@@ -8,10 +8,20 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-// te crea el token
-router.post('/auth', authController.find);
+// crear el token para logearte
+router.post('/auth', authController.checkUser);
 
-//crear un jugador
+
+
+//crear un Jugador
 router.post('/add', playersController.add);
+
+// editar un Jugador 
+router.put('/players/:id', playersController.edit);
+
+// borrar un Jugador 
+router.delete('/players/:id', playersController.delete);
+
+
 
 module.exports = router;

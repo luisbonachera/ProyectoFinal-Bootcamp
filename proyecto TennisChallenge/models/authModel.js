@@ -1,15 +1,15 @@
 const dbConn = require('../config/db');
-const sha256 = require("sha256");
+
 const SQL_FIND_ALL_ACTOR = "SELECT * FROM actor";
 const SQL_FIND_ONE_ACTOR_ID = "SELECT * FROM players WHERE email = data.email AND password = data.password";
 
 authModel = {};
 
-authModel.find = user => {
+authModel.checkUser = user => {
     return new Promise((resolve,reject)=> {
-        pasSha256 = sha256(user.password);
+        
         dbConn.query(
-            `SELECT * FROM players WHERE email = '${user.email}' AND password = '${pasSha256}'`,
+            'SELECT * FROM players WHERE username = ? AND password = ?',[user.username, user.password],
             (err,result)=>{
                 console.log("ya he terminado la consulata buscar usuario");
                 if(err){
