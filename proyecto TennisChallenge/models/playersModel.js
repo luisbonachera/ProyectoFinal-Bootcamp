@@ -4,6 +4,29 @@ const dbConn = require('../config/db');
 playersModel = {};
 
 
+playersModel.list = (isAmin) => {
+    return new Promise((resolve, reject) => {
+        // if(!validate(data)) reject("Invalid data")
+        let SQL_FIND_ALL_PLAYERS = 'SELECT id_player,username,email,city,genre,rating';
+
+        if(isAmin){
+            console.log("entra en la queray Admin= true")
+            SQL_FIND_ALL_PLAYERS = SQL_FIND_ALL_PLAYERS + ', isAdmin';
+        }
+        dbConn.query(
+            SQL_FIND_ALL_PLAYERS + ' FROM players',
+            (err, result) => {
+                console.log("Hay respuesta de la db es :" + err);
+                if (err) reject(err);
+                else {
+                    console.log(result);
+                    resolve(result);
+                }
+            }
+        );
+    })
+};
+
 //crear un Jugador
 playersModel.add = user => {
     return new Promise((resolve, reject)=>{

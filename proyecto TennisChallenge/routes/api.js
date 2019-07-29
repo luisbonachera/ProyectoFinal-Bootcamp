@@ -8,6 +8,10 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
+
+// Listar jugadores
+router.get('/players', playersController.list)
+
 // crear el token para logearte
 router.post('/auth', authController.checkUser);
 

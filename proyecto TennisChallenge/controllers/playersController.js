@@ -1,44 +1,81 @@
 const playersModel = require("../models/playersModel");
 const sha256 = require("sha256");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 // const secret = "lo se yo";
 const secret = "mysecret";
 
 const playersController = {};
 
+//Listar Players
+playersController.list = (req, res) => {
+  console.log(req.headers.authorization);
+  const token = req.headers.authorization.replace("Bearer ", "");
+  console.log(token);
+  try {
+    // console.log(jwt.verify(token,"mysecret"));
+    const decoded = jwt.verify(token, "mysecret");
+  playersModel
+    .list(decoded.isAdmin)
+    .then(players => {
+      console.log("guayList");
+      console.log(players);
+      res.send(players);
+    })
+    .catch(err => {
+      console.log(err);
+      res.send("errorControlerList...Petaaaaaaso");
+    });
+  }catch(err) {
+    res.send("error al verificar token");
+  }
+};
+
 //crear un Jugador
 playersController.add = (req, res) => {
   const u = req.body;
-  const user = {
-    ...( id_player != null && { id_player: id_player }),
-    ...(u.username != null && { username: u.username }),
-    ...(u.email != null && { email: u.email }),
-    ...(u.password != null && { password: sha256(u.password) }),
-    ...(u.city != null && { city: u.city }),
-    ...(u.rating != null && { rating: u.rating }),
-    ...(u.genre != null && { genre: u.genre }),
-    ...(u.isAdmin != null && { isAdmin: u.isAdmin })
-  }
-  if(user.username && user.password){
-    playersModel.add(user)
-    .then(rows => {
+  if (u) {
+    let user = {
+      ...(u.username != null && { username: u.username }),
+      ...(u.email != null && { email: u.email }),
+      ...(u.password != null && { password: sha256(u.password) }),
+      ...(u.city != null && { city: u.city }),
+      ...(u.rating != null && { rating: u.rating }),
+      ...(u.genre != null && { genre: u.genre }),
+      
+    };
+    if (
+      user.username &&
+      u.email &&
+      user.password &&
+      u.city &&
+      u.rating &&
+      u.genre
+    ) {
+     
+      playersModel
+        .add(user)
+        .then(rows => {
+          res.send({
+            type: "success",
+            data: rows
+          });
+        })
+        .catch(err => {
+          res.send({
+            type: "error",
+            data: err
+          });
+        });
+    } else {
       res.send({
-        type: "success",
-        data: rows
+        type: "error, algun o algunos campos vienen vacio"
       });
-    })
-    .catch(err => {
-      res.send({
-        type: "error",
-        data: err
-      });
-    });
-  }else{
+    }
+  } else {
     res.send({
-      type: "error, Username o password son null"
-    })
+      type: "error el body esta vacio"
+    });
   }
-  
 };
 
 // editarte a ti mismo como Jugador o editar a otro si eres Administrador
@@ -53,38 +90,42 @@ playersController.edit = (req, res) => {
   try {
     // console.log(jwt.verify(token,"mysecret"));
     const decoded = jwt.verify(token, "mysecret");
-    console.log(decoded.id_player);
-    if (!decoded.isAdmin || decoded.id_player === id_player) {
-      console.log("entrar")
-      const user = {
-        ...( id_player != null && { id_player: id_player }),
+    if (decoded.isAdmin || decoded.id_player === id_player) {
+      console.log("entrar");
+      let user = {
         ...(u.username != null && { username: u.username }),
         ...(u.email != null && { email: u.email }),
         ...(u.password != null && { password: sha256(u.password) }),
         ...(u.city != null && { city: u.city }),
         ...(u.rating != null && { rating: u.rating }),
-        ...(u.genre != null && { genre: u.genre }),
-        ...(u.isAdmin != null && { isAdmin: u.isAdmin })
+        ...(u.genre != null && { genre: u.genre })
+      };
+      if (decoded.isAdmin) {
+        console.log("entrar al isAdmin");
+        user = {
+          ...user,
+          ...(u.isAdmin !== null && { isAdmin: u.isAdmin ? 1 : 0 })
+        };
       }
-      playersModel.edit(user,id_player)
+      console.log("rol admin:" + u.isAdmin);
+      playersModel
+        .edit(user, id_player)
         .then(user => {
           console.log("guayEditController");
           res.send(user);
         })
         .catch(err => {
+          console.log(err);
           res.send("ErrorEditController....Petaaaaso");
         });
-
     } else {
       // error tu no puedes editar
       res.status(401).send("You don`t have permission for edit");
     }
-  }
-  catch{
+  } catch (e) {
     res.status(401).send("You don`t have permission");
   }
-}
-
+};
 
 // borrarte a ti mismo como Jugador o borrar a otro si eres Administrador
 playersController.delete = (req, res) => {
@@ -99,9 +140,10 @@ playersController.delete = (req, res) => {
     const decoded = jwt.verify(token, "mysecret");
     console.log(decoded.id_player);
     if (!decoded.isAdmin || decoded.id_player === id_player) {
-      console.log("entrar")
-      
-      playersModel.delete(id_player)
+      console.log("entrar");
+
+      playersModel
+        .delete(id_player)
         .then(row => {
           console.log("guayDeleteController");
           res.send(row);
@@ -109,20 +151,13 @@ playersController.delete = (req, res) => {
         .catch(err => {
           res.send("ErrorDeleteController....Petaaaaso");
         });
-
     } else {
       // error tu no puedes editar
       res.status(401).send("You don`t have permission for delete");
     }
-  }
-  catch{
+  } catch {
     res.status(401).send("You don`t have permission");
   }
-}
-
-
-
-
-
+};
 
 module.exports = playersController;
