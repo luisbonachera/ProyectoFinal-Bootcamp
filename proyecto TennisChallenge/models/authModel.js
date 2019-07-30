@@ -17,6 +17,7 @@ authModel.checkUser = user => {
                     reject(err);
                 }else{
                     console.log("consulta de buscar usuario correcta");
+                    console.log(result);
                     resolve(result);
                 }
             }
