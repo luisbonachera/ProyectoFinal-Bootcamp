@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const authController = require('../controllers/authController');
 const playersController = require('../controllers/playersController');
-
+const messageController = require('../controllers/messageController');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -27,5 +27,7 @@ router.put('/players/:id', playersController.edit);
 router.delete('/players/:id', playersController.delete);
 
 
+// crea un mensaje
+router.post('/msg/add', messageController.add);
 
 module.exports = router;

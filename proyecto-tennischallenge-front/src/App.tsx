@@ -8,6 +8,7 @@ import Login from './components/login';
 import { connect } from 'react-redux';
 import { IGlobalState } from './reducers/reducers';
 import listPlayers from './components/listPlayers';
+import ViewPlayer from './components/ViewPlayer';
 
 interface IProps { }
 
@@ -24,11 +25,12 @@ const App: React.FC<IProps & IPropsGlobal> = props => {
           <header className="App-header">
             {!props.token && (
               <Route path="/auth" exact component={Login} />
-              )}
+            )}
+            <Route path="/players/:playerId" exact component={ViewPlayer} />
             <Route path="/players" exact component={listPlayers} />
             <Route path="/add" exact component={AddPlayer} />
             <Route path="/" exact component={Home} />
-            
+
           </header>
           <Redirect to="/" />
         </Switch>

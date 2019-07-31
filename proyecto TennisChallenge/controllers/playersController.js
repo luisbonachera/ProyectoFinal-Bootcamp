@@ -26,7 +26,7 @@ playersController.list = (req, res) => {
       res.send("errorControlerList...Petaaaaaaso");
     });
   }catch(err) {
-    res.send("error al verificar token");
+    res.send("error al verificar token en listar player");
   }
 };
 

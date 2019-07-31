@@ -5,6 +5,7 @@ import { IGlobalState } from '../reducers/reducers';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 import jwt from 'jsonwebtoken';
+import { Link } from 'react-router-dom';
 
 
 interface Iprops { }
@@ -15,7 +16,7 @@ interface IpropsGlobal {
     setPlayers: (players: IPlayer[]) => void;
 }
 const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
-const [error, setError] = React.useState("");
+    const [error, setError] = React.useState("");
 
     const list = () => {
         if (props.token) {
@@ -67,30 +68,32 @@ const [error, setError] = React.useState("");
 
     return (
         <div>
-          
+
             <CardDeck >
-            {props.players.map(u => 
-                <Card style={{display: 'flex', flexDirection: 'row'}}>
-                    <Card.Img variant="top" src="holder.js/100px160" />
-                    <Card.Body>
-                        <Card.Title>{u.username}</Card.Title>
-                        <Card.Text>
-                            {u.city}
-                        </Card.Text>
-                        <Card.Text>
-                            {u.genre}
-                        </Card.Text>
-                        <Card.Text>
-                            {u.rating}
-                        </Card.Text>
-                    </Card.Body>
-                    <Card.Footer>
-                        <small className="text-muted">Last updated 3 mins ago</small>
-                    </Card.Footer>
-                </Card>
-               )}
+                {props.players.map(u =>
+                    <Link key={u.id_player} to={"/players/" + u.id_player} >
+                        <Card style={{ display: 'flex', flexDirection: 'row' }}>
+                            <Card.Img variant="top" src="holder.js/100px160" />
+                            <Card.Body>
+                                <Card.Title>{u.username}</Card.Title>
+                                <Card.Text>
+                                    {u.city}
+                                </Card.Text>
+                                <Card.Text>
+                                    {u.genre}
+                                </Card.Text>
+                                <Card.Text>
+                                    {u.rating}
+                                </Card.Text>
+                            </Card.Body>
+                            <Card.Footer>
+                                <small className="text-muted">Last updated 3 mins ago</small>
+                            </Card.Footer>
+                        </Card>
+                    </Link>
+                )}
             </CardDeck>
-           
+
         </div>
     )
 };
@@ -101,13 +104,13 @@ const mapStateToProps = (state: IGlobalState) => ({
     token: state.token,
     players: state.players
 
-  });
+});
 
-  const mapDispachToProps = {
+const mapDispachToProps = {
     setPlayers: actions.setPlayers
-  }
-  
-  export default connect(
+}
+
+export default connect(
     mapStateToProps,
     mapDispachToProps
-  )(ListPlayers);
+)(ListPlayers);

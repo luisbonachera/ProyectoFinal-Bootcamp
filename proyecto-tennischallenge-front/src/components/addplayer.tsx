@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Col, Button } from 'react-bootstrap';
 import { RouteComponentProps } from 'react-router-dom';
-import jwt from 'jsonwebtoken';
+// import jwt from 'jsonwebtoken';
 import * as actions from '../actions/actions';
 // import { Switch, Route, BrowserRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -115,12 +115,12 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                                     })
 
                             } else {
-                                // setError("Usuario o Contraseña incorrectos ," + error );
+                                setError("Usuario o Contraseña incorrectos ," + error );
                                 console.log(error);
                             }
                         })
                         .catch(error => {
-                            // setError("Usuario o Contraseña incorrectos ,"+ error );
+                            setError("Usuario o Contraseña incorrectos ,"+ error );
                             console.log(error);
                         });
                 }
