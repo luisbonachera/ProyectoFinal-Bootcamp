@@ -1,26 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Props } from 'react';
 import './App.css';
+import NavBar from './components/navbar';
+import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom';
+import Home from './components/home';
+import AddPlayer from './components/addplayer';
+import Login from './components/login';
+import { connect } from 'react-redux';
+import { IGlobalState } from './reducers/reducers';
 
-const App: React.FC = () => {
+interface IProps {}
+
+interface IPropsGlobal {
+  token: string;
+}
+
+const App: React.FC<IProps & IPropsGlobal> = props => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+      <NavBar />
+        <Switch>
+          <header className="App-header">
+            { !props.token && (
+            <Route path="/auth" exact component={Login} />
+            )}
+            <Route path="/add" exact component={AddPlayer} />
+            <Route path="/" exact component={Home} />
+          </header>
+          <Redirect to="/" />
+        </Switch>
+        
+      </BrowserRouter>
+
+
+
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = (state: IGlobalState) => ({
+  token: state.token
+});
+
+
+export default connect(
+  mapStateToProps
+)(App);
+
