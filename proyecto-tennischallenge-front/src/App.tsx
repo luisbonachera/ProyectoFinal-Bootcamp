@@ -1,4 +1,4 @@
-import React, { Props } from 'react';
+import React from 'react';
 import './App.css';
 import NavBar from './components/navbar';
 import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom';
@@ -7,8 +7,9 @@ import AddPlayer from './components/addplayer';
 import Login from './components/login';
 import { connect } from 'react-redux';
 import { IGlobalState } from './reducers/reducers';
+import listPlayers from './components/listPlayers';
 
-interface IProps {}
+interface IProps { }
 
 interface IPropsGlobal {
   token: string;
@@ -18,18 +19,20 @@ const App: React.FC<IProps & IPropsGlobal> = props => {
   return (
     <div className="App">
       <BrowserRouter>
-      <NavBar />
+        <NavBar />
         <Switch>
           <header className="App-header">
-            { !props.token && (
-            <Route path="/auth" exact component={Login} />
-            )}
+            {!props.token && (
+              <Route path="/auth" exact component={Login} />
+              )}
+            <Route path="/players" exact component={listPlayers} />
             <Route path="/add" exact component={AddPlayer} />
             <Route path="/" exact component={Home} />
+            
           </header>
           <Redirect to="/" />
         </Switch>
-        
+
       </BrowserRouter>
 
 

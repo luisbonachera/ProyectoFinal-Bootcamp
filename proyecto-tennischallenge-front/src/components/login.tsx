@@ -1,11 +1,10 @@
 import React from 'react';
 import { Form, Col, Row, Button } from 'react-bootstrap';
-// import { ReplaceProps, BsPrefixProps } from 'react-bootstrap/helpers';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions'
 import { RouteComponentProps } from 'react-router-dom';
 
-interface IProps {}
+interface IProps { }
 
 interface IPropsGlobal {
     setToken: (token: string) => void;
@@ -18,13 +17,13 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
     const [error, setError] = React.useState("");
 
 
-    const UpdateUser = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const UpdateUser = (event: any) => {
         setInputUser(event.target.value);
         setError("");
     }
 
-    const UpdatePass = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setInputPass(event.currentTarget.value);
+    const UpdatePass = (event: any) => {
+        setInputPass(event.target.value);
         setError("");
     }
 
@@ -68,11 +67,11 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
             <Form>
                 <Form.Group as={Row} controlId="formGroupUsername">
                     <Form.Label>Username</Form.Label>
-                    <input type="text" placeholder="Enter username" onChange={UpdateUser} />
+                    <Form.Control type="text" placeholder="Enter username" onChange={UpdateUser} />
                 </Form.Group>
                 <Form.Group as={Row} controlId="formGroupPassword">
                     <Form.Label>Password</Form.Label>
-                    <input type="password" placeholder="Password" onChange={UpdatePass} />
+                    <Form.Control type="password" placeholder="Password" onChange={UpdatePass} />
                 </Form.Group>
                 <Form.Group as={Row}>
                     <Col sm={{ span: 10, offset: 6 }}>
@@ -86,9 +85,9 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
 
 const mapDispachToProps = {
     setToken: actions.setToken
-  }
-  export default connect(
+}
+export default connect(
     null,
     mapDispachToProps
-  )(Login);
+)(Login);
 
