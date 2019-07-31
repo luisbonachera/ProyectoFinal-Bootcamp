@@ -28,6 +28,12 @@ router.delete('/players/:id', playersController.delete);
 
 
 // crea un mensaje
-router.post('/msg/add', messageController.add);
+router.post('/msgs/add', messageController.add);
+
+//mensaje visto por destinatario(editar campo visto)
+router.put('/msgs/:id', messageController.edit);
+
+// Listar mis mensajes
+router.get('/msgs', messageController.list);
 
 module.exports = router;
