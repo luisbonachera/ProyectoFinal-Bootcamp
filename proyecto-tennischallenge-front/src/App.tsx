@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { IGlobalState } from './reducers/reducers';
 import listPlayers from './components/listPlayers';
 import ViewPlayer from './components/ViewPlayer';
+import MailTray from './components/mailTray';
 
 interface IProps { }
 
@@ -26,15 +27,17 @@ const App: React.FC<IProps & IPropsGlobal> = props => {
             {!props.token && (
               <Route path="/auth" exact component={Login} />
             )}
+            <Route path="/mailTray" exact component={MailTray} />
             <Route path="/players/:playerId" exact component={ViewPlayer} />
             <Route path="/players" exact component={listPlayers} />
             <Route path="/add" exact component={AddPlayer} />
             <Route path="/" exact component={Home} />
+            {/* <Route component={Notfound} /> */}
 
           </header>
-          <Redirect to="/" />
+          
         </Switch>
-
+        <Redirect to="/" />
       </BrowserRouter>
 
 

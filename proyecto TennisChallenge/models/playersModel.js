@@ -35,30 +35,41 @@ playersModel.listFiltros = (isAmin,filtros) => {
 
         if(isAmin){
             console.log("entra en la queray Admin= true")
-            SQL_FIND_ALL_PLAYERS = SQL_FIND_ALL_PLAYERS + ', isAdmin';
+            SQL_FIND_ALL_PLAYERS = SQL_FIND_ALL_PLAYERS + ',isAdmin';
         }
         SQL_FIND_ALL_PLAYERS = SQL_FIND_ALL_PLAYERS + ' FROM players';
         //quie entrar si existe algun campo de filtro
+        const filtrosArray = [];
         if(filtros.username || filtros.city || (filtros.ratingFrom && filtros.ratingTo) ){
+            console.log(filtros.username);
+            console.log(filtros.city );
+            console.log(filtros.ratingFrom);
+            console.log(filtros.ratingTo);
             SQL = SQL_FIND_ALL_PLAYERS + ' WHERE';
+           
             if(filtros.username){
-                SQL = SQL + ' username = ?',[filtros.username];
+                SQL = SQL + ' username = ?';
+                filtrosArray.push(filtros.username);
                 if(filtros.city || (filtros.ratingFrom && filtros.ratingTo)){
                     SQL = SQL + ' AND';
                 }
             }
             if(filtros.city ){
-                SQL = SQL + ' city = ?',[filtros.city];
+                SQL = SQL + ' city = ?';
+                filtrosArray.push(filtros.city);
+                //algo para decir que ponga ,[filtros.city] despues de la query
                 if(filtros.ratingFrom && filtros.ratingTo){
                     SQL = SQL + ' AND';
                 }
             }
             if(filtros.ratingFrom && filtros.ratingTo){
-                SQL = SQL + ' rating >= ? AND rating >= ?',[filtros.ratingFrom,filtros.ratingTo];
+                SQL = SQL + ' rating >= ? AND rating <= ?';
+                filtrosArray.push(filtros.ratingFrom);
+                filtrosArray.push(filtros.ratingTo);
             }
         }
         dbConn.query(
-            SQL,
+            SQL,filtrosArray,
             (err, result) => {
                 console.log("Hay respuesta de la db es listarFiltrar:" + err);
                 if (err) reject(err);

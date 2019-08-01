@@ -8,14 +8,16 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
+//listar jugadores por filtros
+router.get('/playersFilter', playersController.listFiltros);
 
 // Listar jugadores
-router.get('/players', playersController.list)
+router.get('/players', playersController.list);
 
 // crear el token para logearte
 router.post('/auth', authController.checkUser);
 
-router.get('/playersFilter', playersController.listFiltros)
+
 
 //crear un Jugador
 router.post('/add', playersController.add);

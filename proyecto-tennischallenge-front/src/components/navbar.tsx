@@ -67,7 +67,8 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                                 <Nav > <Link to="/">Avatar</Link></Nav>
                                 <Nav ><Link to="/"></Link></Nav>
                                 <NavDropdown title={decoded.username} id="collasible-nav-dropdown">
-                                    <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                                   <Link to="/mailTray" >Correo</Link>
+                                    {/* <NavDropdown.Item href="#action/3.1">>Mail</NavDropdown.Item> */}
                                     <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
                                     <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                                     <NavDropdown.Divider />
