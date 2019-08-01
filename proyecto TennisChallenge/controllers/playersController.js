@@ -29,6 +29,30 @@ playersController.list = (req, res) => {
     res.send("error al verificar token en listar player");
   }
 };
+//listar por filtros
+playersController.listFiltros = (req, res) => {
+  console.log(req.headers.authorization);
+  const token = req.headers.authorization.replace("Bearer ", "");
+  console.log(token);
+  const filtros = req.body;
+  try {
+    // console.log(jwt.verify(token,"mysecret"));
+    const decoded = jwt.verify(token, "mysecret");
+  playersModel
+    .listFiltros(decoded.isAdmin, filtros)
+    .then(players => {
+      console.log("guayListFiltro");
+      console.log(players);
+      res.send(players);
+    })
+    .catch(err => {
+      console.log(err);
+      res.send("errorControlerListFiltro...Petaaaaaaso");
+    });
+  }catch(err) {
+    res.send("error al verificar token en listarFiltros player");
+  }
+};
 
 //crear un Jugador
 playersController.add = (req, res) => {

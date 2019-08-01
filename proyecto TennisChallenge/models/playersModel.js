@@ -27,6 +27,53 @@ playersModel.list = (isAmin) => {
     })
 };
 
+//listar por filtros
+playersModel.listFiltros = (isAmin,filtros) => {
+    return new Promise((resolve, reject) => {
+        // if(!validate(data)) reject("Invalid data")
+        let SQL_FIND_ALL_PLAYERS = 'SELECT id_player,username,email,city,genre,rating';
+
+        if(isAmin){
+            console.log("entra en la queray Admin= true")
+            SQL_FIND_ALL_PLAYERS = SQL_FIND_ALL_PLAYERS + ', isAdmin';
+        }
+        SQL_FIND_ALL_PLAYERS = SQL_FIND_ALL_PLAYERS + ' FROM players';
+        //quie entrar si existe algun campo de filtro
+        if(filtros.username || filtros.city || (filtros.ratingFrom && filtros.ratingTo) ){
+            SQL = SQL_FIND_ALL_PLAYERS + ' WHERE';
+            if(filtros.username){
+                SQL = SQL + ' username = ?',[filtros.username];
+                if(filtros.city || (filtros.ratingFrom && filtros.ratingTo)){
+                    SQL = SQL + ' AND';
+                }
+            }
+            if(filtros.city ){
+                SQL = SQL + ' city = ?',[filtros.city];
+                if(filtros.ratingFrom && filtros.ratingTo){
+                    SQL = SQL + ' AND';
+                }
+            }
+            if(filtros.ratingFrom && filtros.ratingTo){
+                SQL = SQL + ' rating >= ? AND rating >= ?',[filtros.ratingFrom,filtros.ratingTo];
+            }
+        }
+        dbConn.query(
+            SQL,
+            (err, result) => {
+                console.log("Hay respuesta de la db es listarFiltrar:" + err);
+                if (err) reject(err);
+                else {
+                    console.log(result);
+                    resolve(result);
+                }
+            }
+        );
+    })
+};
+
+
+
+
 //crear un Jugador
 playersModel.add = user => {
     return new Promise((resolve, reject)=>{

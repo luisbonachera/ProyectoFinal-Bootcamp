@@ -43,7 +43,7 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
     return (
         <div>
             
-            <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+            <Navbar collapseOnSelect style={{position:"fixed", width:"100vw"}} expand="lg" bg="dark" variant="dark">
                 <Navbar.Brand> <Link to="/">TenisChallenge</Link></Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">

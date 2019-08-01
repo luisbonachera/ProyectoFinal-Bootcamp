@@ -15,7 +15,7 @@ router.get('/players', playersController.list)
 // crear el token para logearte
 router.post('/auth', authController.checkUser);
 
-
+router.get('/playersFilter', playersController.listFiltros)
 
 //crear un Jugador
 router.post('/add', playersController.add);
