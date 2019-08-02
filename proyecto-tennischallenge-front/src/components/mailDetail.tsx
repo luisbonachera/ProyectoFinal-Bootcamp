@@ -3,6 +3,9 @@ import React from 'react';
 
 const MailDetail = () => {
 
+
+    
+
     return (
         <div>
            <div className="row">

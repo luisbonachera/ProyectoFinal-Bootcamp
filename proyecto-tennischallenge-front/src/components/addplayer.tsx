@@ -168,6 +168,24 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
 
 
                 </Form.Row>
+                {/* <Form.Row>
+                    <Form.Group as={Col} controlId="formGridDay">
+                        <Form.Label>Day</Form.Label>
+                        <Form.Control type="text" placeholder="Enter day" onChange={updateGenre} />
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="formGridMonth">
+                        <Form.Label>Month</Form.Label>
+                        <Form.Control type="number" placeholder="Enter month" onChange={updateRating} />
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="formGridYear">
+                        <Form.Label>Year</Form.Label>
+                        <Form.Control type="number" placeholder="Enter year" onChange={updateRating} />
+                    </Form.Group>
+
+
+                </Form.Row> */}
 
                 <Form.Group id="formGridCheckbox">
                     <Form.Check type="checkbox" label="Administrador" onChange={updateIsAdmin} />

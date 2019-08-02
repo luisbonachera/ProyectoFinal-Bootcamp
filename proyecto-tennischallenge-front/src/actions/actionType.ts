@@ -1,4 +1,5 @@
 import { IPlayer } from "../interfaceIPlayer";
+import { IMsg } from "../interfaceIMsg";
 
 
 type TSetTokenAction = {
@@ -11,4 +12,9 @@ type TSetUSersAction = {
     players: IPlayer [];
 };
 
-export type TAction = TSetTokenAction | TSetUSersAction;
+type TSetMsgsAction = {
+    type: "SET_MESSAGES";
+    msgs: IMsg [];
+};
+
+export type TAction = TSetTokenAction | TSetUSersAction | TSetMsgsAction;

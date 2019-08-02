@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 });
 
 //listar jugadores por filtros
-router.get('/playersFilter', playersController.listFiltros);
+router.post('/playersFilter', playersController.listFiltros);
 
 // Listar jugadores
 router.get('/players', playersController.list);

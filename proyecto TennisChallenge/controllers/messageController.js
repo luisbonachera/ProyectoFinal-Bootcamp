@@ -114,11 +114,14 @@ messageController.list = (req, res) => {
             console.log("1");
             messageModel.list(id_player_sent, id_player_destiny)
                 .then(rows => {
-                    console.log("bien");
-                    res.send({
-                        type: "success",
-                        data: rows
-                    });
+                    if(rows.length > 0){
+                        console.log("bien");
+                        res.send(rows);
+                    }else{
+                        console.log("no hay mensajes");
+                        res.send(rows);
+                    }
+                   
                 })
                 .catch(err => {
                     console.log("mal");

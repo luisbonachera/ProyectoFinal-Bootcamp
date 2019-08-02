@@ -27,7 +27,7 @@ const App: React.FC<IProps & IPropsGlobal> = props => {
             {!props.token && (
               <Route path="/auth" exact component={Login} />
             )}
-            <Route path="/mailTray" exact component={MailTray} />
+            <Route path="/mailTray" component={MailTray} />
             <Route path="/players/:playerId" exact component={ViewPlayer} />
             <Route path="/players" exact component={listPlayers} />
             <Route path="/add" exact component={AddPlayer} />
@@ -35,7 +35,7 @@ const App: React.FC<IProps & IPropsGlobal> = props => {
             {/* <Route component={Notfound} /> */}
 
           </header>
-          
+
         </Switch>
         <Redirect to="/" />
       </BrowserRouter>
