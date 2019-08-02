@@ -18,6 +18,7 @@ interface IPropsGloblal {
 const MailTray: React.FC<IPropsGloblal> = props => {
 
     const [error, setError] = React.useState("");
+    const [messagesHooks, setMessagesHooks] = React.useState<IMsg[]>([]);
 
     const listMsgs = () => {
         if (props.token) {
@@ -36,10 +37,35 @@ const MailTray: React.FC<IPropsGloblal> = props => {
                             response
                                 .json()
                                 .then((lista: IMsg[]) => {
-                                    console.log(lista);
-                                    console.log("va bien");
-                                    props.setMessages(lista);
-                                    console.log(lista);
+                                    if (lista.length > 0) {
+                                        console.log(lista);
+                                        console.log("va bien");
+                                        console.log(lista);
+                                        props.setMessages(lista);
+                                        //esto es para recoger los msg received
+                                        if (props.token) {
+                                            const decoded = jwt.decode(props.token);
+                                            if (decoded !== null && typeof decoded !== "string") {
+                                                let msgsReceived = props.msgs.filter(m => m.id_player_destiny === decoded.id_player);
+                                                if (msgsReceived.length > 0) {
+                                                    console.log("hay msg recibidos y los guardo");
+                                                    // setMessagesSent([]);
+                                                    // setMessagesReceived(msgsReceived);
+                                                    setMessagesHooks(msgsReceived);
+                                                } else {
+                                                    console.log("no hay mensajes recibidos");
+                                                }
+
+                                            } else {
+                                                console.log("no se ha podido decodificar token")
+                                            }
+                                        } else {
+                                            console.log("no hay token");
+                                        }
+                                    } else {
+                                        console.log("la lista de msg esta vacia");
+                                    }
+
                                 })
                                 .catch(err => {
                                     setError("Error en el json.");
@@ -76,8 +102,8 @@ const MailTray: React.FC<IPropsGloblal> = props => {
                 </div>
                 <Switch>
                     <Route path="/mailTray/:typeMessage" exact component={ListMail} />
-                    <Route path="/mailTray/:typeMessage/:id" exact component={MailDetail} />
-                    <Redirect to="/mailTray/sent" />
+                    <Route path="/mailTray/:typeMessage/:id_message" exact component={MailDetail} />
+                    <Redirect to="/mailTray/received" />
                 </Switch>
 
             </div>
@@ -92,7 +118,7 @@ const mapStateToProps = (state: IGlobalState) => ({
 });
 
 const mapDispachToProps = {
-   setMessages: actions.setMessages
+    setMessages: actions.setMessages
 }
 
 export default connect(

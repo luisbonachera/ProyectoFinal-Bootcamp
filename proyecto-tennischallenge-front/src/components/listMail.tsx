@@ -7,6 +7,7 @@ import * as actions from '../actions/actions';
 import jwt from 'jsonwebtoken';
 import { setMessages } from '../actions/actions';
 import { messagesReducer } from '../reducers/messagesReducer';
+import { Link } from 'react-router-dom';
 
 interface IPropsGloblal {
     token: string,
@@ -163,14 +164,23 @@ const ListMail: React.FC<IPropsGloblal & RouteComponentProps<{ typeMessage: stri
 
 
 {messagesHooks && messagesHooks.map(m =>
-                <div className="row">
+                <Link to={"/mailTray/"+props.match.params.typeMessage + "/" + m.id_messages} >
+                <div key={m.id_messages}className="row">
                     <div className="col">
                         De: {m.id_player_sent}
                     </div>
                     <div className="col">
-                        Text: {m.text}
+                        Asunto: {m.subject}
+                    </div>
+                    <div className="col">
+                        Fecha: {m.date}
+                    </div>
+                    <div className="col">
+                        Visto: {m.watched? "SI":"NO"}
                     </div>
                 </div>
+                </Link>
+                
 )}
 
         </div >

@@ -6,8 +6,8 @@ const messageModel = {};
 messageModel.add = msg => {
     return new Promise((resolve, reject) => {
         console.log("entra en el modelo addmessage")
-        dbConn.query('INSERT INTO messages (id_player_sent,id_player_destiny,text) VALUES (' +
-            `${msg.id_player_sent}, ${msg.id_player_destiny}, '${msg.text}')`,
+        dbConn.query('INSERT INTO messages (id_player_sent,id_player_destiny,subject,text) VALUES (' +
+            `${msg.id_player_sent}, ${msg.id_player_destiny},'${msg.subject}','${msg.text}')`,
             (err, result) => {
                 console.log("ya he terminado la consula insertar message");
                 if (err) {
