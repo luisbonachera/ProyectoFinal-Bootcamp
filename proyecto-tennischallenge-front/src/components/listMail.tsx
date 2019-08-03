@@ -30,6 +30,21 @@ const ListMail: React.FC<IPropsGloblal & RouteComponentProps<{ typeMessage: stri
     //     setmessagesReceived(event.target.value);
     //     setError("");
     // };
+
+
+    const viewMsg = (id_message: number) => {
+        let msg= props.msgs.filter(m => m.id_messages === id_message);
+        if (msg){
+            if (!msg[0].watched){
+                //fetch edit msg y redirigir
+                props.history.push("/mailTray/" + props.match.params.typeMessage + "/" + id_message);
+            }else{
+                console.log("el mesajes ya estaba visto");
+            }
+        }else {
+            console.log("el msg no existe");
+        }
+    }
     // const listMsgs = () => {
     //     if (props.token) {
     //         let decoded = jwt.decode(props.token);
@@ -137,6 +152,14 @@ const ListMail: React.FC<IPropsGloblal & RouteComponentProps<{ typeMessage: stri
     console.log(messageSent);
     console.log("mensajes sent:");
 
+    const decoded = jwt.decode(props.token);
+    let id:number;
+    let username:string;
+    if (decoded && typeof decoded !== 'string'){
+        id = decoded.id_player;
+        username = decoded.username
+    }
+    
     return (
 
         <div className="col-12">
@@ -164,10 +187,17 @@ const ListMail: React.FC<IPropsGloblal & RouteComponentProps<{ typeMessage: stri
 
 
 {messagesHooks && messagesHooks.map(m =>
-                <Link to={"/mailTray/"+props.match.params.typeMessage + "/" + m.id_messages} >
-                <div key={m.id_messages}className="row">
+                // <Link to={"/mailTray/"+props.match.params.typeMessage + "/" + m.id_messages} >
+                <div  >
+
+                <div  className="row" key={m.id_messages} onClick={()=>viewMsg(m.id_messages)}>
                     <div className="col">
-                        De: {m.id_player_sent}
+                    {/* {m.id_player_sent} */}
+                        De: {m.id_player_sent === id? username:m.username }
+                    </div>
+                    <div className="col">
+                    {/* {m.id_player_destiny} */}
+                    To: {m.id_player_destiny === id? username:m.username }
                     </div>
                     <div className="col">
                         Asunto: {m.subject}
@@ -179,7 +209,7 @@ const ListMail: React.FC<IPropsGloblal & RouteComponentProps<{ typeMessage: stri
                         Visto: {m.watched? "SI":"NO"}
                     </div>
                 </div>
-                </Link>
+                </div>
                 
 )}
 

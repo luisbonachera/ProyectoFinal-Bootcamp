@@ -65,7 +65,7 @@ messageController.edit = (req, res) => {
         // console.log(jwt.verify(token,"mysecret"));
         const decoded = jwt.verify(token, "mysecret");
         let id_player_destiny = decoded.id_player;
-        let id_message = +req.params.id;
+        let id_message = req.params.id;
         console.log(id_message);
         if (id_message) {
             console.log("1");
@@ -98,7 +98,7 @@ messageController.edit = (req, res) => {
 
 }
 
-// Listar mis mensajes
+// Listar mis mensajes join user
 messageController.list = (req, res) => {
     console.log(req.headers.authorization);
     const token = req.headers.authorization.replace("Bearer ", "");
@@ -106,13 +106,14 @@ messageController.list = (req, res) => {
     try {
         // console.log(jwt.verify(token,"mysecret"));
         const decoded = jwt.verify(token, "mysecret");
-        let id_player_destiny = decoded.id_player;
-        let id_player_sent = decoded.id_player;
-        console.log(id_player_destiny);
-        console.log(id_player_sent);
-        if (id_player_sent && id_player_sent) {
+        // let id_player_destiny = decoded.id_player;
+        // let id_player_sent = decoded.id_player;
+        // console.log(id_player_destiny);
+        // console.log(id_player_sent);
+       let id_player = decoded.id_player;
+        if (id_player) {
             console.log("1");
-            messageModel.list(id_player_sent, id_player_destiny)
+            messageModel.list(id_player)
                 .then(rows => {
                     if(rows.length > 0){
                         console.log("bien");

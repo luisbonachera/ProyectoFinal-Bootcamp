@@ -6,4 +6,5 @@ export interface IMsg {
     date: Date,
     text: string;
     watched: boolean;
+    username?: string;
   }
