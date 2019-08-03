@@ -1,16 +1,16 @@
 import React from 'react';
 import { Form, Col, Button } from 'react-bootstrap';
 import { RouteComponentProps } from 'react-router-dom';
+// import jwt from 'jsonwebtoken';
 import * as actions from '../actions/actions';
+// import { Switch, Route, BrowserRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { IPlayer } from '../interfaceIPlayer';
-import jwt from 'jsonwebtoken';
 
 interface IProps { }
 
 interface IPropsGlobal {
+    // players: IPlayer[];
     setToken: (token: string) => void;
-    setPlayer: (player: IPlayer) => void;
 }
 
 const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
@@ -79,6 +79,15 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
             .then(response => {
                 if (response.ok) {
                     console.log("usuario creado")
+                    // const us = {
+                    //     // _id: user._id,
+                    //     username: username,
+                    //     email: email,
+                    //     password: password,
+                    //     isAdmin: isAdmin,
+                    // }
+                    // props.updateUser(us);
+                    // props.history.push("/");
                     fetch("http://localhost:8080/api/auth", {
                         method: "post",
                         headers: {
@@ -94,33 +103,14 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                                 response
                                     .text()
                                     .then((token: string) => {
-                                        if (token) {
-                                            console.log(token);
                                         props.setToken(token);
-                                        let decoded: any = jwt.decode(token);
-                                        console.log("decoded:")
-                                        console.log(decoded);
-                                        if(decoded){
-                                            let player: IPlayer = {
-                                                id_player: decoded.id_player,
-                                                username: decoded.username,
-                                                isAdmin: decoded.isAdmin,
-                                                email: decoded.email,
-                                                city: decoded.city,
-                                                genre: decoded.genre,
-                                                rating: decoded.rating
-                                            }
-                                            console.log("entra");
-                                            console.log(player);
-                                            props.setPlayer(player);
-                                            props.history.push("/");
-                                        }else{
-                                            console.log("Ha fallado el decode en login");
-                                        }
-                                        
-                                    } else {
-                                        console.log("la BD no ha devuelto el token vacio.")
-                                    }
+                                        // const token_decoded: any = jwt.decode(token);
+                                        // console.log(token_decoded);
+                                        // if (token_decoded !== null && typeof token_decoded !== "string") {
+                                        //     props.setUser(token_decoded);
+
+                                        // }
+                                        props.history.push("/")
 
                                     })
 
@@ -210,8 +200,7 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
 };
 
 const mapDispachToProps = {
-    setToken: actions.setToken,
-    setPlayer: actions.setPlayer
+    setToken: actions.setToken
   }
   
   export default connect(

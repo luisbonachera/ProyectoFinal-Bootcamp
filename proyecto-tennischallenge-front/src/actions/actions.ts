@@ -15,6 +15,11 @@ export const setPlayers: ActionCreator<TAction> = (players: IPlayer[]) => ({
     players
 });
 
+export const setPlayer: ActionCreator<TAction> = (player: IPlayer) => ({
+    type: "SET_PLAYER",
+    player
+});
+
 export const setMessages: ActionCreator<TAction> = (msgs: IMsg[]) => ({
     type: "SET_MESSAGES",
     msgs

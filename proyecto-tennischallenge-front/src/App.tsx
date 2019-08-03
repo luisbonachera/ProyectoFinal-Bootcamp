@@ -10,6 +10,7 @@ import { IGlobalState } from './reducers/reducers';
 import listPlayers from './components/listPlayers';
 import ViewPlayer from './components/ViewPlayer';
 import MailTray from './components/mailTray';
+import ProfilePlayer from './components/profilePlayer';
 
 interface IProps { }
 
@@ -27,10 +28,14 @@ const App: React.FC<IProps & IPropsGlobal> = props => {
             {!props.token && (
               <Route path="/auth" exact component={Login} />
             )}
-            <Route path="/mailTray" component={MailTray} />
-            <Route path="/players/:playerId" exact component={ViewPlayer} />
-            <Route path="/players" exact component={listPlayers} />
-            <Route path="/add" exact component={AddPlayer} />
+            {/*deberia de poner un layout si {props.token && ()} */}
+            {/* y dentro de layout todas las rutas de aabjo excepto home */}
+              <Route path="/mailTray" component={MailTray} />
+              <Route path="/profile/:id_player" exact component={ProfilePlayer} />
+              <Route path="/players/:playerId" exact component={ViewPlayer} />
+              <Route path="/players" exact component={listPlayers} />
+              <Route path="/add" exact component={AddPlayer} />
+            
             <Route path="/" exact component={Home} />
             {/* <Route component={Notfound} /> */}
 

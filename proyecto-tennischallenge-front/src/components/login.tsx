@@ -3,11 +3,14 @@ import { Form, Col, Row, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions'
 import { RouteComponentProps } from 'react-router-dom';
+import jwt from 'jsonwebtoken';
+import { IPlayer } from '../interfaceIPlayer';
 
 interface IProps { }
 
 interface IPropsGlobal {
     setToken: (token: string) => void;
+    setPlayer: (player: IPlayer) => void;
 }
 
 const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
@@ -46,10 +49,35 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
                     console.log("ok");
                     response
                         .text() //el text()es una promesa
-                        .then((text: string) => {
-                            console.log(text);
-                            props.setToken(text);
-                            props.history.push("/");
+                        .then((token: string) => {
+                            if (token) {
+                                console.log(token);
+                                props.setToken(token);
+                                let decoded: any = jwt.decode(token);
+                                console.log("decoded:")
+                                console.log(decoded);
+                                if(decoded){
+                                    let player: IPlayer = {
+                                        id_player: decoded.id_player,
+                                        username: decoded.username,
+                                        isAdmin: decoded.isAdmin,
+                                        email: decoded.email,
+                                        city: decoded.city,
+                                        genre: decoded.genre,
+                                        rating: decoded.rating
+                                    }
+                                    console.log("entra");
+                                    console.log(player);
+                                    props.setPlayer(player);
+                                    props.history.push("/");
+                                }else{
+                                    console.log("Ha fallado el decode en login");
+                                }
+                                
+                            } else {
+                                console.log("la BD no ha devuelto el token vacio.")
+                            }
+
                         });
                 } else {
                     setError("Usuario o Contraseña incorrectos");
@@ -86,7 +114,8 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
 };
 
 const mapDispachToProps = {
-    setToken: actions.setToken
+    setToken: actions.setToken,
+    setPlayer: actions.setPlayer
 }
 export default connect(
     null,

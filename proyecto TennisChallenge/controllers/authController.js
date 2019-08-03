@@ -19,7 +19,11 @@ authController.checkUser = (req, res) => {
           {
             id_player: rows[0].id_player,
             username: rows[0].username,
-            isAdmin: rows[0].isAdmin === 1 ? true : false
+            isAdmin: rows[0].isAdmin === 1 ? true : false,
+            email: rows[0].email,
+            city: rows[0].city,
+            genre: rows[0].genre,
+            rating: rows[0].rating
           },
           secret
         );

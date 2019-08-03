@@ -7,9 +7,14 @@ type TSetTokenAction = {
     token: string;
 };
 
-type TSetUSersAction = {
+type TSetPlayersAction = {
     type: "SET_PLAYERS";
     players: IPlayer [];
+};
+
+type TSetPlayerAction = {
+    type: "SET_PLAYER";
+    player: IPlayer;
 };
 
 type TSetMsgsAction = {
@@ -17,4 +22,4 @@ type TSetMsgsAction = {
     msgs: IMsg [];
 };
 
-export type TAction = TSetTokenAction | TSetUSersAction | TSetMsgsAction;
+export type TAction = TSetTokenAction | TSetPlayersAction | TSetPlayerAction | TSetMsgsAction;
