@@ -25,9 +25,9 @@ messageModel.add = msg => {
 //mensaje visto por destinatario(editar campo visto)
 messageModel.edit = (watched,id_message,id_player_destiny) => {
     return new Promise((resolve, reject) => {
-        console.log("entra en el modelo addmessage");
+        console.log("entra en el modelo editmessage");
         // dbConn.query('UPDATE messages SET watched = ? WHERE id_messages = ? AND id_player_destiny = ?',[watched,id_message,id_player_destiny],
-        dbConn.query('UPDATE messages SET watched = ? WHERE id_messages = ?',[watched,id_message],
+        dbConn.query('UPDATE messages SET watched = ? WHERE id_messages = ? AND id_player_destiny = ?',[watched,id_message,id_player_destiny],
  
         (err, result) => {
                 console.log("ya he terminado la consula editar message");
@@ -47,7 +47,7 @@ messageModel.edit = (watched,id_message,id_player_destiny) => {
 // Listar mis mensajes join user
 messageModel.list = (id_player) => {
     return new Promise((resolve, reject) => {
-        console.log("entra en el modelo addmessage")
+        console.log("entra en el modelo listmessage")
         // SELECT * FROM (SELECT * FROM messages AS m  WHERE (m.id_player_sent = 3 || m.id_player_destiny= 3)) As m INNER JOIN players AS p  WHERE (m.id_player_sent <> 3 AND m.id_player_sent= p.id_player) OR (m.id_player_destiny <> 3 AND m.id_player_destiny= p.id_player);
         dbConn.query('SELECT * FROM messages AS m INNER JOIN players AS p WHERE (m.id_player_sent = ' +
          id_player + ' && m.id_player_destiny = p.id_player) OR ' + 

@@ -21,7 +21,7 @@ const ListMail: React.FC<IPropsGloblal & RouteComponentProps<{ typeMessage: stri
     const [messagesReceived, setMessagesReceived] = React.useState<IMsg[]>([]);
     const [messageSent, setMessagesSent] = React.useState<IMsg[]>([]);
     const [messagesHooks, setMessagesHooks] = React.useState<IMsg[]>([]);
-    
+
     // const [inputUsername, setInputUsername] = React.useState("");
     // const [inputCity, setInputCity] = React.useState("");
 
@@ -33,70 +33,44 @@ const ListMail: React.FC<IPropsGloblal & RouteComponentProps<{ typeMessage: stri
 
 
     const viewMsg = (id_message: number) => {
-        let msg= props.msgs.filter(m => m.id_messages === id_message);
-        if (msg){
-            if (!msg[0].watched){
+        let msg = props.msgs.filter(m => m.id_messages === id_message);
+        if (msg) {
+            if (!msg[0].watched) {
                 //fetch edit msg y redirigir
-                props.history.push("/mailTray/" + props.match.params.typeMessage + "/" + id_message);
-            }else{
-                console.log("el mesajes ya estaba visto");
+
+                fetch("http://localhost:8080/api/msgs/" + id_message, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + props.token
+                    }
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            ///deberia comprobar mas cosas?
+                            let msgs = props.msgs.map(m=> {
+                                if (m.id_messages === id_message){
+                                    m.watched = true;
+                                }
+                            });
+                            setMessages(msgs);
+                            props.history.push("/mailTray/" + props.match.params.typeMessage + "/" + id_message);
+                        } else {
+                            console.log("el mesajes ya estaba visto");
+                        }
+                    })
+                    .catch(error => {
+                        setError("Response Error , ha fallado la consulta" + error);
+                        console.log(error);
+                    });
+            } else {
+                console.log("el msg ya esta visto");
             }
-        }else {
+        } else {
             console.log("el msg no existe");
         }
     }
-    // const listMsgs = () => {
-    //     if (props.token) {
-    //         let decoded = jwt.decode(props.token);
-    //         if (decoded !== null) {
-    //             console.log(decoded);
-
-    //             fetch("http://localhost:8080/api/msgs", {
-    //                 headers: {
-    //                     "Content-type": "application/json",
-    //                     Authorization: "Bearer " + props.token
-    //                 }
-    //             })
-    //                 .then(response => {
-    //                     if (response.ok) {
-    //                         response
-    //                             .json()
-    //                             .then((lista: IMsg[]) => {
-    //                                 console.log(lista);
-    //                                 console.log("va bien");
-    //                                 props.setMessages(lista);
-    //                                 console.log(lista);
-    //                             })
-    //                             .catch(err => {
-    //                                 setError("Error en el json.");
-    //                             });
-    //                     } else {
-    //                         setError("responde.ok da error.");
-    //                     }
-    //                 })
-    //                 .catch(err => {
-    //                     setError("Error en response.");
-    //                 });
-    //         }
-    //         else {
-    //             setError("El token no se pudo decodificar");
-    //         }
-    //     }
-    //     else {
-    //         setError("El token no existe");
-    //     }
-    // };
-    // console.log("username " + inputUsername);
-    // console.log("city " + inputCity);
-    // console.log("genre " + inputSex);
-    // console.log("ratingFrom " + inputRatingFrom);
-    // console.log("ratingTo " + inputRatingTo);
-    // console.log("errorRating" + errorRating);
-    // console.log("error" + error);
-
-
-    // React.useEffect(listMsgs, []);
-
+    
     useEffect(() => {
         let typeMessage = props.match.params.typeMessage;
         if (props.msgs) {
@@ -153,18 +127,18 @@ const ListMail: React.FC<IPropsGloblal & RouteComponentProps<{ typeMessage: stri
     console.log("mensajes sent:");
 
     const decoded = jwt.decode(props.token);
-    let id:number;
-    let username:string;
-    if (decoded && typeof decoded !== 'string'){
+    let id: number;
+    let username: string;
+    if (decoded && typeof decoded !== 'string') {
         id = decoded.id_player;
         username = decoded.username
     }
-    
+
     return (
 
         <div className="col-12">
             {/* map lista de correos */}
-            
+
             {/* {(messagesReceived && messagesReceived.map(m =>
                 <div className="row">
                     <div className="col">
@@ -186,32 +160,32 @@ const ListMail: React.FC<IPropsGloblal & RouteComponentProps<{ typeMessage: stri
             ))} */}
 
 
-{messagesHooks && messagesHooks.map(m =>
+            {messagesHooks && messagesHooks.map(m =>
                 // <Link to={"/mailTray/"+props.match.params.typeMessage + "/" + m.id_messages} >
                 <div  >
 
-                <div  className="row" key={m.id_messages} onClick={()=>viewMsg(m.id_messages)}>
-                    <div className="col">
-                    {/* {m.id_player_sent} */}
-                        De: {m.id_player_sent === id? username:m.username }
-                    </div>
-                    <div className="col">
-                    {/* {m.id_player_destiny} */}
-                    To: {m.id_player_destiny === id? username:m.username }
-                    </div>
-                    <div className="col">
-                        Asunto: {m.subject}
-                    </div>
-                    <div className="col">
-                        Fecha: {m.date}
-                    </div>
-                    <div className="col">
-                        Visto: {m.watched? "SI":"NO"}
+                    <div className="row" key={m.id_messages} onClick={() => viewMsg(m.id_messages)}>
+                        <div className="col">
+                            {/* {m.id_player_sent} */}
+                            De: {m.id_player_sent === id ? username : m.username}
+                        </div>
+                        <div className="col">
+                            {/* {m.id_player_destiny} */}
+                            To: {m.id_player_destiny === id ? username : m.username}
+                        </div>
+                        <div className="col">
+                            Asunto: {m.subject}
+                        </div>
+                        <div className="col">
+                            Fecha: {m.date}
+                        </div>
+                        <div className="col">
+                            Visto: {m.watched ? "SI" : "NO"}
+                        </div>
                     </div>
                 </div>
-                </div>
-                
-)}
+
+            )}
 
         </div >
     )

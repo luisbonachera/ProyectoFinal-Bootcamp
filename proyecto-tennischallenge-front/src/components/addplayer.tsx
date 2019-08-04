@@ -140,6 +140,8 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
             })
     }
 
+    
+
     return (
         <div>
             <Form>

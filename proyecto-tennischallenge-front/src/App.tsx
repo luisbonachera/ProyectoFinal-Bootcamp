@@ -11,6 +11,7 @@ import listPlayers from './components/listPlayers';
 import ViewPlayer from './components/ViewPlayer';
 import MailTray from './components/mailTray';
 import ProfilePlayer from './components/profilePlayer';
+import EditPlayer from './components/editPlayer';
 
 interface IProps { }
 
@@ -31,8 +32,10 @@ const App: React.FC<IProps & IPropsGlobal> = props => {
             {/*deberia de poner un layout si {props.token && ()} */}
             {/* y dentro de layout todas las rutas de aabjo excepto home */}
               <Route path="/mailTray" component={MailTray} />
+              
+              <Route path="/players/edit/:id_player" exact component={EditPlayer} />
               <Route path="/profile/:id_player" exact component={ProfilePlayer} />
-              <Route path="/players/:playerId" exact component={ViewPlayer} />
+              <Route path="/players/:id_player" exact component={ViewPlayer} />
               <Route path="/players" exact component={listPlayers} />
               <Route path="/add" exact component={AddPlayer} />
             

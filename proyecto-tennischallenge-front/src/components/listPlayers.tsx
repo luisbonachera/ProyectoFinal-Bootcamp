@@ -269,9 +269,9 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
                         .filter(p => (p.rating >= inputRatingFrom && p.rating <= inputRatingTo))
                         .filter(p => !inputSex || (p.genre === inputSex.toLocaleUpperCase())).map(p => (
                             // {props.players.map(u =>
-                            <Link key={p.id_player} to={"/players/" + p.id_player} >
+                            <Link  to={"/players/" + p.id_player} >
                                 {/* <Card style={{ display: 'flex', flexDirection: 'row' }}> */}
-                                <Card >
+                                <Card key={p.id_player}>
 
                                     <Card.Img variant="top" src="/public/images/avatar-tenis.png" />
                                     <Card.Body >
@@ -290,7 +290,7 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
                                     <Card.Footer>
                                         <small className="text-muted">Last updated 3 mins ago</small>
                                     </Card.Footer>
-
+                                    
                                 </Card>
                                 <br />
 

@@ -114,7 +114,7 @@ playersController.edit = (req, res) => {
   try {
     // console.log(jwt.verify(token,"mysecret"));
     const decoded = jwt.verify(token, "mysecret");
-    if (decoded.isAdmin || decoded.id_player === id_player) {
+    if (decoded.isAdmin || decoded.id_player === +id_player) {
       console.log("entrar");
       let user = {
         ...(u.username != null && { username: u.username }),

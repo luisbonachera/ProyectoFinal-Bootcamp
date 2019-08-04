@@ -10,7 +10,7 @@ interface IPRopsGlobal {
     player: IPlayer;
 }
 
-const ProfilePlayer: React.FC<IPRopsGlobal& RouteComponentProps<{ id_player: string }>> = props => {
+const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: string }>> = props => {
 
     // const id = props.match.params.id_player;
     // console.log(id);

@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from 'react-router';
 import MenuMail from './menuMail';
 import ListMail from './listMail';
 import MailDetail from './mailDetail';
+import AddMail from './addMail';
 import * as actions from '../actions/actions';
 import jwt from 'jsonwebtoken';
 import { IMsg } from '../interfaceIMsg';
@@ -102,6 +103,7 @@ const MailTray: React.FC<IPropsGloblal> = props => {
                 </div>
                 <Switch>
                     <Route path="/mailTray/:typeMessage" exact component={ListMail} />
+                    <Route path="/mailTray/add/:id_player_destiny" exact component={AddMail} />
                     <Route path="/mailTray/:typeMessage/:id_message" exact component={MailDetail} />
                     <Redirect to="/mailTray/received" />
                 </Switch>

@@ -12,9 +12,9 @@ interface IPropsGlobal {
 }
 
 
-const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ playerId: string }>> = props => {
+const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player: string }>> = props => {
 
-    const id = props.match.params.playerId;
+    const id = props.match.params.id_player;
     console.log(id);
 
     console.log(props.players);
@@ -44,7 +44,10 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ playerI
                         </Card.Body>
                         <Card.Footer >
                             <small className="text-muted">Last updated 3 mins ago</small>
-                             <Link to={"/chat"}><div className="btn btn-primary stretched-link">Enviar Mensaje</div></Link> 
+                             <Link to={"/mailTray/add/" + player.id_player}><div className="btn btn-primary stretched-link">Enviar Mensaje</div></Link>
+                             {player.isAdmin && ( 
+                             <Link to={"/players/edit/"+ player.id_player}><div className="btn btn-primary stretched-link">Editar</div></Link>
+                             )}
                         </Card.Footer>
                     </Card>
 
