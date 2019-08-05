@@ -19,6 +19,8 @@ const ListMail: React.FC<IPropsGloblal & RouteComponentProps<{ typeMessage: stri
     // const [messagesReceived, setMessagesReceived] = React.useState<IMsg[]>([]);
     // const [messageSent, setMessagesSent] = React.useState<IMsg[]>([]);
     const [messagesHooks, setMessagesHooks] = React.useState<IMsg[]>([]);
+    const [typeMessage, setTypeMessage] = React.useState(props.match.params.typeMessage);
+
 
     // const [inputUsername, setInputUsername] = React.useState("");
     // const [inputCity, setInputCity] = React.useState("");
@@ -55,6 +57,7 @@ const ListMail: React.FC<IPropsGloblal & RouteComponentProps<{ typeMessage: stri
                             console.log("mensajes");
                             console.log(msgs);
                             setMessages(msgs);
+                            setError("");
                             props.history.push("/mailTray/" + props.match.params.typeMessage + "/" + id_message);
                         } else {
                             console.log("error en response.ok");
@@ -65,7 +68,7 @@ const ListMail: React.FC<IPropsGloblal & RouteComponentProps<{ typeMessage: stri
                         console.log(error);
                     });
             } else {
-                console.log("el msg ya esta visto");
+                console.log("el msg ya esta visto o no es mensaje recibido");
                 props.history.push("/mailTray/" + props.match.params.typeMessage + "/" + id_message);
             }
         } else {
@@ -73,21 +76,30 @@ const ListMail: React.FC<IPropsGloblal & RouteComponentProps<{ typeMessage: stri
            
         }
     }
-    
+
+   
+
     useEffect(() => {
-        let typeMessage = props.match.params.typeMessage;
+        setTypeMessage(props.match.params.typeMessage);
         if (props.msgs) {
             if (typeMessage === 'received') {
+                console.log("tipo de msg es received");
                 if (props.token) {
                     const decoded = jwt.decode(props.token);
                     if (decoded !== null && typeof decoded !== "string") {
-                        let msgsReceived = props.msgs.filter(m => m.id_player_destiny === decoded.id_player);
+                        ////mirar y cambiar y descomentar/////////////////////////////////////////////////////
+                        // let msgsSent = props.msgs.filter(m => m.id_player_destiny === decoded.id_player);
+                        let msgsReceived = props.msgs.filter(m => m.id_player_sent === decoded.id_player);
+                        console.log(msgsReceived);
                         if (msgsReceived.length > 0) {
                             console.log("hay msg recibidos y los guardo");
                             // setMessagesSent([]);
                             // setMessagesReceived(msgsReceived);
                             setError("");
                             setMessagesHooks(msgsReceived);
+                            console.log("error:" + error);
+                            console.log("msgsReceived");
+                            console.log(msgsReceived);
                         } else {
                             console.log("no hay mensajes recibidos");
                             setError("no hay mensajes recibidos");
@@ -101,10 +113,13 @@ const ListMail: React.FC<IPropsGloblal & RouteComponentProps<{ typeMessage: stri
                     console.log("no hay token");
                 }
             } else if (typeMessage === 'sent') {
+                console.log("tipo de msg es sent");
                 if (props.token) {
                     const decoded = jwt.decode(props.token);
                     if (decoded !== null && typeof decoded !== "string") {
-                        let msgsSent = props.msgs.filter(m => m.id_player_sent === decoded.id_player);
+                          ////mirar y cambiar y descomentar/////////////////////////////////////////////////////
+                        // let msgsReceived = props.msgs.filter(m => m.id_player_sent === decoded.id_player);
+                        let msgsSent = props.msgs.filter(m => m.id_player_destiny === decoded.id_player);
                         if (msgsSent.length > 0) {
                             console.log("hay msg enviado y los guardo");
                             // setMessagesReceived([]);
@@ -130,9 +145,13 @@ const ListMail: React.FC<IPropsGloblal & RouteComponentProps<{ typeMessage: stri
         }
     }, [props.match.params.typeMessage]);
 
-    console.log("mensajes received:");
+    if(!props.msgs){
+        return null;
+    }
+
+    console.log("mensajes received fuera de useEffect:");
     console.log(messagesHooks);
-    console.log("mensajes sent:");
+    console.log("mensajes sent fuera de useEffect:");
     console.log(messagesHooks);
     
 
@@ -143,7 +162,7 @@ const ListMail: React.FC<IPropsGloblal & RouteComponentProps<{ typeMessage: stri
         id = decoded.id_player;
         username = decoded.username
     }
-
+    
     return (
 
         <div className="col-12">

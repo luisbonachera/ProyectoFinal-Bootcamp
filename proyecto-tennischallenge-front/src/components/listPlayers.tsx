@@ -273,7 +273,7 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
                                 {/* <Card style={{ display: 'flex', flexDirection: 'row' }}> */}
                                 <Card key={p.id_player}>
 
-                                    <Card.Img variant="top" src="/public/images/avatar-tenis.png" />
+                                    <Card.Img variant="top" src="images/avatar-tenis.png" />
                                     <Card.Body >
                                         <Card.Title>{p.username}</Card.Title>
                                         <Card.Text>

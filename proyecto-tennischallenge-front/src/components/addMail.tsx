@@ -4,7 +4,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import * as actions from '../actions/actions';
 import { connect } from 'react-redux';
 import { IPlayer } from '../interfaceIPlayer';
-
+import jwt from 'jsonwebtoken';
 import { IGlobalState } from '../reducers/reducers';
 import { IMsg } from '../interfaceIMsg';
 
@@ -25,7 +25,7 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
     const [text, SetText] = React.useState("");
     // const [usernameDestiny, setUsernameDestiny] = React.useState("");
     // const [usernameSent, setUsernameSent] = React.useState("");
-    
+
     const updateSubject = (event: any) => {
         setSubject(event.currentTarget.value);
         // setError("");
@@ -104,45 +104,61 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
     }
 
 
-    const id: number = +props.match.params.id_player_destiny;
-    const playerDestiny = props.players.find(p => p.id_player === +id);
+    let id: number = +props.match.params.id_player_destiny;
+    let decoded: any = jwt.decode(props.token);
+    let soyYo = false;
+    // let playerDestiny: any = null;
+    if (id === +decoded.id_player) {
+        soyYo = true;
+    } 
+    // else {
+       let playerDestiny = props.players.find(p => p.id_player === +id);
+    // }
+
 
     console.log(playerDestiny);
     return (
         <div>
 
-            {playerDestiny !== null && playerDestiny !== undefined && (
-                <Form>
+       {playerDestiny !== null && playerDestiny !== undefined && (
+            <Form>
+               
                     <Form.Group controlId="formGridFrom">
                         <Form.Label>From:</Form.Label>
                         {/* <Form.Control type="email" value={props.player.username} onChange={updateUsernameSent} /> */}
-                        <Form.Control type="email" value={props.player.username}/>
+                        <Form.Control type="text" value={props.player.username} />
 
                     </Form.Group>
                     <Form.Group controlId="formGridTo">
                         <Form.Label>To:</Form.Label>
+
                         {/* <Form.Control value={playerDestiny.username} onChange={updateUsernameDestiny} /> */}
-                        <Form.Control type="email" value={playerDestiny.username} />
+                        {soyYo === false && (
+                        <Form.Control type="text" value={playerDestiny.username} />
+                        )}
+                        {soyYo && (
+                        <Form.Control type="text"  />
+                        )}
 
                     </Form.Group>
 
-                    <Form.Group controlId="formGridSubject">
-                        <Form.Label>Asunto</Form.Label>
-                        <Form.Control onChange={updateSubject} />
-                    </Form.Group>
+                <Form.Group controlId="formGridSubject">
+                    <Form.Label>Asunto</Form.Label>
+                    <Form.Control onChange={updateSubject} />
+                </Form.Group>
 
-                    <Form.Group controlId="formGridTextAreaText">
-                        <Form.Label>Texto: </Form.Label>
-                        <Form.Control as="textarea" rows="3" onChange={updateText} />
-                    </Form.Group>
+                <Form.Group controlId="formGridTextAreaText">
+                    <Form.Label>Texto: </Form.Label>
+                    <Form.Control as="textarea" rows="3" onChange={updateText} />
+                </Form.Group>
 
-                    <Button variant="primary" type="button" onClick={addMsg}>
-                        Submit
+                <Button variant="primary" type="button" onClick={addMsg}>
+                    Submit
                 </Button>
 
-                </Form>
-
+            </Form>
             )}
+
 
         </div>
     )

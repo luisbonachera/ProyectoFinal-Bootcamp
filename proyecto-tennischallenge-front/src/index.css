@@ -21,3 +21,22 @@ code {
   font-size: calc(10px + 2vmin); */
   color: black !important;
 }
+
+a{
+  color: white !important;
+  text-decoration :none;  
+}
+
+a:hover{
+  text-decoration: none;
+  color: yellow !important;
+  
+}
+
+.dropdown-menu a, .card-deck a{
+  color: black !important;
+}
+
+.dropdown-menu a:hover{
+  background-color: grey !important;
+}

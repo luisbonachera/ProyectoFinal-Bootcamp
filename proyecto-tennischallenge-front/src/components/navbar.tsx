@@ -19,29 +19,6 @@ interface IPropsGlobal {
 
 
 const NavBar: React.FC<IProps & IPropsGlobal> = props => {
-    // const [username, setUsername] = React.useState("");
-
-
-
-
-
-    // const decodedToken = ()=> {
-    // if(props.token){
-    
-    // const decoded: any = jwt.decode(props.token);
-    //     if(!decoded){
-    //         console.log("el token no se pudo decodificar.")
-    //         return null;
-
-    //     }
-    //     setUsername(decoded.username);
-    // }
-    // }
-
-
-    // React.useEffect(()=>decodedToken(),[props.token]);
-
-
     return (
         <div>
             
@@ -70,6 +47,7 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                                 <Link to="/"></Link>
                                 <NavDropdown title={props.player.username} id="collasible-nav-dropdown">
                                 <Link to="/mailTray" >Correo</Link>
+                                <br/>
                                 <Link to={"/profile/"+ props.player.id_player}>Perfil</Link>
                                    
                                     {/* <NavDropdown.Item href="#action/3.1">>Mail</NavDropdown.Item> */}
