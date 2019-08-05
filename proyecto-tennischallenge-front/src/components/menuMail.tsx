@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { IPlayer } from '../interfaceIPlayer';
 import jwt from 'jsonwebtoken';
 import { connect } from 'react-redux';

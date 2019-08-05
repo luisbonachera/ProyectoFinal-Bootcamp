@@ -1,7 +1,6 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router';
 import MenuMail from './menuMail';
-import ListMail from './listMail';
 import MailDetail from './mailDetail';
 import AddMail from './addMail';
 import * as actions from '../actions/actions';
@@ -9,6 +8,8 @@ import jwt from 'jsonwebtoken';
 import { IMsg } from '../interfaceIMsg';
 import { IGlobalState } from '../reducers/reducers';
 import { connect } from 'react-redux';
+import ListMailReceived from './listMailReceived';
+import ListMailSent from './listMailSent';
 
 interface IPropsGloblal {
     token: string,
@@ -101,10 +102,16 @@ const MailTray: React.FC<IPropsGloblal> = props => {
                 <div className="col-8">
                 </div>
                 <Switch>
-                    <Route path="/mailTray/add/:id_player_destiny" component={AddMail} />
-                    <Route path="/mailTray/:typeMessage" exact component={ListMail} />
+                    <Route path="/mailTray/add/:id_player_destiny" exact component={AddMail} />
+                    <Route path="/mailTray/received" exact component={ListMailReceived} />
+                    <Route path="/mailTray/sent" exact component={ListMailSent} />
+
+                    {/* <Route path="/mailTray/:typeMessage" exact component={ListMail} /> */}
 
                     <Route path="/mailTray/:typeMessage/:id_message" exact component={MailDetail} />
+                    {error 
+                        // podria poner algun error
+                    }
                     <Redirect to="/mailTray/received" />
                 </Switch>
 

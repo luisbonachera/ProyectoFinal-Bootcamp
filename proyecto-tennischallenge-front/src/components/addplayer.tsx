@@ -198,11 +198,6 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
 
 
                 </Form.Row> */}
-
-                <Form.Group id="formGridCheckbox">
-                    <Form.Check type="checkbox" label="Administrador" onChange={updateIsAdmin} />
-                </Form.Group>
-
                 <Button variant="primary" type="button" onClick={add}>
                     Submit
                 </Button>

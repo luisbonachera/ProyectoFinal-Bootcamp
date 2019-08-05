@@ -24,3 +24,8 @@ export const setMessages: ActionCreator<TAction> = (msgs: IMsg[]) => ({
     type: "SET_MESSAGES",
     msgs
 });
+
+export const deletePlayer: ActionCreator<TAction> = (id_player: number) => ({
+    type : "DELETE_PLAYER",
+    id_player
+});

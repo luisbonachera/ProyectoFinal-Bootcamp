@@ -4,27 +4,88 @@ import { IPlayer } from '../interfaceIPlayer';
 import { CardDeck, Card, Button } from 'react-bootstrap';
 import { IGlobalState } from '../reducers/reducers';
 import { connect } from 'react-redux';
+import * as actions from '../actions/actions';
+import jwt from 'jsonwebtoken';
 
 interface IPRopsGlobal {
     players: IPlayer[];
     player: IPlayer;
+    token: string;
+    setToken: (token: string) => void;
+    deletePlayer: (id_player: number) => void;
+    setPlayer: (player: IPlayer) => void;
 }
 
 const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: string }>> = props => {
+    const [error, setError] = React.useState("");
 
-    // const id = props.match.params.id_player;
-    // console.log(id);
+    const id = props.match.params.id_player;
+    console.log(id);
 
-    // console.log(props.players);
+    console.log(props.players);
 
 
-    // const player = props.players.find(p => p.id_player === +id);
-    // console.log(player);
+    const player = props.players.find(p => p.id_player === +id);
+    console.log(player);
 
-    return(
+
+
+
+    const borrar = () => {
+
+        if (props.token) {
+            let decoded: any = jwt.decode(props.token);
+            const id: number = +props.match.params.id_player;
+            if (decoded !== null && (id === decoded.id_player || props.player.isAdmin)) {
+                console.log(decoded);
+
+                console.log("entra al fetch");
+                console.log("Soy admin: " + props.player.isAdmin);
+                fetch("http://localhost:8080/api/players/" + id, {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + props.token
+                    }
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log("usuario borrado")
+                            props.setToken("");
+                            props.history.push("/");
+                            props.deletePlayer(id);
+                            const playerNull: IPlayer = {
+                                id_player: 0,
+                                username: "",
+                                email: "",
+                                city: "",
+                                genre: "",
+                                rating: 0,
+                                isAdmin: false
+                            };
+                            props.setPlayer(playerNull);
+
+                        } else {
+                            console.log("error en el response.ok");
+                        }
+                    })
+                    .catch(err => {
+                        console.log("Error," + err)
+                    })
+            }
+            else {
+                setError("El token no se pudo decodificar");
+            }
+        }
+        else {
+            setError("El token no existe");
+        }
+    };
+
+    return (
         <div>
 
-{props.player !== null && props.player !== undefined && (
+            {props.player !== null && props.player !== undefined && (
                 <CardDeck >
 
                     <Card style={{ display: 'flex', flexDirection: 'row' }}>
@@ -46,9 +107,10 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
                         </Card.Body>
                         <Card.Footer >
                             <small className="text-muted">Last updated 3 mins ago</small>
-                             <Link to={"/players/edit/"+props.player.id_player}>
-                             <Button variant="primary">Editar</Button>
-                                 </Link> 
+                            <Link to={"/players/edit/" + props.player.id_player}>
+                                <Button variant="primary">Editar</Button>
+                            </Link>
+                            <Button variant="primary" onClick={borrar}>Borrar</Button>
                         </Card.Footer>
                     </Card>
 
@@ -60,16 +122,18 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
 };
 
 const mapStateToProps = (state: IGlobalState) => ({
-    // token: state.token,
+    token: state.token,
     players: state.players,
     player: state.player
 
 });
 
-//   const mapDispachToProps = {
-//     setPlayers: actions.setPlayers
-//   }
+const mapDispachToProps = {
+    setToken: actions.setToken,
+    deletePlayer: actions.deletePlayer
+}
 
 export default connect(
-    mapStateToProps
+    mapStateToProps,
+    mapDispachToProps
 )(ProfilePlayer);

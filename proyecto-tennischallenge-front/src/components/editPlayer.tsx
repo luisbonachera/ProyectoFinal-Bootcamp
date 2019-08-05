@@ -65,12 +65,14 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
     };
     let id_player:number = +props.match.params.id_player;
     let player = props.players.find(p=> p.id_player === id_player);
+    console.log("player:");
+    console.log(player);
 
     const edit = () => {
         if (props.token) {
             let decoded: any = jwt.decode(props.token);
             const id:number = +props.match.params.id_player;
-            if (decoded !== null && (id === decoded.id_player || decoded.isAdmid === true)) {
+            if (decoded !== null && (id === decoded.id_player || props.player.isAdmin === true)) {
                 console.log(decoded);
 
                 console.log("entra al fetch");
@@ -160,7 +162,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
     };
     return (
         <div>
-            {player && id_player && (player.id_player === id_player || player.isAdmin) && (
+            {player && id_player && (player.id_player === id_player || props.player.isAdmin) && (
             <Form>
                 <Form.Row>
                     <Form.Group controlId="formGridUsername">
@@ -225,14 +227,15 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
 
                 </Form.Row> */}
-                {player.isAdmin === true && (
+                {props.player.isAdmin && (
                     <Form.Group id="formGridCheckbox">
                         <Form.Check type="checkbox" label="Administrador" onChange={updateIsAdmin} defaultChecked={player.isAdmin}/>
                     </Form.Group>
                 )}
                 <Button variant="primary" type="button" onClick={edit}>
-                    Submit
+                    Save
                 </Button>
+                
             </Form>
             )}
         </div>

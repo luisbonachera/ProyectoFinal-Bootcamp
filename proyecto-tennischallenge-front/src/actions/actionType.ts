@@ -22,4 +22,9 @@ type TSetMsgsAction = {
     msgs: IMsg [];
 };
 
-export type TAction = TSetTokenAction | TSetPlayersAction | TSetPlayerAction | TSetMsgsAction;
+type TDeletePlayerAction = {
+    type : "DELETE_PLAYER";
+    id_player: number;
+}
+
+export type TAction = TSetTokenAction | TSetPlayersAction | TSetPlayerAction | TSetMsgsAction | TDeletePlayerAction;

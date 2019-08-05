@@ -69,11 +69,11 @@ playersController.add = (req, res) => {
     };
     if (
       user.username &&
-      u.email &&
+      user.email &&
       user.password &&
-      u.city &&
-      u.rating &&
-      u.genre
+      user.city &&
+      user.rating &&
+      user.genre
     ) {
      
       playersModel
@@ -163,7 +163,7 @@ playersController.delete = (req, res) => {
     // console.log(jwt.verify(token,"mysecret"));
     const decoded = jwt.verify(token, "mysecret");
     console.log(decoded.id_player);
-    if (!decoded.isAdmin || decoded.id_player === id_player) {
+    if (decoded.isAdmin || decoded.id_player === +id_player) {
       console.log("entrar");
 
       playersModel

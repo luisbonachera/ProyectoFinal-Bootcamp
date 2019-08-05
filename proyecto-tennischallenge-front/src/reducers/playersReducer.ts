@@ -9,6 +9,10 @@ export const playersReducer = (
 ): IPlayer [] =>{
     if (action.type === "SET_PLAYERS"){
         return action.players;
-    }
-    return state;
+    }else if (action.type === "DELETE_PLAYER"){
+        const index = state.findIndex(u => u.id_player === action.id_player);
+        state.splice(index, 1); // esto me elimina con el splice el ultimo elemento de mi array
+        return [...state]; //aqui me retorna los estados
+      }
+      return state;
 }

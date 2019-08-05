@@ -94,9 +94,11 @@ playersModel.add = user => {
                 console.log("ya he terminado la consula insertar usuario");
                 if(err){
                     console.log("error en la consulta");
+                    console.log(err);
                     reject(err);
                 }else{
                     console.log("consulta de insertar usuario correcta");
+                    console.log(result);
                     resolve(result);
                 }
             }
