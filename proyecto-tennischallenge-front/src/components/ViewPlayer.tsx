@@ -1,7 +1,7 @@
 import React from 'react';
 import { IPlayer } from '../interfaceIPlayer';
 import { RouteComponentProps, Link } from 'react-router-dom';
-import { CardDeck, Card } from 'react-bootstrap';
+import { CardDeck, Card, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { IGlobalState } from '../reducers/reducers';
 
@@ -9,6 +9,7 @@ interface IProps { }
 
 interface IPropsGlobal {
     players: IPlayer[];
+    player: IPlayer;
 }
 
 
@@ -44,9 +45,15 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                         </Card.Body>
                         <Card.Footer >
                             <small className="text-muted">Last updated 3 mins ago</small>
-                             <Link to={"/mailTray/add/" + player.id_player}><div className="btn btn-primary stretched-link">Enviar Mensaje</div></Link>
-                             {player.isAdmin && ( 
-                             <Link to={"/players/edit/"+ player.id_player}><div className="btn btn-primary stretched-link">Editar</div></Link>
+                             <Link to={"/mailTray/add/" + player.id_player}>
+                             <Button variant="primary">Enviar Mensaje</Button>
+
+                                 </Link>
+                             {props.player.isAdmin && ( 
+                             <Link to={"/players/edit/"+ player.id_player}>
+<Button variant="primary">Editar</Button>
+
+                                 </Link>
                              )}
                         </Card.Footer>
                     </Card>
@@ -59,7 +66,8 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
 const mapStateToProps = (state: IGlobalState) => ({
     // token: state.token,
-    players: state.players
+    players: state.players,
+    player: state.player
 
 });
 

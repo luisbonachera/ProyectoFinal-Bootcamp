@@ -3,7 +3,6 @@ import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { IGlobalState } from '../reducers/reducers';
-import jwt from 'jsonwebtoken';
 import * as actions from '../actions/actions'
 import { IPlayer } from '../interfaceIPlayer';
 // import bootstrap from 'react-bootstrap';
@@ -53,25 +52,25 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                     {props.token && (
                         <Nav className="mr-auto">
 
-                            <Nav ><Link to="/players">Jugadores</Link></Nav>
-                            <Nav ><Link to="/">Pistas</Link></Nav>
+                            <Link to="/players">Jugadores</Link>
+                            <Link to="/">Pistas</Link>
 
                         </Nav>
                     )}
                     <Nav>
                         {!props.token && (
                             <>
-                                <Nav > <Link to="/auth">LogIn</Link></Nav>
-                                <Nav ><Link to="/add">LogUp</Link></Nav>
+                                <Link to="/auth">LogIn</Link>
+                                <Link to="/add">LogUp</Link>
                             </>
                         )}
                         {props.token && (
                             <>
-                                <Nav > <Link to="/">Avatar</Link></Nav>
-                                <Nav ><Link to="/"></Link></Nav>
+                                <Link to="/">Avatar</Link>
+                                <Link to="/"></Link>
                                 <NavDropdown title={props.player.username} id="collasible-nav-dropdown">
-                                <NavDropdown.Item><Link to="/mailTray" >Correo</Link></NavDropdown.Item>
-                                <NavDropdown.Item><Link to={"/profile/"+ props.player.id_player}>Perfil</Link></NavDropdown.Item>
+                                <Link to="/mailTray" >Correo</Link>
+                                <Link to={"/profile/"+ props.player.id_player}>Perfil</Link>
                                    
                                     {/* <NavDropdown.Item href="#action/3.1">>Mail</NavDropdown.Item> */}
                                     <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -79,7 +78,7 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                                     <NavDropdown.Divider />
                                     <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                                 </NavDropdown>
-                                <Nav ><Link to="/" onClick={() => props.setToken("")}>LogOut</Link></Nav>
+                                <Link to="/" onClick={() => props.setToken("")}>LogOut</Link>
                             </>
                         )}
                     </Nav>

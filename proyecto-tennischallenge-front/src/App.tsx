@@ -41,11 +41,12 @@ const App: React.FC<IProps & IPropsGlobal> = props => {
             
             <Route path="/" exact component={Home} />
             {/* <Route component={Notfound} /> */}
+            <Redirect to="/" />
 
           </header>
 
         </Switch>
-        <Redirect to="/" />
+       
       </BrowserRouter>
 
 

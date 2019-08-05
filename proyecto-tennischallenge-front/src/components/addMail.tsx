@@ -1,10 +1,10 @@
 import React from 'react';
-import { Form, Col, Button } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import { RouteComponentProps } from 'react-router-dom';
 import * as actions from '../actions/actions';
 import { connect } from 'react-redux';
 import { IPlayer } from '../interfaceIPlayer';
-import jwt from 'jsonwebtoken';
+
 import { IGlobalState } from '../reducers/reducers';
 import { IMsg } from '../interfaceIMsg';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { RouteComponentProps, Link } from 'react-router-dom';
 import { IPlayer } from '../interfaceIPlayer';
-import { CardDeck, Card } from 'react-bootstrap';
+import { CardDeck, Card, Button } from 'react-bootstrap';
 import { IGlobalState } from '../reducers/reducers';
 import { connect } from 'react-redux';
 
@@ -46,7 +46,9 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
                         </Card.Body>
                         <Card.Footer >
                             <small className="text-muted">Last updated 3 mins ago</small>
-                             <Link to={"/players/edit/"+props.player.id_player}><div className="btn btn-primary stretched-link">Edtiar</div></Link> 
+                             <Link to={"/players/edit/"+props.player.id_player}>
+                             <Button variant="primary">Editar</Button>
+                                 </Link> 
                         </Card.Footer>
                     </Card>
 

@@ -15,20 +15,20 @@ interface IProps { }
 interface IPropsGlobal {
     player: IPlayer;
     setPlayer: (player: IPlayer) => void;
-    // players: IPlayer[];
+    players: IPlayer[];
     token: string;
 }
 
 const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player: string }>> = props => {
 
     const [error, setError] = React.useState("");
-    const [username, setUsername] = React.useState(props.player.username);
-    const [email, setEmail] = React.useState(props.player.email);
+    const [username, setUsername] = React.useState("");
+    const [email, setEmail] = React.useState("");
     // const [password, setPassword] = React.useState("");
-    const [city, setCity] = React.useState(props.player.city);
-    const [genre, setGenre] = React.useState(props.player.genre);
-    const [rating, setRating] = React.useState(props.player.rating);
-    const [isAdmin, setIsAdmin] = React.useState<boolean>(props.player.isAdmin);
+    const [city, setCity] = React.useState("");
+    const [genre, setGenre] = React.useState("");
+    const [rating, setRating] = React.useState(0);
+    const [isAdmin, setIsAdmin] = React.useState<boolean>(false);
 
     const updateUsername = (event: any) => {
         setUsername(event.currentTarget.value);
@@ -63,6 +63,8 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
         setIsAdmin(s => !s);
         // setError("");
     };
+    let id_player:number = +props.match.params.id_player;
+    let player = props.players.find(p=> p.id_player === id_player);
 
     const edit = () => {
         if (props.token) {
@@ -158,15 +160,16 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
     };
     return (
         <div>
+            {player && id_player && (player.id_player === id_player || player.isAdmin) && (
             <Form>
                 <Form.Row>
                     <Form.Group controlId="formGridUsername">
                         <Form.Label>Username</Form.Label>
-                        <Form.Control placeholder="Enter username" onChange={updateUsername} defaultValue={props.player.username} />
+                        <Form.Control placeholder="Enter username" onChange={updateUsername} defaultValue={player.username} />
                     </Form.Group>
                     <Form.Group as={Col} controlId="formGridEmail">
                         <Form.Label>Email</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" onChange={updateEmail} defaultValue={props.player.email} />
+                        <Form.Control type="email" placeholder="Enter email" onChange={updateEmail} defaultValue={player.email} />
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
@@ -178,13 +181,13 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
                     <Form.Group as={Col} controlId="formGridCity">
                         <Form.Label>City</Form.Label>
-                        <Form.Control type="text" placeholder="Enter city" onChange={updateCity} defaultValue={props.player.city} />
+                        <Form.Control type="text" placeholder="Enter city" onChange={updateCity} defaultValue={player.city} />
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
                     <Form.Group as={Col} controlId="formGridGenre">
                         <Form.Label>Genre</Form.Label>
-                        <Form.Control type="text" placeholder="Enter genre" onChange={updateGenre} value={props.player.genre} />
+                        <Form.Control type="text" placeholder="Enter genre" onChange={updateGenre} value={player.genre} />
                     </Form.Group>
 
                     {/* <Form.Group as={Col} controlId="formGridRating">
@@ -193,7 +196,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                     </Form.Group> */}
                     <Form.Group as={Col} controlId="formGridState">
                         <Form.Label>Desde</Form.Label>
-                        <Form.Control as="select" defaultValue={props.player.rating + ""} onChange={updateRating}>
+                        <Form.Control as="select" defaultValue={player.rating + ""} onChange={updateRating}>
                             <option value={1}>1</option>
                             <option value={2}>2</option>
                             <option value={3}>3</option>
@@ -222,22 +225,23 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
 
                 </Form.Row> */}
-                {props.player.isAdmin === true && (
+                {player.isAdmin === true && (
                     <Form.Group id="formGridCheckbox">
-                        <Form.Check type="checkbox" label="Administrador" onChange={updateIsAdmin} defaultChecked={props.player.isAdmin}/>
+                        <Form.Check type="checkbox" label="Administrador" onChange={updateIsAdmin} defaultChecked={player.isAdmin}/>
                     </Form.Group>
                 )}
                 <Button variant="primary" type="button" onClick={edit}>
                     Submit
                 </Button>
             </Form>
+            )}
         </div>
     )
 };
 
 const mapStateToProps = (state: IGlobalState) => ({
     token: state.token,
-    // players: state.players,
+    players: state.players,
     player: state.player
 
 });

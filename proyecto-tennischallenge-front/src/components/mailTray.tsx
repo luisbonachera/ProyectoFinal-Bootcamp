@@ -97,12 +97,11 @@ const MailTray: React.FC<IPropsGloblal> = props => {
 
                 <div className="col-2">
                     <MenuMail />
-
                 </div>
                 <div className="col-8">
                 </div>
                 <Switch>
-                    <Route path="/mailTray/:typeMessage" exact component={ListMail} />
+                    <Route path="/mailTray/:typeMessage" component={ListMail} />
                     <Route path="/mailTray/add/:id_player_destiny" exact component={AddMail} />
                     <Route path="/mailTray/:typeMessage/:id_message" exact component={MailDetail} />
                     <Redirect to="/mailTray/received" />

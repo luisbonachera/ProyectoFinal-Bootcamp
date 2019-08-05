@@ -51,7 +51,7 @@ messageModel.list = (id_player) => {
         // SELECT * FROM (SELECT * FROM messages AS m  WHERE (m.id_player_sent = 3 || m.id_player_destiny= 3)) As m INNER JOIN players AS p  WHERE (m.id_player_sent <> 3 AND m.id_player_sent= p.id_player) OR (m.id_player_destiny <> 3 AND m.id_player_destiny= p.id_player);
         dbConn.query('SELECT * FROM messages AS m INNER JOIN players AS p WHERE (m.id_player_sent = ' +
          id_player + ' && m.id_player_destiny = p.id_player) OR ' + 
-        '(m.id_player_destiny = '+ id_player + ' && m.id_player_sent = p.id_player)',
+        '(m.id_player_destiny = '+ id_player + ' && m.id_player_sent = p.id_player) ORDER BY m.date DESC',
         //     'SELECT * FROM (SELECT * FROM messages AS m  WHERE (m.id_player_sent = ' 
         // + id_player + ' || m.id_player_destiny = ' + id_player + ')) AS m INNER JOIN players AS p '+
         // 'WHERE (m.id_player_sent <> '+ id_player +' AND m.id_player_sent = p.id_player)'+

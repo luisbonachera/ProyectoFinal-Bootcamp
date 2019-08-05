@@ -6,8 +6,6 @@ import { IMsg } from '../interfaceIMsg';
 import * as actions from '../actions/actions';
 import jwt from 'jsonwebtoken';
 import { setMessages } from '../actions/actions';
-import { messagesReducer } from '../reducers/messagesReducer';
-import { Link } from 'react-router-dom';
 
 interface IPropsGloblal {
     token: string,
@@ -18,8 +16,8 @@ interface IPropsGloblal {
 const ListMail: React.FC<IPropsGloblal & RouteComponentProps<{ typeMessage: string }>> = props => {
 
     const [error, setError] = React.useState("");
-    const [messagesReceived, setMessagesReceived] = React.useState<IMsg[]>([]);
-    const [messageSent, setMessagesSent] = React.useState<IMsg[]>([]);
+    // const [messagesReceived, setMessagesReceived] = React.useState<IMsg[]>([]);
+    // const [messageSent, setMessagesSent] = React.useState<IMsg[]>([]);
     const [messagesHooks, setMessagesHooks] = React.useState<IMsg[]>([]);
 
     // const [inputUsername, setInputUsername] = React.useState("");
@@ -34,8 +32,9 @@ const ListMail: React.FC<IPropsGloblal & RouteComponentProps<{ typeMessage: stri
 
     const viewMsg = (id_message: number) => {
         let msg = props.msgs.filter(m => m.id_messages === id_message);
+        let typeMsg = props.match.params.typeMessage;
         if (msg) {
-            if (!msg[0].watched) {
+            if (!msg[0].watched && typeMsg === 'received') {
                 //fetch edit msg y redirigir
 
                 fetch("http://localhost:8080/api/msgs/" + id_message, {
@@ -53,10 +52,12 @@ const ListMail: React.FC<IPropsGloblal & RouteComponentProps<{ typeMessage: stri
                                     m.watched = true;
                                 }
                             });
+                            console.log("mensajes");
+                            console.log(msgs);
                             setMessages(msgs);
                             props.history.push("/mailTray/" + props.match.params.typeMessage + "/" + id_message);
                         } else {
-                            console.log("el mesajes ya estaba visto");
+                            console.log("error en response.ok");
                         }
                     })
                     .catch(error => {
@@ -65,9 +66,11 @@ const ListMail: React.FC<IPropsGloblal & RouteComponentProps<{ typeMessage: stri
                     });
             } else {
                 console.log("el msg ya esta visto");
+                props.history.push("/mailTray/" + props.match.params.typeMessage + "/" + id_message);
             }
         } else {
             console.log("el msg no existe");
+           
         }
     }
     
@@ -83,9 +86,12 @@ const ListMail: React.FC<IPropsGloblal & RouteComponentProps<{ typeMessage: stri
                             console.log("hay msg recibidos y los guardo");
                             // setMessagesSent([]);
                             // setMessagesReceived(msgsReceived);
+                            setError("");
                             setMessagesHooks(msgsReceived);
                         } else {
                             console.log("no hay mensajes recibidos");
+                            setError("no hay mensajes recibidos");
+                            props.history.push("/mailTray/received");
                         }
 
                     } else {
@@ -103,9 +109,12 @@ const ListMail: React.FC<IPropsGloblal & RouteComponentProps<{ typeMessage: stri
                             console.log("hay msg enviado y los guardo");
                             // setMessagesReceived([]);
                             // setMessagesSent(msgsSent);
+                            setError("");
                             setMessagesHooks(msgsSent);
                         } else {
                             console.log("no hay mensajes enviados");
+                            setError("no hay mensajes enviados");
+                            props.history.push("/mailTray/sent");
                         }
 
                     } else {
@@ -122,9 +131,10 @@ const ListMail: React.FC<IPropsGloblal & RouteComponentProps<{ typeMessage: stri
     }, [props.match.params.typeMessage]);
 
     console.log("mensajes received:");
-    console.log(messagesReceived);
-    console.log(messageSent);
+    console.log(messagesHooks);
     console.log("mensajes sent:");
+    console.log(messagesHooks);
+    
 
     const decoded = jwt.decode(props.token);
     let id: number;
@@ -162,9 +172,10 @@ const ListMail: React.FC<IPropsGloblal & RouteComponentProps<{ typeMessage: stri
 
             {messagesHooks && messagesHooks.map(m =>
                 // <Link to={"/mailTray/"+props.match.params.typeMessage + "/" + m.id_messages} >
-                <div  >
+                // los mensajes received y no vistos son los que se deberian de poner de otro color
+                <div key={m.id_messages} >
 
-                    <div className="row" key={m.id_messages} onClick={() => viewMsg(m.id_messages)}>
+                    <div className="row"  onClick={() => viewMsg(m.id_messages)}>
                         <div className="col">
                             {/* {m.id_player_sent} */}
                             De: {m.id_player_sent === id ? username : m.username}
@@ -179,12 +190,18 @@ const ListMail: React.FC<IPropsGloblal & RouteComponentProps<{ typeMessage: stri
                         <div className="col">
                             Fecha: {m.date}
                         </div>
+                        {/* esto cuanto haya colores en la lista de los msgs lo deberia quitar */}
                         <div className="col">
                             Visto: {m.watched ? "SI" : "NO"}
                         </div>
                     </div>
                 </div>
 
+            )}
+            {messagesHooks.length === 0 && error.length > 0 && (
+                <div className="col">
+               {error}
+            </div>
             )}
 
         </div >
