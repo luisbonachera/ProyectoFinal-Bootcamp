@@ -33,7 +33,7 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
 
 
     const log = () => {
-
+        if(inputUser && inputPass){
         fetch("http://localhost:8080/api/auth", {
             method: "POST",
             headers: {
@@ -88,7 +88,14 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
                 setError("Usuario o Contraseña incorrectos.");
                 console.log(error);
             });
+    }else if(!inputUser && inputPass){
+        setError("Te falta por rellenar el campo usuario");
+    }else if(inputUser && !inputPass){
+        setError("Te falta por rellenar el campo password");
+    }else{
+        setError("Te falta por rellenar los campos usuario y password");
     }
+}
 
     return (
         <div>
@@ -107,6 +114,10 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
                     <Col sm={{ span: 10, offset: 6 }}>
                         <Button type="button" onClick={log}>Sign in</Button>
                     </Col>
+                    <Col sm={{ span: 10, offset: 6 }}>
+                        {error && <p>{error}</p>}
+                    </Col>
+                    
                 </Form.Group>
             </Form>
         </div>
