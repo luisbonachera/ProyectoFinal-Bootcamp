@@ -9,7 +9,7 @@ authModel.checkUser = user => {
     return new Promise((resolve,reject)=> {
         
         dbConn.query(
-            'SELECT * FROM players WHERE username = ? AND password = ?',[user.username, user.password],
+            'SELECT * FROM players WHERE username = ? AND password = ? AND erased = 0',[user.username, user.password],
             (err,result)=>{
                 console.log("ya he terminado la consulata buscar usuario");
                 if(err){

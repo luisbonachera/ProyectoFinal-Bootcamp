@@ -6,7 +6,7 @@ const secret = "mysecret";
 
 const playersController = {};
 
-//Listar Players
+//Listar Players con campo borrado == true
 playersController.list = (req, res) => {
   console.log(req.headers.authorization);
   const token = req.headers.authorization.replace("Bearer ", "");
@@ -147,7 +147,42 @@ playersController.edit = (req, res) => {
       res.status(401).send("You don`t have permission for edit");
     }
   } catch (e) {
-    res.status(401).send("You don`t have permission");
+    res.status(401).send("You don`t have permission for edit" + e);
+  }
+};
+
+// editar el campo borrado a true del player con id_player si eres tu o si eres Administrador
+playersController.editErased = (req, res) => {
+  // decoded token
+  const id_player = req.params.id;
+  console.log("id de url: " + id_player);
+  console.log(req.headers.authorization);
+  const token = req.headers.authorization.replace("Bearer ", "");
+  console.log(token);
+  try {
+    // console.log(jwt.verify(token,"mysecret"));
+    const decoded = jwt.verify(token, "mysecret");
+    if (decoded.isAdmin || decoded.id_player === +id_player) {
+      console.log("entrar");
+      let user = {
+        erased : 1
+      };
+      playersModel
+        .editErased(user, id_player)
+        .then(user => {
+          console.log("guayEditEraserController");
+          res.send(user);
+        })
+        .catch(err => {
+          console.log(err);
+          res.send("ErrorEditEraserController....Petaaaaso");
+        });
+    } else {
+      // error tu no puedes editar
+      res.status(401).send("You don`t have permission for editEraser");
+    }
+  } catch (e) {
+    res.status(401).send("You don`t have permission for editEraser" + e);
   }
 };
 

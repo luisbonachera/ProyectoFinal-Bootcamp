@@ -5,12 +5,15 @@ import * as actions from '../actions/actions'
 import { RouteComponentProps } from 'react-router-dom';
 import jwt from 'jsonwebtoken';
 import { IPlayer } from '../interfaceIPlayer';
+import { IGlobalState } from '../reducers/reducers';
 
 interface IProps { }
 
 interface IPropsGlobal {
     setToken: (token: string) => void;
     setPlayer: (player: IPlayer) => void;
+    setPlayers: (players: IPlayer[]) => void;
+    token: string;
 }
 
 const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
@@ -33,8 +36,10 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
 
 
     const log = () => {
+        // let abortController = new AbortController();
         if(inputUser && inputPass){
         fetch("http://localhost:8080/api/auth", {
+            // signal: abortController.signal,
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -69,7 +74,49 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
                                     console.log("entra");
                                     console.log(player);
                                     props.setPlayer(player);
-                                    props.history.push("/");
+                                        // if (props.token) {
+                                            // let decoded = jwt.decode(props.token);
+                                            // if (decoded) {
+                                            //     console.log(decoded);
+                                                console.log("ahora deberia entrar a listar players")
+                                                // abortController.abort();
+                                                fetch("http://localhost:8080/api/players", {
+                                                    headers: {
+                                                        "Content-type": "application/json",
+                                                        Authorization: "Bearer " + props.token
+                                                    }
+                                                })
+                                                    .then(response => {
+                                                        if (response.ok) {
+                                                            response
+                                                                .json()
+                                                                .then((lista: IPlayer[]) => {
+                                                                    console.log(lista);
+                                                                    console.log("va bien");
+                                                                    props.setPlayers(lista);
+                                                                    console.log(lista);
+                                                                    // props.history.push("/");
+                                                                    
+                                                                })
+                                                                .catch(err => {
+                                                                    setError("Error en el json.");
+                                                                });
+                                                        } else {
+                                                            setError("responde.ok da error.");
+                                                        }
+                                                    })
+                                                    .catch(err => {
+                                                        setError("Error en response."+ err);
+                                                    });
+                                            // }
+                                            // else {
+                                            //     setError("El token no se pudo decodificar");
+                                            // }
+                                        // }
+                                        // else {
+                                        //     setError("El token no existe");
+                                        // }
+                                    
                                 }else{
                                     console.log("Ha fallado el decode en login");
                                 }
@@ -124,12 +171,18 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
     )
 };
 
+const mapStateToProps = (state: IGlobalState) => ({
+    token: state.token
+});
+
 const mapDispachToProps = {
     setToken: actions.setToken,
-    setPlayer: actions.setPlayer
+    setPlayer: actions.setPlayer,
+    setPlayers: actions.setPlayers
 }
+
 export default connect(
-    null,
+    mapStateToProps,
     mapDispachToProps
 )(Login);
 

@@ -44,8 +44,10 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
                 console.log("entra al fetch");
                 console.log("Soy admin: " + props.player.isAdmin);
-                fetch("http://localhost:8080/api/players/" + id, {
-                    method: "DELETE",
+                fetch("http://localhost:8080/api/players/erased/" + id, {
+                // fetch("http://localhost:8080/api/players/" + id, {
+                    // method: "DELETE",
+                    method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: "Bearer " + props.token

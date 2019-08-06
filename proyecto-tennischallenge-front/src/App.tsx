@@ -20,33 +20,38 @@ interface IPropsGlobal {
 }
 
 const App: React.FC<IProps & IPropsGlobal> = props => {
+
   return (
     <div className="App">
       <BrowserRouter>
-        <NavBar />
-        <Switch>
-          <header className="App-header">
-            {!props.token && (
-              <Route path="/auth" exact component={Login} />
-            )}
-            {/*deberia de poner un layout si {props.token && ()} */}
-            {/* y dentro de layout todas las rutas de aabjo excepto home */}
-              <Route path="/mailTray" component={MailTray} />
-              
-              <Route path="/players/edit/:id_player" exact component={EditPlayer} />
-              <Route path="/profile/:id_player" exact component={ProfilePlayer} />
-              <Route path="/players/:id_player" exact component={ViewPlayer} />
-              <Route path="/players" exact component={listPlayers} />
-              <Route path="/add" exact component={AddPlayer} />
-            
-            <Route path="/" exact component={Home} />
-            {/* <Route component={Notfound} /> */}
-            <Redirect to="/" />
+        <>
+          <NavBar />
+          <Switch>
+            <header className="App-header">
+              <>
+                {!props.token && (
+                  <Route path="/auth" exact component={Login} />
+                )}
+                {/*deberia de poner un layout si {props.token && ()} */}
+                {/* y dentro de layout todas las rutas de aabjo excepto home */}
+                {props.token && (
+                  <>
+                    <Route path="/mailTray" component={MailTray} />
+                    <Route path="/players/edit/:id_player" exact component={EditPlayer} />
+                    <Route path="/profile/:id_player" exact component={ProfilePlayer} />
+                    <Route path="/players/:id_player" exact component={ViewPlayer} />
+                    <Route path="/players" exact component={listPlayers} />
+                  </>
+                )}
+                <Route path="/add" exact component={AddPlayer} />
+                <Route path="/" exact component={Home} />
+                {/* <Route component={Notfound} /> */}
+                <Redirect to="/" />
+              </>
+            </header>
 
-          </header>
-
-        </Switch>
-       
+          </Switch>
+        </>
       </BrowserRouter>
 
 

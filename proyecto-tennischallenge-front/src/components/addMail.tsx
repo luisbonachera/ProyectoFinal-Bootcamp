@@ -153,7 +153,7 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                 </Form.Group>
 
                 <Button variant="primary" type="button" onClick={addMsg}>
-                    Submit
+                    Enviar
                 </Button>
 
             </Form>

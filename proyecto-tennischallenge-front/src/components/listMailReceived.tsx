@@ -127,7 +127,7 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
                         <div className="row" >
                             <div className="col">
                                 {/* {m.id_player_sent} */}
-                                De: {m.username}
+                                From: {m.username}
                             </div>
                             <div className="col">
                                 {/* {m.id_player_destiny} */}

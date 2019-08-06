@@ -25,6 +25,8 @@ router.post('/add', playersController.add);
 // editar un Jugador 
 router.put('/players/:id', playersController.edit);
 
+//editar Campo borrado a true
+router.put('/players/erased/:id', playersController.editErased);
 // borrar un Jugador 
 router.delete('/players/:id', playersController.delete);
 
