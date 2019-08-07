@@ -57,26 +57,80 @@ playersController.listFiltros = (req, res) => {
 
 //crear un Jugador
 playersController.add = (req, res) => {
-  const u = req.body;
-  if (u) {
-    let user = {
-      ...(u.username != null && { username: u.username }),
-      ...(u.email != null && { email: u.email }),
-      ...(u.password != null && { password: sha256(u.password) }),
-      ...(u.city != null && { city: u.city }),
-      ...(u.rating != null && { rating: u.rating }),
-      ...(u.genre != null && { genre: u.genre })
+  const p = req.body;
+  if (p) {
+    let player = {
+      ...(p.username != null && { username: p.username }),
+      ...(p.email != null && { email: p.email }),
+      ...(p.password != null && { password: sha256(p.password) }),
+      ...(p.city != null && { city: p.city }),
+      ...(p.rating != null && { rating: p.rating }),
+      ...(p.genre != null && { genre: p.genre })
     };
     if (
-      user.username &&
-      user.email &&
-      user.password &&
-      user.city &&
-      user.rating &&
-      user.genre
+      player.username &&
+      player.email &&
+      player.password &&
+      player.city &&
+      player.rating &&
+      player.genre
     ) {
       playersModel
-        .add(user)
+        .add(player)
+        .then(rows => {
+          res.send({
+            type: "success",
+            data: rows
+          });
+        })
+        .catch(err => {
+          res.send({
+            type: "error",
+            data: err
+          });
+        });
+    } else {
+      res.send({
+        type: "error, algun o algunos campos vienen vacio"
+      });
+    }
+  } else {
+    res.send({
+      type: "error el body esta vacio"
+    });
+  }
+};
+
+
+
+
+//añadir imagen avatar a un Jugador
+playersController.editImage = (req, res) => {
+  const id_player = req.params.id;
+  const p = req.body;
+  console.log(p);
+  if (p) {
+    let player = {
+      avatar: req.file.filename,
+      ...(p.username != null && { username: p.username }),
+      ...(p.email != null && { email: p.email }),
+      ...(p.password != null && { password: sha256(u.password) }),
+      ...(p.city != null && { city: p.city }),
+      ...(p.rating != null && { rating: p.rating }),
+      ...(p.genre != null && { genre: p.genre })
+    };
+    if (
+      player.avatar &&
+      player.username &&
+      player.email &&
+      player.password &&
+      player.city &&
+      player.rating &&
+      player.genre
+    ) {
+      console.log(player);
+      playersModel
+        .editImage(player,id_player)
         .then(rows => {
           res.send({
             type: "success",
@@ -104,7 +158,7 @@ playersController.add = (req, res) => {
 // editarte a ti mismo como Jugador o editar a otro si eres Administrador
 playersController.edit = (req, res) => {
   // decoded token
-  const u = req.body;
+  const p = req.body;
   const id_player = req.params.id;
   console.log("id de url: " + id_player);
   console.log(req.headers.authorization);
@@ -115,27 +169,27 @@ playersController.edit = (req, res) => {
     const decoded = jwt.verify(token, "mysecret");
     if (decoded.isAdmin || decoded.id_player === +id_player) {
       console.log("entrar");
-      let user = {
-        ...(u.username != null && { username: u.username }),
-        ...(u.email != null && { email: u.email }),
-        ...(u.password != null && { password: sha256(u.password) }),
-        ...(u.city != null && { city: u.city }),
-        ...(u.rating != null && { rating: u.rating }),
-        ...(u.genre != null && { genre: u.genre })
+      let player = {
+        ...(p.username != null && { username: p.username }),
+        ...(p.email != null && { email: p.email }),
+        ...(p.password != null && { password: sha256(p.password) }),
+        ...(p.city != null && { city: p.city }),
+        ...(p.rating != null && { rating: p.rating }),
+        ...(p.genre != null && { genre: p.genre })
       };
       if (decoded.isAdmin) {
         console.log("entrar al isAdmin");
-        user = {
-          ...user,
-          ...(u.isAdmin !== null && { isAdmin: u.isAdmin ? 1 : 0 })
+        player = {
+          ...player,
+          ...(u.isAdmin !== null && { isAdmin: p.isAdmin ? 1 : 0 })
         };
       }
       console.log("rol admin:" + u.isAdmin);
       playersModel
-        .edit(user, id_player)
-        .then(user => {
+        .edit(player, id_player)
+        .then(rows => {
           console.log("guayEditController");
-          res.send(user);
+          res.send(rows);
         })
         .catch(err => {
           console.log(err);

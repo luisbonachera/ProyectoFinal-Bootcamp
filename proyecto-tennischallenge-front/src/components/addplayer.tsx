@@ -22,6 +22,7 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
     const [city, setCity] = React.useState("");
     const [genre, setGenre] = React.useState("");
     const [rating, setRating] = React.useState(0);
+    const [image, setImage] = React.useState();
     // const [isAdmin, setIsAdmin] = React.useState<boolean>(false);
 
     const updateUsername = (event: any) => {
@@ -53,10 +54,18 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
         // setError("");
     };
 
+    const updateImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setImage(event.currentTarget.files![0]);
+    };
+
     // const updateIsAdmin = (event: any) => {
     //     setIsAdmin(s => !s);
     //     // setError("");
     // };
+
+    
+       
+
 
     const add = () => {
         console.log("entra al fetch");
@@ -96,41 +105,71 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                                     .then((token: string) => {
                                         if (token) {
                                             console.log(token);
-                                        props.setToken(token);
-                                        let decoded: any = jwt.decode(token);
-                                        console.log("decoded:")
-                                        console.log(decoded);
-                                        if(decoded){
-                                            let player: IPlayer = {
-                                                id_player: decoded.id_player,
-                                                username: decoded.username,
-                                                isAdmin: decoded.isAdmin,
-                                                email: decoded.email,
-                                                city: decoded.city,
-                                                genre: decoded.genre,
-                                                rating: decoded.rating
-                                            }
-                                            console.log("entra");
-                                            console.log(player);
-                                            props.setPlayer(player);
-                                            props.history.push("/");
-                                        }else{
-                                            console.log("Ha fallado el decode en login");
-                                        }
+                                           
+                                            let decoded: any = jwt.decode(token);
+                                            console.log("decoded:")
+                                            console.log(decoded);
+                                            if (decoded) {
+                                                let player: IPlayer = {
+                                                    id_player: decoded.id_player,
+                                                    username: decoded.username,
+                                                    isAdmin: decoded.isAdmin,
+                                                    email: decoded.email,
+                                                    city: decoded.city,
+                                                    genre: decoded.genre,
+                                                    rating: decoded.rating
+                                                }
+                                                console.log("entra");
+                                                console.log(player);
+
+
+                                                const formData = new FormData();
+                                                formData.append("file", image);
+                                                // formData.append("id", decoded.id_player);
                                         
-                                    } else {
-                                        console.log("la BD no ha devuelto el token vacio.")
-                                    }
+                                                fetch("http://localhost:8080/api/addImage/" + decoded.id_player, {
+                                                    method: "PUT",
+                                                    headers: {
+                                                        Authorization: "Bearer " + token
+                                                    },
+                                                    body: formData
+                                                }).then(response => {
+                                                    if (response.ok) {
+                                                        response.json().then((player: IPlayer) => {
+                                                            props.setPlayer(player);
+                                                            props.setToken(token);
+                                                            props.history.push("/");
+                                                        }).catch(err =>{
+                                                           console.log("error al subir la imagen " + err);
+                                                        });
+                                                    }else{
+                                                        console.log("error en el response.ok")
+                                                    }
+                                                }).catch(err => {
+                                                    console.log("error en la consula, error response. " + err);
+                                                });
+                                            
+
+                                             
+                                                // props.setPlayer(player);
+                                                // props.history.push("/");
+                                            } else {
+                                                console.log("Ha fallado el decode en login");
+                                            }
+
+                                        } else {
+                                            console.log("la BD no ha devuelto el token vacio.");
+                                        }
 
                                     })
 
                             } else {
-                                setError("Usuario o Contraseña incorrectos ," + error );
+                                setError("Usuario o Contraseña incorrectos ," + error);
                                 console.log(error);
                             }
                         })
                         .catch(error => {
-                            setError("Usuario o Contraseña incorrectos ,"+ error );
+                            setError("Usuario o Contraseña incorrectos ," + error);
                             console.log(error);
                         });
                 }
@@ -140,12 +179,16 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
             })
     }
 
-    
+
 
     return (
         <div>
             <Form>
                 <Form.Row>
+                    <Form.Group controlId="formGridUsername">
+                        <Form.Label>Username</Form.Label>
+                        <input type="file" className="btn btn-info" placeholder="Enter username" onChange={updateImage} />
+                    </Form.Group>
                     <Form.Group controlId="formGridUsername">
                         <Form.Label>Username</Form.Label>
                         <Form.Control placeholder="Enter username" onChange={updateUsername} />
@@ -209,9 +252,9 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
 const mapDispachToProps = {
     setToken: actions.setToken,
     setPlayer: actions.setPlayer
-  }
-  
-  export default connect(
+}
+
+export default connect(
     null,
     mapDispachToProps
-  )(AddPlayer);
+)(AddPlayer);

@@ -4,6 +4,10 @@ const authController = require('../controllers/authController');
 const playersController = require('../controllers/playersController');
 const messageController = require('../controllers/messageController');
 const sportCenterController = require('../controllers/sportCenterController');
+const multer = require("multer");
+const path = require("path");
+
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -25,6 +29,29 @@ router.get('/players', playersController.list);
 
 //crear un Jugador
 router.post('/add', playersController.add);
+
+//---------SUBIDA DE IMAGENES----------//
+
+// Set The Storage Engine
+const storage = multer.diskStorage({
+  destination: (_req, _file, cb) => {
+    cb(null, "public/uploads/");
+  },
+  filename: (_req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+
+// Init Upload
+const upload = multer({
+  storage
+}).single("file");
+
+
+router.put('/addImage/:id', upload, playersController.editImage);
+
+
+
 
 // editar un Jugador 
 router.put('/players/:id', playersController.edit);

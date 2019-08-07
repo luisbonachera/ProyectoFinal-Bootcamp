@@ -86,18 +86,18 @@ playersModel.listFiltros = (isAmin,filtros) => {
 
 
 //crear un Jugador
-playersModel.add = user => {
+playersModel.add = player => {
     return new Promise((resolve, reject)=>{
         dbConn.query(
-            'INSERT INTO players set ?', [user],
+            'INSERT INTO players set ?', [player],
             (err,result)=>{
-                console.log("ya he terminado la consula insertar usuario");
+                console.log("ya he terminado la consula insertar player");
                 if(err){
                     console.log("error en la consulta");
                     console.log(err);
                     reject(err);
                 }else{
-                    console.log("consulta de insertar usuario correcta");
+                    console.log("consulta de insertar player correcta");
                     console.log(result);
                     resolve(result);
                 }
@@ -106,11 +106,15 @@ playersModel.add = user => {
     });
 };
 
-// editar un Jugador 
-playersModel.edit = (user,id_player) => {
+
+
+ // editar un Jugador 
+playersModel.editImage = (player, id_player)=> {
+    console.log("en modelo editImage ver player debajo:");
+    console.log(player);
     return new Promise((resolve, reject)=>{
         dbConn.query(
-            'UPDATE players SET ? WHERE id_player = ?', [user, id_player],
+            'UPDATE players SET ? WHERE id_player = ?', [player, id_player],
             (err,result)=>{
                 console.log("ya he terminado la consula editar usuario");
                 if(err){
@@ -118,6 +122,26 @@ playersModel.edit = (user,id_player) => {
                     reject(err);
                 }else{
                     console.log("consulta de editar usuario correcta");
+                    resolve(result);
+                }
+            }
+        );
+    });
+};
+
+
+// editar un Jugador 
+playersModel.edit = (player,id_player) => {
+    return new Promise((resolve, reject)=>{
+        dbConn.query(
+            'UPDATE players SET ? WHERE id_player = ?', [player, id_player],
+            (err,result)=>{
+                console.log("ya he terminado la consula editar player");
+                if(err){
+                    console.log("error en la consulta editar " + err);
+                    reject(err);
+                }else{
+                    console.log("consulta de editar player correcta");
                     resolve(result);
                 }
             }
