@@ -16,7 +16,10 @@ export const playerReducer = (
     action: TAction
 ): IPlayer => {
     if (action.type === "SET_PLAYER") {
-        return action.player;
+        return  action.player;
+    }
+    else if (action.type === "UPDATE_PLAYER") {
+        return  action.player;
     }
     return state;
 }

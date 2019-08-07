@@ -30,7 +30,7 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
 
 
 
-
+// esta funcion no es borrar, es editar campo del player de borrado a true
     const borrar = () => {
 
         if (props.token) {

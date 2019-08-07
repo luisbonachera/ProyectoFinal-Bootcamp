@@ -37,112 +37,114 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
 
     const log = () => {
         // let abortController = new AbortController();
-        if(inputUser && inputPass){
-        fetch("http://localhost:8080/api/auth", {
-            // signal: abortController.signal,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                username: inputUser,
-                password: inputPass
+        if (inputUser && inputPass) {
+            fetch("http://localhost:8080/api/auth", {
+                // signal: abortController.signal,
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: inputUser,
+                    password: inputPass
+                })
             })
-        })
-            .then(response => {
-                if (response.ok) {
-                    console.log("ok");
-                    response
-                        .text() //el text()es una promesa
-                        .then((token: string) => {
-                            if (token) {
-                                console.log(token);
-                                props.setToken(token);
-                                let decoded: any = jwt.decode(token);
-                                console.log("decoded:")
-                                console.log(decoded);
-                                if(decoded){
-                                    let player: IPlayer = {
-                                        id_player: decoded.id_player,
-                                        username: decoded.username,
-                                        isAdmin: decoded.isAdmin,
-                                        email: decoded.email,
-                                        city: decoded.city,
-                                        genre: decoded.genre,
-                                        rating: decoded.rating
-                                    }
-                                    console.log("entra");
-                                    console.log(player);
-                                    props.setPlayer(player);
+                .then(response => {
+                    if (response.ok) {
+                        console.log("ok");
+                        response
+                            .text() //el text()es una promesa
+                            .then((token: string) => {
+                                if (token) {
+                                    console.log(token);
+                                    
+                                    let decoded: any = jwt.decode(token);
+                                    console.log("decoded:")
+                                    console.log(decoded);
+                                    if (decoded) {
+                                        let player: IPlayer = {
+                                            id_player: decoded.id_player,
+                                            username: decoded.username,
+                                            isAdmin: decoded.isAdmin,
+                                            email: decoded.email,
+                                            city: decoded.city,
+                                            genre: decoded.genre,
+                                            rating: decoded.rating
+                                        }
+                                        console.log("entra");
+                                        console.log(player);
+                                       
                                         // if (props.token) {
-                                            // let decoded = jwt.decode(props.token);
-                                            // if (decoded) {
-                                            //     console.log(decoded);
-                                                console.log("ahora deberia entrar a listar players")
-                                                // abortController.abort();
-                                                fetch("http://localhost:8080/api/players", {
-                                                    headers: {
-                                                        "Content-type": "application/json",
-                                                        Authorization: "Bearer " + props.token
-                                                    }
-                                                })
-                                                    .then(response => {
-                                                        if (response.ok) {
-                                                            response
-                                                                .json()
-                                                                .then((lista: IPlayer[]) => {
-                                                                    console.log(lista);
-                                                                    console.log("va bien");
-                                                                    props.setPlayers(lista);
-                                                                    console.log(lista);
-                                                                    // props.history.push("/");
-                                                                    
-                                                                })
-                                                                .catch(err => {
-                                                                    setError("Error en el json.");
-                                                                });
-                                                        } else {
-                                                            setError("responde.ok da error.");
-                                                        }
-                                                    })
-                                                    .catch(err => {
-                                                        setError("Error en response."+ err);
-                                                    });
-                                            // }
-                                            // else {
-                                            //     setError("El token no se pudo decodificar");
-                                            // }
+                                        // let decoded = jwt.decode(props.token);
+                                        // if (decoded) {
+                                        //     console.log(decoded);
+                                        console.log("ahora deberia entrar a listar players")
+                                        // abortController.abort();
+                                        fetch("http://localhost:8080/api/players", {
+                                            headers: {
+                                                "Content-type": "application/json",
+                                                Authorization: "Bearer " + token
+                                            }
+                                        })
+                                            .then(response => {
+                                                if (response.ok) {
+                                                    response
+                                                        .json()
+                                                        .then((lista: IPlayer[]) => {
+                                                            console.log(lista);
+                                                            console.log("va bien");
+                                                            props.setPlayers(lista);
+                                                            console.log(lista);
+                                                            props.setPlayer(player);
+                                                            props.setToken(token);
+                                                            props.history.push("/");
+
+                                                        })
+                                                        .catch(err => {
+                                                            setError("Error en el json.");
+                                                        });
+                                                } else {
+                                                    setError("responde.ok da error.");
+                                                }
+                                            })
+                                            .catch(err => {
+                                                setError("Error en response." + err);
+                                            });
+                                        // }
+                                        // else {
+                                        //     setError("El token no se pudo decodificar");
+                                        // }
                                         // }
                                         // else {
                                         //     setError("El token no existe");
                                         // }
-                                    
-                                }else{
-                                    console.log("Ha fallado el decode en login");
-                                }
-                                
-                            } else {
-                                console.log("la BD no ha devuelto el token vacio.")
-                            }
 
-                        });
-                } else {
-                    setError("Usuario o Contraseña incorrectos");
+                                    } else {
+                                        console.log("Ha fallado el decode en login");
+                                    }
+
+                                } else {
+                                    console.log("la BD no ha devuelto el token vacio.")
+                                }
+
+                            });
+                    } else {
+                        setError("Usuario o Contraseña incorrectos");
+                        console.log(error);
+                    }
+                })
+                .catch(err => {
+                    setError("Usuario o Contraseña incorrectos.");
                     console.log(error);
-                }
-            })
-            .catch(err => {
-                setError("Usuario o Contraseña incorrectos.");
-                console.log(error);
-            });
-    }else if(!inputUser && inputPass){
-        setError("Te falta por rellenar el campo usuario");
-    }else if(inputUser && !inputPass){
-        setError("Te falta por rellenar el campo password");
-    }else{
-        setError("Te falta por rellenar los campos usuario y password");
+                });
+        } else if (!inputUser && inputPass) {
+            setError("Te falta por rellenar el campo usuario");
+        } else if (inputUser && !inputPass) {
+            setError("Te falta por rellenar el campo password");
+        } else {
+            setError("Te falta por rellenar los campos usuario y password");
+        }
     }
-}
 
     return (
         <div>
@@ -164,7 +166,7 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
                     <Col sm={{ span: 10, offset: 6 }}>
                         {error && <p>{error}</p>}
                     </Col>
-                    
+
                 </Form.Group>
             </Form>
         </div>

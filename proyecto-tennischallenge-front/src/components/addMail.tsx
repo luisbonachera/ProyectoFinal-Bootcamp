@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Col } from 'react-bootstrap';
 import { RouteComponentProps } from 'react-router-dom';
 import * as actions from '../actions/actions';
 import { connect } from 'react-redux';
@@ -23,6 +23,9 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
     const [error, setError] = React.useState("");
     const [subject, setSubject] = React.useState("");
     const [text, SetText] = React.useState("");
+    // const [inputPlayerDestiny, SetinputPlayerDestiny] = React.useState("");
+    const [inputListPlayerTo, SetinputListPlayerTo] = React.useState("");
+
     // const [usernameDestiny, setUsernameDestiny] = React.useState("");
     // const [usernameSent, setUsernameSent] = React.useState("");
 
@@ -36,19 +39,26 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
         // setError("");
     };
 
-    // const updateUsernameDestiny = (event: any) => {
-    //     setUsernameDestiny(event.currentTarget.value);
+    // const updateInputPlayerDestiny = (event: any) => {
+    //     SetinputPlayerDestiny(event.currentTarget.value);
     //     // setError("");
     // };
-    // const updateUsernameSent = (event: any) => {
-    //     setUsernameSent(event.currentTarget.value);
-    //     // setError("");
-    // };
+
+    const updateInputListPlayerTo = (event: any) => {
+        SetinputListPlayerTo(event.currentTarget.value);
+        // setError("");
+    };
 
 
     const addMsg = () => {
         console.log("entra al fetch");
         if (playerDestiny) {
+            let id_player_destiny;
+            if(soyYo){
+                id_player_destiny = inputListPlayerTo;
+            }else{
+                id_player_destiny = playerDestiny.id_player;
+            }
             fetch("http://localhost:8080/api/msgs/add", {
                 method: "POST",
                 headers: {
@@ -56,7 +66,7 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                     Authorization: "Bearer " + props.token
                 },
                 body: JSON.stringify({
-                    id_player_destiny: playerDestiny.id_player,
+                    id_player_destiny: id_player_destiny,
                     id_player_sent: props.player.id_player,
                     subject: subject,
                     text: text,
@@ -110,9 +120,9 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
     // let playerDestiny: any = null;
     if (id === +decoded.id_player) {
         soyYo = true;
-    } 
+    }
     // else {
-       let playerDestiny = props.players.find(p => p.id_player === +id);
+    let playerDestiny = props.players.find(p => p.id_player === +id);
     // }
 
 
@@ -120,43 +130,57 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
     return (
         <div>
 
-       {playerDestiny !== null && playerDestiny !== undefined && (
-            <Form>
-               
+            {playerDestiny !== null && playerDestiny !== undefined && (
+                <Form>
+
                     <Form.Group controlId="formGridFrom">
                         <Form.Label>From:</Form.Label>
                         {/* <Form.Control type="email" value={props.player.username} onChange={updateUsernameSent} /> */}
-                        <Form.Control type="text" value={props.player.username} />
+                        <Form.Label> {props.player.username} </Form.Label>
 
                     </Form.Group>
+                    {soyYo === false && (
                     <Form.Group controlId="formGridTo">
                         <Form.Label>To:</Form.Label>
+                            <Form.Label> {playerDestiny.username} </Form.Label>     
+                    </Form.Group>
+                    )}
+                    {soyYo && (
+                        <Form.Group as={Col} controlId="formGridState">
+                            <Form.Label>To</Form.Label>
+                            <Form.Control as="select" type="text" value={inputListPlayerTo} onChange={updateInputListPlayerTo}>
+                                {props.players.sort(function (a, b) {
+                                    let nameA = a.username.toLowerCase();
+                                    let nameB = b.username.toLowerCase();
+                                    if (nameA < nameB) //sort string ascending
+                                        return -1;
+                                    if (nameA > nameB)
+                                        return 1;
+                                    return 0; //default return value (no sorting)
+                                }).map(p => (
+                                    <option value={p.id_player}>{p.username}</option>
+                                ))}
 
-                        {/* <Form.Control value={playerDestiny.username} onChange={updateUsernameDestiny} /> */}
-                        {soyYo === false && (
-                        <Form.Control type="text" value={playerDestiny.username} />
-                        )}
-                        {soyYo && (
-                        <Form.Control type="text"  />
-                        )}
+                            </Form.Control>
 
+                        </Form.Group>
+                    )}
+                    <Form.Group controlId="formGridSubject">
+                        <Form.Label>Asunto</Form.Label>
+                        <Form.Control onChange={updateSubject} />
                     </Form.Group>
 
-                <Form.Group controlId="formGridSubject">
-                    <Form.Label>Asunto</Form.Label>
-                    <Form.Control onChange={updateSubject} />
-                </Form.Group>
 
-                <Form.Group controlId="formGridTextAreaText">
-                    <Form.Label>Texto: </Form.Label>
-                    <Form.Control as="textarea" rows="3" onChange={updateText} />
-                </Form.Group>
+                    <Form.Group controlId="formGridTextAreaText">
+                        <Form.Label>Texto: </Form.Label>
+                        <Form.Control as="textarea" rows="3" onChange={updateText} />
+                    </Form.Group>
 
-                <Button variant="primary" type="button" onClick={addMsg}>
-                    Enviar
+                    <Button variant="primary" type="button" onClick={addMsg}>
+                        Enviar
                 </Button>
 
-            </Form>
+                </Form>
             )}
 
 

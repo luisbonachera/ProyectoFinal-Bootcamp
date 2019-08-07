@@ -22,7 +22,7 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
     const [city, setCity] = React.useState("");
     const [genre, setGenre] = React.useState("");
     const [rating, setRating] = React.useState(0);
-    const [isAdmin, setIsAdmin] = React.useState<boolean>(false);
+    // const [isAdmin, setIsAdmin] = React.useState<boolean>(false);
 
     const updateUsername = (event: any) => {
         setUsername(event.currentTarget.value);
@@ -53,14 +53,14 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
         // setError("");
     };
 
-    const updateIsAdmin = (event: any) => {
-        setIsAdmin(s => !s);
-        // setError("");
-    };
+    // const updateIsAdmin = (event: any) => {
+    //     setIsAdmin(s => !s);
+    //     // setError("");
+    // };
 
     const add = () => {
         console.log("entra al fetch");
-        console.log(isAdmin);
+        // console.log(isAdmin);
         fetch("http://localhost:8080/api/add", {
             method: "POST",
             headers: {
@@ -73,7 +73,7 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                 city: city,
                 genre: genre,
                 rating: rating,
-                isAdmin: isAdmin,
+                // isAdmin: isAdmin,
             })
         })
             .then(response => {

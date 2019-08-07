@@ -14,7 +14,9 @@ interface IProps { }
 
 interface IPropsGlobal {
     player: IPlayer;
-    setPlayer: (player: IPlayer) => void;
+    updatePlayer: (player: IPlayer) => void;
+    updatePlayers: (player: IPlayer) => void;
+    
     players: IPlayer[];
     token: string;
 }
@@ -63,15 +65,15 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
         setIsAdmin(s => !s);
         // setError("");
     };
-    let id_player:number = +props.match.params.id_player;
-    let player = props.players.find(p=> p.id_player === id_player);
+    let id_player: number = +props.match.params.id_player;
+    let player = props.players.find(p => p.id_player === id_player);
     console.log("player:");
     console.log(player);
 
     const edit = () => {
         if (props.token) {
             let decoded: any = jwt.decode(props.token);
-            const id:number = +props.match.params.id_player;
+            const id: number = +props.match.params.id_player;
             if (decoded !== null && (id === decoded.id_player || props.player.isAdmin === true)) {
                 console.log(decoded);
 
@@ -84,32 +86,32 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                         Authorization: "Bearer " + props.token
                     },
                     body: JSON.stringify({
-                        username: username,
-                        email: email,
+                        ...(username && { username: username }),
+                        ...(email && { email: email }),
                         // password: password,
-                        city: city,
-                        genre: genre,
-                        rating: rating,
-                        isAdmin: isAdmin,
+                        ...(city && { city: city }),
+                        ...(genre && { genre: genre }),
+                        ...(rating && { rating: rating }),
+                        ...(isAdmin && { isAdmin: isAdmin })
                     })
                 })
                     .then(response => {
                         if (response.ok) {
                             console.log("usuario creado")
-                            props.history.push("/profile/"+ id);
-
-                            const us :IPlayer = {
-                                id_player: id,
-                                username: username,
-                                email: email,
+                            const us: IPlayer = {
+                                ...props.player,
+                                ...(username && { username: username }),
+                                ...(email && { email: email }),
                                 // password: password,
-                                city: city,
-                                genre: genre,
-                                rating: rating,
-                                isAdmin: isAdmin,
+                                ...(city && { city: city }),
+                                ...(genre && { genre: genre }),
+                                ...(rating && { rating: rating }),
+                                ...(isAdmin && { isAdmin: isAdmin })
                             }
                             console.log(us);
-                            props.setPlayer(us);
+                            props.updatePlayer(us);
+                            props.updatePlayers(us);
+                            props.history.push("/profile/" + id);
                             // props.history.push("/");
                             // fetch("http://localhost:8080/api/auth", {
                             //     method: "post",
@@ -163,53 +165,53 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
     return (
         <div>
             {player && id_player && (player.id_player === id_player || props.player.isAdmin) && (
-            <Form>
-                <Form.Row>
-                    <Form.Group controlId="formGridUsername">
-                        <Form.Label>Username</Form.Label>
-                        <Form.Control placeholder="Enter username" onChange={updateUsername} defaultValue={player.username} />
-                    </Form.Group>
-                    <Form.Group as={Col} controlId="formGridEmail">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" onChange={updateEmail} defaultValue={player.email} />
-                    </Form.Group>
-                </Form.Row>
-                <Form.Row>
-                    {/* <Form.Group as={Col} controlId="formGridPassword">
+                <Form>
+                    <Form.Row>
+                        <Form.Group controlId="formGridUsername">
+                            <Form.Label>Username</Form.Label>
+                            <Form.Control placeholder="Enter username" onChange={updateUsername} defaultValue={player.username} />
+                        </Form.Group>
+                        <Form.Group as={Col} controlId="formGridEmail">
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control type="email" placeholder="Enter email" onChange={updateEmail} defaultValue={player.email} />
+                        </Form.Group>
+                    </Form.Row>
+                    <Form.Row>
+                        {/* <Form.Group as={Col} controlId="formGridPassword">
                         <Form.Label>Password</Form.Label>
                         <Form.Control type="password" placeholder="Password" onChange={updatePassword} />
                     </Form.Group> */}
 
 
-                    <Form.Group as={Col} controlId="formGridCity">
-                        <Form.Label>City</Form.Label>
-                        <Form.Control type="text" placeholder="Enter city" onChange={updateCity} defaultValue={player.city} />
-                    </Form.Group>
-                </Form.Row>
-                <Form.Row>
-                    <Form.Group as={Col} controlId="formGridGenre">
-                        <Form.Label>Genre</Form.Label>
-                        <Form.Control type="text" placeholder="Enter genre" onChange={updateGenre} value={player.genre} />
-                    </Form.Group>
+                        <Form.Group as={Col} controlId="formGridCity">
+                            <Form.Label>City</Form.Label>
+                            <Form.Control type="text" placeholder="Enter city" onChange={updateCity} defaultValue={player.city} />
+                        </Form.Group>
+                    </Form.Row>
+                    <Form.Row>
+                        <Form.Group as={Col} controlId="formGridGenre">
+                            <Form.Label>Genre</Form.Label>
+                            <Form.Control type="text" placeholder="Enter genre" onChange={updateGenre} value={player.genre} />
+                        </Form.Group>
 
-                    {/* <Form.Group as={Col} controlId="formGridRating">
+                        {/* <Form.Group as={Col} controlId="formGridRating">
                         <Form.Label>Rating</Form.Label>
                         <Form.Control type="number" placeholder="Enter rating" onChange={updateRating} />
                     </Form.Group> */}
-                    <Form.Group as={Col} controlId="formGridState">
-                        <Form.Label>Desde</Form.Label>
-                        <Form.Control as="select" defaultValue={player.rating + ""} onChange={updateRating}>
-                            <option value={1}>1</option>
-                            <option value={2}>2</option>
-                            <option value={3}>3</option>
-                            <option value={4}>4</option>
-                            <option value={5}>5</option>
-                        </Form.Control>
-                    </Form.Group>
+                        <Form.Group as={Col} controlId="formGridState">
+                            <Form.Label>Desde</Form.Label>
+                            <Form.Control as="select" defaultValue={player.rating + ""} onChange={updateRating}>
+                                <option value={1}>1</option>
+                                <option value={2}>2</option>
+                                <option value={3}>3</option>
+                                <option value={4}>4</option>
+                                <option value={5}>5</option>
+                            </Form.Control>
+                        </Form.Group>
 
 
-                </Form.Row>
-                {/* <Form.Row>
+                    </Form.Row>
+                    {/* <Form.Row>
                     <Form.Group as={Col} controlId="formGridDay">
                         <Form.Label>Day</Form.Label>
                         <Form.Control type="text" placeholder="Enter day" onChange={updateGenre} />
@@ -227,16 +229,16 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
 
                 </Form.Row> */}
-                {props.player.isAdmin && (
-                    <Form.Group id="formGridCheckbox">
-                        <Form.Check type="checkbox" label="Administrador" onChange={updateIsAdmin} defaultChecked={player.isAdmin}/>
-                    </Form.Group>
-                )}
-                <Button variant="primary" type="button" onClick={edit}>
-                    Save
+                    {props.player.isAdmin && (
+                        <Form.Group id="formGridCheckbox">
+                            <Form.Check type="checkbox" label="Administrador" onChange={updateIsAdmin} defaultChecked={player.isAdmin} />
+                        </Form.Group>
+                    )}
+                    <Button variant="primary" type="button" onClick={edit}>
+                        Save
                 </Button>
-                
-            </Form>
+
+                </Form>
             )}
         </div>
     )
@@ -251,7 +253,8 @@ const mapStateToProps = (state: IGlobalState) => ({
 
 const mapDispachToProps = {
     setToken: actions.setToken,
-    setPlayer: actions.setPlayer
+    updatePlayer: actions.updatePlayer,
+    updatePlayers: actions.updatePlayers
 }
 
 export default connect(

@@ -6,29 +6,30 @@ const secret = "mysecret";
 
 const playersController = {};
 
-//Listar Players con campo borrado == true
+//Listar Players con campo borrado == false
 playersController.list = (req, res) => {
-  console.log(req.headers.authorization);
-  const token = req.headers.authorization.replace("Bearer ", "");
-  console.log(token);
   try {
+    console.log(req.headers.authorization);
+    const token = req.headers.authorization.replace("Bearer ", "");
+    console.log(token);
     // console.log(jwt.verify(token,"mysecret"));
     const decoded = jwt.verify(token, "mysecret");
-  playersModel
-    .list(decoded.isAdmin)
-    .then(players => {
-      console.log("guayList");
-      console.log(players);
-      res.send(players);
-    })
-    .catch(err => {
-      console.log(err);
-      res.send("errorControlerList...Petaaaaaaso");
-    });
-  }catch(err) {
+    playersModel
+      .list(decoded.isAdmin)
+      .then(players => {
+        console.log("guayList");
+        console.log(players);
+        res.send(players);
+      })
+      .catch(err => {
+        console.log(err);
+        res.send("errorControlerList...Petaaaaaaso");
+      });
+  } catch (err) {
     res.send("error al verificar token en listar player");
   }
 };
+
 //listar por filtros
 playersController.listFiltros = (req, res) => {
   console.log(req.headers.authorization);
@@ -38,18 +39,18 @@ playersController.listFiltros = (req, res) => {
   try {
     // console.log(jwt.verify(token,"mysecret"));
     const decoded = jwt.verify(token, "mysecret");
-  playersModel
-    .listFiltros(decoded.isAdmin, filtros)
-    .then(players => {
-      console.log("guayListFiltro");
-      console.log(players);
-      res.send(players);
-    })
-    .catch(err => {
-      console.log(err);
-      res.send("errorControlerListFiltro...Petaaaaaaso");
-    });
-  }catch(err) {
+    playersModel
+      .listFiltros(decoded.isAdmin, filtros)
+      .then(players => {
+        console.log("guayListFiltro");
+        console.log(players);
+        res.send(players);
+      })
+      .catch(err => {
+        console.log(err);
+        res.send("errorControlerListFiltro...Petaaaaaaso");
+      });
+  } catch (err) {
     res.send("error al verificar token en listarFiltros player");
   }
 };
@@ -64,8 +65,7 @@ playersController.add = (req, res) => {
       ...(u.password != null && { password: sha256(u.password) }),
       ...(u.city != null && { city: u.city }),
       ...(u.rating != null && { rating: u.rating }),
-      ...(u.genre != null && { genre: u.genre }),
-      
+      ...(u.genre != null && { genre: u.genre })
     };
     if (
       user.username &&
@@ -75,7 +75,6 @@ playersController.add = (req, res) => {
       user.rating &&
       user.genre
     ) {
-     
       playersModel
         .add(user)
         .then(rows => {
@@ -165,7 +164,7 @@ playersController.editErased = (req, res) => {
     if (decoded.isAdmin || decoded.id_player === +id_player) {
       console.log("entrar");
       let user = {
-        erased : 1
+        erased: 1
       };
       playersModel
         .editErased(user, id_player)

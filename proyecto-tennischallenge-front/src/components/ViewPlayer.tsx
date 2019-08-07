@@ -5,7 +5,6 @@ import { CardDeck, Card, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { IGlobalState } from '../reducers/reducers';
 import jwt from 'jsonwebtoken';
-import { setToken } from '../actions/actions';
 import * as actions from '../actions/actions';
 
 interface IProps { }

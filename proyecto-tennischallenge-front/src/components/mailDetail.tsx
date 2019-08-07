@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { IGlobalState } from '../reducers/reducers';
 import { Link } from 'react-router-dom';
 import { IPlayer } from '../interfaceIPlayer';
-import { playerReducer } from '../reducers/playerReducer';
+
 
 interface IPropsGlobal {
     msgs: IMsg[];

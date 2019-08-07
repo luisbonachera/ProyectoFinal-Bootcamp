@@ -27,4 +27,14 @@ type TDeletePlayerAction = {
     id_player: number;
 }
 
-export type TAction = TSetTokenAction | TSetPlayersAction | TSetPlayerAction | TSetMsgsAction | TDeletePlayerAction;
+type TUpdatePlayerAction = {
+    type : "UPDATE_PLAYER";
+    player: IPlayer;
+}
+
+type TUpdatePlayersAction = {
+    type : "UPDATE_PLAYERS";
+    player: IPlayer;
+}
+
+export type TAction = TSetTokenAction | TSetPlayersAction | TSetPlayerAction | TSetMsgsAction | TDeletePlayerAction | TUpdatePlayerAction | TUpdatePlayersAction;

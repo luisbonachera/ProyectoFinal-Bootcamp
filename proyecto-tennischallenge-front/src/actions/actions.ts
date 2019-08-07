@@ -29,3 +29,13 @@ export const deletePlayer: ActionCreator<TAction> = (id_player: number) => ({
     type : "DELETE_PLAYER",
     id_player
 });
+
+export const updatePlayer: ActionCreator<TAction> = (player: IPlayer) => ({
+    type: "UPDATE_PLAYER",
+    player
+});
+
+export const updatePlayers: ActionCreator<TAction> = (player: IPlayer) => ({
+    type: "UPDATE_PLAYERS",
+    player
+});
