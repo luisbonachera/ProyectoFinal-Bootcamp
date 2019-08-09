@@ -5,6 +5,7 @@ import * as actions from '../actions/actions';
 import { connect } from 'react-redux';
 import { IPlayer } from '../interfaceIPlayer';
 import jwt from 'jsonwebtoken';
+import { decode } from 'punycode';
 
 interface IProps { }
 
@@ -21,7 +22,7 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
     const [password, setPassword] = React.useState("");
     const [city, setCity] = React.useState("");
     const [genre, setGenre] = React.useState("");
-    const [rating, setRating] = React.useState(0);
+    const [rating, setRating] = React.useState("");
     const [image, setImage] = React.useState();
     // const [isAdmin, setIsAdmin] = React.useState<boolean>(false);
 
@@ -63,33 +64,43 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
     //     // setError("");
     // };
 
-    
-       
+
+
 
 
     const add = () => {
         console.log("entra al fetch");
         // console.log(isAdmin);
+        const formData = new FormData();
+        formData.append("file", image);
+        formData.append("username", username);
+        formData.append("email", email);
+        formData.append("password", password);
+        formData.append("city", city);
+        formData.append("genre", genre);
+        formData.append("rating", rating);
+
         fetch("http://localhost:8080/api/add", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                // "Content-Type": "application/json"
             },
-            body: JSON.stringify({
-                username: username,
-                email: email,
-                password: password,
-                city: city,
-                genre: genre,
-                rating: rating,
-                // isAdmin: isAdmin,
-            })
+            body: formData
+            // body: JSON.stringify({
+            //     username: username,
+            //     email: email,
+            //     password: password,
+            //     city: city,
+            //     genre: genre,
+            //     rating: rating,
+            //     // isAdmin: isAdmin,
+            // })
         })
             .then(response => {
                 if (response.ok) {
                     console.log("usuario creado")
                     fetch("http://localhost:8080/api/auth", {
-                        method: "post",
+                        method: "POST",
                         headers: {
                             "Content-Type": "application/json"
                         },
@@ -105,52 +116,55 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                                     .then((token: string) => {
                                         if (token) {
                                             console.log(token);
-                                           
+
                                             let decoded: any = jwt.decode(token);
                                             console.log("decoded:")
                                             console.log(decoded);
                                             if (decoded) {
                                                 let player: IPlayer = {
                                                     id_player: decoded.id_player,
+                                                    avatar: decoded.avatar,
                                                     username: decoded.username,
                                                     isAdmin: decoded.isAdmin,
                                                     email: decoded.email,
                                                     city: decoded.city,
                                                     genre: decoded.genre,
-                                                    rating: decoded.rating
+                                                    rating: +decoded.rating
                                                 }
                                                 console.log("entra");
                                                 console.log(player);
+                                                props.setPlayer(player);
+                                                props.setToken(token);
+                                                props.history.push("/");
 
-
-                                                const formData = new FormData();
-                                                formData.append("file", image);
+                                                // const formData = new FormData();
+                                                // formData.append("file", image);
                                                 // formData.append("id", decoded.id_player);
-                                        
-                                                fetch("http://localhost:8080/api/addImage/" + decoded.id_player, {
-                                                    method: "PUT",
-                                                    headers: {
-                                                        Authorization: "Bearer " + token
-                                                    },
-                                                    body: formData
-                                                }).then(response => {
-                                                    if (response.ok) {
-                                                        response.json().then((player: IPlayer) => {
-                                                            props.setPlayer(player);
-                                                            props.setToken(token);
-                                                            props.history.push("/");
-                                                        }).catch(err =>{
-                                                           console.log("error al subir la imagen " + err);
-                                                        });
-                                                    }else{
-                                                        console.log("error en el response.ok")
-                                                    }
-                                                }).catch(err => {
-                                                    console.log("error en la consula, error response. " + err);
-                                                });
-                                            
 
-                                             
+                                                // fetch("http://localhost:8080/api/addImage/" + decoded.id_player, {
+                                                //     method: "PUT",
+                                                //     headers: {
+                                                //         Authorization: "Bearer " + token
+                                                //     },
+                                                //     body: formData
+                                                // }).then(response => {
+                                                //     if (response.ok) {
+                                                //         response.json().then((player: IPlayer) => {
+                                                //             props.setPlayer(player);
+                                                //             props.setToken(token);
+                                                //             props.history.push("/");
+                                                //         }).catch(err => {
+                                                //             console.log("error al subir la imagen " + err);
+                                                //         });
+                                                //     } else {
+                                                //         console.log("error en el response.ok")
+                                                //     }
+                                                // }).catch(err => {
+                                                //     console.log("error en la consula, error response. " + err);
+                                                // });
+
+
+
                                                 // props.setPlayer(player);
                                                 // props.history.push("/");
                                             } else {

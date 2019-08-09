@@ -14,12 +14,13 @@ authController.checkUser = (req, res) => {
       console.log("guayCheckUSer");
       if (rows.length == 1) {
         console.log("user: " + rows[0].username + " rol: " + rows[0].isAdmin);
-        isAdmin = rows[0].admin ? true : false;
+        let isAdmin = rows[0].admin ? true : false;
         var token = jwt.sign(
           {
             id_player: rows[0].id_player,
+            avatar: rows[0].avatar,
             username: rows[0].username,
-            isAdmin: rows[0].isAdmin === 1 ? true : false,
+            isAdmin: isAdmin,
             email: rows[0].email,
             city: rows[0].city,
             genre: rows[0].genre,
@@ -31,9 +32,9 @@ authController.checkUser = (req, res) => {
         console.log(token);
         res.send(token);
       } else if (rows.length > 1) {
-        res.status(400).send("Error en la consulta, sele mas de 1 resultado");
+        res.status(401).send("Error en la consulta, sele mas de 1 resultado");
       } else {
-        res.status(400).send("El usuario no existe");
+        res.status(401).send("El usuario no existe");
       }
       // res.send({
       //     type: "success",
@@ -41,10 +42,7 @@ authController.checkUser = (req, res) => {
       // });
     })
     .catch(err => {
-      res.send({
-        type: "error al devolver la consulta de CheckUSer",
-        data: err
-      });
+      res.status(401).send("error al devolver la consulta de CheckUSer " + err);
     });
 };
 

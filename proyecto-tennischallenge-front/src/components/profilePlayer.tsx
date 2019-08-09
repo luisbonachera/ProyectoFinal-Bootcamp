@@ -30,7 +30,7 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
 
 
 
-// esta funcion no es borrar, es editar campo del player de borrado a true
+    // esta funcion no es borrar, es editar campo del player de borrado a true
     const borrar = () => {
 
         if (props.token) {
@@ -43,8 +43,8 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
                 console.log("Soy admin: " + props.player.isAdmin);
                 fetch("http://localhost:8080/api/players/erased/" + id, {
                     method: "PUT",
-                // fetch("http://localhost:8080/api/players/" + id, {
-                //     method: "DELETE",
+                    // fetch("http://localhost:8080/api/players/" + id, {
+                    //     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: "Bearer " + props.token
@@ -91,7 +91,8 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
                 <CardDeck >
 
                     <Card style={{ display: 'flex', flexDirection: 'row' }}>
-                        <Card.Img variant="top" src="holder.js/100px160" />
+                        <Card.Img className="avatarFrofile" variant="top"
+                            src={props.player.avatar ? "http://localhost:8080/uploads/avatar/" + props.player.avatar : "images/avatar-tenis.png"} alt="" />
                         <Card.Body>
                             <Card.Title>{props.player.username}</Card.Title>
                             <Card.Text>

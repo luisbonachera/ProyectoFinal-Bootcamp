@@ -24,11 +24,17 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.avatarNavbar{
+  height: 50px;
+  width: auto;
+}
+
+.avatarFrofile{
+  height: 400px;
+  width: auto;
+}
+
+.avatarListProfile{
+height: 200px;
+width: auto;
 }

@@ -7,7 +7,7 @@ playersModel = {};
 playersModel.list = (isAmin) => {
     return new Promise((resolve, reject) => {
         // if(!validate(data)) reject("Invalid data")
-        let SQL_FIND_ALL_PLAYERS = 'SELECT id_player,username,email,city,genre,rating';
+        let SQL_FIND_ALL_PLAYERS = 'SELECT id_player,username,email,city,genre,rating,avatar';
 
         if(isAmin){
             console.log("entra en la queray Admin= true")

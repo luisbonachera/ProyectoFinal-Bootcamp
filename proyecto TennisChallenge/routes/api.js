@@ -27,15 +27,14 @@ router.post('/playersFilter', playersController.listFiltros);
 // Listar jugadores con campo borrado a false
 router.get('/players', playersController.list);
 
-//crear un Jugador
-router.post('/add', playersController.add);
+
 
 //---------SUBIDA DE IMAGENES----------//
 
 // Set The Storage Engine
 const storage = multer.diskStorage({
   destination: (_req, _file, cb) => {
-    cb(null, "public/uploads/");
+    cb(null, "public/uploads/avatar");
   },
   filename: (_req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
@@ -43,12 +42,14 @@ const storage = multer.diskStorage({
 });
 
 // Init Upload
-const upload = multer({
+const uploadAvatar = multer({
   storage
 }).single("file");
 
+//crear un Jugador
+router.post('/add', uploadAvatar, playersController.add);
 
-router.put('/addImage/:id', upload, playersController.editImage);
+router.put('/addImage/:id', uploadAvatar, playersController.editImage);
 
 
 

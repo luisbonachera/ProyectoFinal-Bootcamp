@@ -64,6 +64,7 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
                                     if (decoded) {
                                         let player: IPlayer = {
                                             id_player: decoded.id_player,
+                                            avatar: decoded.avatar,
                                             username: decoded.username,
                                             isAdmin: decoded.isAdmin,
                                             email: decoded.email,

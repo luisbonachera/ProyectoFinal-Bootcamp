@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { IGlobalState } from '../reducers/reducers';
@@ -42,8 +42,13 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                             </>
                         )}
                         {props.token && (
-                            <>
-                                <Link to="/">Avatar</Link>
+                            <>  
+                                <div >
+                                 
+                                 <Card.Img className="avatarNavbar" variant="top" 
+                                 src={props.player.avatar?"http://localhost:8080/uploads/avatar/" + props.player.avatar:"images/avatar-tenis.png"} alt=""/>
+                                </div>
+                                
                                 <Link to="/"></Link>
                                 <NavDropdown title={props.player.username} id="collasible-nav-dropdown">
                                 <Link to="/mailTray" >Correo</Link>

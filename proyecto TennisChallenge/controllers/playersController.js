@@ -60,6 +60,7 @@ playersController.add = (req, res) => {
   const p = req.body;
   if (p) {
     let player = {
+      ...(req.file.filename && {avatar: req.file.filename}),
       ...(p.username != null && { username: p.username }),
       ...(p.email != null && { email: p.email }),
       ...(p.password != null && { password: sha256(p.password) }),
@@ -67,7 +68,9 @@ playersController.add = (req, res) => {
       ...(p.rating != null && { rating: p.rating }),
       ...(p.genre != null && { genre: p.genre })
     };
+    console.log(player);
     if (
+      player.avatar &&
       player.username &&
       player.email &&
       player.password &&

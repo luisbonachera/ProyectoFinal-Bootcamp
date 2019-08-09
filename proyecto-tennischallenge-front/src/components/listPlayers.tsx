@@ -347,7 +347,8 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
                             {/* <Card style={{ display: 'flex', flexDirection: 'row' }}> */}
                             <Card>
 
-                                <Card.Img variant="top" src="images/avatar-tenis.png" />
+                            <Card.Img className="avatarListProfile" variant="top" 
+                                 src={p.avatar?"http://localhost:8080/uploads/avatar/" + p.avatar:"images/avatar-tenis.png"} alt=""/>
                                 <Card.Body >
                                     <Card.Title>{p.username}</Card.Title>
                                     <Card.Text>
