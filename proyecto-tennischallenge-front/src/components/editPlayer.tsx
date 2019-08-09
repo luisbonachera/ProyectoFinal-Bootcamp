@@ -16,7 +16,7 @@ interface IPropsGlobal {
     player: IPlayer;
     updatePlayer: (player: IPlayer) => void;
     updatePlayers: (player: IPlayer) => void;
-    
+
     players: IPlayer[];
     token: string;
 }
@@ -29,8 +29,9 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
     // const [password, setPassword] = React.useState("");
     const [city, setCity] = React.useState("");
     const [genre, setGenre] = React.useState("");
-    const [rating, setRating] = React.useState(0);
+    const [rating, setRating] = React.useState("");
     const [isAdmin, setIsAdmin] = React.useState<boolean>(false);
+    const [image, setImage] = React.useState();
 
     const updateUsername = (event: any) => {
         setUsername(event.currentTarget.value);
@@ -65,6 +66,12 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
         setIsAdmin(s => !s);
         // setError("");
     };
+
+    const updateImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setImage(event.currentTarget.files![0]);
+    };
+
+
     let id_player: number = +props.match.params.id_player;
     let player = props.players.find(p => p.id_player === id_player);
     console.log("player:");
@@ -79,39 +86,76 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
                 console.log("entra al fetch");
                 console.log(isAdmin);
+
+                const formData = new FormData();
+                formData.append("file", image);
+                formData.append("username", username);
+                formData.append("email", email);
+                formData.append("city", city);
+                formData.append("genre", genre);
+                formData.append("rating", rating);
+                formData.append("isAdmin", isAdmin ? "1" : "0");
                 fetch("http://localhost:8080/api/players/" + id, {
                     method: "PUT",
                     headers: {
-                        "Content-Type": "application/json",
+                        // "Content-Type": "application/json"
                         Authorization: "Bearer " + props.token
                     },
-                    body: JSON.stringify({
-                        ...(username && { username: username }),
-                        ...(email && { email: email }),
-                        // password: password,
-                        ...(city && { city: city }),
-                        ...(genre && { genre: genre }),
-                        ...(rating && { rating: rating }),
-                        ...(isAdmin && { isAdmin: isAdmin })
-                    })
+                    body: formData
                 })
+                    // fetch("http://localhost:8080/api/players/" + id, {
+                    //     method: "PUT",
+                    //     headers: {
+                    //         "Content-Type": "application/json",
+                    //         Authorization: "Bearer " + props.token
+                    //     },
+                    //     body: JSON.stringify({
+                    //         ...(username && { username: username }),
+                    //         ...(email && { email: email }),
+                    //         // password: password,
+                    //         ...(city && { city: city }),
+                    //         ...(genre && { genre: genre }),
+                    //         ...(rating && { rating: rating }),
+                    //         ...(isAdmin && { isAdmin: isAdmin })
+                    //     })
+                    // })
                     .then(response => {
                         if (response.ok) {
-                            console.log("usuario creado")
-                            const us: IPlayer = {
-                                ...props.player,
-                                ...(username && { username: username }),
-                                ...(email && { email: email }),
-                                // password: password,
-                                ...(city && { city: city }),
-                                ...(genre && { genre: genre }),
-                                ...(rating && { rating: rating }),
-                                ...(isAdmin && { isAdmin: isAdmin })
-                            }
-                            console.log(us);
-                            props.updatePlayer(us);
-                            props.updatePlayers(us);
-                            props.history.push("/profile/" + id);
+                            response
+                                .json()
+                                .then((lista: any) => {
+                                    console.log(lista);
+                                    if (lista.length === 1) {
+                                        console.log("usuario modificado y listado");
+                                        console.log(lista);
+                                        props.updatePlayers(lista[0]);
+                                        props.updatePlayer(lista[0]);
+                                        props.history.push("/profile/" + id);
+                                    } else if (lista.length > 1) {
+                                        console.log("viene mas de 1 player");
+                                    } else {
+                                        console.log("no viene ningun usuario.")
+                                    }
+                                    ;
+                                })
+                                .catch(err => {
+                                    setError("Error en el json.");
+                                });
+                            // console.log("usuario creado")
+                            // const us: IPlayer = {
+                            //     ...props.player,
+                            //     //hay que traerte primero el nombre y luego lo guardas aqui
+                            //     // ...(avatar && { avatar: image }),
+                            //     ...(username && { username: username }),
+                            //     ...(email && { email: email }),
+                            //     // password: password,
+                            //     ...(city && { city: city }),
+                            //     ...(genre && { genre: genre }),
+                            //     ...(rating && { rating: +rating }),
+                            //     ...(isAdmin && { isAdmin: isAdmin })
+                            // }
+                            // console.log(us);
+
                             // props.history.push("/");
                             // fetch("http://localhost:8080/api/auth", {
                             //     method: "post",
@@ -166,6 +210,15 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
         <div>
             {player && id_player && (player.id_player === id_player || props.player.isAdmin) && (
                 <Form>
+                    <Form.Row>
+                        <img className="avatarListProfile"
+                           src={props.player.avatar?"http://localhost:8080/uploads/avatar/" + props.player.avatar : "../images/avatar-tenis.png"} alt=""/>
+                    </Form.Row>
+                    <Form.Row>
+                        <Form.Group controlId="formGridUsername">
+                            <input type="file" className="btn btn-info" placeholder="Enter username" onChange={updateImage} />
+                        </Form.Group>
+                    </Form.Row>
                     <Form.Row>
                         <Form.Group controlId="formGridUsername">
                             <Form.Label>Username</Form.Label>

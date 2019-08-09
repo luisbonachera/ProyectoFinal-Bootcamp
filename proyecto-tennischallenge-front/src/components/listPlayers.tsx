@@ -161,7 +161,7 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
             setError("El token no existe");
         }
     };
-    React.useEffect(list, [props.players]);
+    React.useEffect(list, []);
     // console.log("username " + inputUsername);
     // console.log("city " + inputCity);
     // console.log("genre " + inputSex);

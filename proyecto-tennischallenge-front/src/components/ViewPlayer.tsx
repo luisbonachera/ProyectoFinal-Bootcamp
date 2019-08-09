@@ -88,7 +88,8 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                 <CardDeck >
 
                     <Card style={{ display: 'flex', flexDirection: 'row' }}>
-                        <Card.Img variant="top" src="holder.js/100px160" />
+                    <Card.Img className="avatarListProfile" variant="top" 
+                                 src={player.avatar?"http://localhost:8080/uploads/avatar/" + player.avatar:"images/avatar-tenis.png"} alt=""/>
                         <Card.Body>
                             <Card.Title>{player.username}</Card.Title>
                             <Card.Text>

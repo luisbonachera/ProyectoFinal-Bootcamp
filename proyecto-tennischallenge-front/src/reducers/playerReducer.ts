@@ -3,6 +3,7 @@ import { IPlayer } from '../interfaceIPlayer';
 
 const initialState: IPlayer = {
     id_player: 0,
+    avatar:"",
     username: "",
     email: "",
     city: "",

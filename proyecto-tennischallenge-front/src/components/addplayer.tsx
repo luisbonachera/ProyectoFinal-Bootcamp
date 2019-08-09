@@ -199,8 +199,11 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
         <div>
             <Form>
                 <Form.Row>
+                <img className="avatarListProfile"  
+                                 src={"images/avatar-tenis.png"} alt=""/>
+                </Form.Row>
+                <Form.Row>
                     <Form.Group controlId="formGridUsername">
-                        <Form.Label>Username</Form.Label>
                         <input type="file" className="btn btn-info" placeholder="Enter username" onChange={updateImage} />
                     </Form.Group>
                     <Form.Group controlId="formGridUsername">

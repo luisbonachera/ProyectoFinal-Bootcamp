@@ -27,6 +27,9 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
 
     const player = props.players.find(p => p.id_player === +id);
     console.log(player);
+    // if(!player){
+    //     return null;
+    // }
 
 
 
@@ -58,6 +61,7 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
                             props.deletePlayer(id);
                             const playerNull: IPlayer = {
                                 id_player: 0,
+                                avatar:"",
                                 username: "",
                                 email: "",
                                 city: "",
@@ -87,30 +91,30 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
     return (
         <div>
 
-            {props.player !== null && props.player !== undefined && (
+            {player !== null && player !== undefined && (
                 <CardDeck >
 
                     <Card style={{ display: 'flex', flexDirection: 'row' }}>
-                        <Card.Img className="avatarFrofile" variant="top"
-                            src={props.player.avatar ? "http://localhost:8080/uploads/avatar/" + props.player.avatar : "images/avatar-tenis.png"} alt="" />
+                        <Card.Img className="avatarListProfile" variant="top"
+                            src={player.avatar?"http://localhost:8080/uploads/avatar/" + player.avatar:"images/avatar-tenis.png"} alt=""/>
                         <Card.Body>
-                            <Card.Title>{props.player.username}</Card.Title>
+                            <Card.Title>{player.username}</Card.Title>
                             <Card.Text>
-                                {props.player.email}
+                                {player.email}
                             </Card.Text>
                             <Card.Text>
-                                {props.player.city}
+                                {player.city}
                             </Card.Text>
                             <Card.Text>
-                                {props.player.genre}
+                                {player.genre}
                             </Card.Text>
                             <Card.Text>
-                                {props.player.rating}
+                                {player.rating}
                             </Card.Text>
                         </Card.Body>
                         <Card.Footer >
                             <small className="text-muted">Last updated 3 mins ago</small>
-                            <Link to={"/players/edit/" + props.player.id_player}>
+                            <Link to={"/players/edit/" + player.id_player}>
                                 <Button variant="primary">Editar</Button>
                             </Link>
                             <Button variant="primary" onClick={borrar}>Borrar</Button>

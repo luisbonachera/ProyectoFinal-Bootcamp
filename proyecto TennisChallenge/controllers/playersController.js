@@ -108,55 +108,55 @@ playersController.add = (req, res) => {
 
 
 //añadir imagen avatar a un Jugador
-playersController.editImage = (req, res) => {
-  const id_player = req.params.id;
-  const p = req.body;
-  console.log(p);
-  if (p) {
-    let player = {
-      avatar: req.file.filename,
-      ...(p.username != null && { username: p.username }),
-      ...(p.email != null && { email: p.email }),
-      ...(p.password != null && { password: sha256(u.password) }),
-      ...(p.city != null && { city: p.city }),
-      ...(p.rating != null && { rating: p.rating }),
-      ...(p.genre != null && { genre: p.genre })
-    };
-    if (
-      player.avatar &&
-      player.username &&
-      player.email &&
-      player.password &&
-      player.city &&
-      player.rating &&
-      player.genre
-    ) {
-      console.log(player);
-      playersModel
-        .editImage(player,id_player)
-        .then(rows => {
-          res.send({
-            type: "success",
-            data: rows
-          });
-        })
-        .catch(err => {
-          res.send({
-            type: "error",
-            data: err
-          });
-        });
-    } else {
-      res.send({
-        type: "error, algun o algunos campos vienen vacio"
-      });
-    }
-  } else {
-    res.send({
-      type: "error el body esta vacio"
-    });
-  }
-};
+// playersController.editImage = (req, res) => {
+//   const id_player = req.params.id;
+//   const p = req.body;
+//   console.log(p);
+//   if (p) {
+//     let player = {
+//       avatar: req.file.filename,
+//       ...(p.username != null && { username: p.username }),
+//       ...(p.email != null && { email: p.email }),
+//       ...(p.password != null && { password: sha256(u.password) }),
+//       ...(p.city != null && { city: p.city }),
+//       ...(p.rating != null && { rating: p.rating }),
+//       ...(p.genre != null && { genre: p.genre })
+//     };
+//     if (
+//       player.avatar &&
+//       player.username &&
+//       player.email &&
+//       player.password &&
+//       player.city &&
+//       player.rating &&
+//       player.genre
+//     ) {
+//       console.log(player);
+//       playersModel
+//         .editImage(player,id_player)
+//         .then(rows => {
+//           res.send({
+//             type: "success",
+//             data: rows
+//           });
+//         })
+//         .catch(err => {
+//           res.send({
+//             type: "error",
+//             data: err
+//           });
+//         });
+//     } else {
+//       res.send({
+//         type: "error, algun o algunos campos vienen vacio"
+//       });
+//     }
+//   } else {
+//     res.send({
+//       type: "error el body esta vacio"
+//     });
+//   }
+// };
 
 // editarte a ti mismo como Jugador o editar a otro si eres Administrador
 playersController.edit = (req, res) => {
@@ -170,40 +170,56 @@ playersController.edit = (req, res) => {
   try {
     // console.log(jwt.verify(token,"mysecret"));
     const decoded = jwt.verify(token, "mysecret");
+    console.log(decoded)
+    console.log(p)
+    console.log(id_player)
+    console.log("file "+ req.file.filename)
+    console.log(typeof(req.file.filename))
     if (decoded.isAdmin || decoded.id_player === +id_player) {
       console.log("entrar");
       let player = {
-        ...(p.username != null && { username: p.username }),
-        ...(p.email != null && { email: p.email }),
-        ...(p.password != null && { password: sha256(p.password) }),
-        ...(p.city != null && { city: p.city }),
-        ...(p.rating != null && { rating: p.rating }),
-        ...(p.genre != null && { genre: p.genre })
+        ...(req.file.filename != "" && {avatar: req.file.filename}),
+        ...(p.username != "" && { username: p.username }),
+        ...(p.email != "" && { email: p.email }),
+        ...(p.password != "" && p.password != null && { password: sha256(p.password) }),
+        ...(p.city != "" && { city: p.city }),
+        ...(p.rating != "" && { rating: +p.rating }),
+        ...(p.genre != "" && { genre: p.genre })
       };
+      console.log("player");
+      console.log(player);
       if (decoded.isAdmin) {
         console.log("entrar al isAdmin");
         player = {
           ...player,
-          ...(u.isAdmin !== null && { isAdmin: p.isAdmin ? 1 : 0 })
+          ...(p.isAdmin !== null && { isAdmin: p.isAdmin==="1" ? 1 : 0 })
         };
       }
-      console.log("rol admin:" + u.isAdmin);
-      playersModel
-        .edit(player, id_player)
+      console.log("rol admin:" + decoded.isAdmin);
+      console.log(player);
+      playersModel.edit(player, id_player)
         .then(rows => {
-          console.log("guayEditController");
-          res.send(rows);
+          console.log("guayEditController " + rows);
+          playersModel.listById(id_player)
+          .then(rows => {
+            console.log("guayListController en EditController " + rows);
+            res.send(rows);
+          })
+          .catch(err => {
+            console.log(err);
+            res.status(401).send("ErrorListController en EditController....Petaaaaso " + err);
+          });
         })
         .catch(err => {
           console.log(err);
-          res.send("ErrorEditController....Petaaaaso");
+          res.status(401).send("ErrorEditController....Petaaaaso " + err);
         });
     } else {
       // error tu no puedes editar
       res.status(401).send("You don`t have permission for edit");
     }
   } catch (e) {
-    res.status(401).send("You don`t have permission for edit" + e);
+    res.status(401).send("You don`t have permission for edit " + e);
   }
 };
 

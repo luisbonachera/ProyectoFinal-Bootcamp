@@ -1,17 +1,15 @@
 import React from 'react';
 
 const Home = () => {
-    return (
-        <div>
+    return (      
             <div className="container-fluid tituloIndex text-center">
 
-                <h1> <span>Registrate</span> y <span>Difruta</span>  </h1>
+                <h1> Registrate y Difruta  </h1>
                 <br />
-                <h1><span>del tenis con otros jugadores</span> </h1>
+                <h1>del tenis con otros jugadores </h1>
                 <br />
-                <h1> <span>  de tu zona.</span> </h1>
+                <h1>   de tu zona. </h1>
             </div>
-        </div>
     )
 };
 

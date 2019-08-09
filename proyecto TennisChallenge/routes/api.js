@@ -35,9 +35,13 @@ router.get('/players', playersController.list);
 const storage = multer.diskStorage({
   destination: (_req, _file, cb) => {
     cb(null, "public/uploads/avatar");
+    console.log("entral al storage")
   },
   filename: (_req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
+    console.log("entra al filename");
+    console.log(file.cb);
+    console.log(file);
   }
 });
 
@@ -49,13 +53,13 @@ const uploadAvatar = multer({
 //crear un Jugador
 router.post('/add', uploadAvatar, playersController.add);
 
-router.put('/addImage/:id', uploadAvatar, playersController.editImage);
+// router.put('/addImage/:id', uploadAvatar, playersController.editImage);
 
 
 
 
 // editar un Jugador 
-router.put('/players/:id', playersController.edit);
+router.put('/players/:id',uploadAvatar, playersController.edit);
 
 //editar Campo borrado a true (es como borrar)
 router.put('/players/erased/:id', playersController.editErased);

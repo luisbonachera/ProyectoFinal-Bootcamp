@@ -94,9 +94,10 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
                                                         .then((lista: IPlayer[]) => {
                                                             console.log(lista);
                                                             console.log("va bien");
-                                                            props.setPlayers(lista);
+                                                            
                                                             console.log(lista);
                                                             props.setPlayer(player);
+                                                            props.setPlayers(lista);
                                                             props.setToken(token);
                                                             props.history.push("/");
 

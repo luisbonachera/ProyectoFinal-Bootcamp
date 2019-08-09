@@ -6,7 +6,7 @@ import { IGlobalState } from '../reducers/reducers';
 import * as actions from '../actions/actions'
 import { IPlayer } from '../interfaceIPlayer';
 // import bootstrap from 'react-bootstrap';
-
+import logo from '../images/logo-sin-letras.png';
 
 interface IProps { }
 
@@ -19,52 +19,86 @@ interface IPropsGlobal {
 
 
 const NavBar: React.FC<IProps & IPropsGlobal> = props => {
+    // const [username, setUsername] = React.useState(props.player.username);
+    // const [avatar, setAvatar] = React.useState(props.player.avatar);
+    // const [id_player, setId_player] = React.useState(props.player.id_player);
+    
+    // const actualizar = () => {
+    //     setUsername(props.player.username)
+    //     setAvatar(props.player.avatar);
+    //     setId_player(props.player.id_player);
+        
+    //     console.log("entra el funcion actualizar hooks");
+    //     console.log("username dentro de funcion hooks :" + username);
+    //     console.log("avatar  dentro de funcion hooks :" + avatar);
+    //     console.log("id_player  dentro de funcion hooks :" + id_player);
+        
+    // }
+
+    // React.useEffect(()=>console.log("se renderiza"),[props.player]);
+    console.log(props.player);
+    // if (player === ""){
+    //     return null;
+    // }
+
+    
+
+    // console.log("username despues del useEffect :" + username);
+    // console.log("avatar despues del useEffect :" + avatar);
+    // console.log("id_player despues del useEffect :" + id_player);
     return (
         <div>
             
-            <Navbar collapseOnSelect style={{position:"fixed", width:"100vw"}} expand="lg" bg="dark" variant="dark">
-                <Navbar.Brand> <Link to="/">TenisChallenge</Link></Navbar.Brand>
+            <Navbar collapseOnSelect style={{position:"fixed", width:"100vw"}} expand="lg"  variant="light">
+                <Navbar.Brand>
+                    
+                     <Link to="/">
+                        <img src={logo} className="logo"/>
+                        <span className="span-logo">Tennis Challenge</span>
+                     </Link>
+                     </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     {props.token && (
-                        <Nav className="mr-auto">
+                        <>
+                            <Link className="span-logo"  to="/players">Jugadores</Link>
+                            <Link className="span-logo" to="/">Pistas</Link>
 
-                            <Link to="/players">Jugadores</Link>
-                            <Link to="/">Pistas</Link>
-
-                        </Nav>
+                        </>
                     )}
-                    <Nav>
+                    <>
                         {!props.token && (
                             <>
-                                <Link to="/auth">LogIn</Link>
-                                <Link to="/add">LogUp</Link>
+                                <Link className="span-logo" to="/auth">Iniciar Sesion</Link>
+                                <Link className="span-logo" to="/add">Registrarse</Link>
                             </>
                         )}
                         {props.token && (
                             <>  
-                                <div >
                                  
-                                 <Card.Img className="avatarNavbar" variant="top" 
-                                 src={props.player.avatar?"http://localhost:8080/uploads/avatar/" + props.player.avatar:"images/avatar-tenis.png"} alt=""/>
-                                </div>
+                                 
                                 
-                                <Link to="/"></Link>
-                                <NavDropdown title={props.player.username} id="collasible-nav-dropdown">
-                                <Link to="/mailTray" >Correo</Link>
+                               
+                                {/* {console.log(props.player.username)} */}
+                                <NavDropdown className="span-logo" title={props.player.username} id="collasible-nav-dropdown">
+                                <Link className="span-logo" to="/mailTray" >Correo</Link>
                                 <br/>
-                                <Link to={"/profile/"+ props.player.id_player}>Perfil</Link>
-                                   
+                                <Link className="span-logo" to={"/profile/"+ props.player.id_player}>Perfil</Link>
+                                <br/>
+                                <Link className="span-logo" to="/" onClick={() => props.setToken("")}>Cerrar Sesión</Link>
                                     {/* <NavDropdown.Item href="#action/3.1">>Mail</NavDropdown.Item> */}
-                                    <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                                    {/* <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
                                     <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                                     <NavDropdown.Divider />
-                                    <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                                    <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item> */}
+                                    
                                 </NavDropdown>
-                                <Link to="/" onClick={() => props.setToken("")}>LogOut</Link>
+                                <Card.Img className="avatarNavbar" variant="top"  
+                                  src={props.player.avatar?"http://localhost:8080/uploads/avatar/" + props.player.avatar:"images/avatar-tenis.png"} alt=""/>
+                                
                             </>
                         )}
-                    </Nav>
+                    </>
                 </Navbar.Collapse>
             </Navbar>
         </div>

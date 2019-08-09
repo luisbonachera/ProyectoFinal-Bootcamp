@@ -27,6 +27,30 @@ playersModel.list = (isAmin) => {
     })
 };
 
+//Listar Players con campo borrado == true
+playersModel.listById = (id_player) => {
+    return new Promise((resolve, reject) => {
+        // if(!validate(data)) reject("Invalid data")
+        let SQL_FIND_ALL_PLAYERS = 'SELECT id_player,username,email,city,genre,rating,avatar,isAdmin';
+
+        // if(isAmin){
+        //     console.log("entra en la queray Admin= true")
+        //     SQL_FIND_ALL_PLAYERS = SQL_FIND_ALL_PLAYERS + ', isAdmin';
+        // }
+        dbConn.query(
+            SQL_FIND_ALL_PLAYERS + " FROM players WHERE erased = 0 AND id_player = ? ", [id_player],
+            (err, result) => {
+                console.log("Hay respuesta de la db es :" + err);
+                if (err) reject(err);
+                else {
+                    console.log(result);
+                    resolve(result);
+                }
+            }
+        );
+    })
+};
+
 //listar por filtros NO USADO
 playersModel.listFiltros = (isAmin,filtros) => {
     return new Promise((resolve, reject) => {

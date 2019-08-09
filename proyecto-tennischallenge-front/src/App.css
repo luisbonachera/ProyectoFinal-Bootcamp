@@ -1,5 +1,11 @@
 .App {
   text-align: center;
+    background-image: url("./images/fondo-pelota.jpg");
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 .App-logo {
@@ -9,15 +15,16 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  /* background-color: #282c34; */
   min-height: 100vh;
-  
+  width: 100% !important;
+  height: 100% !important;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  /* color: white; */
 }
 
 .App-link {
@@ -27,6 +34,7 @@
 .avatarNavbar{
   height: 50px;
   width: auto;
+  border-radius: 20%;
 }
 
 .avatarFrofile{
@@ -36,5 +44,47 @@
 
 .avatarListProfile{
 height: 200px;
-width: auto;
+width:  auto;
+}
+.logo{
+  height: 95px;
+}
+.navbar-collapse{
+  justify-content: flex-end;
+}
+.navbar-nav a{
+  color: #000 !important;
+}
+
+a{
+  color: black !important;
+  text-decoration :none;  
+}
+
+span:hover, a:hover{
+  color: grey !important;
+  text-decoration: none;
+}
+
+.dropdown-menu a, .card-deck a{
+  color: black !important;
+}
+a:hover{
+  text-decoration: none !important;
+}
+.dropdown-menu a:hover{
+  background-color: grey !important;
+}
+.tituloIndex h1{
+  color:#bfbfbf !important;
+}
+.span-logo{
+  color: black !important;
+}
+.span-logo {
+padding-right: 35px;
+font-size: 25px;
+}
+.dropdown-menu.show{
+  width: 183px;
 }
