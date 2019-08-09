@@ -4,10 +4,11 @@ const jwt = require("jsonwebtoken");
 
 //crea un mensaje
 messageController.add = (req, res) => {
-    console.log(req.headers.authorization);
-    const token = req.headers.authorization.replace("Bearer ", "");
-    console.log(token);
+
     try {
+        console.log(req.headers.authorization);
+        const token = req.headers.authorization.replace("Bearer ", "");
+        console.log(token);
         // console.log(jwt.verify(token,"mysecret"));
         const decoded = jwt.verify(token, "mysecret");
         let msg = req.body;
@@ -52,17 +53,15 @@ messageController.add = (req, res) => {
     } catch (err) {
         res.send("error al verficar token en enviar mensaje o del body del msg");
     }
-
 }
 
 
 //mensaje visto por destinatario(editar campo visto)
 messageController.edit = (req, res) => {
-    console.log(req.headers.authorization);
-    const token = req.headers.authorization.replace("Bearer ", "");
-    console.log(token);
     try {
-        // console.log(jwt.verify(token,"mysecret"));
+        console.log(req.headers.authorization);
+        const token = req.headers.authorization.replace("Bearer ", "");
+        console.log(token);
         const decoded = jwt.verify(token, "mysecret");
         let id_player_destiny = decoded.id_player;
         let id_message = req.params.id;
@@ -88,41 +87,35 @@ messageController.edit = (req, res) => {
                         data: err
                     });
                 });
-
         } else {
             res.status(401).send("error el mensaje tiene algun campo vacio");
         }
     } catch (err) {
         res.status(401).send("error al verficar token en enviar mensaje o del body del msg");
     }
-
 }
 
 // Listar mis mensajes join user
 messageController.list = (req, res) => {
-    console.log(req.headers.authorization);
-    const token = req.headers.authorization.replace("Bearer ", "");
-    console.log(token);
+
     try {
-        // console.log(jwt.verify(token,"mysecret"));
+        console.log(req.headers.authorization);
+        const token = req.headers.authorization.replace("Bearer ", "");
+        console.log(token);
         const decoded = jwt.verify(token, "mysecret");
-        // let id_player_destiny = decoded.id_player;
-        // let id_player_sent = decoded.id_player;
-        // console.log(id_player_destiny);
-        // console.log(id_player_sent);
-       let id_player = decoded.id_player;
+        let id_player = decoded.id_player;
         if (id_player) {
             console.log("1");
             messageModel.list(id_player)
                 .then(rows => {
-                    if(rows.length > 0){
+                    if (rows.length > 0) {
                         console.log("bien");
                         res.send(rows);
-                    }else{
+                    } else {
                         console.log("no hay mensajes");
                         res.send(rows);
                     }
-                   
+
                 })
                 .catch(err => {
                     console.log("mal");
@@ -138,7 +131,6 @@ messageController.list = (req, res) => {
     } catch (err) {
         res.status(401).send("error al verficar token en enviar mensaje o del body del msg");
     }
-
 }
 
 

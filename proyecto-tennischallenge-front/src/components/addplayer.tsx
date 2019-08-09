@@ -5,7 +5,6 @@ import * as actions from '../actions/actions';
 import { connect } from 'react-redux';
 import { IPlayer } from '../interfaceIPlayer';
 import jwt from 'jsonwebtoken';
-import { decode } from 'punycode';
 
 interface IProps { }
 

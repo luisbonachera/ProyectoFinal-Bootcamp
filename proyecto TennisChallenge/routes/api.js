@@ -4,6 +4,7 @@ const authController = require('../controllers/authController');
 const playersController = require('../controllers/playersController');
 const messageController = require('../controllers/messageController');
 const sportCenterController = require('../controllers/sportCenterController');
+const friendsController = require('../controllers/friendsController');
 const multer = require("multer");
 const path = require("path");
 
@@ -93,5 +94,20 @@ router.put('/sportCenter/edit/:id', sportCenterController.edit);
 
 // borrar Centro Deportivo si eres admin
 router.delete('/sportCenter/:id', sportCenterController.delete);
+
+
+
+//crear un amigo
+router.post('/friends/add', friendsController.add);
+
+// Listar mis amigos
+router.get('/friends', friendsController.list);
+
+//Aceptar amistad y poner a watched=true la amistad
+router.put('/friends/accepted/:id', friendsController.edit);
+
+// borrar peticion de amistad 
+router.delete('/friends/delete/:id', friendsController.delete);
+
 
 module.exports = router;

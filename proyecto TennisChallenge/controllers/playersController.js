@@ -60,7 +60,7 @@ playersController.add = (req, res) => {
   const p = req.body;
   if (p) {
     let player = {
-      ...(req.file.filename && {avatar: req.file.filename}),
+      ...(req.file.filename && { avatar: req.file.filename }),
       ...(p.username != null && { username: p.username }),
       ...(p.email != null && { email: p.email }),
       ...(p.password != null && { password: sha256(p.password) }),
@@ -173,12 +173,12 @@ playersController.edit = (req, res) => {
     console.log(decoded)
     console.log(p)
     console.log(id_player)
-    console.log("file "+ req.file.filename)
-    console.log(typeof(req.file.filename))
+    console.log("file " + req.file.filename)
+    console.log(typeof (req.file.filename))
     if (decoded.isAdmin || decoded.id_player === +id_player) {
       console.log("entrar");
       let player = {
-        ...(req.file.filename != "" && {avatar: req.file.filename}),
+        ...(req.file.filename != "" && { avatar: req.file.filename }),
         ...(p.username != "" && { username: p.username }),
         ...(p.email != "" && { email: p.email }),
         ...(p.password != "" && p.password != null && { password: sha256(p.password) }),
@@ -192,7 +192,7 @@ playersController.edit = (req, res) => {
         console.log("entrar al isAdmin");
         player = {
           ...player,
-          ...(p.isAdmin !== null && { isAdmin: p.isAdmin==="1" ? 1 : 0 })
+          ...(p.isAdmin !== null && { isAdmin: p.isAdmin === "1" ? 1 : 0 })
         };
       }
       console.log("rol admin:" + decoded.isAdmin);
@@ -201,14 +201,14 @@ playersController.edit = (req, res) => {
         .then(rows => {
           console.log("guayEditController " + rows);
           playersModel.listById(id_player)
-          .then(rows => {
-            console.log("guayListController en EditController " + rows);
-            res.send(rows);
-          })
-          .catch(err => {
-            console.log(err);
-            res.status(401).send("ErrorListController en EditController....Petaaaaso " + err);
-          });
+            .then(rows => {
+              console.log("guayListController en EditController " + rows);
+              res.send(rows);
+            })
+            .catch(err => {
+              console.log(err);
+              res.status(401).send("ErrorListController en EditController....Petaaaaso " + err);
+            });
         })
         .catch(err => {
           console.log(err);
@@ -260,14 +260,12 @@ playersController.editErased = (req, res) => {
 
 // borrarte a ti mismo como Jugador o borrar a otro si eres Administrador
 playersController.delete = (req, res) => {
-  // decoded token
-  const id_player = req.params.id;
-  console.log("id de url: " + id_player);
-  console.log(req.headers.authorization);
-  const token = req.headers.authorization.replace("Bearer ", "");
-  console.log(token);
   try {
-    // console.log(jwt.verify(token,"mysecret"));
+    const id_player = req.params.id;
+    console.log("id de url: " + id_player);
+    console.log(req.headers.authorization);
+    const token = req.headers.authorization.replace("Bearer ", "");
+    console.log(token);
     const decoded = jwt.verify(token, "mysecret");
     console.log(decoded.id_player);
     if (decoded.isAdmin || decoded.id_player === +id_player) {

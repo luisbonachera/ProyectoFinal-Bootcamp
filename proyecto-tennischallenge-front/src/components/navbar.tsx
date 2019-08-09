@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Nav, NavDropdown, Card } from 'react-bootstrap';
+import { Navbar, NavDropdown, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { IGlobalState } from '../reducers/reducers';
@@ -53,7 +53,7 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                 <Navbar.Brand>
                     
                      <Link to="/">
-                        <img src={logo} className="logo"/>
+                        <img src={logo} className="logo" alt="imagen de logo de mi pagina"/>
                         <span className="span-logo">Tennis Challenge</span>
                      </Link>
                      </Navbar.Brand>
