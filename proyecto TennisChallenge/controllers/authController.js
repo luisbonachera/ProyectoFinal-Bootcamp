@@ -14,7 +14,8 @@ authController.checkUser = (req, res) => {
       console.log("guayCheckUSer");
       if (rows.length == 1) {
         console.log("user: " + rows[0].username + " rol: " + rows[0].isAdmin);
-        let isAdmin = rows[0].admin ? true : false;
+        let isAdmin = rows[0].isAdmin? true : false;
+        console.log("isAdmin" + isAdmin)
         var token = jwt.sign(
           {
             id_player: rows[0].id_player,

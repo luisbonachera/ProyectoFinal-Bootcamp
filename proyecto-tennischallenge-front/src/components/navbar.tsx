@@ -85,6 +85,8 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                                 <br/>
                                 <Link className="span-logo" to={"/profile/"+ props.player.id_player}>Perfil</Link>
                                 <br/>
+                                <Link className="span-logo" to={"/friends"}>Amigos</Link>
+                                <br/>
                                 <Link className="span-logo" to="/" onClick={() => props.setToken("")}>Cerrar Sesión</Link>
                                     {/* <NavDropdown.Item href="#action/3.1">>Mail</NavDropdown.Item> */}
                                     {/* <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>

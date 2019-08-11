@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { IGlobalState } from '../reducers/reducers';
 import jwt from 'jsonwebtoken';
 import * as actions from '../actions/actions';
+import { IFriendship } from '../interfaceIFriendship';
+
 
 interface IProps { }
 
@@ -15,6 +17,7 @@ interface IPropsGlobal {
     token: string;
     setToken: (token: string) => void;
     deletePlayer: (id_player: number) => void;
+    setFriendships: (friendships: IFriendship[]) => void;
 }
 
 
@@ -33,18 +36,87 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
 
 
+    const amistad = () => {
+        let decoded: any = jwt.decode(props.token);
+        console.log(decoded);
+        const id: number = +props.match.params.id_player;
+        if (decoded !== null && (id === decoded.id_player || props.player.isAdmin)) {
+            console.log(decoded);
+
+            console.log("entra al fetch");
+            console.log("Soy admin: " + props.player.isAdmin);
+            fetch("http://localhost:8080/api/friends/add", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + props.token
+                },
+                body: JSON.stringify({
+                    id_player_friend: id
+                })
+            })
+                .then(response => {
+                    if (response.ok) {
+                        ////habira que ver si es correcto o no
+                        console.log("amistad creada")
+                        fetch("http://localhost:8080/api/friends", {
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization: "Bearer " + props.token
+                            }
+                        })
+                            .then(response => {
+                                if (response.ok) {
+                                    response
+                                        .json()
+                                        .then((listaFriendship: IFriendship[]) => {
+                                            if (listaFriendship.length > 0) {
+                                                console.log(listaFriendship);
+                                                props.setFriendships(listaFriendship);
+                                                props.history.push("/players");
+
+                                            } else {
+                                                console.log("la BD no ha devuelto ningun mensaje.");
+                                            }
+                                        })
+                                        .catch(err => {
+                                            console.log("error al devolver mis mensajes." + err);
+                                        })
+                                } else {
+                                    console.log("Error en el response.ok");
+                                }
+
+
+
+                            })
+                            .catch(err => {
+                                console.log("la consulta no fue bien. ");
+                                // setError(" Error al añadir como amigo.");
+                            })
+                    } else {
+                        console.log("Error en el response.ok");
+                    }
+                }).catch(err => {
+                    console.log("error en response" + err);
+                })
+
+        } else {
+            console.log("Error en el decoded o no eres admin");
+        }
+    }
+
     const borrar = () => {
 
         if (props.token) {
             let decoded: any = jwt.decode(props.token);
-            const id:number = +props.match.params.id_player;
+            const id: number = +props.match.params.id_player;
             if (decoded !== null && (id === decoded.id_player || props.player.isAdmin)) {
                 console.log(decoded);
 
                 console.log("entra al fetch");
                 console.log("Soy admin: " + props.player.isAdmin);
                 fetch("http://localhost:8080/api/players/erased/" + id, {
-                // fetch("http://localhost:8080/api/players/" + id, {
+                    // fetch("http://localhost:8080/api/players/" + id, {
                     // method: "DELETE",
                     method: "PUT",
                     headers: {
@@ -55,17 +127,17 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                     .then(response => {
                         if (response.ok) {
                             console.log("usuario borrado")
-                            if(props.player.id_player === id){
+                            if (props.player.id_player === id) {
                                 props.setToken("");
                                 props.history.push("/");
                                 props.deletePlayer(id);
-                            }else if (props.player.isAdmin){
+                            } else if (props.player.isAdmin) {
                                 props.history.push("/players");
                                 props.deletePlayer(id);
-                            }else{
+                            } else {
                                 console.log("no deberia entrar aqui, o eres admin o te borras a ti.")
                             }
-                        }else{
+                        } else {
                             console.log("error en el response.ok");
                         }
                     })
@@ -88,8 +160,8 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                 <CardDeck >
 
                     <Card style={{ display: 'flex', flexDirection: 'row' }}>
-                    <Card.Img className="avatarListProfile" variant="top" 
-                                 src={player.avatar?"http://localhost:8080/uploads/avatar/" + player.avatar:"images/avatar-tenis.png"} alt=""/>
+                        <Card.Img className="avatarListProfile" variant="top"
+                            src={player.avatar ? "http://localhost:8080/uploads/avatar/" + player.avatar : "images/avatar-tenis.png"} alt="" />
                         <Card.Body>
                             <Card.Title>{player.username}</Card.Title>
                             <Card.Text>
@@ -108,14 +180,18 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                 <Button variant="primary">Enviar Mensaje</Button>
 
                             </Link>
+
+                            <Button variant="primary" onClick={amistad}>Peticion Amistad</Button>
+
+
                             {props.player.isAdmin && (
                                 <>
-                                <Link to={"/players/edit/" + player.id_player}>
-                                    <Button variant="primary">Editar</Button>
-                                </Link>
-                                <Link to={"/players"} onClick={borrar}>
-                                    <Button variant="primary">Borrar</Button>
-                                </Link>
+                                    <Link to={"/players/edit/" + player.id_player}>
+                                        <Button variant="primary">Editar</Button>
+                                    </Link>
+                                    <Link to={"/players"} onClick={borrar}>
+                                        <Button variant="primary">Borrar</Button>
+                                    </Link>
                                 </>
                             )}
                         </Card.Footer>
@@ -136,7 +212,8 @@ const mapStateToProps = (state: IGlobalState) => ({
 
 const mapDispachToProps = {
     setToken: actions.setToken,
-    deletePlayer: actions.deletePlayer
+    deletePlayer: actions.deletePlayer,
+    setFriendships: actions.setFriendships
 }
 
 export default connect(

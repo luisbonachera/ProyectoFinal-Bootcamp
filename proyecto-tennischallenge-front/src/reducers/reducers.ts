@@ -6,18 +6,21 @@ import { playersReducer } from './playersReducer';
 import { IMsg } from '../interfaceIMsg';
 import { messagesReducer } from './messagesReducer';
 import { playerReducer } from './playerReducer';
-
+import { IFriendship } from '../interfaceIFriendship';
+import { friendshipsReducer } from './friendshipReducers';
 
 export interface IGlobalState {
     token: string;
     players: IPlayer [];
     player: IPlayer;
     msgs: IMsg [];
+    friendships: IFriendship [];
 };
 
 export const reducers = combineReducers({
     token: tokenReducer,
     players: playersReducer,
     player: playerReducer,
-    msgs: messagesReducer
+    msgs: messagesReducer,
+    friendships: friendshipsReducer
 })

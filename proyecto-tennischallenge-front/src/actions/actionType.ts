@@ -1,5 +1,6 @@
 import { IPlayer } from "../interfaceIPlayer";
 import { IMsg } from "../interfaceIMsg";
+import { IFriendship } from "../interfaceIFriendship";
 
 
 type TSetTokenAction = {
@@ -37,4 +38,9 @@ type TUpdatePlayersAction = {
     player: IPlayer;
 }
 
-export type TAction = TSetTokenAction | TSetPlayersAction | TSetPlayerAction | TSetMsgsAction | TDeletePlayerAction | TUpdatePlayerAction | TUpdatePlayersAction;
+type TsetFriendshipAction = {
+    type : "SET_FRIENDSHIPS";
+    friendships: IFriendship [];
+}
+
+export type TAction = TSetTokenAction | TSetPlayersAction | TSetPlayerAction | TSetMsgsAction | TDeletePlayerAction | TUpdatePlayerAction | TUpdatePlayersAction | TsetFriendshipAction;

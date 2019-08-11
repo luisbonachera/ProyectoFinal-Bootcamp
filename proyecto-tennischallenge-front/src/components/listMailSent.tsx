@@ -6,10 +6,12 @@ import { IMsg } from '../interfaceIMsg';
 import * as actions from '../actions/actions';
 import jwt from 'jsonwebtoken';
 import { Link } from 'react-router-dom';
+import { IPlayer } from '../interfaceIPlayer';
 
 
 interface IPropsGloblal {
     token: string,
+    player: IPlayer,
     msgs: IMsg[],
     setMessages: (msgs: IMsg[]) => void;
 }
@@ -35,10 +37,11 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
                             // setMessagesReceived(msgsReceived);
                             setError("");
                             setMessagesHooks(msgsSent);
-                            console.log("error:" + error);
+                            
                             console.log("msgsSent");
                             console.log(msgsSent);
                         } else {
+                            console.log("error:");
                             console.log("no hay mensajes enviados");
                             setError("no hay mensajes enviados");
                             // props.history.push("/mailTray/received");
@@ -64,10 +67,8 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
     console.log("mensajes sent fuera de useEffect:");
     console.log(messagesHooks);
 
-    const decoded = jwt.decode(props.token);
-    let myUsername: string;
-    if (decoded && typeof decoded !== 'string') {
-        myUsername = decoded.username
+    if (!props.player) {
+       return null;
     }
     
     return (
@@ -82,7 +83,7 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
                     <div className="row">
                         <div className="col">
                             {/* {m.id_player_sent} */}
-                            From: {myUsername}
+                            From: {props.player.username}
                         </div>
                         <div className="col">
                             {/* {m.id_player_destiny} */}
@@ -115,7 +116,8 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
 
 const mapStateToProps = (state: IGlobalState) => ({
     token: state.token,
-    msgs: state.msgs
+    msgs: state.msgs,
+    player: state.player
 
 });
 

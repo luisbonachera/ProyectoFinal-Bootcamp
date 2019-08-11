@@ -45,7 +45,7 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
     // };
 
     const updateInputListPlayerTo = (event: any) => {
-        SetinputListPlayerTo(event.currentTarget.value);
+        SetinputListPlayerTo(event.target.value);
         // setError("");
     };
 
@@ -56,8 +56,10 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
             let id_player_destiny;
             if(soyYo){
                 id_player_destiny = inputListPlayerTo;
+                console.log("voy a enviar mensaje a alguien: " + id_player_destiny);
             }else{
                 id_player_destiny = playerDestiny.id_player;
+                console.log("voy a enviar mensaje a " +  id_player_destiny);
             }
             fetch("http://localhost:8080/api/msgs/add", {
                 method: "POST",
@@ -92,8 +94,11 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                                                 props.history.push("/mailTray/sent");
 
                                             } else {
-                                                console.log("la BD no ha devuelto ningun mensaje.")
+                                                console.log("la BD no ha devuelto ningun mensaje.");
                                             }
+                                        })
+                                        .catch(err => {
+                                            console.log("error al devolver mis mensajes." + err);
                                         })
 
                                 } else {
@@ -110,6 +115,8 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                 .catch(err => {
                     console.log("Error," + err)
                 })
+        }else{
+            console.log(" no existe playerDestiny");
         }
     }
 
@@ -127,6 +134,7 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
 
 
     console.log(playerDestiny);
+    console.log("persona de destino: " + inputListPlayerTo)
     return (
         <div>
 
@@ -148,7 +156,8 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                     {soyYo && (
                         <Form.Group as={Col} controlId="formGridState">
                             <Form.Label>To</Form.Label>
-                            <Form.Control as="select" type="text" value={inputListPlayerTo} onChange={updateInputListPlayerTo}>
+                            <Form.Control as="select" type="text" value={inputListPlayerTo +""} onChange={updateInputListPlayerTo}>
+                            <option selected hidden>Elige destinatario</option>
                                 {props.players.sort(function (a, b) {
                                     let nameA = a.username.toLowerCase();
                                     let nameB = b.username.toLowerCase();
@@ -157,9 +166,16 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                                     if (nameA > nameB)
                                         return 1;
                                     return 0; //default return value (no sorting)
-                                }).map(p => (
-                                    <option value={p.id_player}>{p.username}</option>
-                                ))}
+                                }).map((p,i) => (
+                                    // (i=== 0) && (
+                                    //     <option defaultValue={p.id_player+""}>{p.username}</option>
+                                        
+                                    // ) ||  (
+                                    <option value={p.id_player+""}>{p.username}</option>
+                                   
+                                    // )
+                                    )
+                    )}
 
                             </Form.Control>
 

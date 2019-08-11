@@ -7,10 +7,12 @@ import * as actions from '../actions/actions';
 import jwt from 'jsonwebtoken';
 import { setMessages } from '../actions/actions';
 import { Link } from 'react-router-dom';
+import { IPlayer } from '../interfaceIPlayer';
 
 interface IPropsGloblal {
     token: string,
     msgs: IMsg[],
+    player: IPlayer,
     setMessages: (msgs: IMsg[]) => void;
 }
 
@@ -109,11 +111,9 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
     console.log("mensajes received fuera de useEffect:");
     console.log(messagesHooks);
 
-    const decoded = jwt.decode(props.token);
-    let myUsername: string;
-    if (decoded && typeof decoded !== 'string') {
-        myUsername = decoded.username
-    }
+    if (!props.player) {
+        return null;
+     }
 
     return (
 
@@ -131,7 +131,7 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
                             </div>
                             <div className="col">
                                 {/* {m.id_player_destiny} */}
-                                To: {myUsername}
+                                To: {props.player.username}
                             </div>
                             <div className="col">
                                 Asunto: {m.subject}
@@ -159,7 +159,8 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
 
 const mapStateToProps = (state: IGlobalState) => ({
     token: state.token,
-    msgs: state.msgs
+    msgs: state.msgs,
+    player: state.player
 
 });
 

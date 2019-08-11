@@ -2,6 +2,7 @@ import { ActionCreator } from "redux";
 import { TAction } from "./actionType";
 import { IPlayer } from "../interfaceIPlayer";
 import { IMsg } from '../interfaceIMsg';
+import { IFriendship } from "../interfaceIFriendship";
 
 
 
@@ -38,4 +39,9 @@ export const updatePlayer: ActionCreator<TAction> = (player: IPlayer) => ({
 export const updatePlayers: ActionCreator<TAction> = (player: IPlayer) => ({
     type: "UPDATE_PLAYERS",
     player
+});
+
+export const setFriendships: ActionCreator<TAction> = (friendships: IFriendship []) => ({
+    type: "SET_FRIENDSHIPS",
+    friendships
 });
