@@ -24,6 +24,7 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
     const [inputSex, setInputSex] = React.useState("");
     const [inputRatingFrom, setInputRatingFrom] = React.useState(1);
     const [inputRatingTo, setInputRatingTo] = React.useState(5);
+    const [filteresList, setFilterestList] = React.useState<IPlayer[]>([]);
 
 
     const UpdateUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -117,12 +118,9 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
 
     let lista = props.players;
 
-    const listar = () => {
+    const filtrar = () => {
 
-
-        // else {
-
-        lista = props.players.filter(
+        lista = lista.filter(
             p => p.username.toLocaleLowerCase().startsWith(inputUsername.toLocaleLowerCase())
             // ).slice(0, 5
         )
@@ -132,57 +130,61 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
 
             .filter(p => !inputSex || (p.genre === inputSex.toLocaleUpperCase()));
 
-            if(lista.length === 0){
-                setError("No tienes amigos con estos requisitos.")
-            }else{
-                setError("");
+        // if (lista.length === 0) {
+        //     setError("No tienes amigos con estos requisitos.");
+        // } else {
+        //     setError("");
+
+
+            if (inputUsername) {
+                lista.sort(function (a, b) {
+                    let nameA = a.username.toLowerCase();
+                    let nameB = b.username.toLowerCase();
+                    if (nameA < nameB) //sort string ascending
+                        return -1;
+                    if (nameA > nameB)
+                        return 1;
+                    return 0; //default return value (no sorting)
+                })
+            }
+            if (inputCity) {
+                lista.sort(function (a, b) {
+                    let cityA = a.city.toLowerCase();
+                    let cityB = b.city.toLowerCase();
+                    if (cityA < cityB) //sort string ascending
+                        return -1;
+                    if (cityA > cityB)
+                        return 1;
+                    return 0; //default return value (no sorting)
+                })
             }
 
-        if (inputUsername) {
-            lista.sort(function (a, b) {
-                let nameA = a.username.toLowerCase();
-                let nameB = b.username.toLowerCase();
-                if (nameA < nameB) //sort string ascending
-                    return -1;
-                if (nameA > nameB)
-                    return 1;
-                return 0; //default return value (no sorting)
-            })
-        }
-        if (inputCity) {
-            lista.sort(function (a, b) {
-                let cityA = a.city.toLowerCase();
-                let cityB = b.city.toLowerCase();
-                if (cityA < cityB) //sort string ascending
-                    return -1;
-                if (cityA > cityB)
-                    return 1;
-                return 0; //default return value (no sorting)
-            })
-        }
+            if (inputRatingFrom || inputRatingTo) {
+                lista.sort(function (a, b) { return a.rating - b.rating })
+            }
 
-        if (inputRatingFrom || inputRatingTo) {
-            lista.sort(function (a, b) { return a.rating - b.rating })
-        }
-
-        if (inputSex) {
-            lista.sort(function (a, b) {
-                let genreA = a.genre.toLowerCase();
-                let genreB = b.genre.toLowerCase();
-                if (genreA < genreB) //sort string ascending
-                    return -1;
-                if (genreA > genreB)
-                    return 1;
-                return 0; //default return value (no sorting)
-            })
-        }
+            if (inputSex) {
+                lista.sort(function (a, b) {
+                    let genreA = a.genre.toLowerCase();
+                    let genreB = b.genre.toLowerCase();
+                    if (genreA < genreB) //sort string ascending
+                        return -1;
+                    if (genreA > genreB)
+                        return 1;
+                    return 0; //default return value (no sorting)
+                })
+            }
+            console.log("lista despues de filtrar")
+            console.log(lista);
+            setFilterestList(lista);
+        // }
     }
-    
-    React.useEffect(listar, [inputUsername,inputCity,inputRatingFrom,inputRatingTo,inputSex]);
-    
-    
 
-    if (!lista) {
+    React.useEffect(filtrar, [inputUsername, inputCity, inputRatingFrom, inputRatingTo, inputSex]);
+
+
+
+    if (!filteresList){
         return null;
     }
 
@@ -288,14 +290,14 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
 
                     .filter(p => !inputSex || (p.genre === inputSex.toLocaleUpperCase())) */}
 
-                    {lista.map(p => (
+                    {filteresList && filteresList.map(p => (
                         // {props.players.map(u =>
                         <Link key={p.id_player} to={"/players/" + p.id_player} >
                             {/* <Card style={{ display: 'flex', flexDirection: 'row' }}> */}
                             <Card>
 
-                            <Card.Img className="avatarListProfile" variant="top" 
-                                 src={p.avatar?"http://localhost:8080/uploads/avatar/" + p.avatar:"images/avatar-tenis.png"} alt=""/>
+                                <Card.Img className="avatarListProfile" variant="top"
+                                    src={p.avatar ? "http://localhost:8080/uploads/avatar/" + p.avatar : "images/avatar-tenis.png"} alt="" />
                                 <Card.Body >
                                     <Card.Title>{p.username}</Card.Title>
                                     <Card.Text>

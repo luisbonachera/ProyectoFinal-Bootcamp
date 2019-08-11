@@ -11,6 +11,7 @@ interface IProps { }
 interface IPropsGlobal {
     setToken: (token: string) => void;
     setPlayer: (player: IPlayer) => void;
+    setPlayers: (players: IPlayer[]) => void;
 }
 
 const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
@@ -130,51 +131,84 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                                                     genre: decoded.genre,
                                                     rating: +decoded.rating
                                                 }
-                                                console.log("entra");
-                                                console.log(player);
-                                                props.setPlayer(player);
-                                                props.setToken(token);
-                                                props.history.push("/");
 
-                                                // const formData = new FormData();
-                                                // formData.append("file", image);
-                                                // formData.append("id", decoded.id_player);
+                                                fetch("http://localhost:8080/api/players", {
+                                                    headers: {
+                                                        "Content-type": "application/json",
+                                                        Authorization: "Bearer " + token
+                                                    }
+                                                })
+                                                    .then(response => {
+                                                        if (response.ok) {
+                                                            response
+                                                                .json()
+                                                                .then((lista: IPlayer[]) => {
+                                                                    console.log("va bien");
 
-                                                // fetch("http://localhost:8080/api/addImage/" + decoded.id_player, {
-                                                //     method: "PUT",
-                                                //     headers: {
-                                                //         Authorization: "Bearer " + token
-                                                //     },
-                                                //     body: formData
-                                                // }).then(response => {
-                                                //     if (response.ok) {
-                                                //         response.json().then((player: IPlayer) => {
-                                                //             props.setPlayer(player);
-                                                //             props.setToken(token);
-                                                //             props.history.push("/");
-                                                //         }).catch(err => {
-                                                //             console.log("error al subir la imagen " + err);
-                                                //         });
-                                                //     } else {
-                                                //         console.log("error en el response.ok")
-                                                //     }
-                                                // }).catch(err => {
-                                                //     console.log("error en la consula, error response. " + err);
-                                                // });
+                                                                    console.log(lista);
+                                                                    props.setPlayer(player);
+                                                                    props.setPlayers(lista);
+                                                                    props.setToken(token);
+                                                                    props.history.push("/");
+
+                                                                })
+                                                                .catch(err => {
+                                                                    setError("Error en el json.");
+                                                                });
+                                                        } else {
+                                                            setError("responde.ok da error.");
+                                                        }
+                                                    })
+                                                    .catch(err => {
+                                                        setError("Error en response." + err);
+                                                    });
+
+
+                                                        // console.log("entra");
+                                                        // console.log(player);
+                                                        // props.setPlayer(player);
+                                                        // props.setToken(token);
+                                                        // props.history.push("/");
+
+                                                        // const formData = new FormData();
+                                                        // formData.append("file", image);
+                                                        // formData.append("id", decoded.id_player);
+
+                                                        // fetch("http://localhost:8080/api/addImage/" + decoded.id_player, {
+                                                        //     method: "PUT",
+                                                        //     headers: {
+                                                        //         Authorization: "Bearer " + token
+                                                        //     },
+                                                        //     body: formData
+                                                        // }).then(response => {
+                                                        //     if (response.ok) {
+                                                        //         response.json().then((player: IPlayer) => {
+                                                        //             props.setPlayer(player);
+                                                        //             props.setToken(token);
+                                                        //             props.history.push("/");
+                                                        //         }).catch(err => {
+                                                        //             console.log("error al subir la imagen " + err);
+                                                        //         });
+                                                        //     } else {
+                                                        //         console.log("error en el response.ok")
+                                                        //     }
+                                                        // }).catch(err => {
+                                                        //     console.log("error en la consula, error response. " + err);
+                                                        // });
 
 
 
-                                                // props.setPlayer(player);
-                                                // props.history.push("/");
-                                            } else {
-                                                console.log("Ha fallado el decode en login");
-                                            }
+                                                        // props.setPlayer(player);
+                                                        // props.history.push("/");
+                                                    } else {
+                                                            console.log("Ha fallado el decode en login");
+                                                        }
 
                                         } else {
-                                            console.log("la BD no ha devuelto el token vacio.");
-                                        }
+                                                console.log("la BD no ha devuelto el token vacio.");
+                                            }
 
-                                    })
+                                        })
 
                             } else {
                                 setError("Usuario o Contraseña incorrectos ," + error);
@@ -198,8 +232,8 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
         <div>
             <Form>
                 <Form.Row>
-                <img className="avatarListProfile"  
-                                 src={"images/avatar-tenis.png"} alt=""/>
+                    <img className="avatarListProfile"
+                        src={"images/avatar-tenis.png"} alt="" />
                 </Form.Row>
                 <Form.Row>
                     <Form.Group controlId="formGridUsername">
@@ -267,7 +301,8 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
 
 const mapDispachToProps = {
     setToken: actions.setToken,
-    setPlayer: actions.setPlayer
+    setPlayer: actions.setPlayer,
+    setPlayers: actions.setPlayers
 }
 
 export default connect(

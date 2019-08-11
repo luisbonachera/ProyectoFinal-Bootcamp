@@ -92,7 +92,6 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
                                                     response
                                                         .json()
                                                         .then((lista: IPlayer[]) => {
-                                                            console.log(lista);
                                                             console.log("va bien");
                                                             
                                                             console.log(lista);

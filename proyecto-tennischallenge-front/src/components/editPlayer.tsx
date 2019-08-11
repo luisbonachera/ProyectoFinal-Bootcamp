@@ -31,6 +31,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
     const [genre, setGenre] = React.useState("");
     const [rating, setRating] = React.useState("");
     const [isAdmin, setIsAdmin] = React.useState<boolean>(false);
+    
     const [image, setImage] = React.useState();
 
     const updateUsername = (event: any) => {
@@ -62,8 +63,10 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
         // setError("");
     };
 
-    const updateIsAdmin = (event: any) => {
-        setIsAdmin(s => !s);
+    const updateIsAdmin = (event: any)=>{
+        setIsAdmin(s=> !s);
+        // setIsAdmin(event.target.checked);
+        console.log("isAdmin en updatedIsAdmin: " + isAdmin);
         // setError("");
     };
 
@@ -74,6 +77,9 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
     let id_player: number = +props.match.params.id_player;
     let player = props.players.find(p => p.id_player === id_player);
+    // if (player){
+    //     setIsAdmin(player.isAdmin);
+    // }
     console.log("player:");
     console.log(player);
 
@@ -94,7 +100,13 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                 formData.append("city", city);
                 formData.append("genre", genre);
                 formData.append("rating", rating);
-                formData.append("isAdmin", isAdmin ? "1" : "0");
+                let administador = isAdmin ? "1" : "0";
+                formData.append("isAdmin", administador);
+
+                // formData.append("isAdmin", isAdmin ? "1" : "0");
+                console.log(isAdmin);
+
+                console.log(administador);
                 fetch("http://localhost:8080/api/players/" + id, {
                     method: "PUT",
                     headers: {
@@ -129,10 +141,10 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                         console.log("usuario modificado y listado");
                                         console.log(lista);
                                         props.updatePlayers(lista[0]);
-                                        if(id === decoded.id_player){
+                                        if (id === decoded.id_player) {
                                             props.updatePlayer(lista[0]);
                                         }
-                                        
+
                                         props.history.push("/profile/" + id);
                                     } else if (lista.length > 1) {
                                         console.log("viene mas de 1 player");
@@ -209,13 +221,14 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
             setError("El token no existe");
         }
     };
+
     return (
         <div>
             {player && id_player && (player.id_player === id_player || props.player.isAdmin) && (
                 <Form>
                     <Form.Row>
                         <img className="avatarListProfile"
-                           src={player.avatar?"http://localhost:8080/uploads/avatar/" + player.avatar : "../../../images/avatar-tenis.png"} alt=""/>
+                            src={player.avatar ? "http://localhost:8080/uploads/avatar/" + player.avatar : "../../../images/avatar-tenis.png"} alt="" />
                     </Form.Row>
                     <Form.Row>
                         <Form.Group controlId="formGridUsername">
@@ -247,7 +260,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                     <Form.Row>
                         <Form.Group as={Col} controlId="formGridGenre">
                             <Form.Label>Genre</Form.Label>
-                            <Form.Control type="text" placeholder="Enter genre" onChange={updateGenre} value={player.genre} />
+                            <Form.Control type="text" placeholder="Enter genre" onChange={updateGenre} defaultValue={player.genre} />
                         </Form.Group>
 
                         {/* <Form.Group as={Col} controlId="formGridRating">
@@ -255,7 +268,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                         <Form.Control type="number" placeholder="Enter rating" onChange={updateRating} />
                     </Form.Group> */}
                         <Form.Group as={Col} controlId="formGridState">
-                            <Form.Label>Desde</Form.Label>
+                            <Form.Label>Rating</Form.Label>
                             <Form.Control as="select" defaultValue={player.rating + ""} onChange={updateRating}>
                                 <option value={1}>1</option>
                                 <option value={2}>2</option>
@@ -285,15 +298,20 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
 
                 </Form.Row> */}
-                    {props.player.isAdmin && 
+                    {props.player.isAdmin &&
+                    <>
                         <Form.Group id="formGridCheckbox">
-                            <Form.Check type="checkbox" label="Administrador" onChange={updateIsAdmin} defaultChecked={player.isAdmin} />
+                            <Form.Check  id="admin" className="Administrador" type="checkbox" label="Administrador" name="Administrador" onChange={updateIsAdmin} defaultChecked={player.isAdmin} />
                         </Form.Group>
+
+                        <Form.Group id="formGridCheckbox2">
+                            <Form.Check type="checkbox" label="PrebaAdmin" onChange={updateIsAdmin}  checked={isAdmin} />
+                        </Form.Group>
+                        </>
                     }
                     <Button variant="primary" type="button" onClick={edit}>
                         Save
                 </Button>
-
                 </Form>
             )}
         </div>
