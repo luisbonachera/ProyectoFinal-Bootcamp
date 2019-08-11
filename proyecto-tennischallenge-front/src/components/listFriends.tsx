@@ -14,7 +14,7 @@ interface Iprops { }
 interface IpropsGlobal {
     token: string;
     setFriendships: (friendships: IFriendship[]) => void;
-    friendships: IFriendship [];
+    friendships: IFriendship[];
 };
 
 const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
@@ -25,24 +25,26 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
     const [inputSex, setInputSex] = React.useState("");
     const [inputRatingFrom, setInputRatingFrom] = React.useState(1);
     const [inputRatingTo, setInputRatingTo] = React.useState(5);
+    const [myFriends, setMyFriends] = React.useState<IFriendship[]>([]);
+    const [friendsFiltros, setFriendsFiltros] = React.useState<IFriendship[]>([]);
 
 
-    const UpdateUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const UpdateUsernameF = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputUsername(event.target.value);
         setError("");
     };
 
-    const UpdateCity = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const UpdateCityF = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputCity(event.target.value);
         setError("");
     };
 
-    const UpdateSex = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const UpdateSexF = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputSex(event.target.value);
         setError("");
     };
 
-    const UpdateRatingFrom = (event: any) => {
+    const UpdateRatingFromF = (event: any) => {
 
         if (inputRatingTo >= event.target.value) {
             setInputRatingFrom(event.target.value);
@@ -52,7 +54,7 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
         }
     };
 
-    const UpdateRatingTo = (event: any) => {
+    const UpdateRatingToF = (event: any) => {
 
         if (inputRatingFrom <= event.target.value) {
             setInputRatingTo(event.target.value);
@@ -62,6 +64,7 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
         }
 
     };
+
 
     const list = () => {
         if (props.token) {
@@ -79,11 +82,19 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                         if (response.ok) {
                             response
                                 .json()
-                                .then((lista: IFriendship []) => {
-                                    console.log(lista);
-                                    console.log("va bien");
-                                    props.setFriendships(lista);
-                                    console.log(lista);
+                                .then((lista: IFriendship[]) => {
+                                    if (lista.length == 0) {
+                                        setError("Tu lista de amigos esta vacia");
+                                    }
+                                    else {
+                                        setError("");
+                                        console.log("va bien");
+                                        props.setFriendships(lista);
+
+                                        console.log("friends desde BD");
+                                        console.log(lista);
+                                    }
+                                    // 
                                 })
                                 .catch(err => {
                                     setError("Error en el json.");
@@ -105,75 +116,114 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
         }
     };
     React.useEffect(list, []);
-    
-    let friends = props.friendships.filter(f=> f.accepted === true);
 
-    // const listar = () => {
+    let friends: IFriendship[] = myFriends;
+
+    const amigos = () => {
+        friends = props.friendships.filter(f => f.accepted);
+
+        if (friends.length === 0) {
+            console.log("null")
+            setError("Tu lista de amigos esta vacia.")
+            // return null;
+        } else {
+            setError("");
+            setMyFriends(friends);
+            console.log("friends primera vez")
+            console.log(friends)
+            setFriendsFiltros(friends)
+            console.log("listafriends primera vez")
+            console.log(friends)
+        }
+
+        console.log(friends)
+    };
+
+    React.useEffect(amigos, [props.friendships]);
 
 
-    //     // else {
 
-    //     lista = props.players.filter(
-    //         p => p.username.toLocaleLowerCase().startsWith(inputUsername.toLocaleLowerCase())
-    //         // ).slice(0, 5
-    //     )
-    //         .filter(p => p.city.toLocaleLowerCase().startsWith(inputCity.toLocaleLowerCase()))
+    // let listaFriends: IFriendship[] = myFriends;
 
-    //         .filter(p => (p.rating >= inputRatingFrom && p.rating <= inputRatingTo))
+    const filtar = () => {
 
-    //         .filter(p => !inputSex || (p.genre === inputSex.toLocaleUpperCase()));
+        // listaFriends = listaFriends.filter(
+            friends =  myFriends.filter(
+            p => p.username.toLocaleLowerCase().startsWith(inputUsername.toLocaleLowerCase())
+            // ).slice(0, 5
+        )
+            .filter(p => p.city.toLocaleLowerCase().startsWith(inputCity.toLocaleLowerCase()))
+
+            .filter(p => (p.rating >= inputRatingFrom && p.rating <= inputRatingTo))
+
+            .filter(p => !inputSex || (p.genre === inputSex.toLocaleUpperCase()));
+            
+            if(friends.length === 0){
+                setError("No tienes amigos con estos requisitos.")
+            }else{
+                setError("");
+            }
+        console.log("myFriends");
+        console.log(myFriends);
+        console.log("listaFriends");
+        console.log(friends);
 
 
-    //     if (inputUsername) {
-    //         lista.sort(function (a, b) {
-    //             let nameA = a.username.toLowerCase();
-    //             let nameB = b.username.toLowerCase();
-    //             if (nameA < nameB) //sort string ascending
-    //                 return -1;
-    //             if (nameA > nameB)
-    //                 return 1;
-    //             return 0; //default return value (no sorting)
-    //         })
-    //     }
-    //     if (inputCity) {
-    //         lista.sort(function (a, b) {
-    //             let cityA = a.city.toLowerCase();
-    //             let cityB = b.city.toLowerCase();
-    //             if (cityA < cityB) //sort string ascending
-    //                 return -1;
-    //             if (cityA > cityB)
-    //                 return 1;
-    //             return 0; //default return value (no sorting)
-    //         })
-    //     }
+        if (inputUsername) {
+            friends.sort(function (a, b) {
+                let nameA = a.username.toLowerCase();
+                let nameB = b.username.toLowerCase();
+                if (nameA < nameB) //sort string ascending
+                    return -1;
+                if (nameA > nameB)
+                    return 1;
+                return 0; //default return value (no sorting)
+            })
+        }
+        if (inputCity) {
+            friends.sort(function (a, b) {
+                let cityA = a.city.toLowerCase();
+                let cityB = b.city.toLowerCase();
+                if (cityA < cityB) //sort string ascending
+                    return -1;
+                if (cityA > cityB)
+                    return 1;
+                return 0; //default return value (no sorting)
+            })
+        }
 
-    //     if (inputRatingFrom || inputRatingTo) {
-    //         lista.sort(function (a, b) { return a.rating - b.rating })
-    //     }
+        if (inputRatingFrom || inputRatingTo) {
+            friends.sort(function (a, b) { return a.rating - b.rating })
+        }
 
-    //     if (inputSex) {
-    //         lista.sort(function (a, b) {
-    //             let genreA = a.genre.toLowerCase();
-    //             let genreB = b.genre.toLowerCase();
-    //             if (genreA < genreB) //sort string ascending
-    //                 return -1;
-    //             if (genreA > genreB)
-    //                 return 1;
-    //             return 0; //default return value (no sorting)
-    //         })
-    //     }
-    // }
-    
-    // React.useEffect(listar, [inputUsername,inputCity,inputRatingFrom,inputRatingTo,inputSex]);
-    
-    
+        if (inputSex) {
+            friends.sort(function (a, b) {
+                let genreA = a.genre.toLowerCase();
+                let genreB = b.genre.toLowerCase();
+                if (genreA < genreB) //sort string ascending
+                    return -1;
+                if (genreA > genreB)
+                    return 1;
+                return 0; //default return value (no sorting)
+            })
+        }
+        // setMyFriends(listaFriends);
+        setFriendsFiltros(friends);
+    }
 
-    if (!friends) {
+    React.useEffect(filtar, [inputUsername, inputCity, inputRatingFrom, inputRatingTo, inputSex]);
+
+
+    if (!friends || !myFriends || !friendsFiltros) {
+        console.log("null")
+        setError("Tu lista de amigos esta vacia.")
         return null;
     }
 
+
     return (
         <div>
+
 
             <div className="container">
                 <div className="barraFiltros" style={{ display: 'flex', flexDirection: 'row' }}>
@@ -181,31 +231,31 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                     <div className="form-group row">
                         <label className="col-sm-2 col-form-label"></label>
                         <div className="col-sm-10">
-                            <input type="text" className="form-control" id="idUsername" placeholder="username" onChange={UpdateUsername} />
+                            <input type="text" className="form-control" id="idUsername" placeholder="username" onChange={UpdateUsernameF} />
                         </div>
                     </div>
                     <div className="form-group row">
                         <label className="col-sm-2 col-form-label"></label>
                         <div className="col-sm-10">
-                            <input type="text" className="form-control" id="idCity" placeholder="City" onChange={UpdateCity} />
+                            <input type="text" className="form-control" id="idCity" placeholder="City" onChange={UpdateCityF} />
                         </div>
                     </div>
 
                     <div className="form-check">
-                        <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Hombre" onChange={UpdateSex} />
+                        <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Hombre" onChange={UpdateSexF} />
                         {/* <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked /> */}
                         <label className="form-check-label" >
                             Hombre
                         </label>
                     </div>
                     <div className="form-check">
-                        <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="Mujer" onChange={UpdateSex} />
+                        <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="Mujer" onChange={UpdateSexF} />
                         <label className="form-check-label" >
                             Mujer
                         </label>
                     </div>
                     <div className="form-check">
-                        <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="" onChange={UpdateSex} defaultChecked />
+                        <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="" onChange={UpdateSexF} defaultChecked />
                         <label className="form-check-label" >
                             Ambos
                         </label>
@@ -215,7 +265,7 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
 
                         <Form.Group as={Col} controlId="formGridState">
                             <Form.Label>Desde</Form.Label>
-                            <Form.Control as="select" value={inputRatingFrom + ""} onChange={UpdateRatingFrom}>
+                            <Form.Control as="select" value={inputRatingFrom + ""} onChange={UpdateRatingFromF}>
                                 <option value={1}>1</option>
                                 <option value={2}>2</option>
                                 <option value={3}>3</option>
@@ -226,7 +276,7 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
 
                         <Form.Group as={Col} controlId="formGridState">
                             <Form.Label>Hasta</Form.Label>
-                            <Form.Control as="select" value={inputRatingTo + ""} onChange={UpdateRatingTo}>
+                            <Form.Control as="select" value={inputRatingTo + ""} onChange={UpdateRatingToF}>
                                 <option value={1}>1</option>
                                 <option value={2}>2</option>
                                 <option value={3}>3</option>
@@ -240,48 +290,51 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                     </DropdownButton>
 
                 </div>
-                <CardDeck >
-                    {friends.map(f => (
-                        // {props.players.map(u =>
-                        <Link key={f.id_player} to={"/players/" + f.id_player} >
-                            {/* <Card style={{ display: 'flex', flexDirection: 'row' }}> */}
-                            <Card>
-
-                            <Card.Img className="avatarListProfile" variant="top" 
-                                 src={f.avatar?"http://localhost:8080/uploads/avatar/" + f.avatar:"images/avatar-tenis.png"} alt=""/>
-                                <Card.Body >
-                                    <Card.Title>{f.username}</Card.Title>
-                                    <Card.Text>
-                                        {f.city}
-                                    </Card.Text>
-                                    <Card.Text>
-                                        {f.genre}
-                                    </Card.Text>
-                                    <Card.Text>
-                                        {f.rating}
-                                    </Card.Text>
-
-                                </Card.Body>
-                                <Card.Footer>
-                                    <small className="text-muted">Last updated 3 mins ago</small>
-                                </Card.Footer>
-
-                            </Card>
-                            <br />
-
-                        </Link>
-                    ))}
-                </CardDeck>
                 {error &&
-                    <Form.Text>{error}</Form.Text>
+                    <div>
+                        {error}
+                    </div>
                 }
+                {friendsFiltros  &&
+                    <CardDeck >
+                        {friendsFiltros.map(f => (
+                            // {props.players.map(u =>
+                            <Link key={f.id_player} to={"/players/" + f.id_player} >
+                                {/* <Card style={{ display: 'flex', flexDirection: 'row' }}> */}
+                                <Card>
+
+                                    <Card.Img className="avatarListProfile" variant="top"
+                                        src={f.avatar ? "http://localhost:8080/uploads/avatar/" + f.avatar : "images/avatar-tenis.png"} alt="" />
+                                    <Card.Body >
+                                        <Card.Title>{f.username}</Card.Title>
+                                        <Card.Text>
+                                            {f.city}
+                                        </Card.Text>
+                                        <Card.Text>
+                                            {f.genre}
+                                        </Card.Text>
+                                        <Card.Text>
+                                            {f.rating}
+                                        </Card.Text>
+
+                                    </Card.Body>
+                                    <Card.Footer>
+                                        <small className="text-muted">Last updated 3 mins ago</small>
+                                    </Card.Footer>
+
+                                </Card>
+                                <br />
+
+                            </Link>
+                        ))}
+                    </CardDeck>
+                }
+
             </div>
 
         </div>
     )
 };
-
-
 
 const mapStateToProps = (state: IGlobalState) => ({
     token: state.token,

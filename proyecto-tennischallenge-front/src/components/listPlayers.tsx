@@ -190,6 +190,11 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
 
             .filter(p => !inputSex || (p.genre === inputSex.toLocaleUpperCase()));
 
+            if(lista.length === 0){
+                setError("No tienes amigos con estos requisitos.")
+            }else{
+                setError("");
+            }
 
         if (inputUsername) {
             lista.sort(function (a, b) {
@@ -285,7 +290,7 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
                         </label>
                     </div>
                     <div className="form-check">
-                        <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="" onChange={UpdateSex} defaultChecked />
+                        <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="" onChange={UpdateSex} defaultChecked />
                         <label className="form-check-label" >
                             Ambos
                         </label>
