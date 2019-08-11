@@ -96,7 +96,7 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
 
                     <Card style={{ display: 'flex', flexDirection: 'row' }}>
                         <Card.Img className="avatarListProfile" variant="top"
-                            src={player.avatar?"http://localhost:8080/uploads/avatar/" + player.avatar:"images/avatar-tenis.png"} alt=""/>
+                            src={player.avatar?"http://localhost:8080/uploads/avatar/" + player.avatar:"../../images/avatar-tenis.png"} alt=""/>
                         <Card.Body>
                             <Card.Title>{player.username}</Card.Title>
                             <Card.Text>

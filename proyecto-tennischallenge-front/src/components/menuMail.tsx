@@ -25,14 +25,14 @@ const MenuMail: React.FC<IPropsGloblal> = props => {
         <div>
             {decode && decode.id_player && (
             <div className="row">
-                <Link to={"/mailTray/add/"+ decode.id_player }> Nuevo </Link>
+                <Link className="text" to={"/mailTray/add/"+ decode.id_player }> Nuevo </Link>
             </div>
             )}
             <div className="row">
-                <Link to="/mailTray/received"> Recibidos </Link>
+                <Link className="text" to="/mailTray/received"> Recibidos </Link>
             </div>
             <div className="row">
-                <Link to="/mailTray/sent"> Enviados </Link>
+                <Link className="text" to="/mailTray/sent"> Enviados </Link>
             </div>
 
         </div>

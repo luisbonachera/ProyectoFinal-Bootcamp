@@ -129,7 +129,10 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                         console.log("usuario modificado y listado");
                                         console.log(lista);
                                         props.updatePlayers(lista[0]);
-                                        props.updatePlayer(lista[0]);
+                                        if(id === decoded.id_player){
+                                            props.updatePlayer(lista[0]);
+                                        }
+                                        
                                         props.history.push("/profile/" + id);
                                     } else if (lista.length > 1) {
                                         console.log("viene mas de 1 player");
@@ -212,7 +215,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                 <Form>
                     <Form.Row>
                         <img className="avatarListProfile"
-                           src={props.player.avatar?"http://localhost:8080/uploads/avatar/" + props.player.avatar : "../images/avatar-tenis.png"} alt=""/>
+                           src={player.avatar?"http://localhost:8080/uploads/avatar/" + player.avatar : "../../../images/avatar-tenis.png"} alt=""/>
                     </Form.Row>
                     <Form.Row>
                         <Form.Group controlId="formGridUsername">
@@ -282,11 +285,11 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
 
                 </Form.Row> */}
-                    {props.player.isAdmin && (
+                    {props.player.isAdmin && 
                         <Form.Group id="formGridCheckbox">
                             <Form.Check type="checkbox" label="Administrador" onChange={updateIsAdmin} defaultChecked={player.isAdmin} />
                         </Form.Group>
-                    )}
+                    }
                     <Button variant="primary" type="button" onClick={edit}>
                         Save
                 </Button>

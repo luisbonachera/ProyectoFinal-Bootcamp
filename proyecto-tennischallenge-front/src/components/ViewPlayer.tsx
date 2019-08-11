@@ -40,7 +40,9 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
         let decoded: any = jwt.decode(props.token);
         console.log(decoded);
         const id: number = +props.match.params.id_player;
-        if (decoded !== null && (id === decoded.id_player || props.player.isAdmin)) {
+        // if (decoded !== null && (id === decoded.id_player || props.player.isAdmin)) {
+        if (decoded !== null) {
+
             console.log(decoded);
 
             console.log("entra al fetch");
@@ -101,7 +103,7 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                 })
 
         } else {
-            console.log("Error en el decoded o no eres admin");
+            console.log("Error en el decoded");
         }
     }
 
@@ -161,7 +163,7 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
                     <Card style={{ display: 'flex', flexDirection: 'row' }}>
                         <Card.Img className="avatarListProfile" variant="top"
-                            src={player.avatar ? "http://localhost:8080/uploads/avatar/" + player.avatar : "images/avatar-tenis.png"} alt="" />
+                            src={player.avatar ? "http://localhost:8080/uploads/avatar/" + player.avatar : "../../images/avatar-tenis.png"} alt="" />
                         <Card.Body>
                             <Card.Title>{player.username}</Card.Title>
                             <Card.Text>

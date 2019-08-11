@@ -62,64 +62,6 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
 
     };
 
-
-    // const listFilter = () => {
-    //     if (props.token) {
-    //         let decoded = jwt.decode(props.token);
-    //         console.log("hola " + inputCity);
-    //         if (decoded !== null) {
-    //             console.log(decoded);
-    //             console.log(inputCity);
-
-    //             fetch("http://localhost:8080/api/playersFilter", {
-    //                 method: "POST",
-    //                 headers: {
-    //                     "Content-type": "application/json",
-    //                     Authorization: "Bearer " + props.token
-    //                 },
-    //                 body: JSON.stringify({
-    //                     username: inputUsername,
-    //                     city: inputCity,
-    //                     ratingFrom: inputRatingFrom,
-    //                     ratingTo: inputRatingTo
-    //                 })
-    //             })
-    //                 .then(response => {
-    //                     if (response.ok) {
-    //                         console.log(response.ok);
-    //                         response
-    //                             .json()
-    //                             .then((lista: IPlayer[]) => {
-    //                                 console.log(lista);
-    //                                 if (lista.length > 0) {
-    //                                     console.log("va bien");
-    //                                     props.setPlayers(lista);
-    //                                     console.log(lista);
-    //                                 } else {
-    //                                     setError("No hay ningun Resultado.")
-    //                                 }
-
-    //                             })
-    //                             .catch(err => {
-    //                                 setError("Error en el json. " + err);
-    //                             });
-    //                     } else {
-    //                         setError("responde.ok da error.");
-    //                     }
-    //                 })
-    //                 .catch(err => {
-    //                     setError("Error en response." + err);
-    //                 });
-    //         }
-    //         else {
-    //             setError("El token no se pudo decodificar");
-    //         }
-    //     }
-    //     else {
-    //         setError("El token no existe");
-    //     }
-    // };
-
     const list = () => {
         if (props.token) {
             let decoded = jwt.decode(props.token);
