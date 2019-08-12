@@ -45,3 +45,9 @@ export const setFriendships: ActionCreator<TAction> = (friendships: IFriendship 
     type: "SET_FRIENDSHIPS",
     friendships
 });
+
+export const deleteFriendship: ActionCreator<TAction> = (id_friendship: number) => ({
+    type: "DELETE_FRIENDSHIP",
+    id_friendship
+});
+

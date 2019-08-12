@@ -18,23 +18,49 @@ interface IPropsGlobal {
     setToken: (token: string) => void;
     deletePlayer: (id_player: number) => void;
     setFriendships: (friendships: IFriendship[]) => void;
+    friendships: IFriendship[];
+    deleteFriendship: (id_friendship: number) => void;
 }
 
-
 const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player: string }>> = props => {
+
+    const initialStatePlayer: IPlayer = {
+        id_player: 0,
+        avatar: "",
+        username: "",
+        email: "",
+        city: "",
+        genre: "",
+        rating: 0,
+        isAdmin: false
+    };
+
+    // const initialStateFriendship: IFriendship = {
+    //     id_friends: 0,
+    //     id_player1: 0,
+    //     id_player2: 0,
+    //     watched: false,
+    //     accepted: false,
+    //     id_player: 0,
+    //     avatar: "",
+    //     username: "",
+    //     email: "",
+    //     city: "",
+    //     genre: "",
+    //     rating: 0,
+    //     isAdmin: false
+    // }
     const [error, setError] = React.useState("");
+    const [thisplayer, setThisPlayer] = React.useState<IPlayer>(initialStatePlayer);
+    const [myFriendship, setMyFriendship] = React.useState<IFriendship[]>([]);
+    const [stateFriend, setStateFriend] = React.useState("");
+    const [id_friend, setId_friend] = React.useState(0);
+
 
     const id = props.match.params.id_player;
     console.log(id);
 
     console.log(props.players);
-
-
-    const player = props.players.find(p => p.id_player === +id);
-    console.log(player);
-
-
-
 
     const amistad = () => {
         let decoded: any = jwt.decode(props.token);
@@ -107,6 +133,51 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
         }
     }
 
+    const borrarFriend = () => {
+        if (props.token) {
+            let decoded: any = jwt.decode(props.token);
+            const id: number = +props.match.params.id_player;
+            if (decoded !== null && (id !== decoded.id_player || props.player.isAdmin)) {
+                console.log(decoded);
+
+                console.log("entra al fetch");
+                console.log("Soy admin: " + props.player.isAdmin);
+                fetch("http://localhost:8080/api/friends/delete/" + id_friend, {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + props.token
+                    }
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log("amistad borrada")
+                            // if (props.player.id_player === id) {
+                            //     props.setToken("");
+                            //     props.history.push("/");
+                            //     props.deletePlayer(id);
+                            // } else if (props.player.isAdmin) {
+                            props.history.push("/players");
+                            props.deleteFriendship(id_friend);
+                            // } else {
+                            //     console.log("no deberia entrar aqui, o eres admin o te borras a ti.")
+                            // }
+                        } else {
+                            console.log("error en response.ok")
+                        }
+                    }).catch(err => {
+
+                    });
+            } else {
+                console.log("ha fallado el decode")
+            }
+        } else {
+            console.log("no hay token en redux");
+        }
+
+    }
+
+
     const borrar = () => {
 
         if (props.token) {
@@ -156,46 +227,147 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
         }
     };
 
+
+
+    const findThisPlayer = () => {
+        let player: any = props.players.find(p => p.id_player === +id);
+        console.log(player);
+
+        if (player) {
+            console.log(player);
+            setThisPlayer(player);
+            console.log("thisPlayer");
+            console.log(thisplayer);
+            // let lista = props.friendships.filter(f =>
+            //     ((f.id_player1 === player.id_player && f.id_player2 === props.player.id_player) ||
+            //         (f.id_player2 === player.id_player && f.id_player1 === props.player.id_player)) &&
+            //     (f.accepted));
+            //     console.log(lista);
+            props.friendships.map(f => {
+                if ((f.id_player1 === player.id_player && f.id_player2 === props.player.id_player) ||
+                    (f.id_player2 === player.id_player && f.id_player1 === props.player.id_player)) {
+                    if (f.accepted) {
+                        setStateFriend("amigo");
+                        setId_friend(f.id_friends);
+                    } else if (!f.accepted) {
+                        if (f.id_player1 === player.id_player) {
+                            console.log("entra id_player1 es este player, el me envio peticion")
+                            setStateFriend("responderPeticion");
+                            setId_friend(f.id_friends);
+                        } else if (f.id_player1 === props.player.id_player) {
+                            console.log("entra id_player1 soy yo, yo envie peticion.")
+                            setStateFriend("EsperandoPeticion");
+                            setId_friend(f.id_friends);
+                        } else {
+                            console.log("aqui no deberia de entrar");
+                            setStateFriend("");
+                            setId_friend(f.id_friends);
+                        }
+                    }
+                } else {
+                    console.log("aqui no deberia entrar")
+                }
+
+            });
+            //     console.log(lista);
+
+            // setMyFriendship(lista);
+
+
+
+            console.log("myfriendship");
+            console.log(myFriendship);
+        } else {
+            console.log("este usuario no es tu amigo")
+        }
+
+    };
+
+    React.useEffect(findThisPlayer, []);
+
+    // const findMyFriend = () => {
+    //     let lista = props.friendships.filter(f =>
+    //         ((f.id_player1 === thisplayer.id_player && f.id_player2 === props.player.id_player) ||
+    //             (f.id_player2 === thisplayer.id_player && f.id_player1 === props.player.id_player)) &&
+    //         (f.accepted));
+    //         console.log(lista);
+    //     setMyFriendship(lista[0]);
+    //     console.log("myfriendship");
+    //     console.log(myFriendship)
+    // }
+
+    // React.useEffect(findMyFriend, [thisplayer]);
+
+    // if(myFriendship){
+    //     return null;
+    // }
+
     return (
         <div>
-            {player !== null && player !== undefined && (
+            {thisplayer !== null && thisplayer !== undefined && (
                 <CardDeck >
 
                     <Card style={{ display: 'flex', flexDirection: 'row' }}>
                         <Card.Img className="avatarListProfile" variant="top"
-                            src={player.avatar ? "http://localhost:8080/uploads/avatar/" + player.avatar : "../../images/avatar-tenis.png"} alt="" />
+                            src={thisplayer.avatar ? "http://localhost:8080/uploads/avatar/" + thisplayer.avatar : "../../images/avatar-tenis.png"} alt="" />
                         <Card.Body>
-                            <Card.Title>{player.username}</Card.Title>
+                            <Card.Title>{thisplayer.username}</Card.Title>
                             <Card.Text>
-                                {player.city}
+                                {thisplayer.city}
                             </Card.Text>
                             <Card.Text>
-                                {player.genre}
+                                {thisplayer.genre}
                             </Card.Text>
                             <Card.Text>
-                                {player.rating}
+                                {thisplayer.rating}
                             </Card.Text>
                         </Card.Body>
                         <Card.Footer >
                             <small className="text-muted">Last updated 3 mins ago</small>
-                            <Link to={"/mailTray/add/" + player.id_player}>
+                            <Link to={"/mailTray/add/" + thisplayer.id_player}>
                                 <Button variant="primary">Enviar Mensaje</Button>
 
                             </Link>
+                            {/* aqui tengo que poner mi lista de frienship */}
+                            {/* {props.friendships.map(f=> 
+                ( ({console.log(f)}) &&  
+                ( (f.id_player1 === player.id_player && f.id_player2 === props.player.id_player) ||
+                (f.id_player2 === player.id_player && f.id_player1 === props.player.id_player) ) 
+                
+                && (
+                  
+               (  f.accepted && ( */}
+                            {/* {myFriendship && (myFriendship.map(mF => (
+                                ((mF.username === thisplayer.username) && ( */}
+                            {stateFriend === "amigo" &&
+                                <Button variant="primary" onClick={borrarFriend}>Eliminar Amigo</Button>
+                            }
+                            {/* ))
+                                ||
+                                ((mF.username !== thisplayer.username) && ( */}
+                            {stateFriend === "responderPeticion" &&
+                                <Button variant="primary" disabled>Responder Amistad</Button>
+                            }
+                            {stateFriend === "EsperandoPeticion" &&
+                                <Button variant="primary" disabled>Esperando Amistad</Button>
+                            }
+                            {stateFriend === "" &&
+                                <Button variant="primary" onClick={amistad}>Solicitar Amistad</Button>
+                            }
+                            {/* )
+                                )
+                            )))} */}
 
-                            <Button variant="primary" onClick={amistad}>Peticion Amistad</Button>
-
-
-                            {props.player.isAdmin && (
+                            {props.player.isAdmin &&
                                 <>
-                                    <Link to={"/players/edit/" + player.id_player}>
+                                    <Link to={"/players/edit/" + thisplayer.id_player}>
                                         <Button variant="primary">Editar</Button>
                                     </Link>
                                     <Link to={"/players"} onClick={borrar}>
                                         <Button variant="primary">Borrar</Button>
                                     </Link>
                                 </>
-                            )}
+                            }
                         </Card.Footer>
                     </Card>
 
@@ -208,14 +380,16 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 const mapStateToProps = (state: IGlobalState) => ({
     token: state.token,
     players: state.players,
-    player: state.player
+    player: state.player,
+    friendships: state.friendships
 
 });
 
 const mapDispachToProps = {
     setToken: actions.setToken,
     deletePlayer: actions.deletePlayer,
-    setFriendships: actions.setFriendships
+    setFriendships: actions.setFriendships,
+    deleteFriendship: actions.deleteFriendship
 }
 
 export default connect(

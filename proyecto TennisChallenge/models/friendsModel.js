@@ -69,7 +69,7 @@ friendsModel.edit = (watched,accepted,id_friends,my_id) => {
 friendsModel.delete = (id_friends, my_id) => {
     return new Promise((resolve, reject)=>{
         dbConn.query(
-            'DELETE FROM friends WHERE id_friends = ? AND id_player2 = ?', [id_friends,my_id],
+            'DELETE FROM friends WHERE id_friends = ? AND (id_player1 = ? OR id_player2 = ?)', [id_friends,my_id,my_id],
             (err,result)=>{
                 console.log("ya he terminado la consula borrar amistad");
                 if(err){

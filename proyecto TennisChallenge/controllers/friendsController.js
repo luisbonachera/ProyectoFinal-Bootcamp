@@ -133,7 +133,7 @@ friendsController.edit = (req, res) => {
 // borrar peticion de amistad 
 friendsController.delete = (req, res) => {
     try {
-        const id_friends = req.params.id;
+        const id_friends = +req.params.id;
         console.log("id de url: " + id_friends);
         console.log(req.headers.authorization);
         const token = req.headers.authorization.replace("Bearer ", "");
