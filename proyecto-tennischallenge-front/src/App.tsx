@@ -13,6 +13,7 @@ import MailTray from './components/mailTray';
 import ProfilePlayer from './components/profilePlayer';
 import EditPlayer from './components/editPlayer';
 import listFriends from './components/listFriends';
+import FriendRequests from './components/friendRequests';
 
 interface IProps { }
 
@@ -39,6 +40,8 @@ const App: React.FC<IProps & IPropsGlobal> = props => {
                   <>
                     <Route path="/mailTray" component={MailTray} />
                     <Route path="/friends" exact component={listFriends} />
+                    
+                    <Route path="/friendRequests" exact component={FriendRequests} />
                     <Route path="/players/edit/:id_player" exact component={EditPlayer} />
                     <Route path="/profile/:id_player" exact component={ProfilePlayer} />
                     <Route path="/players/:id_player" exact component={ViewPlayer} />

@@ -46,10 +46,10 @@ friendsModel.list = (my_id) => {
 
 
 //Aceptar amistad y poner a watched=true la amistad
-friendsModel.edit = (watched,accepted,id_friends,my_id) => {
+friendsModel.edit = (accepted,id_friends,my_id) => {
     return new Promise((resolve, reject) => {
         console.log("entra en el modelo editmessage");
-        dbConn.query('UPDATE friends SET watched = ?, accepted = ? WHERE id_friends = ? AND id_player2 = ?',[watched,accepted,id_friends,my_id],
+        dbConn.query('UPDATE friends SET accepted = ? WHERE id_friends = ? AND id_player2 = ?',[accepted,id_friends,my_id],
         (err, result) => {
                 console.log("ya he terminado la consula aceptar amistar");
                 if (err) {

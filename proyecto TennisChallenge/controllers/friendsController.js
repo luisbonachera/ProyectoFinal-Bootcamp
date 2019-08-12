@@ -87,7 +87,7 @@ friendsController.list = (req, res) => {
     }
 }
 
-//Aceptar amistad y poner a watched=true la amistad
+//Aceptar amistad  la amistad
 friendsController.edit = (req, res) => {
     try {
         console.log(req.headers.authorization);
@@ -100,10 +100,8 @@ friendsController.edit = (req, res) => {
         console.log(my_id);
         if (id_friends) {
             if (my_id) {
-                let watched = 1;
                 let accepted = 1;
-                console.log(watched);
-                friendsModel.edit(watched, accepted, id_friends, my_id)
+                friendsModel.edit(accepted, id_friends, my_id)
                     .then(rows => {
                         console.log("bien");
                         res.send({

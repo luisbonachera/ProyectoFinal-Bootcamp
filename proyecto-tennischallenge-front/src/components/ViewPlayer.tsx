@@ -35,24 +35,8 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
         isAdmin: false
     };
 
-    // const initialStateFriendship: IFriendship = {
-    //     id_friends: 0,
-    //     id_player1: 0,
-    //     id_player2: 0,
-    //     watched: false,
-    //     accepted: false,
-    //     id_player: 0,
-    //     avatar: "",
-    //     username: "",
-    //     email: "",
-    //     city: "",
-    //     genre: "",
-    //     rating: 0,
-    //     isAdmin: false
-    // }
     const [error, setError] = React.useState("");
     const [thisplayer, setThisPlayer] = React.useState<IPlayer>(initialStatePlayer);
-    const [myFriendship, setMyFriendship] = React.useState<IFriendship[]>([]);
     const [stateFriend, setStateFriend] = React.useState("");
     const [id_friend, setId_friend] = React.useState(0);
 
@@ -275,8 +259,7 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
 
 
-            console.log("myfriendship");
-            console.log(myFriendship);
+           
         } else {
             console.log("este usuario no es tu amigo")
         }

@@ -94,6 +94,10 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                 console.log(isAdmin);
 
                 const formData = new FormData();
+                // esto es para poder cambiarle la foto y pnerle el nombre de su id.extension 
+                // a otra persona que no sea yo si soy Admin
+                formData.append("id_player", ""+id);
+                
                 formData.append("file", image);
                 formData.append("username", username);
                 formData.append("email", email);

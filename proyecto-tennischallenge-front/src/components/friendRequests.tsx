@@ -1,10 +1,11 @@
 import React from 'react';
-import { CardDeck, Card, DropdownButton, Form, Col } from 'react-bootstrap';
+import { CardDeck, Card, DropdownButton, Form, Col, Button } from 'react-bootstrap';
+import { IPlayer } from '../interfaceIPlayer';
 import { IGlobalState } from '../reducers/reducers';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 import jwt from 'jsonwebtoken';
-import { Link } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import { IFriendship } from '../interfaceIFriendship';
 
 
@@ -14,9 +15,11 @@ interface IpropsGlobal {
     token: string;
     setFriendships: (friendships: IFriendship[]) => void;
     friendships: IFriendship[];
+    deleteFriendship: (id_friendship: number) => void;
+    player: IPlayer;
 };
 
-const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
+const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = props => {
     const [error, setError] = React.useState("");
     const [errorRating, setErrorRating] = React.useState("");
     const [inputUsername, setInputUsername] = React.useState("");
@@ -119,35 +122,163 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
     let friends: IFriendship[] = myFriends;
 
     const amigos = () => {
-        friends = props.friendships.filter(f => f.accepted);
+        let decoded:any = jwt.decode(props.token);
+        if (!decoded) {
+            console.log("ha fallado el decode");
+        }
+        else {
+            friends = props.friendships.filter(f => !f.accepted && f.id_player2 === decoded.id_player);
 
-        if (friends.length === 0) {
-            console.log("null")
-            setError("Tu lista de amigos esta vacia.")
-            // return null;
-        } else {
-            setError("");
-            setMyFriends(friends);
-            console.log("friends primera vez")
-            console.log(friends)
-            setFriendsFiltros(friends)
-            console.log("listafriends primera vez")
+            if (friends.length === 0) {
+                console.log("null")
+                setError("Tu lista de amigos esta vacia.")
+                // return null;
+            } else {
+                setError("");
+                setMyFriends(friends);
+                console.log("friends primera vez")
+                console.log(friends)
+                setFriendsFiltros(friends)
+                console.log("listafriends primera vez")
+                console.log(friends)
+            }
+
             console.log(friends)
         }
-
-        console.log(friends)
     };
 
     React.useEffect(amigos, [props.friendships]);
 
 
+    const acceptedFriendship = (id_friend: number) => {
+        let decoded: any = jwt.decode(props.token);
+        console.log(decoded);
+        // const id: number = +props.match.params.id_player;
+        // if (decoded !== null && (id === decoded.id_player || props.player.isAdmin)) {
+        if (decoded !== null) {
+
+            console.log(decoded);
+
+            console.log("entra al fetch");
+            console.log("Soy admin: " + props.player.isAdmin);
+            fetch("http://localhost:8080/api//friends/accepted/" + id_friend, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + props.token
+                },
+                // body: JSON.stringify({
+                //     id_player_friend: id
+                // })
+            })
+                .then(response => {
+                    if (response.ok) {
+                        ////habira que ver si es correcto o no
+                        console.log("amistad creada")
+                        fetch("http://localhost:8080/api/friends", {
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization: "Bearer " + props.token
+                            }
+                        })
+                            .then(response => {
+                                if (response.ok) {
+                                    response
+                                        .json()
+                                        .then((listaFriendship: IFriendship[]) => {
+                                            if (listaFriendship.length > 0) {
+                                                console.log(listaFriendship);
+                                                props.setFriendships(listaFriendship);
+                                                props.history.push("/friendRequests");
+
+                                            } else {
+                                                console.log("la BD no ha devuelto ningun mensaje.");
+                                            }
+                                        })
+                                        .catch(err => {
+                                            console.log("error al devolver mis mensajes." + err);
+                                        })
+                                } else {
+                                    console.log("Error en el response.ok");
+                                }
+
+
+
+                            })
+                            .catch(err => {
+                                console.log("la consulta no fue bien. ");
+                                // setError(" Error al añadir como amigo.");
+                            })
+                    } else {
+                        console.log("Error en el response.ok");
+                    }
+                }).catch(err => {
+                    console.log("error en response" + err);
+                })
+
+        } else {
+            console.log("Error en el decoded");
+        }
+    }
+
+
+
+
+    const borrarFriend = (id_friend: number) => {
+        try {
+            if (props.token) {
+                let decoded: any = jwt.decode(props.token);
+                // const id: number = +props.match.params.id_player;
+                // if (decoded !== null && (id !== decoded.id_player || props.player.isAdmin)) {
+                console.log(decoded);
+
+                console.log("entra al fetch");
+                console.log("Soy admin: " + props.player.isAdmin);
+                fetch("http://localhost:8080/api/friends/delete/" + id_friend, {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + props.token
+                    }
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log("amistad borrada")
+                            // if (props.player.id_player === id) {
+                            //     props.setToken("");
+                            //     props.history.push("/");
+                            //     props.deletePlayer(id);
+                            // } else if (props.player.isAdmin) {
+                            props.deleteFriendship(id_friend);
+                            props.history.push("/friendRequests");
+
+                            // } else {
+                            //     console.log("no deberia entrar aqui, o eres admin o te borras a ti.")
+                            // }
+                        } else {
+                            console.log("error en response.ok")
+                        }
+                    }).catch(err => {
+
+                    });
+                // } else {
+                //     console.log("ha fallado el decode")
+                // }
+            } else {
+                console.log("no hay token en redux");
+            }
+        } catch (err) {
+            console.log("ha fallado el decode");
+        }
+
+    }
 
     // let listaFriends: IFriendship[] = myFriends;
 
     const filtar = () => {
 
         // listaFriends = listaFriends.filter(
-            friends =  myFriends.filter(
+        friends = myFriends.filter(
             p => p.username.toLocaleLowerCase().startsWith(inputUsername.toLocaleLowerCase())
             // ).slice(0, 5
         )
@@ -156,12 +287,12 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
             .filter(p => (p.rating >= inputRatingFrom && p.rating <= inputRatingTo))
 
             .filter(p => !inputSex || (p.genre === inputSex.toLocaleUpperCase()));
-            
-            if(friends.length === 0){
-                setError("No tienes amigos con estos requisitos.")
-            }else{
-                setError("");
-            }
+
+        if (friends.length === 0) {
+            setError("No tienes amigos con estos requisitos.")
+        } else {
+            setError("");
+        }
         console.log("myFriends");
         console.log(myFriends);
         console.log("listaFriends");
@@ -294,7 +425,7 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                         {error}
                     </div>
                 }
-                {friendsFiltros  &&
+                {friendsFiltros &&
                     <CardDeck >
                         {friendsFiltros.map(f => (
                             // {props.players.map(u =>
@@ -318,6 +449,12 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
 
                                     </Card.Body>
                                     <Card.Footer>
+                                        {/* {stateFriend === "amigo" && */}
+                                        <Button variant="primary" onClick={()=>borrarFriend(f.id_friends)}>Cancelar</Button>
+                                        {/* } */}
+                                        {/* {stateFriend === "amigo" && */}
+                                        <Button variant="primary" onClick={()=>acceptedFriendship(f.id_friends)}>Aceptar</Button>
+                                        {/* } */}
                                         <small className="text-muted">Last updated 3 mins ago</small>
                                     </Card.Footer>
 
@@ -337,15 +474,17 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
 
 const mapStateToProps = (state: IGlobalState) => ({
     token: state.token,
-    friendships: state.friendships
+    friendships: state.friendships,
+    player: state.player
 
 });
 
 const mapDispachToProps = {
-    setFriendships: actions.setFriendships
+    setFriendships: actions.setFriendships,
+    deleteFriendship: actions.deleteFriendship
 }
 
 export default connect(
     mapStateToProps,
     mapDispachToProps
-)(ListFriends);
+)(FriendRequests);

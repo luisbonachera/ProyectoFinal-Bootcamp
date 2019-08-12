@@ -7,10 +7,11 @@ const sportCenterController = require('../controllers/sportCenterController');
 const friendsController = require('../controllers/friendsController');
 const multer = require("multer");
 const path = require("path");
+const jwt = require("jsonwebtoken");
 
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
   res.send('respond with a resource');
 });
 
@@ -38,11 +39,19 @@ const storage = multer.diskStorage({
     cb(null, "public/uploads/avatar");
     console.log("entral al storage")
   },
-  filename: (_req, file, cb) => {
+  filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
     console.log("entra al filename");
     console.log(file.cb);
     console.log(file);
+    console.log("id del editado: " + req.id_player)
+    // const token = req.headers.authorization.replace("Bearer ", "");
+    // const player = jwt.decode(token);
+    let nombre= file.originalname.split(".");
+    console.log(nombre);
+    let extension = nombre[nombre.length-1];
+    console.log("extension es: " + extension);
+    cb(null, req.body.id_player + "." + extension);
   }
 });
 
@@ -60,7 +69,7 @@ router.post('/add', uploadAvatar, playersController.add);
 
 
 // editar un Jugador 
-router.put('/players/:id',uploadAvatar, playersController.edit);
+router.put('/players/:id', uploadAvatar, playersController.edit);
 
 //editar Campo borrado a true (es como borrar)
 router.put('/players/erased/:id', playersController.editErased);
@@ -103,7 +112,7 @@ router.post('/friends/add', friendsController.add);
 // Listar mis amigos
 router.get('/friends', friendsController.list);
 
-//Aceptar amistad y poner a watched=true la amistad
+//Aceptar amistad la amistad
 router.put('/friends/accepted/:id', friendsController.edit);
 
 // borrar peticion de amistad 
