@@ -72,7 +72,12 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
         console.log("entra al fetch");
         // console.log(isAdmin);
         const formData = new FormData();
-        formData.append("file", image);
+        if (image) {
+            formData.append("file", image);
+        }else{
+            formData.append("file", "");
+        }
+        formData.append("id_player", "");
         formData.append("username", username);
         formData.append("email", email);
         formData.append("password", password);
@@ -211,13 +216,13 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                                         })
 
                             } else {
-                                setError("Usuario o Contraseña incorrectos ," + error);
-                                console.log(error);
+                                setError("Usuario o Contraseña incorrectos");
+                                console.log("Usuario o Contraseña incorrectos");;
                             }
                         })
                         .catch(error => {
                             setError("Usuario o Contraseña incorrectos ," + error);
-                            console.log(error);
+                            console.log("Usuario o Contraseña incorrectos" + error);
                         });
                 }
             })

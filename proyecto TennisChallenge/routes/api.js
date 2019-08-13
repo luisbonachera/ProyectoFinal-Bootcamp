@@ -5,6 +5,7 @@ const playersController = require("../controllers/playersController");
 const messageController = require("../controllers/messageController");
 const sportCenterController = require("../controllers/sportCenterController");
 const friendsController = require("../controllers/friendsController");
+const notificationsController = require("../controllers/notificationsController");
 const multer = require("multer");
 const path = require("path");
 const jwt = require("jsonwebtoken");
@@ -31,25 +32,24 @@ router.get("/players", playersController.list);
 
 // Set The Storage Engine
 const storage = multer.diskStorage({
-  destination: (_req, _file, cb) => {
-    if(file!== ""){
-    cb(null, "public/uploads/avatar");
-    console.log("entral al storage");
+  destination: (_req, file, cb) => {
+    if (file !== "") {
+      cb(null, "public/uploads/avatar");
     }
   },
   filename: (req, file, cb) => {
-    // cb(null, Date.now() + path.extname(file.originalname));
-
-    // const token = req.headers.authorization.replace("Bearer ", "");
-    // const player = jwt.decode(token);
-    if(file!== ""){
+    if (file !== "") {
       let nombre = file.originalname.split(".");
-    console.log(nombre);
-    let extension = nombre[nombre.length - 1];
-    console.log("extension es: " + extension);
-    cb(null, req.body.id_player + "." + extension);
+      let extension = nombre[nombre.length - 1];
+      if (req.body.id_player === "") {
+        cb(null, Date.now() + "." + extension);
+      } else {
+        
+        cb(null, req.body.id_player + "." + extension);
+      }
+    }else{
+      console.log("el archivo file esta vacio o no existe")
     }
-    
   }
 });
 
@@ -109,4 +109,8 @@ router.put("/friends/accepted/:id", friendsController.edit);
 // borrar peticion de amistad
 router.delete("/friends/delete/:id", friendsController.delete);
 
+//obtner cuantas notificiaciones nuevas tengo
+//(numero de mensajes nuevos y
+// numero de peticiones de amistad nuevas)
+router.get("/notifications", notificationsController.counter);
 module.exports = router;

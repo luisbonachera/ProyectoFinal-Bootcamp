@@ -1,6 +1,7 @@
 import { IPlayer } from "../interfaceIPlayer";
 import { IMsg } from "../interfaceIMsg";
 import { IFriendship } from "../interfaceIFriendship";
+import { INotifications } from "../interfaceINotifications";
 
 type TSetTokenAction = {
   type: "SET_TOKEN";
@@ -47,6 +48,11 @@ type TdeleteFriendshipAction = {
   id_friendship: number;
 };
 
+type TSetNotificationsAction = {
+  type: "SET_NOTIFICATIONS";
+  notifications: INotifications;
+};
+
 export type TAction =
   | TSetTokenAction
   | TSetPlayersAction
@@ -56,4 +62,5 @@ export type TAction =
   | TUpdatePlayerAction
   | TUpdatePlayersAction
   | TsetFriendshipAction
-  | TdeleteFriendshipAction;
+  | TdeleteFriendshipAction
+  | TSetNotificationsAction;

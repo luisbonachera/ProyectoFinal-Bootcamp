@@ -3,6 +3,7 @@ import { TAction } from "./actionType";
 import { IPlayer } from "../interfaceIPlayer";
 import { IMsg } from '../interfaceIMsg';
 import { IFriendship } from "../interfaceIFriendship";
+import { INotifications } from "../interfaceINotifications";
 
 
 
@@ -51,3 +52,7 @@ export const deleteFriendship: ActionCreator<TAction> = (id_friendship: number) 
     id_friendship
 });
 
+export const setNotifications: ActionCreator<TAction> = (notifications: INotifications) => ({
+    type: "SET_NOTIFICATIONS",
+    notifications
+});

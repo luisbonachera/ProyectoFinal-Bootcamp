@@ -77,8 +77,8 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
             {messagesHooks && messagesHooks.map(m =>
                 // <Link to={"/mailTray/"+props.match.params.typeMessage + "/" + m.id_messages} >
                 // los mensajes received y no vistos son los que se deberian de poner de otro color
-                <Link to={"/mailTray/sent/" + m.id_messages}>
-                <div key={m.id_messages}  >
+                <Link key={m.id_messages} to={"/mailTray/sent/" + m.id_messages}>
+                <div   >
 
                     <div className="row">
                         <div className="col">

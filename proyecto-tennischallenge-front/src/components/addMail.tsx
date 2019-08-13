@@ -54,12 +54,12 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
         console.log("entra al fetch");
         if (playerDestiny) {
             let id_player_destiny;
-            if(soyYo){
+            if (soyYo) {
                 id_player_destiny = inputListPlayerTo;
                 console.log("voy a enviar mensaje a alguien: " + id_player_destiny);
-            }else{
+            } else {
                 id_player_destiny = playerDestiny.id_player;
-                console.log("voy a enviar mensaje a " +  id_player_destiny);
+                console.log("voy a enviar mensaje a " + id_player_destiny);
             }
             fetch("http://localhost:8080/api/msgs/add", {
                 method: "POST",
@@ -115,7 +115,7 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                 .catch(err => {
                     console.log("Error," + err)
                 })
-        }else{
+        } else {
             console.log(" no existe playerDestiny");
         }
     }
@@ -148,16 +148,16 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
 
                     </Form.Group>
                     {soyYo === false && (
-                    <Form.Group controlId="formGridTo">
-                        <Form.Label>To:</Form.Label>
-                            <Form.Label> {playerDestiny.username} </Form.Label>     
-                    </Form.Group>
+                        <Form.Group controlId="formGridTo">
+                            <Form.Label>To:</Form.Label>
+                            <Form.Label> {playerDestiny.username} </Form.Label>
+                        </Form.Group>
                     )}
                     {soyYo && (
                         <Form.Group as={Col} controlId="formGridState">
                             <Form.Label>To</Form.Label>
-                            <Form.Control as="select" type="text" value={inputListPlayerTo +""} onChange={updateInputListPlayerTo}>
-                            <option selected hidden>Elige destinatario</option>
+                            <Form.Control as="select" type="text" value={inputListPlayerTo + ""} onChange={updateInputListPlayerTo}>
+                                <option selected value="" hidden>Elige destinatario</option>
                                 {props.players.sort(function (a, b) {
                                     let nameA = a.username.toLowerCase();
                                     let nameB = b.username.toLowerCase();
@@ -166,16 +166,16 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                                     if (nameA > nameB)
                                         return 1;
                                     return 0; //default return value (no sorting)
-                                }).map((p,i) => (
+                                }).map((p, i) => (
                                     // (i=== 0) && (
                                     //     <option defaultValue={p.id_player+""}>{p.username}</option>
-                                        
+
                                     // ) ||  (
-                                    <option value={p.id_player+""}>{p.username}</option>
-                                   
+                                    <option key={p.id_player} value={p.id_player + ""}>{p.username}</option>
+
                                     // )
-                                    )
-                    )}
+                                )
+                                )}
 
                             </Form.Control>
 

@@ -93,7 +93,7 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
                         }
                     })
                     .catch(err => {
-                        setError("Error en response.");
+                        setError("Error en response." + err);
                     });
             }
             else {

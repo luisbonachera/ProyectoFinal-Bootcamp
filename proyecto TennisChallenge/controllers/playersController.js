@@ -60,7 +60,8 @@ playersController.add = (req, res) => {
   const p = req.body;
   if (p) {
     let player = {
-      ...(req.file.filename && { avatar: req.file.filename }),
+      ...(req.file &&
+        req.file.filename!= "" && { avatar: req.file.filename }),
       ...(p.username != null && { username: p.username }),
       ...(p.email != null && { email: p.email }),
       ...(p.password != null && { password: sha256(p.password) }),
@@ -69,15 +70,6 @@ playersController.add = (req, res) => {
       ...(p.genre != null && { genre: p.genre })
     };
     console.log(player);
-    if (
-      player.avatar &&
-      player.username &&
-      player.email &&
-      player.password &&
-      player.city &&
-      player.rating &&
-      player.genre
-    ) {
       playersModel
         .add(player)
         .then(rows => {
@@ -92,11 +84,6 @@ playersController.add = (req, res) => {
             data: err
           });
         });
-    } else {
-      res.send({
-        type: "error, algun o algunos campos vienen vacio"
-      });
-    }
   } else {
     res.send({
       type: "error el body esta vacio"

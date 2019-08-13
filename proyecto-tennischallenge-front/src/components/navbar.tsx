@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, NavDropdown, Card } from 'react-bootstrap';
+import { Navbar, NavDropdown, Card, Badge, Dropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { IGlobalState } from '../reducers/reducers';
@@ -7,6 +7,8 @@ import * as actions from '../actions/actions'
 import { IPlayer } from '../interfaceIPlayer';
 // import bootstrap from 'react-bootstrap';
 import logo from '../images/logo-sin-letras.png';
+import { INotifications } from '../interfaceINotifications';
+
 
 interface IProps { }
 
@@ -14,8 +16,8 @@ interface IPropsGlobal {
     token: string;
     player: IPlayer;
     setToken: (token: string) => void;
+    notifications: INotifications;
 }
-
 
 
 const NavBar: React.FC<IProps & IPropsGlobal> = props => {
@@ -80,14 +82,19 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                                 
                                
                                 {/* {console.log(props.player.username)} */}
-                                <NavDropdown className="span-logo" title={props.player.username} id="collasible-nav-dropdown">
-                                <Link className="span-logo" to="/mailTray" >Correo</Link>
+                                {/* <NavDropdown className="span-logo" title={props.player.username} id="collasible-nav-dropdown"> */}
+                                <Dropdown className="span-logo" >
+                                <Dropdown.Toggle id="dropdown-basic"><Badge variant="light">{props.notifications.numbers_messages + props.notifications.numbers_friends > 0?
+                                     props.notifications.numbers_messages + props.notifications.numbers_friends:"" }</Badge> {props.player.username}</Dropdown.Toggle>
+                                <Dropdown.Menu>
+
+                                <Link className="span-logo" to="/mailTray" ><Badge variant="light">{props.notifications.numbers_messages > 0?props.notifications.numbers_messages:""}</Badge> Correo</Link>
                                 <br/>
                                 <Link className="span-logo" to={"/profile/"+ props.player.id_player}>Perfil</Link>
                                 <br/>
                                 <Link className="span-logo" to={"/friends"}>Amigos</Link>
                                 <br/>
-                                <Link className="span-logo" to={"/friendRequests"}>Peticiones</Link>
+                                <Link className="span-logo" to={"/friendRequests"}><Badge variant="light">{props.notifications.numbers_friends>0?props.notifications.numbers_friends:""}</Badge> Peticiones</Link>
                                 <br/>
                                 <Link className="span-logo" to="/" onClick={() => props.setToken("")}>Cerrar Sesión</Link>
                                     {/* <NavDropdown.Item href="#action/3.1">>Mail</NavDropdown.Item> */}
@@ -95,8 +102,8 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                                     <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                                     <NavDropdown.Divider />
                                     <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item> */}
-                                    
-                                </NavDropdown>
+                                </Dropdown.Menu>
+                                </Dropdown>
                                 <Card.Img className="avatarNavbar" variant="top"  
                                   src={props.player.avatar?"http://localhost:8080/uploads/avatar/" + props.player.avatar:"images/avatar-tenis.png"} alt=""/>
                                 
@@ -111,7 +118,8 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
 
 const mapStateToProps = (state: IGlobalState) => ({
     token: state.token,
-    player: state.player
+    player: state.player,
+    notifications: state.notifications
 });
 
 const mapDispachToProps = {

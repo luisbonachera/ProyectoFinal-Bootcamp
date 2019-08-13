@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import NavBar from './components/navbar';
 import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom';
@@ -14,15 +14,68 @@ import ProfilePlayer from './components/profilePlayer';
 import EditPlayer from './components/editPlayer';
 import listFriends from './components/listFriends';
 import FriendRequests from './components/friendRequests';
+import { INotifications } from './interfaceINotifications';
+import * as actions from './actions/actions';
 
 interface IProps { }
 
 interface IPropsGlobal {
   token: string;
+  setNotifications: (notification: INotifications) => void;
 }
 
 const App: React.FC<IProps & IPropsGlobal> = props => {
+  useEffect(() => {
 
+    if (props.token) {
+      const n = setInterval(() => {
+        console.log("token antes del fetch de notifications:")
+        console.log(props.token);
+        fetch("http://localhost:8080/api/notifications", {
+
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + props.token
+          },
+        })
+          .then(response => {
+            if (response.ok) {
+              response
+                .json()
+                .then((notifications) => {
+
+                  console.log(notifications);
+                  if (notifications[0]) {
+                    if (notifications[0].numbers_messages > 0 || notifications[0].numbers_friends > 0) {
+                      console.log("va bien");
+                      console.log(notifications);
+                     
+                      console.log(notifications);
+                    } else {
+                      console.log("no hay notificaciones");
+                    }
+                    props.setNotifications(notifications[0]);
+                  }
+
+                })
+                .catch(err => {
+                  console.log("Error en el json.");
+                });
+            } else {
+              console.log("responde.ok da error.");
+            }
+          })
+          .catch(err => {
+            console.log("Error en response. " + err);
+          });
+
+
+      }, 30000);
+      return () => { clearInterval(n) }
+    }else{
+      console.log("aun no hay token");
+    }
+  }, [props.token]);
   return (
     <BrowserRouter>
       <div className="App">
@@ -55,7 +108,7 @@ const App: React.FC<IProps & IPropsGlobal> = props => {
           </Switch>
         </header>
       </div>
-      </BrowserRouter>
+    </BrowserRouter>
   );
 }
 
@@ -63,8 +116,12 @@ const mapStateToProps = (state: IGlobalState) => ({
   token: state.token
 });
 
+const mapDispachToProps = {
+  setNotifications: actions.setNotifications
+}
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispachToProps
 )(App);
 
