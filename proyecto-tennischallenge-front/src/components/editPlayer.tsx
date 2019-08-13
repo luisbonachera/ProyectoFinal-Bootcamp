@@ -31,7 +31,6 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
     const [genre, setGenre] = React.useState("");
     const [rating, setRating] = React.useState("");
     const [isAdmin, setIsAdmin] = React.useState<boolean>(false);
-    
     const [image, setImage] = React.useState();
 
     const updateUsername = (event: any) => {
@@ -63,8 +62,8 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
         // setError("");
     };
 
-    const updateIsAdmin = (event: any)=>{
-        setIsAdmin(s=> !s);
+    const updateIsAdmin = (event: any) => {
+        setIsAdmin(s => !s);
         // setIsAdmin(event.target.checked);
         console.log("isAdmin en updatedIsAdmin: " + isAdmin);
         // setError("");
@@ -77,9 +76,10 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
     let id_player: number = +props.match.params.id_player;
     let player = props.players.find(p => p.id_player === id_player);
-    // if (player){
-    //     setIsAdmin(player.isAdmin);
-    // }
+
+
+    
+
     console.log("player:");
     console.log(player);
 
@@ -96,9 +96,12 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                 const formData = new FormData();
                 // esto es para poder cambiarle la foto y pnerle el nombre de su id.extension 
                 // a otra persona que no sea yo si soy Admin
-                formData.append("id_player", ""+id);
-                
-                formData.append("file", image);
+                formData.append("id_player", "" + id);
+                if (image) {
+                    formData.append("file", image);
+                }else{
+                    formData.append("file", "");
+                }
                 formData.append("username", username);
                 formData.append("email", email);
                 formData.append("city", city);
@@ -107,7 +110,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                 let administador = isAdmin ? "1" : "0";
                 formData.append("isAdmin", administador);
 
-                // formData.append("isAdmin", isAdmin ? "1" : "0");
+               
                 console.log(isAdmin);
 
                 console.log(administador);
@@ -226,6 +229,18 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
         }
     };
 
+
+    React.useEffect(()=> {
+        if (player) {
+            setUsername(player.username);
+            setEmail(player.email)
+            setCity(player.city);
+            setGenre(player.genre);
+            setRating(player.rating+"");
+            setIsAdmin(player.isAdmin);
+        }
+    }, []);
+
     return (
         <div>
             {player && id_player && (player.id_player === id_player || props.player.isAdmin) && (
@@ -242,11 +257,11 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                     <Form.Row>
                         <Form.Group controlId="formGridUsername">
                             <Form.Label>Username</Form.Label>
-                            <Form.Control placeholder="Enter username" onChange={updateUsername} defaultValue={player.username} />
+                            <Form.Control placeholder="Enter username" onChange={updateUsername} value={username} />
                         </Form.Group>
                         <Form.Group as={Col} controlId="formGridEmail">
                             <Form.Label>Email</Form.Label>
-                            <Form.Control type="email" placeholder="Enter email" onChange={updateEmail} defaultValue={player.email} />
+                            <Form.Control type="email" placeholder="Enter email" onChange={updateEmail} value={email} />
                         </Form.Group>
                     </Form.Row>
                     <Form.Row>
@@ -258,13 +273,13 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
                         <Form.Group as={Col} controlId="formGridCity">
                             <Form.Label>City</Form.Label>
-                            <Form.Control type="text" placeholder="Enter city" onChange={updateCity} defaultValue={player.city} />
+                            <Form.Control type="text" placeholder="Enter city" onChange={updateCity} value={city} />
                         </Form.Group>
                     </Form.Row>
                     <Form.Row>
                         <Form.Group as={Col} controlId="formGridGenre">
                             <Form.Label>Genre</Form.Label>
-                            <Form.Control type="text" placeholder="Enter genre" onChange={updateGenre} defaultValue={player.genre} />
+                            <Form.Control type="text" placeholder="Enter genre" onChange={updateGenre} value={genre} />
                         </Form.Group>
 
                         {/* <Form.Group as={Col} controlId="formGridRating">
@@ -273,7 +288,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                     </Form.Group> */}
                         <Form.Group as={Col} controlId="formGridState">
                             <Form.Label>Rating</Form.Label>
-                            <Form.Control as="select" defaultValue={player.rating + ""} onChange={updateRating}>
+                            <Form.Control as="select" value={rating + ""} onChange={updateRating}>
                                 <option value={1}>1</option>
                                 <option value={2}>2</option>
                                 <option value={3}>3</option>
@@ -303,14 +318,14 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
                 </Form.Row> */}
                     {props.player.isAdmin &&
-                    <>
-                        <Form.Group id="formGridCheckbox">
-                            <Form.Check  id="admin" className="Administrador" type="checkbox" label="Administrador" name="Administrador" onChange={updateIsAdmin} defaultChecked={player.isAdmin} />
-                        </Form.Group>
+                        <>
+                            <Form.Group id="formGridCheckbox">
+                                <Form.Check id="admin" className="Administrador" type="checkbox" label="Administrador" name="Administrador" onChange={updateIsAdmin} checked={isAdmin} />
+                            </Form.Group>
 
-                        <Form.Group id="formGridCheckbox2">
-                            <Form.Check type="checkbox" label="PrebaAdmin" onChange={updateIsAdmin}  checked={isAdmin} />
-                        </Form.Group>
+                            {/* <Form.Group id="formGridCheckbox2">
+                                <Form.Check type="checkbox" label="PrebaAdmin" onChange={updateIsAdmin} checked={isAdmin} />
+                            </Form.Group> */}
                         </>
                     }
                     <Button variant="primary" type="button" onClick={edit}>

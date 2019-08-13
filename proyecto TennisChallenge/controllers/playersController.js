@@ -104,9 +104,6 @@ playersController.add = (req, res) => {
   }
 };
 
-
-
-
 //añadir imagen avatar a un Jugador
 // playersController.editImage = (req, res) => {
 //   const id_player = req.params.id;
@@ -170,18 +167,15 @@ playersController.edit = (req, res) => {
   try {
     // console.log(jwt.verify(token,"mysecret"));
     const decoded = jwt.verify(token, "mysecret");
-    console.log(decoded)
-    console.log(p)
-    console.log(id_player)
-    console.log("file " + req.file.filename)
-    console.log(typeof (req.file.filename))
     if (decoded.isAdmin || decoded.id_player === +id_player) {
       console.log("entrar");
       let player = {
-        ...(req.file.filename != "" && { avatar: req.file.filename }),
+        ...(req.file &&
+          req.file.filename != "" && { avatar: req.file.filename }),
         ...(p.username != "" && { username: p.username }),
         ...(p.email != "" && { email: p.email }),
-        ...(p.password != "" && p.password != null && { password: sha256(p.password) }),
+        ...(p.password != "" &&
+          p.password != null && { password: sha256(p.password) }),
         ...(p.city != "" && { city: p.city }),
         ...(p.rating != "" && { rating: +p.rating }),
         ...(p.genre != "" && { genre: p.genre })
@@ -197,17 +191,23 @@ playersController.edit = (req, res) => {
       }
       console.log("rol admin:" + decoded.isAdmin);
       console.log(player);
-      playersModel.edit(player, id_player)
+      playersModel
+        .edit(player, id_player)
         .then(rows => {
           console.log("guayEditController " + rows);
-          playersModel.listById(id_player)
+          playersModel
+            .listById(id_player)
             .then(rows => {
               console.log("guayListController en EditController " + rows);
               res.send(rows);
             })
             .catch(err => {
               console.log(err);
-              res.status(401).send("ErrorListController en EditController....Petaaaaso " + err);
+              res
+                .status(401)
+                .send(
+                  "ErrorListController en EditController....Petaaaaso " + err
+                );
             });
         })
         .catch(err => {

@@ -28,7 +28,9 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
         setError("");
     }
 
-    const UpdatePass = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // const UpdatePass = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const UpdatePass = (event: any) => {
+
         setInputPass(event.target.value);
         setError("");
     }
@@ -152,12 +154,12 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
             <Form>
                 <Form.Group as={Row} controlId="formGroupUsername">
                     <Form.Label>Username</Form.Label>
-                    <input type="text" className="form-control" id="uname" placeholder="Enter username" name="uname" required onChange={UpdateUser} />
+                    <input type="text" className="form-control" id="uname" placeholder="Enter username"  required onChange={UpdateUser} />
                     {/* <Form.Control type="text" placeholder="Enter username" onChange={UpdateUser} /> */}
                 </Form.Group>
                 <Form.Group as={Row} controlId="formGroupPassword">
                     <Form.Label>Password</Form.Label>
-                    <input type="password" className="form-control" id="pwd" placeholder="Enter password" name="pswd" required onChange={UpdatePass} />
+                    <input type="password" className="form-control" id="pwd" placeholder="Enter password" onChange={UpdatePass} />
                     {/* <input type="password" placeholder="Password" onChange={UpdatePass} /> */}
                 </Form.Group>
                 <Form.Group as={Row}>

@@ -334,7 +334,7 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                             {stateFriend === "EsperandoPeticion" &&
                                 <Button variant="primary" disabled>Esperando Amistad</Button>
                             }
-                            {stateFriend === "" &&
+                            {stateFriend === "" && props.player.id_player !== +id &&
                                 <Button variant="primary" onClick={amistad}>Solicitar Amistad</Button>
                             }
                             {/* )

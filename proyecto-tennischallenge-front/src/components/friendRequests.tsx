@@ -86,7 +86,7 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
                                 .json()
                                 .then((lista: IFriendship[]) => {
                                     if (lista.length === 0) {
-                                        setError("Tu lista de amigos esta vacia");
+                                        setError("No tienes peticiones de amistad pendiendes.");
                                     }
                                     else {
                                         setError("");

@@ -24,44 +24,38 @@ interface IPropsGlobal {
 const App: React.FC<IProps & IPropsGlobal> = props => {
 
   return (
-    <div className="App">
-      <BrowserRouter>
-        <>
-          <NavBar />
+    <BrowserRouter>
+      <div className="App">
+
+        <NavBar />
+        <header className="App-header">
           <Switch>
-            <header className="App-header">
+            {!props.token && (
+              <Route path="/auth" exact component={Login} />
+            )}
+            {/*deberia de poner un layout si {props.token && ()} */}
+            {/* y dentro de layout todas las rutas de aabjo excepto home */}
+            {props.token && (
               <>
-                {!props.token && (
-                  <Route path="/auth" exact component={Login} />
-                )}
-                {/*deberia de poner un layout si {props.token && ()} */}
-                {/* y dentro de layout todas las rutas de aabjo excepto home */}
-                {props.token && (
-                  <>
-                    <Route path="/mailTray" component={MailTray} />
-                    <Route path="/friends" exact component={listFriends} />
-                    
-                    <Route path="/friendRequests" exact component={FriendRequests} />
-                    <Route path="/players/edit/:id_player" exact component={EditPlayer} />
-                    <Route path="/profile/:id_player" exact component={ProfilePlayer} />
-                    <Route path="/players/:id_player" exact component={ViewPlayer} />
-                    <Route path="/players" exact component={listPlayers} />
-                  </>
-                )}
-                <Route path="/add" exact component={AddPlayer} />
-                <Route path="/" exact component={Home} />
-                {/* <Route component={Notfound} /> */}
-                <Redirect to="/" />
+                <Route path="/mailTray" component={MailTray} />
+                <Route path="/friends" exact component={listFriends} />
+
+                <Route path="/friendRequests" exact component={FriendRequests} />
+                <Route path="/players/edit/:id_player" exact component={EditPlayer} />
+                <Route path="/profile/:id_player" exact component={ProfilePlayer} />
+                <Route path="/players/:id_player" exact component={ViewPlayer} />
+                <Route path="/players" exact component={listPlayers} />
               </>
-            </header>
+            )}
+            <Route path="/add" exact component={AddPlayer} />
+            <Route path="/" exact component={Home} />
+            {/* <Route component={Notfound} /> */}
+            <Redirect to="/" />
 
           </Switch>
-        </>
+        </header>
+      </div>
       </BrowserRouter>
-
-
-
-    </div>
   );
 }
 
