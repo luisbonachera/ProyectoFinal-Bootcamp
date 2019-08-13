@@ -1,5 +1,6 @@
 import React from 'react';
-import { Navbar, NavDropdown, Card, Badge, Dropdown } from 'react-bootstrap';
+import { Navbar, Card, Badge, Dropdown } from 'react-bootstrap';
+// import { NavDropdown} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { IGlobalState } from '../reducers/reducers';
@@ -8,6 +9,8 @@ import { IPlayer } from '../interfaceIPlayer';
 // import bootstrap from 'react-bootstrap';
 import logo from '../images/logo-sin-letras.png';
 import { INotifications } from '../interfaceINotifications';
+import { IFriendship } from '../interfaceIFriendship';
+import { IMsg } from '../interfaceIMsg';
 
 
 interface IProps { }
@@ -17,6 +20,12 @@ interface IPropsGlobal {
     player: IPlayer;
     setToken: (token: string) => void;
     notifications: INotifications;
+    setNotifications: (notifications: INotifications) => void;
+    setPlayer:(player: IPlayer) => void;
+    setPlayers:(players: IPlayer[]) => void;
+    setFriendships:(friendships: IFriendship[]) => void;
+    setMessages: (msgs: IMsg[]) => void;
+
 }
 
 
@@ -43,7 +52,29 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
     //     return null;
     // }
 
-    
+    const logout = () => {
+        const initialStateNotifications: INotifications = {
+            numbers_messages: 0,
+            numbers_friends: 0,
+          }
+
+          const initialStatePlayer: IPlayer = {
+            id_player: 0,
+            avatar:"",
+            username: "",
+            email: "",
+            city: "",
+            genre: "",
+            rating: 0,
+            isAdmin: false
+        };
+         props.setPlayer(initialStatePlayer);
+         props.setPlayers([]);
+         props.setNotifications(initialStateNotifications);
+         props.setFriendships([]);
+         props.setMessages([]);
+         props.setToken("")
+    }
 
     // console.log("username despues del useEffect :" + username);
     // console.log("avatar despues del useEffect :" + avatar);
@@ -96,7 +127,7 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                                 <br/>
                                 <Link className="span-logo" to={"/friendRequests"}><Badge variant="light">{props.notifications.numbers_friends>0?props.notifications.numbers_friends:""}</Badge> Peticiones</Link>
                                 <br/>
-                                <Link className="span-logo" to="/" onClick={() => props.setToken("")}>Cerrar Sesión</Link>
+                                <Link className="span-logo" to="/" onClick={() => logout()}>Cerrar Sesión</Link>
                                     {/* <NavDropdown.Item href="#action/3.1">>Mail</NavDropdown.Item> */}
                                     {/* <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
                                     <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
@@ -123,7 +154,12 @@ const mapStateToProps = (state: IGlobalState) => ({
 });
 
 const mapDispachToProps = {
-    setToken: actions.setToken
+    setToken: actions.setToken,
+    setNotifications: actions.setNotifications,
+    setPlayer: actions.setPlayer,
+    setPlayers: actions.setPlayers,
+    setFriendships: actions.setFriendships,
+    setMessages: actions.setMessages
 }
 
 export default connect(

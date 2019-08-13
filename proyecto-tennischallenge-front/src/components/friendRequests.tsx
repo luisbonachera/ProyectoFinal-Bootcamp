@@ -131,7 +131,7 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
 
             if (friends.length === 0) {
                 console.log("null")
-                setError("Tu lista de amigos esta vacia.")
+                setError("No tienes peticiones de amistad.")
                 // return null;
             } else {
                 setError("");

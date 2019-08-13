@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 import jwt from 'jsonwebtoken';
 import { Link } from 'react-router-dom';
+import { IFriendship } from '../interfaceIFriendship';
 
 
 interface Iprops { }
@@ -14,6 +15,7 @@ interface IpropsGlobal {
     token: string;
     players: IPlayer[];
     setPlayers: (players: IPlayer[]) => void;
+    setFriendships: (friendships: IFriendship[]) => void;
 };
 
 const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
@@ -182,7 +184,56 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
 
     React.useEffect(filtrar, [inputUsername, inputCity, inputRatingFrom, inputRatingTo, inputSex]);
 
+    const listFriendship = () => {
+        if (props.token) {
+            let decoded = jwt.decode(props.token);
+            if (decoded !== null) {
+                console.log(decoded);
 
+                fetch("http://localhost:8080/api/friends", {
+                    headers: {
+                        "Content-type": "application/json",
+                        Authorization: "Bearer " + props.token
+                    }
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            response
+                                .json()
+                                .then((lista: IFriendship[]) => {
+                                    if (lista.length === 0) {
+                                        setError("Tu lista de amigos esta vacia");
+                                    }
+                                    else {
+                                        setError("");
+                                        console.log("va bien");
+                                        props.setFriendships(lista);
+
+                                        console.log("friends desde BD");
+                                        console.log(lista);
+                                    }
+                                    // 
+                                })
+                                .catch(err => {
+                                    setError("Error en el json.");
+                                });
+                        } else {
+                            setError("responde.ok da error.");
+                        }
+                    })
+                    .catch(err => {
+                        setError("Error en response.");
+                    });
+            }
+            else {
+                setError("El token no se pudo decodificar");
+            }
+        }
+        else {
+            setError("El token no existe");
+        }
+    };
+    React.useEffect(listFriendship, []);
 
     if (!filteresList){
         return null;
@@ -339,7 +390,8 @@ const mapStateToProps = (state: IGlobalState) => ({
 });
 
 const mapDispachToProps = {
-    setPlayers: actions.setPlayers
+    setPlayers: actions.setPlayers,
+    setFriendships: actions.setFriendships
 }
 
 export default connect(
