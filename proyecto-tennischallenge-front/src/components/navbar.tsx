@@ -47,7 +47,7 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
     // }
 
     // React.useEffect(()=>console.log("se renderiza"),[props.player]);
-    console.log(props.player);
+    // console.log(props.player);
     // if (player === ""){
     //     return null;
     // }

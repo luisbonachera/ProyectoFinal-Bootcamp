@@ -96,6 +96,8 @@ router.put("/sportCenter/edit/:id", sportCenterController.edit);
 // borrar Centro Deportivo si eres admin
 router.delete("/sportCenter/:id", sportCenterController.delete);
 
+///////////////Amigos////////////////////////////
+
 //crear un amigo
 router.post("/friends/add", friendsController.add);
 
@@ -104,6 +106,9 @@ router.get("/friends", friendsController.list);
 
 //Aceptar amistad la amistad
 router.put("/friends/accepted/:id", friendsController.edit);
+
+//Cambiar a visto a mi nuevo amigo
+router.put("/friends/watched/:id", friendsController.editWatched);
 
 // borrar peticion de amistad
 router.delete("/friends/delete/:id", friendsController.delete);

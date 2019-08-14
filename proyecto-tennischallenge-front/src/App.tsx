@@ -31,8 +31,8 @@ const App: React.FC<IProps & IPropsGlobal> = props => {
 
     if (props.token) {
       const n = setInterval(() => {
-        console.log("token antes del fetch de notifications:")
-        console.log(props.token);
+        // console.log("token antes del fetch de notifications:");
+        // console.log(props.token);
         fetch("http://localhost:8080/api/notifications", {
 
           headers: {
@@ -47,16 +47,16 @@ const App: React.FC<IProps & IPropsGlobal> = props => {
                 // .then((notifications: INotifications) => {
                   .then((notifications) => {
 
-                  console.log(notifications);
-                  console.log(notifications[0]);
+                  // console.log(notifications);
+                  // console.log(notifications[0]);
                   if (notifications[0]) {
                     if (notifications[0].numbers_messages > 0 || notifications[0].numbers_friends > 0) {
-                      console.log("va bien");
-                      console.log(notifications);
+                      // console.log("va bien");
+                      // console.log(notifications);
                      
-                      console.log(notifications);
+                      // console.log(notifications);
                     } else {
-                      console.log("no hay notificaciones");
+                      // console.log("no hay notificaciones");
                     }
                     props.setNotifications(notifications[0]);
                   }
@@ -77,7 +77,7 @@ const App: React.FC<IProps & IPropsGlobal> = props => {
       }, 500);
       return () => { clearInterval(n) }
     }else{
-      console.log("aun no hay token");
+      // console.log("aun no hay token");
     }
   }, [props.token]);
   return (

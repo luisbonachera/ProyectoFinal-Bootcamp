@@ -1,11 +1,13 @@
 import React from 'react';
-import { CardDeck, Card, DropdownButton, Form, Col } from 'react-bootstrap';
+import { CardDeck, Card, DropdownButton, Form, Col, Badge } from 'react-bootstrap';
 import { IGlobalState } from '../reducers/reducers';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 import jwt from 'jsonwebtoken';
 import { Link } from 'react-router-dom';
 import { IFriendship } from '../interfaceIFriendship';
+import { decode } from 'punycode';
+import { IPlayer } from '../interfaceIPlayer';
 
 
 interface Iprops { }
@@ -14,6 +16,7 @@ interface IpropsGlobal {
     token: string;
     setFriendships: (friendships: IFriendship[]) => void;
     friendships: IFriendship[];
+    player: IPlayer;
 };
 
 const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
@@ -63,7 +66,6 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
         }
 
     };
-
 
     const list = () => {
         if (props.token) {
@@ -147,7 +149,7 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
     const filtar = () => {
 
         // listaFriends = listaFriends.filter(
-            friends =  myFriends.filter(
+        friends = myFriends.filter(
             p => p.username.toLocaleLowerCase().startsWith(inputUsername.toLocaleLowerCase())
             // ).slice(0, 5
         )
@@ -156,12 +158,12 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
             .filter(p => (p.rating >= inputRatingFrom && p.rating <= inputRatingTo))
 
             .filter(p => !inputSex || (p.genre === inputSex.toLocaleUpperCase()));
-            
-            if(friends.length === 0){
-                setError("No tienes amigos con estos requisitos.")
-            }else{
-                setError("");
-            }
+
+        if (friends.length === 0) {
+            setError("No tienes amigos con estos requisitos.")
+        } else {
+            setError("");
+        }
         console.log("myFriends");
         console.log(myFriends);
         console.log("listaFriends");
@@ -211,6 +213,64 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
     }
 
     React.useEffect(filtar, [inputUsername, inputCity, inputRatingFrom, inputRatingTo, inputSex]);
+
+
+    const watched = (id_player: number) => {
+        let decoded: any = jwt.decode(props.token);
+        let friend = props.friendships.filter(f => f.id_player2 === id_player && !f.watched && f.accepted && f.id_player1 === decoded.id_player)
+        if (friend.length > 0) {
+            fetch("http://localhost:8080/api/friends/watched/" + friend[0].id_friends,  {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + props.token
+                },
+            })
+            .then(response => {
+                if (response.ok) {
+
+                    console.log("amistad creada")
+                        fetch("http://localhost:8080/api/friends", {
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization: "Bearer " + props.token
+                            }
+                        })
+                            .then(response => {
+                                if (response.ok) {
+                                    response
+                                        .json()
+                                        .then((listaFriendship: IFriendship[]) => {
+                                            if (listaFriendship.length > 0) {
+                                                console.log(listaFriendship);
+                                                props.setFriendships(listaFriendship);
+
+                                            } else {
+                                                console.log("la BD no ha devuelto ningun mensaje.");
+                                            }
+                                        })
+                                        .catch(err => {
+                                            console.log("error al devolver mis mensajes." + err);
+                                        })
+                                } else {
+                                    console.log("Error en el response.ok");
+                                }
+                            })
+                            .catch(err => {
+                                console.log("la consulta no fue bien. ");
+                                // setError(" Error al añadir como amigo.");
+                            })
+                    }else{
+                        console.log("error en response.ok");
+                    }
+                })
+                .catch(err=>{
+                    console.log("error en response " + err);
+                })
+        }else{
+            console.log("este no es tu amigo nuevo.")
+        }
+    }
 
 
     if (!friends || !myFriends || !friendsFiltros) {
@@ -294,16 +354,24 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                         {error}
                     </div>
                 }
-                {friendsFiltros  &&
+                {friendsFiltros &&
                     <CardDeck >
                         {friendsFiltros.map(f => (
                             // {props.players.map(u =>
-                            <Link key={f.id_player} to={"/players/" + f.id_player} >
+                            <Link key={f.id_player} to={"/players/" + f.id_player} onClick={() => watched(f.id_player)} >
                                 {/* <Card style={{ display: 'flex', flexDirection: 'row' }}> */}
                                 <Card>
+{console.log("watched" +f.watched)}
+{console.log("yo" + props.player.id_player)}
+{console.log("el" + f.id_player1)}
+{console.log(f.id_player1 === props.player.id_player)}
+{console.log("accepted" +f.accepted)}
 
                                     <Card.Img className="avatarListProfile" variant="top"
                                         src={f.avatar ? "http://localhost:8080/uploads/avatar/" + f.avatar : "images/avatar-tenis.png"} alt="" />
+                                    {!f.watched && f.id_player1 === props.player.id_player && f.accepted &&
+                                        <Badge pill variant="light">Nuevo</Badge>
+                                    }
                                     <Card.Body >
                                         <Card.Title>{f.username}</Card.Title>
                                         <Card.Text>
@@ -337,7 +405,8 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
 
 const mapStateToProps = (state: IGlobalState) => ({
     token: state.token,
-    friendships: state.friendships
+    friendships: state.friendships,
+    player: state.player    
 
 });
 

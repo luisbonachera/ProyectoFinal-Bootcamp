@@ -65,6 +65,26 @@ friendsModel.edit = (accepted,id_friends,my_id) => {
 };
 
 
+//Cambiar a visto a mi nuevo amigo
+friendsModel.editWatched = (watched,id_friends,my_id) => {
+    return new Promise((resolve, reject) => {
+        console.log("entra en el modelo editmessage");
+        dbConn.query('UPDATE friends SET watched = ? WHERE id_friends = ? AND id_player1 = ?',[watched,id_friends,my_id],
+        (err, result) => {
+                console.log("ya he terminado la consula poner watched a true");
+                if (err) {
+                    console.log("error en la consulta poner watched a true");
+                    reject(err);
+                } else {
+                    console.log("consulta de poner watched a true correcta");
+                    resolve(result);
+                }
+            }
+        );
+    });
+};
+
+
 // borrar peticion de amistad 
 friendsModel.delete = (id_friends, my_id) => {
     return new Promise((resolve, reject)=>{

@@ -71,10 +71,11 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
     const add = () => {
         console.log("entra al fetch");
         // console.log(isAdmin);
+        ///requerir campos*********************************************************************
         const formData = new FormData();
         if (image) {
             formData.append("file", image);
-        }else{
+        } else {
             formData.append("file", "");
         }
         formData.append("id_player", "");
@@ -169,51 +170,51 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                                                     });
 
 
-                                                        // console.log("entra");
-                                                        // console.log(player);
-                                                        // props.setPlayer(player);
-                                                        // props.setToken(token);
-                                                        // props.history.push("/");
+                                                // console.log("entra");
+                                                // console.log(player);
+                                                // props.setPlayer(player);
+                                                // props.setToken(token);
+                                                // props.history.push("/");
 
-                                                        // const formData = new FormData();
-                                                        // formData.append("file", image);
-                                                        // formData.append("id", decoded.id_player);
+                                                // const formData = new FormData();
+                                                // formData.append("file", image);
+                                                // formData.append("id", decoded.id_player);
 
-                                                        // fetch("http://localhost:8080/api/addImage/" + decoded.id_player, {
-                                                        //     method: "PUT",
-                                                        //     headers: {
-                                                        //         Authorization: "Bearer " + token
-                                                        //     },
-                                                        //     body: formData
-                                                        // }).then(response => {
-                                                        //     if (response.ok) {
-                                                        //         response.json().then((player: IPlayer) => {
-                                                        //             props.setPlayer(player);
-                                                        //             props.setToken(token);
-                                                        //             props.history.push("/");
-                                                        //         }).catch(err => {
-                                                        //             console.log("error al subir la imagen " + err);
-                                                        //         });
-                                                        //     } else {
-                                                        //         console.log("error en el response.ok")
-                                                        //     }
-                                                        // }).catch(err => {
-                                                        //     console.log("error en la consula, error response. " + err);
-                                                        // });
+                                                // fetch("http://localhost:8080/api/addImage/" + decoded.id_player, {
+                                                //     method: "PUT",
+                                                //     headers: {
+                                                //         Authorization: "Bearer " + token
+                                                //     },
+                                                //     body: formData
+                                                // }).then(response => {
+                                                //     if (response.ok) {
+                                                //         response.json().then((player: IPlayer) => {
+                                                //             props.setPlayer(player);
+                                                //             props.setToken(token);
+                                                //             props.history.push("/");
+                                                //         }).catch(err => {
+                                                //             console.log("error al subir la imagen " + err);
+                                                //         });
+                                                //     } else {
+                                                //         console.log("error en el response.ok")
+                                                //     }
+                                                // }).catch(err => {
+                                                //     console.log("error en la consula, error response. " + err);
+                                                // });
 
 
 
-                                                        // props.setPlayer(player);
-                                                        // props.history.push("/");
-                                                    } else {
-                                                            console.log("Ha fallado el decode en login");
-                                                        }
-
-                                        } else {
-                                                console.log("la BD no ha devuelto el token vacio.");
+                                                // props.setPlayer(player);
+                                                // props.history.push("/");
+                                            } else {
+                                                console.log("Ha fallado el decode en login");
                                             }
 
-                                        })
+                                        } else {
+                                            console.log("la BD no ha devuelto el token vacio.");
+                                        }
+
+                                    })
 
                             } else {
                                 setError("Usuario o Contraseña incorrectos");
@@ -266,14 +267,27 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
-                    <Form.Group as={Col} controlId="formGridGenre">
-                        <Form.Label>Genre</Form.Label>
-                        <Form.Control type="text" placeholder="Enter genre" onChange={updateGenre} />
+
+                    <Form.Group as={Col} controlId="formGridState">
+                        <Form.Label>Genero</Form.Label>
+                        <Form.Control as="select" value={genre} onChange={updateGenre}>
+                            <option selected hidden>Introduce Genero</option>
+                            <option value={"Hombre"}>Hombre</option>
+                            <option value={"Mujer"}>Mujer</option>
+                        </Form.Control>
                     </Form.Group>
 
-                    <Form.Group as={Col} controlId="formGridRating">
-                        <Form.Label>Rating</Form.Label>
-                        <Form.Control type="number" placeholder="Enter rating" onChange={updateRating} />
+
+                    <Form.Group as={Col} controlId="formGridState">
+                        <Form.Label>Level</Form.Label>
+                        <Form.Control as="select" value={rating + ""} onChange={updateRating}>
+                            <option selected hidden>Introduce Level</option>
+                            <option value={1}>1</option>
+                            <option value={2}>2</option>
+                            <option value={3}>3</option>
+                            <option value={4}>4</option>
+                            <option value={5}>5</option>
+                        </Form.Control>
                     </Form.Group>
 
 

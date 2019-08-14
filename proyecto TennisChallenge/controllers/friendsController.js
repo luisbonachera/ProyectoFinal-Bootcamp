@@ -127,6 +127,46 @@ friendsController.edit = (req, res) => {
     }
 }
 
+//Cambiar a visto a mi nuevo amigo
+friendsController.editWatched = (req, res) => {
+    try {
+        console.log(req.headers.authorization);
+        const token = req.headers.authorization.replace("Bearer ", "");
+        console.log(token);
+        const decoded = jwt.verify(token, "mysecret");
+        let my_id = decoded.id_player;
+        let id_friends = +req.params.id;
+        console.log(id_friends);
+        console.log(my_id);
+        if (id_friends) {
+            if (my_id) {
+                let watched = 1;
+                friendsModel.editWatched(watched, id_friends, my_id)
+                    .then(rows => {
+                        console.log("bien");
+                        res.send({
+                            type: "success",
+                            data: rows
+                        });
+                    })
+                    .catch(err => {
+                        console.log("mal");
+                        res.send({
+                            type: "error",
+                            data: err
+                        });
+                    });
+            } else {
+                res.status(401).send("error my id no existe");
+            }
+        } else {
+            res.status(401).send("error el id de amistad no existe");
+        }
+    } catch (err) {
+        res.status(401).send("error en el token o al verficarlo. " + err);
+    }
+}
+
 
 // borrar peticion de amistad 
 friendsController.delete = (req, res) => {

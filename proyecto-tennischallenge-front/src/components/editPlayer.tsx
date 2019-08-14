@@ -232,6 +232,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
     React.useEffect(()=> {
         if (player) {
+            console.log(player)
             setUsername(player.username);
             setEmail(player.email)
             setCity(player.city);
@@ -277,10 +278,14 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                         </Form.Group>
                     </Form.Row>
                     <Form.Row>
-                        <Form.Group as={Col} controlId="formGridGenre">
-                            <Form.Label>Genre</Form.Label>
-                            <Form.Control type="text" placeholder="Enter genre" onChange={updateGenre} value={genre} />
-                        </Form.Group>
+                    <Form.Group as={Col} controlId="formGridState">
+                        <Form.Label>Genero</Form.Label>
+                        <Form.Control as="select" value={genre} onChange={updateGenre}>
+                            <option value="HOMBRE">Hombre</option>
+                            <option value="MUJER">Mujer</option>
+                        </Form.Control>
+                    </Form.Group>
+                        
 
                         {/* <Form.Group as={Col} controlId="formGridRating">
                         <Form.Label>Rating</Form.Label>
