@@ -54,9 +54,10 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
 
     const logout = () => {
         const initialStateNotifications: INotifications = {
-            numbers_messages: 0,
-            numbers_friends: 0,
-          }
+            number_messages: 0,
+            numbers_requestFriend: 0,
+            numbers_acceptedFriend: 0
+          };
 
           const initialStatePlayer: IPlayer = {
             id_player: 0,
@@ -115,17 +116,17 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                                 {/* {console.log(props.player.username)} */}
                                 {/* <NavDropdown className="span-logo" title={props.player.username} id="collasible-nav-dropdown"> */}
                                 <Dropdown className="span-logo" >
-                                <Dropdown.Toggle id="dropdown-basic"><Badge variant="light">{props.notifications.numbers_messages + props.notifications.numbers_friends > 0?
-                                     props.notifications.numbers_messages + props.notifications.numbers_friends:"" }</Badge> {props.player.username}</Dropdown.Toggle>
+                                <Dropdown.Toggle id="dropdown-basic"><Badge variant="light">{props.notifications.number_messages + props.notifications.numbers_requestFriend + props.notifications.numbers_acceptedFriend > 0?
+                                     props.notifications.number_messages + props.notifications.numbers_acceptedFriend + props.notifications.numbers_requestFriend:"" }</Badge> {props.player.username}</Dropdown.Toggle>
                                 <Dropdown.Menu>
 
-                                <Link className="span-logo" to="/mailTray" ><Badge variant="light">{props.notifications.numbers_messages > 0?props.notifications.numbers_messages:""}</Badge> Correo</Link>
+                                <Link className="span-logo" to="/mailTray" ><Badge variant="light">{props.notifications.number_messages > 0?props.notifications.number_messages:""}</Badge> Correo</Link>
                                 <br/>
                                 <Link className="span-logo" to={"/profile/"+ props.player.id_player}>Perfil</Link>
                                 <br/>
-                                <Link className="span-logo" to={"/friends"}>Amigos</Link>
+                                <Link className="span-logo" to={"/friends"}><Badge variant="light">{props.notifications.numbers_acceptedFriend > 0?props.notifications.numbers_acceptedFriend:""}</Badge>Amigos</Link>
                                 <br/>
-                                <Link className="span-logo" to={"/friendRequests"}><Badge variant="light">{props.notifications.numbers_friends>0?props.notifications.numbers_friends:""}</Badge> Peticiones</Link>
+                                <Link className="span-logo" to={"/friendRequests"}><Badge variant="light">{props.notifications.numbers_requestFriend>0?props.notifications.numbers_requestFriend:""}</Badge> Peticiones</Link>
                                 <br/>
                                 <Link className="span-logo" to="/" onClick={() => logout()}>Cerrar Sesión</Link>
                                     {/* <NavDropdown.Item href="#action/3.1">>Mail</NavDropdown.Item> */}

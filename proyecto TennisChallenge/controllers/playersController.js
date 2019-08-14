@@ -61,7 +61,7 @@ playersController.add = (req, res) => {
   if (p) {
     let player = {
       ...(req.file &&
-        req.file.filename!= "" && { avatar: req.file.filename }),
+        req.file.filename != "" && { avatar: req.file.filename }),
       ...(p.username != null && { username: p.username }),
       ...(p.email != null && { email: p.email }),
       ...(p.password != null && { password: sha256(p.password) }),

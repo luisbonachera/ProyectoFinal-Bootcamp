@@ -33,7 +33,7 @@ router.get("/players", playersController.list);
 // Set The Storage Engine
 const storage = multer.diskStorage({
   destination: (_req, file, cb) => {
-    if (file !== "") {
+    if (file !== "" && file) {
       cb(null, "public/uploads/avatar");
     }
   },
@@ -44,7 +44,6 @@ const storage = multer.diskStorage({
       if (req.body.id_player === "") {
         cb(null, Date.now() + "." + extension);
       } else {
-        
         cb(null, req.body.id_player + "." + extension);
       }
     }else{

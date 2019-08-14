@@ -35,7 +35,7 @@ CREATE TABLE `friends` (
   KEY `FK_friends_players_idx1` (`id_player2`),
   CONSTRAINT `FK_id_players1` FOREIGN KEY (`id_player1`) REFERENCES `players` (`id_player`),
   CONSTRAINT `FK_id_players2` FOREIGN KEY (`id_player2`) REFERENCES `players` (`id_player`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `friends` (
 
 LOCK TABLES `friends` WRITE;
 /*!40000 ALTER TABLE `friends` DISABLE KEYS */;
-INSERT INTO `friends` VALUES (4,3,4,0,0),(5,3,5,0,0),(6,3,6,0,0),(12,44,3,0,1),(13,3,8,0,0),(15,3,2,0,0),(16,2,4,0,1),(17,2,5,0,1),(18,2,8,0,0),(20,7,3,0,1),(21,3,22,0,0);
+INSERT INTO `friends` VALUES (4,3,4,0,0),(5,3,5,0,0),(6,3,6,0,0),(12,44,3,0,1),(13,3,8,0,0),(16,2,4,0,1),(17,2,5,0,1),(18,2,8,0,0),(20,7,3,0,1),(21,3,22,0,0),(22,44,2,0,1),(23,3,2,0,1);
 /*!40000 ALTER TABLE `friends` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-14  0:14:29
+-- Dump completed on 2019-08-14 11:40:06

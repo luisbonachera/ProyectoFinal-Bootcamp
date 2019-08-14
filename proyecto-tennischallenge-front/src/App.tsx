@@ -25,7 +25,9 @@ interface IPropsGlobal {
 }
 
 const App: React.FC<IProps & IPropsGlobal> = props => {
+
   useEffect(() => {
+
 
     if (props.token) {
       const n = setInterval(() => {
@@ -42,9 +44,11 @@ const App: React.FC<IProps & IPropsGlobal> = props => {
             if (response.ok) {
               response
                 .json()
-                .then((notifications) => {
+                // .then((notifications: INotifications) => {
+                  .then((notifications) => {
 
                   console.log(notifications);
+                  console.log(notifications[0]);
                   if (notifications[0]) {
                     if (notifications[0].numbers_messages > 0 || notifications[0].numbers_friends > 0) {
                       console.log("va bien");
@@ -70,7 +74,7 @@ const App: React.FC<IProps & IPropsGlobal> = props => {
           });
 
 
-      }, 30000);
+      }, 500);
       return () => { clearInterval(n) }
     }else{
       console.log("aun no hay token");

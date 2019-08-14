@@ -18,30 +18,33 @@ USE `proyectotenis`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `type_court_catalogue`
+-- Table structure for table `sports_center`
 --
 
-DROP TABLE IF EXISTS `type_court_catalogue`;
+DROP TABLE IF EXISTS `sports_center`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `type_court_catalogue` (
-  `id_type_court_catalogue` int(11) NOT NULL AUTO_INCREMENT,
-  `type` varchar(20) DEFAULT NULL,
-  `id_sport_center` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_type_court_catalogue`),
-  UNIQUE KEY `idt_type_court_catalogue_UNIQUE` (`id_type_court_catalogue`),
-  KEY `FK_Type_cour_catalogue_Sport_center_idx` (`id_sport_center`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `sports_center` (
+  `id_sports_center` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `city` varchar(30) NOT NULL,
+  `zone` varchar(40) NOT NULL,
+  `number_court` tinyint(5) NOT NULL DEFAULT '1',
+  `price_hour` tinyint(5) NOT NULL,
+  `price_extra_night` tinyint(5) NOT NULL,
+  PRIMARY KEY (`id_sports_center`),
+  UNIQUE KEY `name_UNIQUE` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `type_court_catalogue`
+-- Dumping data for table `sports_center`
 --
 
-LOCK TABLES `type_court_catalogue` WRITE;
-/*!40000 ALTER TABLE `type_court_catalogue` DISABLE KEYS */;
-INSERT INTO `type_court_catalogue` VALUES (1,'1',1),(2,'2',2),(3,'3',3),(4,'1',4),(5,'2',4),(6,'3',4);
-/*!40000 ALTER TABLE `type_court_catalogue` ENABLE KEYS */;
+LOCK TABLES `sports_center` WRITE;
+/*!40000 ALTER TABLE `sports_center` DISABLE KEYS */;
+INSERT INTO `sports_center` VALUES (1,'Centro Deportivo UMA','Málaga','El Consul',3,5,3),(2,'Club Deportivo Vals','Málaga','El Consul',3,6,3),(3,'Centro Deportivo Limoneros','Puerto de la Torre','El Limonero',2,5,3),(4,'Club de Tenis Puente Romano','Marbella','Puente Romano',10,12,5),(7,'Club El Candado2','Málaga','El Candado',3,7,4);
+/*!40000 ALTER TABLE `sports_center` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-14 11:40:07
+-- Dump completed on 2019-08-14  0:14:29
