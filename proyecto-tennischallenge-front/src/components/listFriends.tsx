@@ -17,6 +17,7 @@ interface IpropsGlobal {
     setFriendships: (friendships: IFriendship[]) => void;
     friendships: IFriendship[];
     player: IPlayer;
+    players: IPlayer[];
 };
 
 const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
@@ -116,7 +117,7 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
             setError("El token no existe");
         }
     };
-    React.useEffect(list, []);
+    React.useEffect(list, [props.players]);
 
     let friends: IFriendship[] = myFriends;
 
@@ -361,16 +362,14 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                             <Link key={f.id_player} to={"/players/" + f.id_player} onClick={() => watched(f.id_player)} >
                                 {/* <Card style={{ display: 'flex', flexDirection: 'row' }}> */}
                                 <Card>
-{console.log("watched" +f.watched)}
-{console.log("yo" + props.player.id_player)}
-{console.log("el" + f.id_player1)}
-{console.log(f.id_player1 === props.player.id_player)}
-{console.log("accepted" +f.accepted)}
 
                                     <Card.Img className="avatarListProfile" variant="top"
                                         src={f.avatar ? "http://localhost:8080/uploads/avatar/" + f.avatar : "images/avatar-tenis.png"} alt="" />
                                     {!f.watched && f.id_player1 === props.player.id_player && f.accepted &&
-                                        <Badge pill variant="light">Nuevo</Badge>
+                                    <>
+                                        <Card.Img className="avatarListProfile" variant="top" src="images/Pelota Luis brochazo.png"  alt="" />
+                                        {/* <Badge pill variant="light">Nuevo</Badge> */}
+                                        </>
                                     }
                                     <Card.Body >
                                         <Card.Title>{f.username}</Card.Title>
@@ -406,7 +405,8 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
 const mapStateToProps = (state: IGlobalState) => ({
     token: state.token,
     friendships: state.friendships,
-    player: state.player    
+    player: state.player,
+    players: state.players   
 
 });
 

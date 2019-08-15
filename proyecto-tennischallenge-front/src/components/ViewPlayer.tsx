@@ -346,9 +346,9 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                     <Link to={"/players/edit/" + thisplayer.id_player}>
                                         <Button variant="primary">Editar</Button>
                                     </Link>
-                                    <Link to={"/players"} onClick={borrar}>
-                                        <Button variant="primary">Borrar</Button>
-                                    </Link>
+                                    {/* <Link to={"/players"} > */}
+                                        <Button variant="primary" onClick={borrar}>Borrar</Button>
+                                    {/* </Link> */}
                                 </>
                             }
                         </Card.Footer>
