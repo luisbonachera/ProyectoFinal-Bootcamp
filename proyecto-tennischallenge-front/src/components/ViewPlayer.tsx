@@ -85,6 +85,7 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                             if (listaFriendship.length > 0) {
                                                 console.log(listaFriendship);
                                                 props.setFriendships(listaFriendship);
+                                                props.deleteFriendship(id);
                                                 props.history.push("/players");
 
                                             } else {
@@ -142,7 +143,7 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                             //     props.deletePlayer(id);
                             // } else if (props.player.isAdmin) {
                             props.history.push("/players");
-                            props.deleteFriendship(id_friend);
+                            
                             // } else {
                             //     console.log("no deberia entrar aqui, o eres admin o te borras a ti.")
                             // }
@@ -186,11 +187,15 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                             console.log("usuario borrado")
                             if (props.player.id_player === id) {
                                 props.setToken("");
+                               
+                                props.deletePlayer(id);
+                                props.deleteFriendship(id_friend);
                                 props.history.push("/");
-                                props.deletePlayer(id);
                             } else if (props.player.isAdmin) {
-                                props.history.push("/players");
+                               
                                 props.deletePlayer(id);
+                                props.deleteFriendship(id_friend);
+                                props.history.push("/players");
                             } else {
                                 console.log("no deberia entrar aqui, o eres admin o te borras a ti.")
                             }
@@ -199,7 +204,7 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                         }
                     })
                     .catch(err => {
-                        console.log("Error," + err)
+                        console.log("Error," + err);
                     })
             }
             else {
@@ -210,7 +215,6 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
             setError("El token no existe");
         }
     };
-
 
 
     const findThisPlayer = () => {
@@ -261,11 +265,11 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
            
         } else {
+            setError("Aun no existe el player")
             console.log("este usuario no es tu amigo")
         }
 
     };
-
     React.useEffect(findThisPlayer, []);
 
     // const findMyFriend = () => {

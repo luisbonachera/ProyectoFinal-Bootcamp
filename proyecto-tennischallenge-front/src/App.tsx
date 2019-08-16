@@ -16,6 +16,7 @@ import listFriends from './components/listFriends';
 import FriendRequests from './components/friendRequests';
 import { INotifications } from './interfaceINotifications';
 import * as actions from './actions/actions';
+import SimpleMap from './components/googleMaps';
 
 interface IProps { }
 
@@ -26,60 +27,60 @@ interface IPropsGlobal {
 
 const App: React.FC<IProps & IPropsGlobal> = props => {
 
-  useEffect(() => {
+  // useEffect(() => {
 
 
-    if (props.token) {
-      const n = setInterval(() => {
-        // console.log("token antes del fetch de notifications:");
-        // console.log(props.token);
-        fetch("http://localhost:8080/api/notifications", {
+  //   if (props.token) {
+  //     const n = setInterval(() => {
+  //       // console.log("token antes del fetch de notifications:");
+  //       // console.log(props.token);
+  //       fetch("http://localhost:8080/api/notifications", {
 
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + props.token
-          },
-        })
-          .then(response => {
-            if (response.ok) {
-              response
-                .json()
-                // .then((notifications: INotifications) => {
-                  .then((notifications) => {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: "Bearer " + props.token
+  //         },
+  //       })
+  //         .then(response => {
+  //           if (response.ok) {
+  //             response
+  //               .json()
+  //               // .then((notifications: INotifications) => {
+  //               .then((notifications) => {
 
-                  // console.log(notifications);
-                  // console.log(notifications[0]);
-                  if (notifications[0]) {
-                    if (notifications[0].numbers_messages > 0 || notifications[0].numbers_friends > 0) {
-                      // console.log("va bien");
-                      // console.log(notifications);
-                     
-                      // console.log(notifications);
-                    } else {
-                      // console.log("no hay notificaciones");
-                    }
-                    props.setNotifications(notifications[0]);
-                  }
+  //                 // console.log(notifications);
+  //                 // console.log(notifications[0]);
+  //                 if (notifications[0]) {
+  //                   if (notifications[0].numbers_messages > 0 || notifications[0].numbers_friends > 0) {
+  //                     // console.log("va bien");
+  //                     // console.log(notifications);
 
-                })
-                .catch(err => {
-                  console.log("Error en el json.");
-                });
-            } else {
-              console.log("responde.ok da error.");
-            }
-          })
-          .catch(err => {
-            console.log("Error en response. " + err);
-          });
+  //                     // console.log(notifications);
+  //                   } else {
+  //                     // console.log("no hay notificaciones");
+  //                   }
+  //                   props.setNotifications(notifications[0]);
+  //                 }
+
+  //               })
+  //               .catch(err => {
+  //                 console.log("Error en el json.");
+  //               });
+  //           } else {
+  //             console.log("responde.ok da error.");
+  //           }
+  //         })
+  //         .catch(err => {
+  //           console.log("Error en response. " + err);
+  //         });
 
 
-      }, 500);
-      return () => { clearInterval(n) }
-    }else{
-      // console.log("aun no hay token");
-    }
-  }, [props.token]);
+  //     }, 500);
+  //     return () => { clearInterval(n) }
+  //   } else {
+  //     // console.log("aun no hay token");
+  //   }
+  // }, [props.token]);
   return (
     <BrowserRouter>
       <div className="App">
@@ -92,20 +93,19 @@ const App: React.FC<IProps & IPropsGlobal> = props => {
             )}
             {/*deberia de poner un layout si {props.token && ()} */}
             {/* y dentro de layout todas las rutas de aabjo excepto home */}
-            {props.token && (
-              <>
-                <Route path="/mailTray" component={MailTray} />
-                <Route path="/friends" exact component={listFriends} />
 
-                <Route path="/friendRequests" exact component={FriendRequests} />
-                <Route path="/players/edit/:id_player" exact component={EditPlayer} />
-                <Route path="/profile/:id_player" exact component={ProfilePlayer} />
-                <Route path="/players/:id_player" exact component={ViewPlayer} />
-                <Route path="/players" exact component={listPlayers} />
-              </>
-            )}
+            {props.token && (<Route path="/mailTray" component={MailTray} />)}
+            {props.token && (<Route path="/friends" exact component={listFriends} />)}
+
+            {props.token && (<Route path="/friendRequests" exact component={FriendRequests} />)}
+            {props.token && (<Route path="/players/edit/:id_player" exact component={EditPlayer} />)}
+            {props.token && (<Route path="/profile/:id_player" exact component={ProfilePlayer} />)}
+            {props.token && (<Route path="/players/:id_player" exact component={ViewPlayer} />)}
+            {props.token && (<Route path="/players" exact component={listPlayers} />)}
+
             <Route path="/add" exact component={AddPlayer} />
             <Route path="/" exact component={Home} />
+            <Route path="/maps" exact component={SimpleMap} />
             {/* <Route component={Notfound} /> */}
             <Redirect to="/" />
 

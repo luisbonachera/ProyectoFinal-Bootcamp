@@ -96,15 +96,19 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                     {props.token && (
                         <>
                             <Link className="span-logo"  to="/players">Jugadores</Link>
+                            
                             <Link className="span-logo" to="/">Pistas</Link>
+                            <Link className="span-logo"  to="/maps">Mapa</Link>
 
                         </>
                     )}
+                    
                     <>
                         {!props.token && (
                             <>
                                 <Link className="span-logo" to="/auth">Iniciar Sesion</Link>
                                 <Link className="span-logo" to="/add">Registrarse</Link>
+                                
                             </>
                         )}
                         {props.token && (

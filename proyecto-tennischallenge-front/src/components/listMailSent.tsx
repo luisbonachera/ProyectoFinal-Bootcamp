@@ -93,7 +93,7 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
                             Asunto: {m.subject}
                         </div>
                         <div className="col">
-                            Fecha: {m.date}
+                            Fecha: {new Date(m.date).toLocaleString()}
                         </div>
                         {/* esto cuanto haya colores en la lista de los msgs lo deberia quitar */}
                         <div className="col">

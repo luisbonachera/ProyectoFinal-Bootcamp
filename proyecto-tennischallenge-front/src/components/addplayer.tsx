@@ -271,7 +271,7 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                     <Form.Group as={Col} controlId="formGridState">
                         <Form.Label>Genero</Form.Label>
                         <Form.Control as="select" value={genre} onChange={updateGenre}>
-                            <option selected hidden>Introduce Genero</option>
+                            <option value="" selected hidden>Introduce Genero</option>
                             <option value={"Hombre"}>Hombre</option>
                             <option value={"Mujer"}>Mujer</option>
                         </Form.Control>

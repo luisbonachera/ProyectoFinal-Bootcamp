@@ -99,8 +99,9 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
                                                             console.log(lista);
                                                             props.setPlayer(player);
                                                             props.setPlayers(lista);
-                                                            props.setToken(token);
                                                             props.history.push("/");
+                                                            props.setToken(token);
+                                                            
 
                                                         })
                                                         .catch(err => {
