@@ -156,7 +156,7 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
             <Form className="inputsLogin">
                 <Form.Group as={Row} className="inputsCenter" controlId="formGroupUsername">
                     <Form.Label>Username</Form.Label>
-                    <input type="text" className="form-control" id="uname" placeholder="Enter username"  required onChange={UpdateUser} />
+                    <input type="text" className={error?"form-control form-control-red":"form-control"} id="uname" placeholder="Enter username"  required onChange={UpdateUser} />
                     {/* <Form.Control type="text" placeholder="Enter username" onChange={UpdateUser} /> */}
                 </Form.Group>
                 <Form.Group as={Row} className="inputsCenter" controlId="formGroupPassword">

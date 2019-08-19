@@ -48,7 +48,11 @@
   background-color: transparent;
   border: none;
 }
+/********************/
+.form-control-red{
+border-color:red;
 
+}
 #dropdwnMenuShowNavbar{
   background-color: transparent;
 }
