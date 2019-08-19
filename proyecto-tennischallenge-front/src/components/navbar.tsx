@@ -122,7 +122,7 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                                 <Dropdown className="span-logo" >
                                 <Dropdown.Toggle id="dropdown-basic"><Badge variant="light">{props.notifications.number_messages + props.notifications.numbers_requestFriend + props.notifications.numbers_acceptedFriend > 0?
                                      props.notifications.number_messages + props.notifications.numbers_acceptedFriend + props.notifications.numbers_requestFriend:"" }</Badge> {props.player.username}</Dropdown.Toggle>
-                                <Dropdown.Menu>
+                                <Dropdown.Menu id="dropdwnMenuShowNavbar">
 
                                 <Link className="span-logo" to="/mailTray" ><Badge variant="light">{props.notifications.number_messages > 0?props.notifications.number_messages:""}</Badge> Correo</Link>
                                 <br/>

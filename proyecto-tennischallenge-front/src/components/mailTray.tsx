@@ -92,24 +92,17 @@ const MailTray: React.FC<IPropsGloblal> = props => {
     React.useEffect(listMsgs, []);
 
     return (
-        <div className="container-fluid">
-            <div className="row">
-                {/* <MenuMail /> */}
-
+        <div className="container">
+            <div className="row fondoCorreo">
                 <div className="col-2">
                     <MenuMail />
-                </div>
-                <div className="col-8">
                 </div>
                 <Switch>
                     <Route path="/mailTray/add/:id_player_destiny" exact component={AddMail} />
                     <Route path="/mailTray/received" exact component={ListMailReceived} />
                     <Route path="/mailTray/sent" exact component={ListMailSent} />
-
-                    {/* <Route path="/mailTray/:typeMessage" exact component={ListMail} /> */}
-
                     <Route path="/mailTray/:typeMessage/:id_message" exact component={MailDetail} />
-                    {error 
+                    {error
                         // podria poner algun error
                     }
                     <Redirect to="/mailTray/received" />

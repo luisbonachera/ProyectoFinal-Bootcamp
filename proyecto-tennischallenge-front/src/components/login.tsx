@@ -151,28 +151,30 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
     }
 
     return (
-        <div>
-            <Form>
-                <Form.Group as={Row} controlId="formGroupUsername">
+        <div className="container">
+            <div className="login">
+            <Form className="inputsLogin">
+                <Form.Group as={Row} className="inputsCenter" controlId="formGroupUsername">
                     <Form.Label>Username</Form.Label>
                     <input type="text" className="form-control" id="uname" placeholder="Enter username"  required onChange={UpdateUser} />
                     {/* <Form.Control type="text" placeholder="Enter username" onChange={UpdateUser} /> */}
                 </Form.Group>
-                <Form.Group as={Row} controlId="formGroupPassword">
+                <Form.Group as={Row} className="inputsCenter" controlId="formGroupPassword">
                     <Form.Label>Password</Form.Label>
                     <input type="password" className="form-control" id="pwd" placeholder="Enter password" onChange={UpdatePass} />
                     {/* <input type="password" placeholder="Password" onChange={UpdatePass} /> */}
                 </Form.Group>
                 <Form.Group as={Row}>
-                    <Col sm={{ span: 10, offset: 6 }}>
+                    {/* <Col sm={{ span: 10, offset: 6 }}> */}
                         <Button type="button" onClick={log}>Sign in</Button>
-                    </Col>
+                    {/* </Col> */}
                     <Col sm={{ span: 10, offset: 6 }}>
                         {error && <p>{error}</p>}
                     </Col>
 
                 </Form.Group>
             </Form>
+            </div>
         </div>
     )
 };

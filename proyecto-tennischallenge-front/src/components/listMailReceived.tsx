@@ -113,41 +113,52 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
 
     if (!props.player) {
         return null;
-     }
+    }
 
     return (
+        <div className="col recibido">
+            <div className="row" >
+                <div className="col colBorder">
+                    From:
+                </div>
+                <div className="col colBorder">
+                    Asunto
+                </div>
+                <div className="col colBorder">
+                    Fecha:
+                </div>
 
-        <div className="col-12">
+                <div className="col colBorder">
+                    Visto
+                </div>
+            </div>
             {messagesHooks && messagesHooks.map(m =>
                 // <Link to={"/mailTray/"+props.match.params.typeMessage + "/" + m.id_messages} >
                 // los mensajes received y no vistos son los que se deberian de poner de otro color
                 <Link key={m.id_messages} to={"/mailTray/received/" + m.id_messages} onClick={() => viewMsg(m.id_messages)}>
-                    <div  >
 
-                        <div className="row" >
-                            <div className="col">
-                                {/* {m.id_player_sent} */}
-                                From: {m.username}
-                            </div>
-                            <div className="col">
-                                {/* {m.id_player_destiny} */}
-                                To: {props.player.username}
-                            </div>
-                            <div className="col">
-                                Asunto: {m.subject}
-                            </div>
-                            <div className="col">
-                            Fecha: {new Date(m.date).toLocaleString()}
-                            </div>
-                            {/* esto cuanto haya colores en la lista de los msgs lo deberia quitar */}
-                            <div className="col">
-                                Visto: {m.watched ? "SI" : "NO"}
-                            </div>
+                    <div className="row" >
+                        <div className="col colBorder">
+                            {m.username}
                         </div>
+                        {/* <div className="col">
+                            {props.player.username}
+                        </div> */}
+                        <div className="col colBorder">
+                            {m.subject}
+                        </div>
+                        <div className="col colBorder">
+                            {new Date(m.date).toLocaleString()}
+                        </div>
+                        {/* esto cuanto haya colores en la lista de los msgs lo deberia quitar */}
+                        <div className="col colBorder">
+                            {m.watched ? "SI" : "NO"}
+                        </div>
+
                     </div>
                 </Link>
             )}
-            { error && (
+            {error && (
                 <div className="col">
                     {error}
                 </div>

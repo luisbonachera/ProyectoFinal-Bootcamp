@@ -24,7 +24,7 @@ const MailDetail: React.FC<IPropsGlobal & RouteComponentProps<{ typeMessage: str
         return null
     }
     return (
-        <div>
+        <div className="col detalleMensaje"> 
 
             <div className="row">
                 From: {typeMsg === "received"? message[0].username: props.player.username}

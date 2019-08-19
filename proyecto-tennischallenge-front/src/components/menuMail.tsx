@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { IPlayer } from '../interfaceIPlayer';
 import jwt from 'jsonwebtoken';
@@ -22,20 +22,23 @@ const MenuMail: React.FC<IPropsGloblal> = props => {
     
 
     return (
-        <div>
-            {decode && decode.id_player && (
-            <div className="row">
+        <Fragment>
+            <ul className="MenuMensajes">
+                <li>
+                {decode && decode.id_player && (
                 <Link className="text" to={"/mailTray/add/"+ decode.id_player }> Nuevo </Link>
-            </div>
             )}
-            <div className="row">
+                </li>
+                <li>
                 <Link className="text" to="/mailTray/received"> Recibidos </Link>
-            </div>
-            <div className="row">
+                </li>
+                <li>
                 <Link className="text" to="/mailTray/sent"> Enviados </Link>
-            </div>
+                </li>
+            </ul>
+            
 
-        </div>
+        </Fragment>
     )
 }
 
