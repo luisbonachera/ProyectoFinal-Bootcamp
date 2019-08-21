@@ -44,9 +44,18 @@
   z-index: 999;
 }
 
+.notifications{
+  border-radius: 50% !important ;
+}
 #dropdown-basic{
   background-color: transparent;
   border: none;
+  font-size: 1.5rem;
+    
+}
+
+#dropdown-basic:focus{
+  box-shadow: 0 0 0 0.2rem transparent;
 }
 /********************/
 .form-control-red{
@@ -55,6 +64,7 @@ border-color:red;
 }
 #dropdwnMenuShowNavbar{
   background-color: transparent;
+  border: none;
 }
 
 #dropdwnMenuShowNavbar .span-logo:hover{
@@ -102,7 +112,11 @@ span:hover, a:hover{
   text-decoration: none;
 }
 
-.dropdown-menu a, .card-deck a{
+.dropdown-menu a{
+  color: white !important;
+}
+
+.card-deck a{
   color: black !important;
 }
 
@@ -129,7 +143,9 @@ a:hover{
   padding-right: 750px;
 }
 .span-logo{
-  color: black !important;
+  color: white !important;
+  padding-right: 35px;
+  font-size: 23px;
 }
 
 /**/
@@ -137,10 +153,6 @@ a:hover{
   color: #081d60  !important;
 }
 
-.span-logo {
-padding-right: 35px;
-/* font-size: 25px; */
-}
 .dropdown-menu.show{
   width: 183px;
 }
@@ -226,11 +238,14 @@ font-size: 25px;
 
   /*Correo recibido*/
 
-  .recibido{
+  .rowMsgReceived{
+    background-color: #00000036;
+  }
+  .receivedOrSent{
     padding-top: 50px;
 
   }
-  .recibido  a .row .col, .recibido .col{
+  .receivedOrSent a .row .colum, .receivedOrSent .colum{
    color:white;
    font-size: 25px;
 

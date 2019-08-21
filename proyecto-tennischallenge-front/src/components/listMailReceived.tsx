@@ -116,44 +116,46 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
     }
 
     return (
-        <div className="col recibido">
+        <div className="col receivedOrSent">
+            {messagesHooks.length >0 &&
             <div className="row" >
-                <div className="col colBorder">
+                <div className="col colum colBorder">
                     From:
                 </div>
-                <div className="col colBorder">
+                <div className="col colum colBorder">
                     Asunto
                 </div>
-                <div className="col colBorder">
+                <div className="col colum colBorder">
                     Fecha:
                 </div>
-
-                <div className="col colBorder">
+                {/* esto cuanto haya colores en la lista de los msgs lo deberia quitar */}
+                {/* <div className="col colBorder">
                     Visto
-                </div>
+                </div> */}
             </div>
-            {messagesHooks && messagesHooks.map(m =>
+            }
+            {messagesHooks.length >0 && messagesHooks.map(m =>
                 // <Link to={"/mailTray/"+props.match.params.typeMessage + "/" + m.id_messages} >
                 // los mensajes received y no vistos son los que se deberian de poner de otro color
                 <Link key={m.id_messages} to={"/mailTray/received/" + m.id_messages} onClick={() => viewMsg(m.id_messages)}>
 
-                    <div className="row" >
-                        <div className="col colBorder">
+                    <div className={m.watched ?"row": "row rowMsgReceived" }>
+                        <div className="col colum colBorder">
                             {m.username}
                         </div>
                         {/* <div className="col">
                             {props.player.username}
                         </div> */}
-                        <div className="col colBorder">
+                        <div className="col colum colBorder">
                             {m.subject}
                         </div>
-                        <div className="col colBorder">
+                        <div className="col colum colBorder">
                             {new Date(m.date).toLocaleString()}
                         </div>
                         {/* esto cuanto haya colores en la lista de los msgs lo deberia quitar */}
-                        <div className="col colBorder">
+                        {/* <div className="col colBorder">
                             {m.watched ? "SI" : "NO"}
-                        </div>
+                        </div> */}
 
                     </div>
                 </Link>
