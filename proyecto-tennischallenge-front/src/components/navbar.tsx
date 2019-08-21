@@ -121,18 +121,38 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                                 {/* <NavDropdown className="span-logo" title={props.player.username} id="collasible-nav-dropdown"> */}
                                 <Dropdown className="span-logo" >
                                 <Dropdown.Toggle id="dropdown-basic"><Badge className="notifications" variant="light">{props.notifications.number_messages + props.notifications.numbers_requestFriend + props.notifications.numbers_acceptedFriend > 0?
-                                     props.notifications.number_messages + props.notifications.numbers_acceptedFriend + props.notifications.numbers_requestFriend:"" }</Badge> {props.player.username}</Dropdown.Toggle>
+                                     props.notifications.number_messages + props.notifications.numbers_acceptedFriend + props.notifications.numbers_requestFriend:"" }
+                                     
+                                     </Badge><img src="images\pelota-tenis.png" alt="" width="35px" height="35px"></img> {props.player.username}</Dropdown.Toggle>
                                 <Dropdown.Menu id="dropdwnMenuShowNavbar">
 
-                                <Link className="span-logo" to="/mailTray" ><Badge className="notifications" variant="light">{props.notifications.number_messages > 0?props.notifications.number_messages:""}</Badge> Correo</Link>
+                                
+                                {/* <i className="material-icons iconDropdwon md-48">mail</i> */}
+                                <Badge className="notifications" variant="light">{props.notifications.number_messages > 0?props.notifications.number_messages:""}</Badge>
+                                 <img src="images\pelota-tenis.png" alt="" width="35px" height="35px"></img>
+                                 <Link className="span-logo" to="/mailTray" >
+                                 Correo</Link>
+                                 
                                 <br/>
-                                <Link className="span-logo" to={"/profile/"+ props.player.id_player}>Perfil</Link>
+                                <Link className="span-logo" to={"/profile/"+ props.player.id_player}>
+                                <i className="material-icons md-48">person</i>
+                                    Perfil</Link>
                                 <br/>
-                                <Link className="span-logo" to={"/friends"}><Badge className="notifications" variant="light">{props.notifications.numbers_acceptedFriend > 0?props.notifications.numbers_acceptedFriend:""}</Badge>Amigos</Link>
+                                <Link className="span-logo" to={"/friends"}>
+                                <i className="material-icons iconDropdwon md-48">group</i>
+                                Amigos</Link>
+                                <Badge className="notifications" variant="light">{props.notifications.numbers_acceptedFriend > 0?props.notifications.numbers_acceptedFriend:""}</Badge>
+                                <img src="images\pelota-tenis.png" alt="" width="35px" height="35px"></img>
                                 <br/>
-                                <Link className="span-logo" to={"/friendRequests"}><Badge className="notifications" variant="light">{props.notifications.numbers_requestFriend>0?props.notifications.numbers_requestFriend:""}</Badge> Peticiones</Link>
+                                <Link className="span-logo" to={"/friendRequests"}>
+                                <i className="material-icons iconDropdwon md-48">group_add</i>
+                                 Peticiones</Link>
+                                 <Badge className="notifications" variant="light">{props.notifications.numbers_requestFriend>0?props.notifications.numbers_requestFriend:""}</Badge>
+                                 <img src="images\pelota-tenis.png" alt="" width="35px" height="35px"></img>
                                 <br/>
-                                <Link className="span-logo" to="/" onClick={() => logout()}>Cerrar Sesión</Link>
+                                <Link className="span-logo" to="/" onClick={() => logout()}>
+                                <i className="material-icons iconDropdwon md-48">power_settings_new</i>
+                                    Cerrar Sesión</Link>
                                     {/* <NavDropdown.Item href="#action/3.1">>Mail</NavDropdown.Item> */}
                                     {/* <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
                                     <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>

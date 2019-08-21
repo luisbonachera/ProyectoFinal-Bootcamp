@@ -1,9 +1,9 @@
 .App {
   text-align: center;
-    /* background-image: url("./images/fondo-pelota.jpg"); */
-    width: 100%;
-    height: 100%;
-    /* background-repeat: no-repeat;
+  /* background-image: url("./images/fondo-pelota.jpg"); */
+  width: 100%;
+  height: 100%;
+  /* background-repeat: no-repeat;
     background-size: cover;
     background-position: center; */
 }
@@ -33,184 +33,201 @@
   padding-top: 121px;
 }
 
-
 .App-link {
   color: #61dafb;
 }
 
 /*Navbar*/
 
-.navbar{
+.navbar {
   z-index: 999;
 }
 
-.notifications{
-  border-radius: 50% !important ;
+.notifications {
+  border-radius: 50% !important;
+  background-color: transparent !important;
+  margin-right: -27px !important;
 }
-#dropdown-basic{
+
+#dropdown-basic {
   background-color: transparent;
   border: none;
   font-size: 1.5rem;
-    
 }
 
-#dropdown-basic:focus{
+#dropdown-basic:focus {
   box-shadow: 0 0 0 0.2rem transparent;
 }
-/********************/
-.form-control-red{
-border-color:red;
 
+/********************/
+
+.form-control-red {
+  border-color: red;
 }
-#dropdwnMenuShowNavbar{
+
+#dropdwnMenuShowNavbar {
   background-color: transparent;
   border: none;
 }
 
-#dropdwnMenuShowNavbar .span-logo:hover{
-  
-  color:black;
+#dropdwnMenuShowNavbar .span-logo:hover {
+  color: black;
 }
-.avatarNavbar{
+
+.avatarNavbar {
   height: 50px;
   width: auto;
   border-radius: 20%;
 }
 
-.avatarFrofile{
+.avatarFrofile {
   height: 400px;
   width: auto;
 }
 
-.avatarListProfile{
-height: 220px;
-width:  auto;
+.avatarListProfile {
+  height: 220px;
+  width: auto;
 }
-.logo{
+
+.logo {
   height: 95px;
 }
-.navbar-collapse{
+
+.navbar-collapse {
   justify-content: flex-end;
 }
-.navbar-nav a{
+
+.navbar-nav a {
   color: #000 !important;
 }
 
 /**/
-.collapse a{
+
+.collapse a {
   color: white !important;
   font-size: 23px;
 }
 
-a{
+a {
   color: black !important;
-  text-decoration :none;  
+  text-decoration: none;
 }
 
-span:hover, a:hover{
+span:hover, a:hover {
   color: grey !important;
   text-decoration: none;
 }
 
-.dropdown-menu a{
+.dropdown-menu a {
   color: white !important;
 }
 
-.card-deck a{
+.card-deck a {
   color: black !important;
 }
 
-a:hover{
+a:hover {
   text-decoration: none !important;
 }
+
 /******************************************************************************/
-.dropdown-menu a:hover{
+
+.dropdown-menu a:hover {
   background-color: transparent !important;
-  
 }
+
 /**/
+
 .tituloIndex {
   padding-top: 25vh;
   padding-bottom: 25vh;
-  background-color: rgba(255, 255, 255, 0.2); 
-   box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
 }
 
-.tituloIndex h1{
-  color:#bfbfbf !important;
+.tituloIndex h1 {
+  color: #bfbfbf !important;
   /**/
-  color:black !important;
+  color: black !important;
   padding-right: 750px;
 }
-.span-logo{
+
+.span-logo {
   color: white !important;
   padding-right: 35px;
   font-size: 23px;
 }
 
 /**/
-.span-logo:hover{
-  color: #081d60  !important;
+
+.span-logo:hover {
+  color: #081d60 !important;
 }
 
-.dropdown-menu.show{
-  width: 183px;
+.dropdown-menu.show {
+  width: 210px;
 }
-
-
-
-.listPlayers{
+.iconDropdwon{
+margin-right: 5px;
+vertical-align: sub ;
+}
+.listPlayers {
   padding-top: 150px;
 }
 
 /*login.tsx*/
 
-.login{
-  color:white;
-  padding-top: 25vh; 
-   padding-bottom: 25vh;
+.login {
+  color: white;
+  padding-top: 25vh;
+  padding-bottom: 25vh;
   background-color: rgba(255, 255, 255, 0.2);
-
 }
-.inputsLogin input{
+
+.inputsLogin input {
   width: 25%;
   margin: auto;
 }
+
 .form-group {
   display: block;
 }
-.ErrorLogin{
+
+.ErrorLogin {
   padding-top: 15px;
 }
 
 /*ListPlayers.tsx*/
 
-.containerBuscador{
+.containerBuscador {
   /* background-color: rgba(255, 255, 255, 0.2); */
   text-align: left;
-color: white;
+  color: white;
 }
-.buscador{
+
+.buscador {
   position: fixed;
   font-size: 23px;
   padding-top: 30vh;
 }
-.cardsJugadores{
+
+.cardsJugadores {
   width: 250px;
-    display: inline-block;
-    margin: 20px;
+  display: inline-block;
+  margin: 20px;
 }
-.card{
+
+.card {
   background-color: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
-
-}
-.card img{
-  box-shadow: 0 2px 5px 0 rgba(161, 132, 132, 0.16), 0 2px 10px 0 rgba(0,0,0,.12);
-
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
 }
 
-#dropdown-basic-button{
+.card img {
+  box-shadow: 0 2px 5px 0 rgba(161, 132, 132, 0.16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+}
+
+#dropdown-basic-button {
   background-color: transparent;
   border: none;
 }
@@ -220,56 +237,56 @@ color: white;
   margin-right: 0.5rem;
 }
 
-
 /* MENU Mensajes*/
 
-.MenuMensajes{
+.MenuMensajes {
   padding-top: 50px;
   list-style: none;
 }
-.MenuMensajes li a{
-color: white !important;
-font-size: 25px;
-}
-.MenuMensajes li a:hover{
+
+.MenuMensajes li a {
+  color: white !important;
   font-size: 25px;
-  color: #081d60  !important;
-  }
+}
 
-  /*Correo recibido*/
+.MenuMensajes li a:hover {
+  font-size: 25px;
+  color: #081d60 !important;
+}
 
-  .rowMsgReceived{
-    background-color: #00000036;
-  }
-  .receivedOrSent{
-    padding-top: 50px;
+/*Correo recibido*/
 
-  }
-  .receivedOrSent a .row .colum, .receivedOrSent .colum{
-   color:white;
-   font-size: 25px;
+.rowMsgReceived {
+  background-color: #00000036;
+}
 
-  }
+.receivedOrSent {
+  padding-top: 50px;
+}
 
-  .colBorder {
-    border: 1px solid black;
-  }
+.receivedOrSent a .row .colum, .receivedOrSent .colum {
+  color: white;
+  font-size: 25px;
+}
 
-.fondoCorreo{
-  background-image: -webkit-gradient( linear, left top, right bottom, from(rgba(92,80,80,0.2)), to(rgba(255, 255, 255, 0.37)), color-stop(.5,#d34f08d1) );
-  box-shadow: 0 2px 5px 0 rgba(161, 132, 132, 0.16), 0 2px 10px 0 rgba(0,0,0,.12);
-border-radius: 10px;
+.colBorder {
+  border: 1px solid black;
+}
+
+.fondoCorreo {
+  background-image: -webkit-gradient( linear, left top, right bottom, from(rgba(92, 80, 80, 0.2)), to(rgba(255, 255, 255, 0.37)), color-stop(.5, #d34f08d1));
+  box-shadow: 0 2px 5px 0 rgba(161, 132, 132, 0.16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+  border-radius: 10px;
 }
 
 /*Detalle mensaje*/
 
-.detalleMensaje{
+.detalleMensaje {
   margin: auto;
   padding-left: 59px;
   color: white;
 }
 
-.mensajeNuevo{
+.mensajeNuevo {
   margin: auto;
 }
-
