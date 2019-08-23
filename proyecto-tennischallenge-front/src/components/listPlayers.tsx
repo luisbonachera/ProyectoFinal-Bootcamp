@@ -270,13 +270,7 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
                             <label className="form-check-label" >Hombre</label>
                         </div>
 
-                        <div className="form-check">
-                            <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Hombre" onChange={UpdateSex} />
-                            {/* <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked /> */}
-                            <label className="form-check-label" >
-                                Hombre
-                        </label>
-                        </div>
+
                         <div className="form-check">
                             <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="Mujer" onChange={UpdateSex} />
                             <label className="form-check-label" >
@@ -292,7 +286,7 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
 
                         <DropdownButton id="dropdown-basic-button" title="Nivel">
 
-                            <Form.Group as={Col} controlId="formGridState">
+                            <Form.Group as={Col} id="dropdwnMenuShowNavbar" controlId="formGridState">
                                 <Form.Label>Desde</Form.Label>
                                 <Form.Control as="select" value={inputRatingFrom + ""} onChange={UpdateRatingFrom}>
                                     <option value={1}>1</option>
@@ -303,7 +297,7 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
                                 </Form.Control>
                             </Form.Group>
 
-                            <Form.Group as={Col} controlId="formGridState">
+                            <Form.Group as={Col} id="dropdwnMenuShowNavbar" controlId="formGridState">
                                 <Form.Label>Hasta</Form.Label>
                                 <Form.Control as="select" value={inputRatingTo + ""} onChange={UpdateRatingTo}>
                                     <option value={1}>1</option>
@@ -329,7 +323,8 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
                             <Card>
 
                                 <Card.Img className="avatarListProfile" variant="top"
-                                    src={p.avatar ? "http://localhost:8080/uploads/avatar/" + p.avatar : "images/avatar-tenis.png"} alt="" />
+                                    src={p.avatar ? "http://localhost:8080/uploads/avatar/" + p.avatar + "?" + Date() : 
+                                    "images/avatar-tenis.png"} alt="" />
                                 <Card.Body >
                                     <Link key={p.id_player} to={"/players/" + p.id_player} >
                                         <Card.Title>{p.username}</Card.Title>

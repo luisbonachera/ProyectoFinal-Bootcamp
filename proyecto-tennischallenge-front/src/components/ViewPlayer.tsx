@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { IPlayer } from '../interfaceIPlayer';
 import { RouteComponentProps, Link } from 'react-router-dom';
 import { CardDeck, Card, Button } from 'react-bootstrap';
@@ -143,7 +143,7 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                             //     props.deletePlayer(id);
                             // } else if (props.player.isAdmin) {
                             props.history.push("/players");
-                            
+
                             // } else {
                             //     console.log("no deberia entrar aqui, o eres admin o te borras a ti.")
                             // }
@@ -187,12 +187,12 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                             console.log("usuario borrado")
                             if (props.player.id_player === id) {
                                 props.setToken("");
-                               
+
                                 props.deletePlayer(id);
                                 props.deleteFriendship(id_friend);
                                 props.history.push("/");
                             } else if (props.player.isAdmin) {
-                               
+
                                 props.deletePlayer(id);
                                 props.deleteFriendship(id_friend);
                                 props.history.push("/players");
@@ -263,7 +263,7 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
 
 
-           
+
         } else {
             setError("Aun no existe el player")
             console.log("este usuario no es tu amigo")
@@ -296,7 +296,8 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
                     <Card style={{ display: 'flex', flexDirection: 'row' }}>
                         <Card.Img className="avatarListProfile" variant="top"
-                            src={thisplayer.avatar ? "http://localhost:8080/uploads/avatar/" + thisplayer.avatar : "../../images/avatar-tenis.png"} alt="" />
+                            src={thisplayer.avatar ? "http://localhost:8080/uploads/avatar/" + thisplayer.avatar + "?" + Date() :
+                                "../../images/avatar-tenis.png"} alt="" />
                         <Card.Body>
                             <Card.Title>{thisplayer.username}</Card.Title>
                             <Card.Text>
@@ -310,11 +311,12 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                             </Card.Text>
                         </Card.Body>
                         <Card.Footer >
-                            <small className="text-muted">Last updated 3 mins ago</small>
+                            {/* <small className="text-muted">Last updated 3 mins ago</small> */}
                             <Link to={"/mailTray/add/" + thisplayer.id_player}>
                                 <Button variant="primary">Enviar Mensaje</Button>
-
                             </Link>
+                            <br />
+                            <br />
                             {/* aqui tengo que poner mi lista de frienship */}
                             {/* {props.friendships.map(f=> 
                 ( ({console.log(f)}) &&  
@@ -327,19 +329,35 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                             {/* {myFriendship && (myFriendship.map(mF => (
                                 ((mF.username === thisplayer.username) && ( */}
                             {stateFriend === "amigo" &&
-                                <Button variant="primary" onClick={borrarFriend}>Eliminar Amigo</Button>
+                                <Fragment>
+                                    <Button variant="primary" onClick={borrarFriend}>Eliminar Amigo</Button>
+                                    <br />
+                                    <br />
+                                </Fragment>
                             }
                             {/* ))
                                 ||
                                 ((mF.username !== thisplayer.username) && ( */}
                             {stateFriend === "responderPeticion" &&
-                                <Button variant="primary" disabled>Responder Amistad</Button>
+                                <Fragment>
+                                    <Button variant="primary" disabled>Responder Amistad</Button>
+                                    <br />
+                                    <br />
+                                </Fragment>
                             }
                             {stateFriend === "EsperandoPeticion" &&
-                                <Button variant="primary" disabled>Esperando Amistad</Button>
+                                <Fragment>
+                                    <Button variant="primary" disabled>Esperando Amistad</Button>
+                                    <br />
+                                    <br />
+                                </Fragment>
                             }
                             {stateFriend === "" && props.player.id_player !== +id &&
-                                <Button variant="primary" onClick={amistad}>Solicitar Amistad</Button>
+                                <Fragment>
+                                    <Button variant="primary" onClick={amistad}>Solicitar Amistad</Button>
+                                    <br />
+                                    <br />
+                                </Fragment>
                             }
                             {/* )
                                 )
@@ -350,8 +368,12 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                     <Link to={"/players/edit/" + thisplayer.id_player}>
                                         <Button variant="primary">Editar</Button>
                                     </Link>
+                                    <br />
+                                    <br />
                                     {/* <Link to={"/players"} > */}
-                                        <Button variant="primary" onClick={borrar}>Borrar</Button>
+                                    <Button variant="primary" onClick={borrar}>Borrar</Button>
+                                    <br />
+                                    <br />
                                     {/* </Link> */}
                                 </>
                             }

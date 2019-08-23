@@ -119,14 +119,14 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
         <div className="col receivedOrSent">
             {messagesHooks.length >0 &&
             <div className="row" >
-                <div className="col colum colBorder">
-                    From:
+                <div className="col-2 colum colBorder">
+                    De:
                 </div>
-                <div className="col colum colBorder">
+                <div className="col-8 colum colBorder">
                     Asunto
                 </div>
-                <div className="col colum colBorder">
-                    Fecha:
+                <div className="col-2 colum colBorder">
+                    Fecha
                 </div>
                 {/* esto cuanto haya colores en la lista de los msgs lo deberia quitar */}
                 {/* <div className="col colBorder">
@@ -139,18 +139,19 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
                 // los mensajes received y no vistos son los que se deberian de poner de otro color
                 <Link key={m.id_messages} to={"/mailTray/received/" + m.id_messages} onClick={() => viewMsg(m.id_messages)}>
 
-                    <div className={m.watched ?"row": "row rowMsgReceived" }>
-                        <div className="col colum colBorder">
+                    <div className={m.watched ?"row messageResume": "row messageResume rowMsgReceived" }>
+                        <div className="col-2 colum colBorder">
                             {m.username}
                         </div>
                         {/* <div className="col">
                             {props.player.username}
                         </div> */}
-                        <div className="col colum colBorder">
+                        <div className="col-8 colum colBorder">
                             {m.subject}
                         </div>
-                        <div className="col colum colBorder">
-                            {new Date(m.date).toLocaleString()}
+                        <div className="col-2 colum colBorder">
+                        {new Date(m.date).toLocaleDateString()}
+                            {/* {new Date(m.date).toLocaleString()} */}
                         </div>
                         {/* esto cuanto haya colores en la lista de los msgs lo deberia quitar */}
                         {/* <div className="col colBorder">

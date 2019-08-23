@@ -367,7 +367,7 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                                         src={f.avatar ? "http://localhost:8080/uploads/avatar/" + f.avatar : "images/avatar-tenis.png"} alt="" />
                                     {!f.watched && f.id_player1 === props.player.id_player && f.accepted &&
                                         <>
-                                            <Card.Img className="avatarListProfile" variant="top" src="images/Pelota Luis brochazo.png" alt="" />
+                                            <Card.Img className="avatarListProfile newFriend" variant="top" src="images/Pelota Luis brochazo.png" alt="" height="30px"/>
                                             {/* <Badge pill variant="light">Nuevo</Badge> */}
                                         </>
                                     }
@@ -384,9 +384,9 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                                         </Card.Text>
 
                                     </Card.Body>
-                                    <Card.Footer>
+                                    {/* <Card.Footer>
                                         <small className="text-muted">Last updated 3 mins ago</small>
-                                    </Card.Footer>
+                                    </Card.Footer> */}
 
                                 </Card>
                                 <br />

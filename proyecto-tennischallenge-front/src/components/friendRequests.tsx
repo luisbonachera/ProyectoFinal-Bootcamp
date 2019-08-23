@@ -455,7 +455,7 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
                                         {/* {stateFriend === "amigo" && */}
                                         <Button variant="primary" onClick={()=>acceptedFriendship(f.id_friends)}>Aceptar</Button>
                                         {/* } */}
-                                        <small className="text-muted">Last updated 3 mins ago</small>
+                                        {/* <small className="text-muted">Last updated 3 mins ago</small> */}
                                     </Card.Footer>
 
                                 </Card>

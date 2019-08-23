@@ -78,11 +78,11 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
                     <div className="col-2 colum colBorder">
                         Para:
                     </div>
-                    <div className="col-5 colum colBorder">
+                    <div className="col-7 colum colBorder">
                         Asunto
                     </div>
-                    <div className="col-4 colum colBorder">
-                        Fecha:
+                    <div className="col-2 colum colBorder">
+                        Fecha
                     </div>
                     {/* esto cuanto haya colores en la lista de los msgs lo deberia quitar */}
                     <div className="col-1 colum colBorder">
@@ -97,7 +97,7 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
 
                     <div   >
 
-                        <div className="row">
+                        <div className="row messageResume">
                             {/* <div className="col">
                                 {/* {m.id_player_sent} }
                                 From: {props.player.username}
@@ -106,13 +106,13 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
                                 {/* {m.id_player_destiny} to*/}
                                 {m.username}
                             </div>
-                            <div className="col-5 colum colBorder">
+                            <div className="col-7 colum colBorder">
                                 {/* Asunto */}
                                 {m.subject}
                             </div>
-                            <div className="col-4 colum colBorder">
+                            <div className="col-2 colum colBorder">
                                 {/* fecha */}
-                                {new Date(m.date).toLocaleString()}
+                                {new Date(m.date).toLocaleDateString()}
                             </div>
                             {/* esto cuanto haya colores en la lista de los msgs lo deberia quitar */}
                             <div className="col-1 colum colBorder">

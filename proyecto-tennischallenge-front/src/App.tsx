@@ -28,8 +28,6 @@ interface IPropsGlobal {
 const App: React.FC<IProps & IPropsGlobal> = props => {
 
   React.useEffect(() => {
-
-
     if (props.token) {
       const n = setInterval(() => {
         // console.log("token antes del fetch de notifications:");

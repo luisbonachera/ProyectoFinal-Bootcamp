@@ -11,7 +11,7 @@ import logo from '../images/logo-sin-letras.png';
 import { INotifications } from '../interfaceINotifications';
 import { IFriendship } from '../interfaceIFriendship';
 import { IMsg } from '../interfaceIMsg';
-
+import unmountDropdown from '../js/funtions.js';
 
 interface IProps { }
 
@@ -77,6 +77,33 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
          props.setToken("")
     }
 
+    // const unmountDropdown = () => {
+    //     document.getElementsByClassName("dropDown-basic").show = false;
+    // } 
+//     const unmountDropdown = (dropDownClass:any,dropDownId:any,show:any,dropbtnClass:any) =>{
+//         let dropdowns = document.getElementsByClassName(dropDownClass);
+//         let i:any;     
+//         let openDropdown = dropdowns[i];
+//         if(document == null){
+//             return null;
+//         }else{
+//         document.getElementById(dropDownId).classList.toggle(show);
+
+//         }
+    
+//     // Close the dropdown if the user clicks outside of it
+//     window.onclick = function(event) {
+//       if (!event.target.matches(dropbtnClass)) {
+//         for (i = 0; i < dropdowns.length; i++) {
+//           if (openDropdown.classList.contains(show)) {
+//             openDropdown.classList.remove(show);
+//           }
+//         }
+//       }
+//     }
+// }
+
+
     // console.log("username despues del useEffect :" + username);
     // console.log("avatar despues del useEffect :" + avatar);
     // console.log("id_player despues del useEffect :" + id_player);
@@ -126,33 +153,37 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                                      </Badge><img src="images\pelota-tenis.png" alt="" width="35px" height="35px"></img> {props.player.username}</Dropdown.Toggle>
                                 <Dropdown.Menu id="dropdwnMenuShowNavbar">
 
-                                
-                                {/* <i className="material-icons iconDropdwon md-48">mail</i> */}
-                                <Badge className="notifications" variant="light">{props.notifications.number_messages > 0?props.notifications.number_messages:""}</Badge>
+                                {/* <Link className="span-logo span-logo-dropdown" to="/mailTray" onClick={()=>unmountDropdown('dropdown-content','myDropdown','show','.dropbtn')}> */}
+                                <Link className="span-logo span-logo-dropdown" to="/mailTray">
+                                <i className="material-icons iconDropdown md-48">mail</i>
+                                 <span className="span-Dropdown">Correo</span> 
+                                 <Badge className="notifications" variant="light">{props.notifications.number_messages > 0?props.notifications.number_messages:""}</Badge>
                                  <img src="images\pelota-tenis.png" alt="" width="35px" height="35px"></img>
-                                 <Link className="span-logo" to="/mailTray" >
-                                 Correo</Link>
-                                 
+                                 </Link>
                                 <br/>
-                                <Link className="span-logo" to={"/profile/"+ props.player.id_player}>
-                                <i className="material-icons md-48">person</i>
-                                    Perfil</Link>
+                                <Link className="span-logo span-logo-dropdown" to={"/profile/"+ props.player.id_player}>
+                                <i className="material-icons iconDropdown md-48">person</i>
+                                <span className="span-Dropdown">Perfil</span> 
+                                    </Link>
                                 <br/>
-                                <Link className="span-logo" to={"/friends"}>
-                                <i className="material-icons iconDropdwon md-48">group</i>
-                                Amigos</Link>
+                                <Link className="span-logo span-logo-dropdown" to={"/friends"}>
+                                <i className="material-icons iconDropdown md-48">group</i>
+                                <span className="span-Dropdown">Amigos</span>
                                 <Badge className="notifications" variant="light">{props.notifications.numbers_acceptedFriend > 0?props.notifications.numbers_acceptedFriend:""}</Badge>
                                 <img src="images\pelota-tenis.png" alt="" width="35px" height="35px"></img>
+                                </Link>
                                 <br/>
-                                <Link className="span-logo" to={"/friendRequests"}>
-                                <i className="material-icons iconDropdwon md-48">group_add</i>
-                                 Peticiones</Link>
+                                <Link className="span-logo span-logo-dropdown" to={"/friendRequests"}>
+                                <i className="material-icons iconDropdown md-48">group_add</i>
+                                <span className="span-Dropdown">Peticiones</span>
                                  <Badge className="notifications" variant="light">{props.notifications.numbers_requestFriend>0?props.notifications.numbers_requestFriend:""}</Badge>
                                  <img src="images\pelota-tenis.png" alt="" width="35px" height="35px"></img>
+                                 </Link>
                                 <br/>
-                                <Link className="span-logo" to="/" onClick={() => logout()}>
-                                <i className="material-icons iconDropdwon md-48">power_settings_new</i>
-                                    Cerrar Sesión</Link>
+                                <Link className="span-logo span-logo-dropdown" to="/" onClick={() => logout()}>
+                                <i className="material-icons iconDropdown md-48">power_settings_new</i>
+                                <span className="span-Dropdown">Cerrar Sesión</span>
+                                   </Link>
                                     {/* <NavDropdown.Item href="#action/3.1">>Mail</NavDropdown.Item> */}
                                     {/* <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
                                     <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
@@ -161,7 +192,8 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                                 </Dropdown.Menu>
                                 </Dropdown>
                                 <Card.Img className="avatarNavbar" variant="top"  
-                                  src={props.player.avatar?"http://localhost:8080/uploads/avatar/" + props.player.avatar:"images/avatar-tenis.png"} alt=""/>
+                                  src={props.player.avatar?"http://localhost:8080/uploads/avatar/" + props.player.avatar + "?" + Date() :
+                                  "images/avatar-tenis.png"} alt=""/>
                                 
                             </>
                         )}

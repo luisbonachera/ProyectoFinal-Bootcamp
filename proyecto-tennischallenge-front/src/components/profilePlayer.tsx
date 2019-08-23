@@ -96,7 +96,8 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
 
                     <Card style={{ display: 'flex', flexDirection: 'row' }}>
                         <Card.Img className="avatarListProfile" variant="top"
-                            src={player.avatar?"http://localhost:8080/uploads/avatar/" + player.avatar:"../../images/avatar-tenis.png"} alt=""/>
+                            src={player.avatar?"http://localhost:8080/uploads/avatar/" + player.avatar + "?" + Date() :
+                            "../../images/avatar-tenis.png"} alt=""/>
                         <Card.Body>
                             <Card.Title>{player.username}</Card.Title>
                             <Card.Text>
@@ -113,10 +114,12 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
                             </Card.Text>
                         </Card.Body>
                         <Card.Footer >
-                            <small className="text-muted">Last updated 3 mins ago</small>
+                            {/* <small className="text-muted">Last updated 3 mins ago</small> */}
                             <Link to={"/players/edit/" + player.id_player}>
                                 <Button variant="primary">Editar</Button>
                             </Link>
+                            <br/>
+                            <br/>
                             <Button variant="primary" onClick={borrar}>Borrar</Button>
                         </Card.Footer>
                     </Card>

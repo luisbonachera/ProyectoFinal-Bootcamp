@@ -148,7 +148,10 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                         console.log("usuario modificado y listado");
                                         console.log(lista);
                                         props.updatePlayers(lista[0]);
+                                        // entro aqui porque yo me he editado, pero si soy admin puedo editar a otros
                                         if (id === decoded.id_player) {
+                                            console.log("soy yo o deberia:")
+                                            console.log(lista[0]);
                                             props.updatePlayer(lista[0]);
                                         }
 
@@ -248,7 +251,8 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                 <Form>
                     <Form.Row>
                         <img className="avatarListProfile"
-                            src={player.avatar ? "http://localhost:8080/uploads/avatar/" + player.avatar : "../../../images/avatar-tenis.png"} alt="" />
+                            src={player.avatar ? "http://localhost:8080/uploads/avatar/" + player.avatar + "?" + Date() : 
+                            "../../../images/avatar-tenis.png"} alt="" />
                     </Form.Row>
                     <Form.Row>
                         <Form.Group controlId="formGridUsername">
