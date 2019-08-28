@@ -7,8 +7,8 @@ notificationsModel = {};
 notificationsModel.counter = (id_player) => {
     return new Promise((resolve, reject) => {
         // if(!validate(data)) reject("Invalid data")
-        let SQL_FIND_ALL_NOTIFICATIONS = "SELECT number_messages, numbers_requestFriend, numbers_acceptedFriend FROM " +
-        "(SELECT COUNT(m.id_messages) as number_messages, ? as id_player_destiny " +
+        let SQL_FIND_ALL_NOTIFICATIONS = "SELECT numbers_messages, numbers_requestFriend, numbers_acceptedFriend FROM " +
+        "(SELECT COUNT(m.id_messages) as numbers_messages, ? as id_player_destiny " +
          "FROM messages as m  WHERE m.id_player_destiny = ? AND m.watched = 0) as A " +
         "INNER JOIN " +
         "(SELECT COUNT(f.id_player2) as numbers_requestFriend, ? as id_player2 " +

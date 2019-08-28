@@ -7,6 +7,7 @@ import * as actions from '../actions/actions';
 import jwt from 'jsonwebtoken';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { IFriendship } from '../interfaceIFriendship';
+import { INotifications } from '../interfaceINotifications';
 
 
 interface Iprops { }
@@ -17,6 +18,7 @@ interface IpropsGlobal {
     friendships: IFriendship[];
     deleteFriendship: (id_friendship: number) => void;
     player: IPlayer;
+    setNotifications: (notification: INotifications) => void;
 };
 
 const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = props => {
@@ -122,7 +124,7 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
     let friends: IFriendship[] = myFriends;
 
     const amigos = () => {
-        let decoded:any = jwt.decode(props.token);
+        let decoded: any = jwt.decode(props.token);
         if (!decoded) {
             console.log("ha fallado el decode");
         }
@@ -149,6 +151,61 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
 
     React.useEffect(amigos, [props.friendships]);
 
+    //meterlo tanto en aceptar como en borrar
+    const updatednotificationsFriendship = () => {
+
+        if (props.token) {
+
+
+            fetch("http://localhost:8080/api/notifications", {
+
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + props.token
+                },
+            })
+                .then(response => {
+                    if (response.ok) {
+                        response
+                            .json()
+                            // .then((notifications: INotifications) => {
+                            .then((notifications) => {
+
+                                // console.log(notifications);
+                                // console.log(notifications[0]);
+                                if (notifications[0]) {
+                                    // if (notifications[0].numbers_messages > 0 || 
+                                    //   notifications[0].numbers_requestFriend > 0 ||
+                                    //   notifications[0].numbers_acceptedFriend > 0) {
+                                    console.log("actualizando mis notificaciones");
+                                    console.log(notifications);
+                                    props.setNotifications(notifications[0]);
+                                    // console.log(notifications);
+                                    // } else {
+                                    //   // console.log("no hay notificaciones");
+                                    // }
+
+                                }else{
+                                    console.log("no me actualiza las notificaciones porque notificacion[0] no existe")
+                                }
+
+                            })
+                            .catch(err => {
+                                console.log("Error en el json. " + err);
+                            });
+                    } else {
+                        console.log("responde.ok da error.");
+                    }
+                })
+                .catch(err => {
+                    console.log("Error en response. " + err);
+                });
+
+
+        } else {
+            // console.log("aun no hay token");
+        }
+    }
 
     const acceptedFriendship = (id_friend: number) => {
         let decoded: any = jwt.decode(props.token);
@@ -174,7 +231,9 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
                 .then(response => {
                     if (response.ok) {
                         ////habira que ver si es correcto o no
-                        console.log("amistad creada")
+                        console.log("amistad creada");
+                        //actualizo mis notificaciones
+                        updatednotificationsFriendship();
                         fetch("http://localhost:8080/api/friends", {
                             headers: {
                                 "Content-Type": "application/json",
@@ -206,9 +265,9 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
 
                             })
                             .catch(err => {
-                                console.log("la consulta no fue bien. ");
+                                console.log("la consulta no fue bien. " + err);
                                 // setError(" Error al añadir como amigo.");
-                            })
+                            });
                     } else {
                         console.log("Error en el response.ok");
                     }
@@ -250,6 +309,8 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
                             //     props.deletePlayer(id);
                             // } else if (props.player.isAdmin) {
                             props.deleteFriendship(id_friend);
+                            //actualizo mis notificaciones
+                            updatednotificationsFriendship();
                             props.history.push("/friendRequests");
 
                             // } else {
@@ -259,7 +320,8 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
                             console.log("error en response.ok")
                         }
                     }).catch(err => {
-
+                        console.log("la consulta no fue bien. " + err);
+                        // setError(" Error al borrar como amigo.");
                     });
                 // } else {
                 //     console.log("ha fallado el decode")
@@ -450,10 +512,10 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
                                     </Card.Body>
                                     <Card.Footer>
                                         {/* {stateFriend === "amigo" && */}
-                                        <Button variant="primary" onClick={()=>borrarFriend(f.id_friends)}>Cancelar</Button>
+                                        <Button variant="primary" onClick={() => borrarFriend(f.id_friends)}>Cancelar</Button>
                                         {/* } */}
                                         {/* {stateFriend === "amigo" && */}
-                                        <Button variant="primary" onClick={()=>acceptedFriendship(f.id_friends)}>Aceptar</Button>
+                                        <Button variant="primary" onClick={() => acceptedFriendship(f.id_friends)}>Aceptar</Button>
                                         {/* } */}
                                         {/* <small className="text-muted">Last updated 3 mins ago</small> */}
                                     </Card.Footer>
@@ -481,7 +543,8 @@ const mapStateToProps = (state: IGlobalState) => ({
 
 const mapDispachToProps = {
     setFriendships: actions.setFriendships,
-    deleteFriendship: actions.deleteFriendship
+    deleteFriendship: actions.deleteFriendship,
+    setNotifications: actions.setNotifications
 }
 
 export default connect(

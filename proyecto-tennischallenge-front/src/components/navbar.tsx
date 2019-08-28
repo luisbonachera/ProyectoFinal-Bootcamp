@@ -65,7 +65,7 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
 
     const logout = () => {
         const initialStateNotifications: INotifications = {
-            number_messages: 0,
+            numbers_messages: 0,
             numbers_requestFriend: 0,
             numbers_acceptedFriend: 0
         };
@@ -158,15 +158,22 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                                 {/* {console.log(props.player.username)} */}
                                 {/* <NavDropdown className="span-logo" title={props.player.username} id="collasible-nav-dropdown"> */}
                                 <Dropdown className="span-logo" >
-                                    <Dropdown.Toggle id="dropdown-basic" ><Badge className="notifications"
-                                        variant="light">{props.notifications.number_messages + props.notifications.numbers_requestFriend + props.notifications.numbers_acceptedFriend > 0 ?
-                                            props.notifications.number_messages + props.notifications.numbers_acceptedFriend + props.notifications.numbers_requestFriend : ""}
-
-                                    </Badge><img src="images\pelota-tenis.png" alt="" width="35px" height="35px"></img> 
-                                    <Card.Img className="avatarNavbar" variant="top"
-                                    src={props.player.avatar ? "http://localhost:8080/uploads/avatar/" + props.player.avatar + "?" + Date() :
-                                        "images/avatar-tenis.png"} alt="" />
-                                    {/* {props.player.username} */}
+                                    <Dropdown.Toggle id="dropdown-basic" >
+                                        {(props.notifications.numbers_messages > 0 ||
+                                            props.notifications.numbers_requestFriend > 0 ||
+                                            props.notifications.numbers_acceptedFriend > 0) &&
+                                            <Fragment>
+                                                <Badge className="notifications"
+                                                    variant="light">{props.notifications.numbers_messages + props.notifications.numbers_requestFriend + props.notifications.numbers_acceptedFriend > 0 ?
+                                                        props.notifications.numbers_messages + props.notifications.numbers_acceptedFriend + props.notifications.numbers_requestFriend : ""}
+                                                </Badge>
+                                                <img src="images\pelota-tenis.png" alt="" width="35px" height="35px"></img>
+                                            </Fragment>
+                                        }
+                                        <Card.Img className="avatarNavbar" variant="top"
+                                            src={props.player.avatar ? "http://localhost:8080/uploads/avatar/" + props.player.avatar + "?" + Date() :
+                                                "images/avatar-tenis.png"} alt="" />
+                                        {/* {props.player.username} */}
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu id="dropdwnMenuShowNavbar">
 
@@ -179,23 +186,35 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                                         <Link className="span-logo span-logo-dropdown" to="/mailTray" onClick={UpdateOcultar}>
                                             <i className="material-icons iconDropdown md-48">mail</i>
                                             <span className="span-Dropdown">Correo</span>
-                                            <Badge className="notifications" variant="light">{props.notifications.number_messages > 0 ? props.notifications.number_messages : ""}</Badge>
-                                            <img src="images\pelota-tenis.png" alt="" width="35px" height="35px"></img>
+                                            {props.notifications.numbers_messages > 0 &&
+                                                <Fragment>
+                                                    <Badge className="notifications" variant="light">{props.notifications.numbers_messages > 0 ? props.notifications.numbers_messages : ""}</Badge>
+                                                    <img src="images\pelota-tenis.png" alt="" width="35px" height="35px"></img>
+                                                </Fragment>
+                                            }
                                         </Link>
                                         <br />
-                                        
+
                                         <Link className="span-logo span-logo-dropdown" to={"/friends"} onClick={UpdateOcultar}>
                                             <i className="material-icons iconDropdown md-48">group</i>
                                             <span className="span-Dropdown">Amigos</span>
-                                            <Badge className="notifications" variant="light">{props.notifications.numbers_acceptedFriend > 0 ? props.notifications.numbers_acceptedFriend : ""}</Badge>
-                                            <img src="images\pelota-tenis.png" alt="" width="35px" height="35px"></img>
+                                            {props.notifications.numbers_acceptedFriend > 0 &&
+                                                <Fragment>
+                                                    <Badge className="notifications" variant="light">{props.notifications.numbers_acceptedFriend > 0 ? props.notifications.numbers_acceptedFriend : ""}</Badge>
+                                                    <img src="images\pelota-tenis.png" alt="" width="35px" height="35px"></img>
+                                                </Fragment>
+                                            }
                                         </Link>
                                         <br />
                                         <Link className="span-logo span-logo-dropdown" to={"/friendRequests"} onClick={UpdateOcultar}>
                                             <i className="material-icons iconDropdown md-48">group_add</i>
                                             <span className="span-Dropdown">Peticiones</span>
-                                            <Badge className="notifications" variant="light">{props.notifications.numbers_requestFriend > 0 ? props.notifications.numbers_requestFriend : ""}</Badge>
-                                            <img src="images\pelota-tenis.png" alt="" width="35px" height="35px"></img>
+                                            {props.notifications.numbers_requestFriend > 0 &&
+                                                <Fragment>
+                                                    <Badge className="notifications" variant="light">{props.notifications.numbers_requestFriend > 0 ? props.notifications.numbers_requestFriend : ""}</Badge>
+                                                    <img src="images\pelota-tenis.png" alt="" width="35px" height="35px"></img>
+                                                </Fragment>
+                                            }
                                         </Link>
                                         <br />
                                         <Link className="span-logo span-logo-dropdown" to="/" onClick={() => logout()}>
@@ -209,7 +228,7 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                                     <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item> */}
                                     </Dropdown.Menu>
                                 </Dropdown>
-                                
+
 
                             </>
                         )}

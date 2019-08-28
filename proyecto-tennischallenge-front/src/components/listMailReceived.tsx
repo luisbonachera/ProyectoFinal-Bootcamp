@@ -9,18 +9,71 @@ import { setMessages } from '../actions/actions';
 import { Link } from 'react-router-dom';
 import { IPlayer } from '../interfaceIPlayer';
 import { Badge } from 'react-bootstrap';
+import { INotifications } from '../interfaceINotifications';
 
 interface IPropsGloblal {
     token: string,
     msgs: IMsg[],
     player: IPlayer,
     setMessages: (msgs: IMsg[]) => void;
+    setNotifications: (notification: INotifications) => void;
 }
 
 const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props => {
 
     const [error, setError] = React.useState("");
     const [messagesHooks, setMessagesHooks] = React.useState<IMsg[]>([]);
+
+    const updatednotificationsFriendship = () => {
+        if (props.token) {
+            fetch("http://localhost:8080/api/notifications", {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + props.token
+                },
+            })
+                .then(response => {
+                    if (response.ok) {
+                        response
+                            .json()
+                            // .then((notifications: INotifications) => {
+                            .then((notifications) => {
+
+                                // console.log(notifications);
+                                // console.log(notifications[0]);
+                                if (notifications[0]) {
+                                    // if (notifications[0].numbers_messages > 0 || 
+                                    //   notifications[0].numbers_requestFriend > 0 ||
+                                    //   notifications[0].numbers_acceptedFriend > 0) {
+                                    console.log("actualizando mis notificaciones");
+                                    console.log(notifications);
+                                    props.setNotifications(notifications[0]);
+                                    // console.log(notifications);
+                                    // } else {
+                                    //   // console.log("no hay notificaciones");
+                                    // }
+
+                                } else {
+                                    console.log("no me actualiza las notificaciones porque notificacion[0] no existe")
+                                }
+
+                            })
+                            .catch(err => {
+                                console.log("Error en el json. " + err);
+                            });
+                    } else {
+                        console.log("responde.ok da error.");
+                    }
+                })
+                .catch(err => {
+                    console.log("Error en response. " + err);
+                });
+
+
+        } else {
+            // console.log("aun no hay token");
+        }
+    }
 
     const viewMsg = (id_message: number) => {
         let msg = props.msgs.filter(m => m.id_messages === id_message);
@@ -46,6 +99,8 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
                             console.log("mensajes");
                             console.log(msgs);
                             setMessages(msgs);
+                            //actualizo mis notificaciones
+                            updatednotificationsFriendship();
                             setError("");
                             props.history.push("/mailTray/received/" + id_message);
                         } else {
@@ -155,7 +210,7 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
                             {m.subject}
                         </div>
                         <div className="col-2 colum colBorder">
-                            <Badge className="badge-date" variant="secondary">{new Date(m.date).toLocaleDateString()}</Badge> 
+                            <Badge className="badge-date" variant="secondary">{new Date(m.date).toLocaleDateString()}</Badge>
                             {/* {new Date(m.date).toLocaleString()} */}
                         </div>
                         {/* esto cuanto haya colores en la lista de los msgs lo deberia quitar */}
@@ -184,7 +239,8 @@ const mapStateToProps = (state: IGlobalState) => ({
 });
 
 const mapDispachToProps = {
-    setMessages: actions.setMessages
+    setMessages: actions.setMessages,
+    setNotifications: actions.setNotifications
 }
 
 export default connect(

@@ -6,8 +6,8 @@ import * as actions from '../actions/actions';
 import jwt from 'jsonwebtoken';
 import { Link } from 'react-router-dom';
 import { IFriendship } from '../interfaceIFriendship';
-import { decode } from 'punycode';
 import { IPlayer } from '../interfaceIPlayer';
+import { INotifications } from '../interfaceINotifications';
 
 
 interface Iprops { }
@@ -18,6 +18,7 @@ interface IpropsGlobal {
     friendships: IFriendship[];
     player: IPlayer;
     players: IPlayer[];
+    setNotifications: (notification: INotifications) => void;
 };
 
 const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
@@ -216,6 +217,58 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
     React.useEffect(filtar, [inputUsername, inputCity, inputRatingFrom, inputRatingTo, inputSex, myFriends]);
 
 
+    const updatednotificationsFriendship = () => {
+        if (props.token) {
+            fetch("http://localhost:8080/api/notifications", {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + props.token
+                },
+            })
+                .then(response => {
+                    if (response.ok) {
+                        response
+                            .json()
+                            // .then((notifications: INotifications) => {
+                            .then((notifications) => {
+
+                                // console.log(notifications);
+                                // console.log(notifications[0]);
+                                if (notifications[0]) {
+                                    // if (notifications[0].numbers_messages > 0 || 
+                                    //   notifications[0].numbers_requestFriend > 0 ||
+                                    //   notifications[0].numbers_acceptedFriend > 0) {
+                                    console.log("actualizando mis notificaciones");
+                                    console.log(notifications);
+                                    props.setNotifications(notifications[0]);
+                                    // console.log(notifications);
+                                    // } else {
+                                    //   // console.log("no hay notificaciones");
+                                    // }
+
+                                }else{
+                                    console.log("no me actualiza las notificaciones porque notificacion[0] no existe")
+                                }
+
+                            })
+                            .catch(err => {
+                                console.log("Error en el json. " + err);
+                            });
+                    } else {
+                        console.log("responde.ok da error.");
+                    }
+                })
+                .catch(err => {
+                    console.log("Error en response. " + err);
+                });
+
+
+        } else {
+            // console.log("aun no hay token");
+        }
+    }
+
+
     const watched = (id_player: number) => {
         let decoded: any = jwt.decode(props.token);
         let friend = props.friendships.filter(f => f.id_player2 === id_player && !f.watched && f.accepted && f.id_player1 === decoded.id_player)
@@ -230,7 +283,9 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                 .then(response => {
                     if (response.ok) {
 
-                        console.log("amistad creada")
+                        console.log("amistad creada");
+                        //actualizo mis notificaciones
+                        updatednotificationsFriendship();
                         fetch("http://localhost:8080/api/friends", {
                             headers: {
                                 "Content-Type": "application/json",
@@ -243,6 +298,7 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                                         .json()
                                         .then((listaFriendship: IFriendship[]) => {
                                             if (listaFriendship.length > 0) {
+                                                console.log("mi lista deberia de peticiones de amistad tener estar reducida en una")
                                                 console.log(listaFriendship);
                                                 props.setFriendships(listaFriendship);
 
@@ -411,7 +467,8 @@ const mapStateToProps = (state: IGlobalState) => ({
 });
 
 const mapDispachToProps = {
-    setFriendships: actions.setFriendships
+    setFriendships: actions.setFriendships,
+    setNotifications: actions.setNotifications
 }
 
 export default connect(
