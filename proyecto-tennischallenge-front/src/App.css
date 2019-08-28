@@ -30,7 +30,8 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  background-image: url("http://www.hoerbranz.at/system/web/GetImage.ashx?fileid=922469&mode=O");
+  background-image: url("./images/fondo-pelota.jpg");
+  /* background-image: url("http://www.hoerbranz.at/system/web/GetImage.ashx?fileid=922469&mode=O"); */
   padding-top: 116px;/*121*/
 }
 /* .App-header2{
@@ -311,7 +312,7 @@ a:hover {
   margin-right: 10px;
 }
 
-/*Correo recibido*/
+/*Correo recibido y enviado*/
 
 .rowMsgReceived {
   background-color: #00000036;
@@ -359,7 +360,13 @@ a:hover {
 .imgAvatarMsg {
   border-radius: 50%;
 }
-
+/*mensaje enviaje*/
+.green600{
+  color: rgba(16, 120, 7, 0.82);
+}
+.blue300{
+  color: rgb(13, 75, 220);
+}
 /*Detalle mensaje*/
 
 .detalleMensaje {
@@ -372,6 +379,12 @@ a:hover {
   margin: auto;
 }
 
+
+/*Correo nuevo*/
+
+.textarea.form-control {
+  height: 40vh;
+}
 /* List friends */
 
 .newFriend {

@@ -136,10 +136,10 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
     console.log(playerDestiny);
     console.log("persona de destino: " + inputListPlayerTo)
     return (
-        <div>
+        <div className="col-9">
 
             {playerDestiny !== null && playerDestiny !== undefined && (
-                <Form>
+                <Form className="container">
 
                     <Form.Group controlId="formGridFrom">
                         <Form.Label>From:</Form.Label>

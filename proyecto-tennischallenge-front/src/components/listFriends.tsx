@@ -1,5 +1,5 @@
 import React from 'react';
-import { CardDeck, Card, DropdownButton, Form, Col, Badge } from 'react-bootstrap';
+import { CardDeck, Card, DropdownButton, Form, Col} from 'react-bootstrap';
 import { IGlobalState } from '../reducers/reducers';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';

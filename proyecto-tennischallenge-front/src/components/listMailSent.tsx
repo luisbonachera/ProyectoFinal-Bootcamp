@@ -7,6 +7,7 @@ import * as actions from '../actions/actions';
 import jwt from 'jsonwebtoken';
 import { Link } from 'react-router-dom';
 import { IPlayer } from '../interfaceIPlayer';
+import { Badge } from 'react-bootstrap';
 
 
 interface IPropsGloblal {
@@ -73,7 +74,7 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
 
     return (
         <div className="col receivedOrSent">
-            {messagesHooks.length > 0 &&
+            {/* {messagesHooks.length > 0 &&
                 <div className="row" >
                     <div className="col-2 colum colBorder">
                         Para:
@@ -83,13 +84,13 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
                     </div>
                     <div className="col-2 colum colBorder">
                         Fecha
-                    </div>
+                    </div> */}
                     {/* esto cuanto haya colores en la lista de los msgs lo deberia quitar */}
-                    <div className="col-1 colum colBorder">
+                    {/* <div className="col-1 colum colBorder">
                         Visto
                     </div>
                 </div>
-            }
+            } */}
             {messagesHooks.length > 0 && messagesHooks.map(m =>
                 // <Link to={"/mailTray/"+props.match.params.typeMessage + "/" + m.id_messages} >
                 // los mensajes received y no vistos son los que se deberian de poner de otro color
@@ -102,23 +103,27 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
                                 {/* {m.id_player_sent} }
                                 From: {props.player.username}
                             </div> */}
+                            <div className="col-1 colum colBorder">
+                                <img className="imgAvatarMsg" src={m.avatar ? "http://localhost:8080/uploads/avatar/" + m.avatar : "/images/avatar-tenis.png"}
+                                    alt="" width="auto" height="50" />
+                            </div>
                             <div className="col-2 colum colBorder">
                                 {/* {m.id_player_destiny} to*/}
                                 {m.username}
                             </div>
-                            <div className="col-7 colum colBorder">
-                                {/* Asunto */}
+                            <div className="col-6 colum colBorder">
                                 {m.subject}
                             </div>
                             <div className="col-2 colum colBorder">
-                                {/* fecha */}
+                                <Badge className="badge-date" variant="secondary">
                                 {new Date(m.date).toLocaleDateString()}
+                                </Badge>
                             </div>
                             {/* esto cuanto haya colores en la lista de los msgs lo deberia quitar */}
                             <div className="col-1 colum colBorder">
-                                {m.watched ? <i className="material-icons">done_all</i> : <i className="material-icons">done</i>
+                                {m.watched ? <i className="material-icons green600">done_all</i> : <i className="material-icons blue300">done</i>
                                 }
-                                
+
                             </div>
                         </div>
                     </div>

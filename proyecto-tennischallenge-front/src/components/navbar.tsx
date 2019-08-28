@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import { Navbar, Card, Badge, Dropdown } from 'react-bootstrap';
-// import { NavDropdown} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { IGlobalState } from '../reducers/reducers';

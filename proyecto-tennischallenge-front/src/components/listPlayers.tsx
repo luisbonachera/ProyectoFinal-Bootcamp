@@ -1,5 +1,5 @@
 import React from 'react';
-import { CardDeck, Card, DropdownButton, Form, Col } from 'react-bootstrap';
+import { Card, DropdownButton, Form, Col } from 'react-bootstrap';
 import { IPlayer } from '../interfaceIPlayer';
 import { IGlobalState } from '../reducers/reducers';
 import { connect } from 'react-redux';
