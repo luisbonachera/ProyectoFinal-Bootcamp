@@ -170,10 +170,13 @@ playersController.edit = (req, res) => {
       console.log("player");
       console.log(player);
       if (decoded.isAdmin) {
+        console.log(p.isAdmin)
         console.log("entrar al isAdmin");
         player = {
           ...player,
-          ...(p.isAdmin !== null && { isAdmin: p.isAdmin === "1" ? 1 : 0 })
+          ...(p.isAdmin !== null && { isAdmin: p.isAdmin})
+
+          // ...(p.isAdmin !== null && { isAdmin: p.isAdmin ? 1 : 0 })
         };
       }
       console.log("rol admin:" + decoded.isAdmin);

@@ -157,7 +157,7 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                         <Form.Group as={Col} controlId="formGridState">
                             <Form.Label>To</Form.Label>
                             <Form.Control as="select" type="text" value={inputListPlayerTo + ""} onChange={updateInputListPlayerTo}>
-                                <option selected value="" hidden>Elige destinatario</option>
+                                <option defaultValue="" hidden>Elige destinatario</option>
                                 {props.players.sort(function (a, b) {
                                     let nameA = a.username.toLowerCase();
                                     let nameB = b.username.toLowerCase();

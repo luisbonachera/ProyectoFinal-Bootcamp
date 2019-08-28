@@ -364,8 +364,9 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                             )))} */}
 
                             {props.player.isAdmin &&
-                                <>
+                                <Fragment>
                                     <Link to={"/players/edit/" + thisplayer.id_player}>
+                                        {console.log(thisplayer.id_player)}
                                         <Button variant="primary">Editar</Button>
                                     </Link>
                                     <br />
@@ -375,7 +376,7 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                     <br />
                                     <br />
                                     {/* </Link> */}
-                                </>
+                                </Fragment>
                             }
                         </Card.Footer>
                     </Card>

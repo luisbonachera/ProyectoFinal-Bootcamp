@@ -8,6 +8,7 @@ import jwt from 'jsonwebtoken';
 import { setMessages } from '../actions/actions';
 import { Link } from 'react-router-dom';
 import { IPlayer } from '../interfaceIPlayer';
+import { Badge } from 'react-bootstrap';
 
 interface IPropsGloblal {
     token: string,
@@ -117,7 +118,7 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
 
     return (
         <div className="col receivedOrSent">
-            {messagesHooks.length >0 &&
+            {/* {messagesHooks.length >0 &&
             <div className="row" >
                 <div className="col-2 colum colBorder">
                     De:
@@ -127,30 +128,34 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
                 </div>
                 <div className="col-2 colum colBorder">
                     Fecha
-                </div>
-                {/* esto cuanto haya colores en la lista de los msgs lo deberia quitar */}
-                {/* <div className="col colBorder">
+                </div> */}
+            {/* esto cuanto haya colores en la lista de los msgs lo deberia quitar */}
+            {/* <div className="col colBorder">
                     Visto
                 </div> */}
-            </div>
-            }
-            {messagesHooks.length >0 && messagesHooks.map(m =>
+            {/* </div>
+            } */}
+            {messagesHooks.length > 0 && messagesHooks.map(m =>
                 // <Link to={"/mailTray/"+props.match.params.typeMessage + "/" + m.id_messages} >
                 // los mensajes received y no vistos son los que se deberian de poner de otro color
                 <Link key={m.id_messages} to={"/mailTray/received/" + m.id_messages} onClick={() => viewMsg(m.id_messages)}>
 
-                    <div className={m.watched ?"row messageResume": "row messageResume rowMsgReceived" }>
+                    <div className={m.watched ? "row messageResume" : "row messageResume rowMsgReceived"}>
+                        <div className="col-1 colum colBorder">
+                            <img className="imgAvatarMsg" src={m.avatar ? "http://localhost:8080/uploads/avatar/" + m.avatar : "/images/avatar-tenis.png"}
+                                alt="" width="auto" height="50" />
+                        </div>
                         <div className="col-2 colum colBorder">
                             {m.username}
                         </div>
                         {/* <div className="col">
                             {props.player.username}
                         </div> */}
-                        <div className="col-8 colum colBorder">
+                        <div className="col-7 colum colBorder">
                             {m.subject}
                         </div>
                         <div className="col-2 colum colBorder">
-                        {new Date(m.date).toLocaleDateString()}
+                            <Badge className="badge-date" variant="secondary">{new Date(m.date).toLocaleDateString()}</Badge> 
                             {/* {new Date(m.date).toLocaleString()} */}
                         </div>
                         {/* esto cuanto haya colores en la lista de los msgs lo deberia quitar */}

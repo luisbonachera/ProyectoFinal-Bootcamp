@@ -3,7 +3,6 @@
   /* background-image: url("./images/fondo-pelota.jpg"); */
   width: 100%;
   height: 100%;
- 
   /* background-repeat: no-repeat;
     background-size: cover;
     background-position: center; */
@@ -32,9 +31,11 @@
   background-size: cover;
   background-position: center;
   background-image: url("http://www.hoerbranz.at/system/web/GetImage.ashx?fileid=922469&mode=O");
-  padding-top: 121px;
+  padding-top: 116px;/*121*/
 }
-
+/* .App-header2{
+  padding-top: 116px;/*121*/
+/* } */ 
 .App-link {
   color: #61dafb;
 }
@@ -58,7 +59,7 @@
   font-size: 1.5rem;
 }
 
-#dropdown-basic:focus , .btn-primary .dropdown-toggle:focus {
+#dropdown-basic:focus, .btn-primary .dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem transparent;
 }
 
@@ -71,6 +72,11 @@
 #dropdwnMenuShowNavbar {
   background-color: transparent;
   border: none;
+  margin-left: -20px;
+}
+  #dropdwnRatingListPlayer{
+    background-color: transparent;
+    border: none;
 }
 
 #dropdwnMenuShowNavbar .span-logo:hover {
@@ -157,7 +163,7 @@ a:hover {
   color: #bfbfbf !important;
   /**/
   color: black !important;
-  padding-right: 750px;
+  /* padding-right: 750px; */
 }
 
 .span-logo {
@@ -166,27 +172,31 @@ a:hover {
   font-size: 23px;
 }
 
-.span-logo-dropdown{
+.span-logo-dropdown {
   padding-right: 15px;
 }
+
 /**/
 
 .span-logo:hover, .span-Dropdown:hover {
   color: #081d60 !important;
 }
 
-.span-Dropdown{
-color: white !important;
-padding-right: 10px;
-font-size: 23px;
+.span-Dropdown {
+  color: white !important;
+  padding-right: 10px;
+  font-size: 23px;
 }
+
 .dropdown-menu.show {
   width: 200px;
 }
-.iconDropdown{
-margin-right: 10px;
-vertical-align: sub ;
+
+.iconDropdown {
+  margin-right: 10px;
+  vertical-align: sub;
 }
+
 .listPlayers {
   padding-top: 150px;
 }
@@ -249,8 +259,9 @@ vertical-align: sub ;
   padding-left: 1.25rem;
   box-shadow: none;
 }
+
 .dropdown-toggle::after {
-display: none;
+  display: none;
 }
 
 .dropdown-menu[x-placement^=bottom], .dropdown-menu[x-placement^=left], .dropdown-menu[x-placement^=right], .dropdown-menu[x-placement^=top] {
@@ -273,6 +284,7 @@ display: none;
 .MenuMensajes {
   padding-top: 50px;
   list-style: none;
+  padding-inline-start: 0px;
 }
 
 .MenuMensajes li a {
@@ -281,8 +293,22 @@ display: none;
 }
 
 .MenuMensajes li a:hover {
-  font-size: 25px;
+  /* font-size: 25px; */
   color: #081d60 !important;
+}
+
+.divIconAndNameMenuMensaje {
+  /**/
+  display: flex;
+  /* justify-content: center;
+  align-content: center; */
+}
+
+.iconMenuMensajes {
+  /**/
+  font-size: 29px;
+  line-height: inherit;
+  margin-right: 10px;
 }
 
 /*Correo recibido*/
@@ -296,9 +322,10 @@ display: none;
   text-align: left;
 }
 
-.messageResume:hover{
+.messageResume:hover {
   background-color: #80808052;
 }
+
 .receivedOrSent a .row .colum, .receivedOrSent .colum {
   color: white;
   font-size: 20px;
@@ -307,10 +334,30 @@ display: none;
 .colBorder {
   border-bottom: 1px solid #cb4403;
 }
+
+.colum {
+  display: flex;
+  align-items: center;
+}
+
+.badge-date {
+  color: white !important;
+  font-size: 0.8rem;
+  background-color: #808080a1;
+}
+
+.badge-date:hover {
+  color: white !important;
+}
+
 .fondoCorreo {
   background-image: -webkit-gradient( linear, left top, right bottom, from(rgba(92, 80, 80, 0.2)), to(rgba(255, 255, 255, 0.37)), color-stop(.5, #d34f08d1));
   box-shadow: 0 2px 5px 0 rgba(161, 132, 132, 0.16), 0 2px 10px 0 rgba(0, 0, 0, .12);
   border-radius: 10px;
+}
+
+.imgAvatarMsg {
+  border-radius: 50%;
 }
 
 /*Detalle mensaje*/
@@ -325,11 +372,10 @@ display: none;
   margin: auto;
 }
 
-
 /* List friends */
 
-.newFriend{
-margin-top: -64px;
-width: auto;
-height: 65px;
+.newFriend {
+  margin-top: -64px;
+  width: auto;
+  height: 65px;
 }

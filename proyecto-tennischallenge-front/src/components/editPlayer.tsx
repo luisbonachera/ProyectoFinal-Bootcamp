@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Form, Col, Button } from 'react-bootstrap';
 import { RouteComponentProps } from 'react-router-dom';
 // import jwt from 'jsonwebtoken';
@@ -147,7 +147,13 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                     if (lista.length === 1) {
                                         console.log("usuario modificado y listado");
                                         console.log(lista);
+                                        /***************************************** */
+                                        lista[0] = {
+                                            ...lista[0],
+                                            ...({isAdmin: lista[0].isAdmin == '1'?true:false})
+                                        }
                                         props.updatePlayers(lista[0]);
+                                         /***************************************** */
                                         // entro aqui porque yo me he editado, pero si soy admin puedo editar a otros
                                         if (id === decoded.id_player) {
                                             console.log("soy yo o deberia:")
@@ -325,9 +331,11 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                     </Form.Group>
 
 
-                </Form.Row> */}
+                </Form.Row> */}{
+                    console.log(props.player.isAdmin)
+                }
                     {props.player.isAdmin &&
-                        <>
+                        <Fragment>
                             <Form.Group id="formGridCheckbox">
                                 <Form.Check id="admin" className="Administrador" type="checkbox" label="Administrador" name="Administrador" onChange={updateIsAdmin} checked={isAdmin} />
                             </Form.Group>
@@ -335,7 +343,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                             {/* <Form.Group id="formGridCheckbox2">
                                 <Form.Check type="checkbox" label="PrebaAdmin" onChange={updateIsAdmin} checked={isAdmin} />
                             </Form.Group> */}
-                        </>
+                        </Fragment>
                     }
                     <Button variant="primary" type="button" onClick={edit}>
                         Save

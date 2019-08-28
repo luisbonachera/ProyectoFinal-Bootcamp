@@ -15,28 +15,37 @@ interface IPropsGloblal {
 
 const MenuMail: React.FC<IPropsGloblal> = props => {
 
-    let decode : any;
-    if(props.token){
+    let decode: any;
+    if (props.token) {
         decode = jwt.decode(props.token);
     }
-    
+
 
     return (
         <Fragment>
             <ul className="MenuMensajes">
                 <li>
-                {decode && decode.id_player && (
-                <Link className="text" to={"/mailTray/add/"+ decode.id_player }> Nuevo </Link>
-            )}
+                    {decode && decode.id_player && (
+                        <Link className="text divIconAndNameMenuMensaje" to={"/mailTray/add/" + decode.id_player}>
+                            <i className="material-icons iconMenuMensajes md-48">add_box</i>
+                            Nuevo
+                        </Link>
+                    )}
                 </li>
                 <li>
-                <Link className="text" to="/mailTray/received"> Recibidos </Link>
+                    <Link className="text divIconAndNameMenuMensaje" to="/mailTray/received">
+                        <i className="material-icons iconMenuMensajes md-48">mail</i>
+                        Recibidos
+                    </Link>
                 </li>
                 <li>
-                <Link className="text" to="/mailTray/sent"> Enviados </Link>
+                    <Link className="text divIconAndNameMenuMensaje" to="/mailTray/sent">
+                    <i className="material-icons iconMenuMensajes md-48">send</i>
+                        Enviados
+                    </Link>
                 </li>
             </ul>
-            
+
 
         </Fragment>
     )

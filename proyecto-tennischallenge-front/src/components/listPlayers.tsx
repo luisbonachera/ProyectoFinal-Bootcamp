@@ -286,7 +286,7 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
 
                         <DropdownButton id="dropdown-basic-button" title="Nivel">
 
-                            <Form.Group as={Col} id="dropdwnMenuShowNavbar" controlId="formGridState">
+                            <Form.Group as={Col} id="dropdwnRatingListPlayer" controlId="formGridState">
                                 <Form.Label>Desde</Form.Label>
                                 <Form.Control as="select" value={inputRatingFrom + ""} onChange={UpdateRatingFrom}>
                                     <option value={1}>1</option>
@@ -297,7 +297,7 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
                                 </Form.Control>
                             </Form.Group>
 
-                            <Form.Group as={Col} id="dropdwnMenuShowNavbar" controlId="formGridState">
+                            <Form.Group as={Col} id="dropdwnRatingListPlayer" controlId="formGridState">
                                 <Form.Label>Hasta</Form.Label>
                                 <Form.Control as="select" value={inputRatingTo + ""} onChange={UpdateRatingTo}>
                                     <option value={1}>1</option>
@@ -318,7 +318,7 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
 
                 <div className="col-sm">
                     {filteresList && filteresList.map(p => (
-                        <div className="cardsJugadores">
+                        <div className="cardsJugadores" key={p.id_player}>
                             {/* <Card style={{ display: 'flex', flexDirection: 'row' }}> */}
                             <Card>
 
@@ -326,7 +326,7 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
                                     src={p.avatar ? "http://localhost:8080/uploads/avatar/" + p.avatar + "?" + Date() : 
                                     "images/avatar-tenis.png"} alt="" />
                                 <Card.Body >
-                                    <Link key={p.id_player} to={"/players/" + p.id_player} >
+                                    <Link  to={"/players/" + p.id_player} >
                                         <Card.Title>{p.username}</Card.Title>
                                         <Card.Text>
                                             {p.city}

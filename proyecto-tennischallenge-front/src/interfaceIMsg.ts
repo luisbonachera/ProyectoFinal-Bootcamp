@@ -7,4 +7,5 @@ export interface IMsg {
     text: string;
     watched: boolean;
     username?: string;
+    avatar?: string;
   }

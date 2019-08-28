@@ -93,10 +93,12 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
                                                 if (response.ok) {
                                                     response
                                                         .json()
-                                                        .then((lista: IPlayer[]) => {
+                                                        .then((lista) => {
                                                             console.log("va bien");
-                                                            
                                                             console.log(lista);
+                                                            for(let i=0;i<lista.length;i++){
+                                                                lista[i].isAdmin = (lista[i].isAdmin == '1'?true:false)
+                                                            }
                                                             props.setPlayer(player);
                                                             props.setPlayers(lista);
                                                             props.history.push("/");
