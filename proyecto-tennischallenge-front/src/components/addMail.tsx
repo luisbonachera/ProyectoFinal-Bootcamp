@@ -141,7 +141,7 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
 
             {playerDestiny !== null && playerDestiny !== undefined && (
                 <Fragment>
-                    <div className="row">
+                    <div className="container row containerMessageNew">
                         <div className="col-1">
                             <img className="imgAvatarMsg" src={props.player.avatar ? "http://localhost:8080/uploads/avatar/" + props.player.avatar : "/images/avatar-tenis.png"}
                                 alt="" width="auto" height="50" />
@@ -160,10 +160,19 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                         <Form.Label> {props.player.username} </Form.Label>
                     </Form.Group> */}
                         {soyYo === false && (
-                            <Form.Group className="containerPlayerDestinyMessage" controlId="formGridTo">
-                                {/* <Form.Label>Para:</Form.Label> */}
-                                <Form.Label> {playerDestiny.username} </Form.Label>
-                            </Form.Group>
+                            <div className="row containerMessageNew">
+                                <div className="col-1">
+                                    <img className="imgAvatarMsg" src={playerDestiny.avatar ? "http://localhost:8080/uploads/avatar/" + playerDestiny.avatar : "/images/avatar-tenis.png"}
+                                        alt="" width="auto" height="50" />
+                                </div>
+                                <div className="col-1">
+                                    {playerDestiny.username}
+                                </div>
+                            </div>
+                            // <Form.Group className="containerPlayerDestinyMessage" controlId="formGridTo">
+                            //     {/* <Form.Label>Para:</Form.Label> */}
+                            //     <Form.Label> {playerDestiny.username} </Form.Label>
+                            // </Form.Group>
                         )}
                         {soyYo && (
                             <Form.Group className="containerPlayerDestinyMessage" controlId="formGridState">
@@ -204,14 +213,20 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
 
 
                         <Form.Group controlId="formGridTextAreaText">
-                            <Form.Label>Texto: </Form.Label>
+                            {/* <Form.Label>Texto: </Form.Label> */}
                             <Form.Control className="textAreaMensajeNuevo" as="textarea" rows="3" onChange={updateText} placeholder="Escriba aqui el texto del mensaje" />
                         </Form.Group>
 
-                        <Button variant="primary" type="button" onClick={addMsg}>
-                            Enviar
-                    </Button>
-
+                        <Form.Group controlId="formButttonSend">
+                            <div className="row">
+                                {/* <div className="col-9"></div> */}
+                                <div className="col containerButtonSend">
+                                    <Button variant="primary" type="button" onClick={addMsg}>
+                                        Enviar
+                                </Button>
+                                </div>
+                            </div>
+                        </Form.Group>
                     </Form>
                 </Fragment>
             )}

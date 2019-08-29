@@ -25,13 +25,25 @@ const MailDetail: React.FC<IPropsGlobal & RouteComponentProps<{ typeMessage: str
         return null
     }
     return (
-        <div className="col detalleMensaje">
-            <div className="col-1 colum">
-                <img className="imgAvatarMsg" src={message[0].avatar ? "http://localhost:8080/uploads/avatar/" + message[0].avatar : "/images/avatar-tenis.png"}
-                    alt="" width="auto" height="50" />
-            </div>
-            <div className="col-2 colum ">
-            {typeMsg === "received" ? message[0].username : props.player.username}
+        // <div className="col detalleMensaje">
+        <div className="col containerMessageDetails">
+            <div className="row container">
+                <div className="col-1 colum">
+                {/* {typeMsg === "sent" &&  */}
+                    <img className="imgAvatarMsg" src={message[0].avatar ? "http://localhost:8080/uploads/avatar/" + message[0].avatar : "/images/avatar-tenis.png"}
+                        alt="" width="auto" height="50" />
+                        {/* message[0].username : props.player.username} */}
+                </div>
+                <div className="col-2 colum ">
+                    {/* {typeMsg === "received" ? message[0].username : props.player.username} */}
+                    {message[0].username}
+                </div>
+                <div className="col-6"></div>
+                <div className="col-3 containerDateMessageDetail">
+                    <Badge className="badge-date" variant="secondary">
+                        {new Date(message[0].date).toLocaleString()}
+                    </Badge>
+                </div>
             </div>
             {/* <div className="row">
                 From: {typeMsg === "received" ? message[0].username : props.player.username}
@@ -39,20 +51,21 @@ const MailDetail: React.FC<IPropsGlobal & RouteComponentProps<{ typeMessage: str
             <div className="row">
                 To: {typeMsg === "sent" ? message[0].username : props.player.username}
             </div> */}
-            <div className="row">
-                Asunto: {message[0].subject}
+            <div className="row container">
+                <div className="col">
+                    Asunto: {message[0].subject}
+                </div>
             </div>
-            <div className="row">
-                <Badge className="badge-date" variant="secondary">
-                    {new Date(message[0].date).toLocaleString()}
-                </Badge>
-            </div>
-            <div className="row">
-                text: {message[0].text}
+            <div className="row container">
+                <div className="col">
+                    {message[0].text}
+                </div>
             </div>
             {typeMsg === "received" &&
-                <div className="row">
-                    <Link to={"/mailTray/add/" + message[0].id_player_sent}> Responder </Link>
+                <div className="row container">
+                    <div className="col containerButtonSend">
+                        <Link className="btn btn-primary" to={"/mailTray/add/" + message[0].id_player_sent}> Responder </Link>
+                    </div>
                 </div>
             }
 

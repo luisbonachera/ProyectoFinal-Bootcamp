@@ -320,22 +320,40 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
                     {filteresList && filteresList.map(p => (
                         <div className="cardsJugadores" key={p.id_player}>
                             {/* <Card style={{ display: 'flex', flexDirection: 'row' }}> */}
-                            <Card>
+                            <Card className="cardListPlayer">
 
                                 <Card.Img className="avatarListProfile" variant="top"
-                                    src={p.avatar ? "http://localhost:8080/uploads/avatar/" + p.avatar + "?" + Date() : 
-                                    "images/avatar-tenis.png"} alt="" />
-                                <Card.Body >
-                                    <Link  to={"/players/" + p.id_player} >
-                                        <Card.Title>{p.username}</Card.Title>
-                                        <Card.Text>
+                                    src={p.avatar ? "http://localhost:8080/uploads/avatar/" + p.avatar + "?" + Date() :
+                                        "images/avatar-tenis.png"} alt="" />
+                                <Card.Body className="cardBodyListPlayer" >
+                                    <Link to={"/players/" + p.id_player} >
+                                        <Card.Title className="cardTitleListPlayer">
+                                            {p.username}
+                                        </Card.Title>
+                                        <Card.Text className="cardTextListPlayer">
                                             {p.city}
-                                        </Card.Text>
-                                        <Card.Text>
+                                        </Card.Text >
+                                        <Card.Text className="cardTextListPlayer">
+                                            <img src={p.genre === "HOMBRE"?"images/hombre30.png":"images/mujer.png"} width="15" height="15" alt=""/>
                                             {p.genre}
-                                        </Card.Text>
-                                        <Card.Text>
-                                            Level {p.rating}
+                                        </Card.Text >
+                                        <Card.Text className="cardTextListPlayer">
+                                            {p.rating > 0 &&
+                                                <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
+                                            }
+                                            {p.rating > 1 &&
+                                                <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
+                                            }
+                                            {p.rating > 2 &&
+                                                <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
+                                            }
+                                            {p.rating > 3 &&
+                                                <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
+                                            }
+                                            {p.rating > 4 &&
+                                                <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
+                                            }
+                                            {/* Level {p.rating} */}
                                         </Card.Text>
                                     </Link>
                                 </Card.Body>

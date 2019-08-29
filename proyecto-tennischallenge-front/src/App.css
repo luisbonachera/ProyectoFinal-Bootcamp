@@ -49,6 +49,7 @@
 
 .navbar {
   z-index: 999;
+  background-color: rgba(210, 184, 169, 0.74);
 }
 
 .notifications {
@@ -75,14 +76,10 @@
 }
 
 #dropdwnMenuShowNavbar {
-  background-color: transparent;
-  border: none;
+  background-color: #f8f9fab5;
+  ;
   margin-left: -20px;
-}
-
-#dropdwnRatingListPlayer {
-  background-color: transparent;
-  border: none;
+  border-radius: 15px;
 }
 
 #dropdwnMenuShowNavbar .span-logo:hover {
@@ -100,13 +97,8 @@
   width: auto;
 }
 
-.avatarListProfile {
-  height: 220px;
-  width: auto;
-}
-
 .logo {
-  height: 95px;
+  height: 70px;
 }
 
 .navbar-collapse {
@@ -129,10 +121,13 @@ a {
   color: black !important;
   text-decoration: none;
 }
+
 /* *********************************************************************************************** */
+
 /* a:hover{
   background-color: #808080a6;
 } */
+
 span:hover, a:hover {
   color: #081d60 !important;
   /* color: grey !important; */
@@ -140,11 +135,12 @@ span:hover, a:hover {
 }
 
 .dropdown-menu {
-  left: -15px !important;
+  left: -27px !important;
 }
 
 .dropdown-menu a {
   color: #081d60 !important;
+  padding-left: 10px;
   /* color: white !important; */
 }
 
@@ -160,6 +156,7 @@ a:hover {
 
 .dropdown-menu a:hover {
   background-color: transparent !important;
+  color: #6c757d !important;
 }
 
 /**/
@@ -192,7 +189,8 @@ a:hover {
 /**/
 
 .span-logo:hover, .span-Dropdown:hover {
-  color: #081d60 !important;
+  /* color: #081d60 !important; */
+  color: #6c757d !important;
 }
 
 .span-Dropdown {
@@ -203,7 +201,7 @@ a:hover {
 }
 
 .dropdown-menu.show {
-  width: 200px;
+  width: 206px;
 }
 
 .iconDropdown {
@@ -240,6 +238,11 @@ a:hover {
 
 /********************ListPlayers.tsx**************************/
 
+#dropdwnRatingListPlayer {
+  background-color: transparent;
+  border: none;
+}
+
 .containerBuscador {
   /* background-color: rgba(255, 255, 255, 0.2); */
   text-align: left;
@@ -248,24 +251,77 @@ a:hover {
 }
 
 .buscador {
+  /* position: fixed;
+  font-size: 23px;
+  padding-top: 20vh; */
   position: fixed;
   font-size: 23px;
-  padding-top: 20vh;
+  background-color: #8080807a;
+  padding: 2vh 2vw 2vh 2vw;
+  border-radius: 5%;
+  margin-top: 3vh;
+}
+
+.avatarListProfile {
+  height: 150px;
+  width: 150px;
+  border: 0.1px solid black;
+  border-radius: 6% 35% 0% 35%;
+  /* height: 220px;
+  width: auto; */
 }
 
 .cardsJugadores {
-  width: 250px;
+  width: 130px;
+  height: auto;
   display: inline-block;
   margin: 20px;
+  /* width: 201px;
+  height: 441px;
+  display: inline-block;
+  margin: 20px; */
+}
+
+.cardListPlayer {
+  height: 280px;
+  width: 150px;
+  border: 0.1px solid black;
+  border-radius: 6% 35% 0% 35%;
 }
 
 .card {
+  border: none;
   background-color: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 1), 0 2px 10px 0 rgba(0, 0, 0, 1);
+  /* box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12); */
+}
+
+.cardBodyListPlayer {
+  padding: 0.5rem;
+  line-height: 1;
+}
+
+.cardTitleListPlayer {
+  margin-bottom: 0.5rem;
+}
+
+.cardTextListPlayer {
+  margin-bottom: 0.3rem;
+}
+
+.card:hover {
+  box-shadow: 10px 10px 15px 3px rgba(0, 0, 0, 1), 0 2px 10px 0 rgba(0, 0, 0, 1);
+  margin-bottom: -15px;
 }
 
 .card img {
   box-shadow: 0 2px 5px 0 rgba(161, 132, 132, 0.16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+}
+
+.iconRatingTennis {
+  font-size: 20px;
+  line-height: inherit;
+  /* margin-right: 10px; */
 }
 
 #dropdown-basic-button {
@@ -297,12 +353,13 @@ a:hover {
 
 /********************MENU Mensajes**************************/
 
-.menuMensajesP{
+.menuMensajesP {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0px;
 }
+
 .MenuMensajes {
   padding-top: 30px;
   list-style: none;
@@ -349,9 +406,9 @@ a:hover {
 
 .receivedOrSent {
   padding: 30px 20px 20px 20px;
-  text-align: left;
-  
+  /* text-align: left; */
 }
+
 .messageResume {
   margin: 0px 2px 0px 2px;
 }
@@ -360,6 +417,8 @@ a:hover {
   background-color: #80808052;
   box-shadow: 6px 6px 2px 2px black;
   /* margin-bottom: 5px; */
+  margin-left: -10px;
+  margin-right: 10px;
 }
 
 .receivedOrSent a .row .colum, .receivedOrSent .colum {
@@ -423,27 +482,58 @@ a:hover {
   color: white;
 }
 
-.mensajeNuevo {
-  margin: auto;
+.containerMessageDetails {
+  padding: 30px 20px 20px 20px;
+  text-align: left;
 }
+
+.containerDateMessageDetail {
+  text-align: end;
+}
+
+.miButton {
+  border: 1px solid black;
+  border-radius: 10%;
+  width: 100px;
+  /* margin-left: 55px; */
+  /* align-items: center;
+  text-align: center; */
+}
+
+/* .mensajeNuevo {
+  margin: auto;
+} */
 
 /*Correo nuevo*/
 
 /* .containerPlayerDestinyMessage{
   display: flex;
 } */
+
+.containerMessageNew {
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/*esto no me hace que el button se vaya al final*/
+
+.containerButtonSend {
+  text-align: end;
+}
+
 .textarea.form-control {
   height: 40vh;
 }
 
-.selectUsernameEmail{
+.selectUsernameEmail {
   width: 7.2rem;
   padding: 0 20px 0 20px;
 }
 
-.textAreaMensajeNuevo{
+.textAreaMensajeNuevo {
   height: 40vh !important;
 }
+
 /* List friends */
 
 .newFriend {
