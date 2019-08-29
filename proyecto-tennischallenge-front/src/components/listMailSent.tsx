@@ -8,6 +8,7 @@ import jwt from 'jsonwebtoken';
 import { Link } from 'react-router-dom';
 import { IPlayer } from '../interfaceIPlayer';
 import { Badge } from 'react-bootstrap';
+import { INotifications } from '../interfaceINotifications';
 
 
 interface IPropsGloblal {
@@ -15,6 +16,7 @@ interface IPropsGloblal {
     player: IPlayer,
     msgs: IMsg[],
     setMessages: (msgs: IMsg[]) => void;
+    notifications: INotifications;
 }
 
 const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
@@ -33,7 +35,7 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
                     // let msgsReceived = props.msgs.filter(m => m.id_player_sent === decoded.id_player);
                     console.log(msgsSent);
                     if (msgsSent.length > 0) {
-                        console.log("hay msg recibidos y los guardo");
+                        console.log("hay msg enviados y los guardo");
                         // setMessagesSent([]);
                         // setMessagesReceived(msgsReceived);
                         setError("");
@@ -57,7 +59,7 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
         } else {
             setError("no hay mensajes en la store, haciendo UseEffect.");
         }
-    }, [props.msgs]);
+    }, [props.msgs,props.notifications]);
 
     if (!props.msgs) {
         console.log("no hay mensajes en la store");
@@ -144,7 +146,9 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
 const mapStateToProps = (state: IGlobalState) => ({
     token: state.token,
     msgs: state.msgs,
-    player: state.player
+    player: state.player,
+    notifications: state.notifications
+
 
 });
 

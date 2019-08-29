@@ -135,7 +135,7 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                             <Link className="span-logo" to="/players">Jugadores</Link>
 
                             <Link className="span-logo" to="/">Pistas</Link>
-                            <Link className="span-logo" to="/maps">Mapa</Link>
+                            {/* <Link className="span-logo" to="/maps">Mapa</Link> */}
 
                         </>
                     )}

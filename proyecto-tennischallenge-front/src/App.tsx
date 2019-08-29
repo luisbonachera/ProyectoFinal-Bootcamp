@@ -46,18 +46,19 @@ const App: React.FC<IProps & IPropsGlobal> = props => {
                 // .then((notifications: INotifications) => {
                 .then((notifications) => {
 
-                  console.log(notifications);
-                  console.log(notifications[0]);
+                  // console.log(notifications);
+                  // console.log(notifications[0]);
                   if (notifications[0]) {
                     if (notifications[0].numbers_messages > 0 || 
                       notifications[0].numbers_requestFriend > 0 ||
                       notifications[0].numbers_acceptedFriend > 0) {
-                      console.log("tengo notificaciones");
-                      console.log(notifications);
+                      // console.log("tengo notificaciones");
+                      // console.log(notifications);
                       props.setNotifications(notifications[0]);
                       // console.log(notifications);
                     } else {
-                      console.log("no hay notificaciones");
+                      // console.log("no hay notificaciones");
+                      props.setNotifications(notifications[0]);
                     }
                     
                   }

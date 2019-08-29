@@ -10,11 +10,13 @@ import { IGlobalState } from '../reducers/reducers';
 import { connect } from 'react-redux';
 import ListMailReceived from './listMailReceived';
 import ListMailSent from './listMailSent';
+import { INotifications } from '../interfaceINotifications';
 
 interface IPropsGloblal {
     token: string,
     msgs: IMsg[],
-    setMessages: (msgs: IMsg[]) => void
+    setMessages: (msgs: IMsg[]) => void,
+    notifications: INotifications;
 }
 
 const MailTray: React.FC<IPropsGloblal> = props => {
@@ -89,7 +91,7 @@ const MailTray: React.FC<IPropsGloblal> = props => {
         }
     };
 
-    React.useEffect(listMsgs, []);
+    React.useEffect(listMsgs, [props.notifications]);
 
     return (
         <div className="container">
@@ -115,7 +117,8 @@ const MailTray: React.FC<IPropsGloblal> = props => {
 
 const mapStateToProps = (state: IGlobalState) => ({
     token: state.token,
-    msgs: state.msgs
+    msgs: state.msgs,
+    notifications: state.notifications
 
 });
 
