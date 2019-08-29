@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Form, Button, Col } from 'react-bootstrap';
 import { RouteComponentProps } from 'react-router-dom';
 import * as actions from '../actions/actions';
@@ -136,67 +136,84 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
     console.log(playerDestiny);
     console.log("persona de destino: " + inputListPlayerTo)
     return (
-        <div className="col-9">
+        // <div className="col-9">
+        <div className="col receivedOrSent">
 
             {playerDestiny !== null && playerDestiny !== undefined && (
-                <Form className="container">
+                <Fragment>
+                    <div className="row">
+                        <div className="col-1">
+                            <img className="imgAvatarMsg" src={props.player.avatar ? "http://localhost:8080/uploads/avatar/" + props.player.avatar : "/images/avatar-tenis.png"}
+                                alt="" width="auto" height="50" />
+                        </div>
+                        <div className="col-1">
+                            {props.player.username}
+                        </div>
+                    </div>
+                    <div className="col-2 colum ">
+                        {/* {m.id_player_destiny} to*/}
 
-                    <Form.Group controlId="formGridFrom">
-                        <Form.Label>From:</Form.Label>
-                        {/* <Form.Control type="email" value={props.player.username} onChange={updateUsernameSent} /> */}
+                    </div>
+                    <Form className="container">
+                        {/* <Form.Group controlId="formGridFrom">
+                        <Form.Label>De:</Form.Label>
                         <Form.Label> {props.player.username} </Form.Label>
+                    </Form.Group> */}
+                        {soyYo === false && (
+                            <Form.Group className="containerPlayerDestinyMessage" controlId="formGridTo">
+                                {/* <Form.Label>Para:</Form.Label> */}
+                                <Form.Label> {playerDestiny.username} </Form.Label>
+                            </Form.Group>
+                        )}
+                        {soyYo && (
+                            <Form.Group className="containerPlayerDestinyMessage" controlId="formGridState">
+                                {/* <Form.Label>Para</Form.Label> */}
+                                {/* <div className="col-1 colum ">
+                                <img className="imgAvatarMsg" src={inputListPlayerTo.avatar ? "http://localhost:8080/uploads/avatar/" + inputListPlayerTo.avatar : "/images/avatar-tenis.png"}
+                                    alt="" width="auto" height="50" />
+                            </div> */}
+                                <Form.Control className="selectUsernameEmail" as="select" type="text" value={inputListPlayerTo + ""} onChange={updateInputListPlayerTo}>
+                                    <option defaultValue="" hidden>destino</option>
+                                    {props.players.sort(function (a, b) {
+                                        let nameA = a.username.toLowerCase();
+                                        let nameB = b.username.toLowerCase();
+                                        if (nameA < nameB) //sort string ascending
+                                            return -1;
+                                        if (nameA > nameB)
+                                            return 1;
+                                        return 0; //default return value (no sorting)
+                                    }).map((p, i) => (
+                                        // (i=== 0) && (
+                                        //     <option defaultValue={p.id_player+""}>{p.username}</option>
 
-                    </Form.Group>
-                    {soyYo === false && (
-                        <Form.Group controlId="formGridTo">
-                            <Form.Label>To:</Form.Label>
-                            <Form.Label> {playerDestiny.username} </Form.Label>
+                                        // ) ||  (
+                                        <option key={p.id_player} value={p.id_player + ""}>{p.username}</option>
+
+                                        // )
+                                    )
+                                    )}
+
+                                </Form.Control>
+
+                            </Form.Group>
+                        )}
+                        <Form.Group controlId="formGridSubject">
+                            {/* <Form.Label>Asunto</Form.Label> */}
+                            <Form.Control onChange={updateSubject} placeholder="Asunto" />
                         </Form.Group>
-                    )}
-                    {soyYo && (
-                        <Form.Group as={Col} controlId="formGridState">
-                            <Form.Label>To</Form.Label>
-                            <Form.Control as="select" type="text" value={inputListPlayerTo + ""} onChange={updateInputListPlayerTo}>
-                                <option defaultValue="" hidden>Elige destinatario</option>
-                                {props.players.sort(function (a, b) {
-                                    let nameA = a.username.toLowerCase();
-                                    let nameB = b.username.toLowerCase();
-                                    if (nameA < nameB) //sort string ascending
-                                        return -1;
-                                    if (nameA > nameB)
-                                        return 1;
-                                    return 0; //default return value (no sorting)
-                                }).map((p, i) => (
-                                    // (i=== 0) && (
-                                    //     <option defaultValue={p.id_player+""}>{p.username}</option>
 
-                                    // ) ||  (
-                                    <option key={p.id_player} value={p.id_player + ""}>{p.username}</option>
 
-                                    // )
-                                )
-                                )}
-
-                            </Form.Control>
-
+                        <Form.Group controlId="formGridTextAreaText">
+                            <Form.Label>Texto: </Form.Label>
+                            <Form.Control className="textAreaMensajeNuevo" as="textarea" rows="3" onChange={updateText} placeholder="Escriba aqui el texto del mensaje" />
                         </Form.Group>
-                    )}
-                    <Form.Group controlId="formGridSubject">
-                        <Form.Label>Asunto</Form.Label>
-                        <Form.Control onChange={updateSubject} />
-                    </Form.Group>
 
+                        <Button variant="primary" type="button" onClick={addMsg}>
+                            Enviar
+                    </Button>
 
-                    <Form.Group controlId="formGridTextAreaText">
-                        <Form.Label>Texto: </Form.Label>
-                        <Form.Control as="textarea" rows="3" onChange={updateText} />
-                    </Form.Group>
-
-                    <Button variant="primary" type="button" onClick={addMsg}>
-                        Enviar
-                </Button>
-
-                </Form>
+                    </Form>
+                </Fragment>
             )}
 
 

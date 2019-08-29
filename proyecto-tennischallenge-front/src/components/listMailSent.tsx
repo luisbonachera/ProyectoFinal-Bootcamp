@@ -98,31 +98,33 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
 
                     <div   >
 
-                        <div className="row messageResume">
+                        <div className="row messageResume colBorder">
                             {/* <div className="col">
                                 {/* {m.id_player_sent} }
                                 From: {props.player.username}
                             </div> */}
-                            <div className="col-1 colum colBorder">
+                            <div className="col-1 colum ">
                                 <img className="imgAvatarMsg" src={m.avatar ? "http://localhost:8080/uploads/avatar/" + m.avatar : "/images/avatar-tenis.png"}
                                     alt="" width="auto" height="50" />
                             </div>
-                            <div className="col-2 colum colBorder">
+                            <div className="col-2 colum ">
                                 {/* {m.id_player_destiny} to*/}
                                 {m.username}
                             </div>
-                            <div className="col-6 colum colBorder">
+                            <div className="col-6 colum ">
                                 {m.subject}
                             </div>
-                            <div className="col-2 colum colBorder">
+                            <div className="col-2 colum ">
                                 <Badge className="badge-date" variant="secondary">
                                 {new Date(m.date).toLocaleDateString()}
                                 </Badge>
                             </div>
                             {/* esto cuanto haya colores en la lista de los msgs lo deberia quitar */}
-                            <div className="col-1 colum colBorder">
-                                {m.watched ? <i className="material-icons green600">done_all</i> : <i className="material-icons blue300">done</i>
+                            <div className="col-1 colum ">
+                                <Badge className="badge-mailSent-watched">
+                                {m.watched ? <i className="material-icons blue300">done_all</i> : <i className="material-icons green600">done</i>
                                 }
+                                </Badge>
 
                             </div>
                         </div>

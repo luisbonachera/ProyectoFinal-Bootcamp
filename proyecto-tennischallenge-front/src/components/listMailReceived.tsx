@@ -195,21 +195,21 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
                 // los mensajes received y no vistos son los que se deberian de poner de otro color
                 <Link key={m.id_messages} to={"/mailTray/received/" + m.id_messages} onClick={() => viewMsg(m.id_messages)}>
 
-                    <div className={m.watched ? "row messageResume" : "row messageResume rowMsgReceived"}>
-                        <div className="col-1 colum colBorder">
+                    <div className={m.watched ? "row messageResume colBorder" : "row messageResume rowMsgReceived colBorder"}>
+                        <div className="col-1 colum">
                             <img className="imgAvatarMsg" src={m.avatar ? "http://localhost:8080/uploads/avatar/" + m.avatar : "/images/avatar-tenis.png"}
                                 alt="" width="auto" height="50" />
                         </div>
-                        <div className="col-2 colum colBorder">
+                        <div className="col-2 colum ">
                             {m.username}
                         </div>
                         {/* <div className="col">
                             {props.player.username}
                         </div> */}
-                        <div className="col-7 colum colBorder">
+                        <div className="col-7 colum ">
                             {m.subject}
                         </div>
-                        <div className="col-2 colum colBorder">
+                        <div className="col-2 colum ">
                             <Badge className="badge-date" variant="secondary">{new Date(m.date).toLocaleDateString()}</Badge>
                             {/* {new Date(m.date).toLocaleString()} */}
                         </div>

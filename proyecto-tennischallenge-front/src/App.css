@@ -32,11 +32,15 @@
   background-position: center;
   background-image: url("./images/fondo-pelota.jpg");
   /* background-image: url("http://www.hoerbranz.at/system/web/GetImage.ashx?fileid=922469&mode=O"); */
-  padding-top: 116px;/*121*/
+  padding-top: 116px;
+  /*121*/
 }
+
 /* .App-header2{
   padding-top: 116px;/*121*/
-/* } */ 
+
+/* } */
+
 .App-link {
   color: #61dafb;
 }
@@ -75,9 +79,10 @@
   border: none;
   margin-left: -20px;
 }
-  #dropdwnRatingListPlayer{
-    background-color: transparent;
-    border: none;
+
+#dropdwnRatingListPlayer {
+  background-color: transparent;
+  border: none;
 }
 
 #dropdwnMenuShowNavbar .span-logo:hover {
@@ -115,7 +120,8 @@
 /**/
 
 .collapse a {
-  color: white !important;
+  color: #081d60 !important;
+  /* color: white !important; */
   font-size: 23px;
 }
 
@@ -123,9 +129,13 @@ a {
   color: black !important;
   text-decoration: none;
 }
-
+/* *********************************************************************************************** */
+/* a:hover{
+  background-color: #808080a6;
+} */
 span:hover, a:hover {
-  color: grey !important;
+  color: #081d60 !important;
+  /* color: grey !important; */
   text-decoration: none;
 }
 
@@ -134,7 +144,8 @@ span:hover, a:hover {
 }
 
 .dropdown-menu a {
-  color: white !important;
+  color: #081d60 !important;
+  /* color: white !important; */
 }
 
 .card-deck a {
@@ -168,7 +179,8 @@ a:hover {
 }
 
 .span-logo {
-  color: white !important;
+  color: #081d60 !important;
+  /* color: white !important; */
   padding-right: 35px;
   font-size: 23px;
 }
@@ -184,7 +196,8 @@ a:hover {
 }
 
 .span-Dropdown {
-  color: white !important;
+  color: #081d60 !important;
+  /* color: white !important; */
   padding-right: 10px;
   font-size: 23px;
 }
@@ -202,10 +215,11 @@ a:hover {
   padding-top: 150px;
 }
 
-/*login.tsx*/
+/********************login.tsx**************************/
 
 .login {
-  color: white;
+  color: #081d60;
+  /* color: white; */
   padding-top: 25vh;
   padding-bottom: 25vh;
   background-color: rgba(255, 255, 255, 0.2);
@@ -224,12 +238,13 @@ a:hover {
   padding-top: 15px;
 }
 
-/*ListPlayers.tsx*/
+/********************ListPlayers.tsx**************************/
 
 .containerBuscador {
   /* background-color: rgba(255, 255, 255, 0.2); */
   text-align: left;
-  color: white;
+  color: #081d60;
+  /* color: white; */
 }
 
 .buscador {
@@ -280,22 +295,34 @@ a:hover {
   margin-right: 0.5rem;
 }
 
-/* MENU Mensajes*/
+/********************MENU Mensajes**************************/
 
+.menuMensajesP{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px;
+}
 .MenuMensajes {
-  padding-top: 50px;
+  padding-top: 30px;
   list-style: none;
   padding-inline-start: 0px;
 }
 
 .MenuMensajes li a {
   color: white !important;
-  font-size: 25px;
+  font-size: 20px;
+  justify-content: center;
+  border: 1px solid white;
+  border-radius: 10px 10px;
+  margin-bottom: 10px;
+  box-shadow: 2px 2px 2px 2px black;
 }
 
 .MenuMensajes li a:hover {
   /* font-size: 25px; */
   color: #081d60 !important;
+  box-shadow: 6px 6px 2px 2px black;
 }
 
 .divIconAndNameMenuMensaje {
@@ -303,6 +330,7 @@ a:hover {
   display: flex;
   /* justify-content: center;
   align-content: center; */
+  background-color: #808080a6;
 }
 
 .iconMenuMensajes {
@@ -312,19 +340,26 @@ a:hover {
   margin-right: 10px;
 }
 
-/*Correo recibido y enviado*/
+/********************lista resumida de Correo recibido y enviado**************************/
 
 .rowMsgReceived {
-  background-color: #00000036;
+  background-color: rgba(0, 0, 0, 0.46);
+  border-radius: 10px 10px 10px 10px;
 }
 
 .receivedOrSent {
-  padding-top: 50px;
+  padding: 30px 20px 20px 20px;
   text-align: left;
+  
+}
+.messageResume {
+  margin: 0px 2px 0px 2px;
 }
 
 .messageResume:hover {
   background-color: #80808052;
+  box-shadow: 6px 6px 2px 2px black;
+  /* margin-bottom: 5px; */
 }
 
 .receivedOrSent a .row .colum, .receivedOrSent .colum {
@@ -333,7 +368,8 @@ a:hover {
 }
 
 .colBorder {
-  border-bottom: 1px solid #cb4403;
+  border: 1px solid #ffffff6b;
+  border-radius: 15px 15px 15px 15px;
 }
 
 .colum {
@@ -352,22 +388,34 @@ a:hover {
 }
 
 .fondoCorreo {
-  background-image: -webkit-gradient( linear, left top, right bottom, from(rgba(92, 80, 80, 0.2)), to(rgba(255, 255, 255, 0.37)), color-stop(.5, #d34f08d1));
-  box-shadow: 0 2px 5px 0 rgba(161, 132, 132, 0.16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+  box-shadow: 0 6px 11px 0 black;
+  background-color: #adb5bd45;
+  /* background-image: -webkit-gradient( linear, left top, right bottom, from(rgba(92, 80, 80, 0.2)), to(rgba(255, 255, 255, 0.37)), color-stop(.5, #d34f08d1));
+  box-shadow: 0 2px 5px 0 rgba(161, 132, 132, 0.16), 0 2px 10px 0 rgba(0, 0, 0, .12); */
   border-radius: 10px;
 }
 
 .imgAvatarMsg {
   border-radius: 50%;
 }
-/*mensaje enviaje*/
-.green600{
+
+/******************** Mensaje enviado **************************/
+
+.badge-mailSent-watched {
+  background-color: #f8f9fa;
+  border-radius: 50%;
+  font-size: 30%;
+}
+
+.green600 {
   color: rgba(16, 120, 7, 0.82);
 }
-.blue300{
+
+.blue300 {
   color: rgb(13, 75, 220);
 }
-/*Detalle mensaje*/
+
+/******************** Detalle mensaje **************************/
 
 .detalleMensaje {
   margin: auto;
@@ -379,11 +427,22 @@ a:hover {
   margin: auto;
 }
 
-
 /*Correo nuevo*/
 
+/* .containerPlayerDestinyMessage{
+  display: flex;
+} */
 .textarea.form-control {
   height: 40vh;
+}
+
+.selectUsernameEmail{
+  width: 7.2rem;
+  padding: 0 20px 0 20px;
+}
+
+.textAreaMensajeNuevo{
+  height: 40vh !important;
 }
 /* List friends */
 
