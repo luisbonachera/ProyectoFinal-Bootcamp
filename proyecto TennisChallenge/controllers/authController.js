@@ -43,7 +43,8 @@ authController.checkUser = (req, res) => {
       // });
     })
     .catch(err => {
-      res.status(401).send("error al devolver la consulta de CheckUSer " + err);
+      res.status(401).send({ e: err.errno });
+      // res.status(401).send("error al devolver la consulta de CheckUSer " + err);
     });
 };
 

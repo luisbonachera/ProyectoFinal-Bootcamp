@@ -147,7 +147,7 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                                 alt="" width="auto" height="50" />
                         </div>
                         <div className="col-1">
-                            {props.player.username}
+                            <p className="usernameMailFrom">{props.player.username}</p>
                         </div>
                     </div>
                     <div className="col-2 colum ">
@@ -166,7 +166,7 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                                         alt="" width="auto" height="50" />
                                 </div>
                                 <div className="col-1">
-                                    {playerDestiny.username}
+                                <p className="usernameMailFrom">{playerDestiny.username}</p>
                                 </div>
                             </div>
                             // <Form.Group className="containerPlayerDestinyMessage" controlId="formGridTo">

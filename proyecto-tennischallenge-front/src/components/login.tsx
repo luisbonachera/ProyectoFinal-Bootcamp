@@ -21,18 +21,24 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
     const [inputUser, setInputUser] = React.useState("");
     const [inputPass, setInputPass] = React.useState("");
     const [error, setError] = React.useState("");
+    const [errorPass, setErrorPass] = React.useState("");
+    const [errorUsername, setErrorUsername] = React.useState("");
 
 
     const UpdateUser = (event: any) => {
         setInputUser(event.target.value);
         setError("");
+        setErrorUsername("");
+        // setErrorPass("");
     }
 
     // const UpdatePass = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const UpdatePass = (event: any) => {
+    const UpdatePass = (event: any) => {
 
         setInputPass(event.target.value);
         setError("");
+        // setErrorUsername("");
+        setErrorPass("");
     }
 
 
@@ -59,7 +65,7 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
                             .then((token: string) => {
                                 if (token) {
                                     console.log(token);
-                                    
+
                                     let decoded: any = jwt.decode(token);
                                     console.log("decoded:")
                                     console.log(decoded);
@@ -76,7 +82,7 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
                                         }
                                         console.log("entra");
                                         console.log(player);
-                                       
+
                                         // if (props.token) {
                                         // let decoded = jwt.decode(props.token);
                                         // if (decoded) {
@@ -96,14 +102,14 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
                                                         .then((lista) => {
                                                             console.log("va bien");
                                                             console.log(lista);
-                                                            for(let i=0;i<lista.length;i++){
-                                                                lista[i].isAdmin = (lista[i].isAdmin == '1'?true:false)
+                                                            for (let i = 0; i < lista.length; i++) {
+                                                                lista[i].isAdmin = (lista[i].isAdmin == '1' ? true : false)
                                                             }
                                                             props.setPlayer(player);
                                                             props.setPlayers(lista);
                                                             props.history.push("/");
                                                             props.setToken(token);
-                                                            
+
 
                                                         })
                                                         .catch(err => {
@@ -135,47 +141,86 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
 
                             });
                     } else {
-                        setError("Usuario o Contraseña incorrectos");
+                        response.json().then(({ e }) => {
+                            if (e === 1062) {
+                                console.log(e)
+                            }
+                            console.log(e)
+                        }).catch(err=> {
+
+                        })
+                        setError("Usuario o Contraseña incorrectos.");
+                        setErrorPass("error");
+                        setErrorUsername("error");
                         console.log(error);
                     }
                 })
                 .catch(err => {
-                    setError("Usuario o Contraseña incorrectos.");
+                    setError("Usuario o Contraseña incorrectos. " + err);
+                    setErrorPass("error");
+                    setErrorUsername("error");
                     console.log(error);
                 });
         } else if (!inputUser && inputPass) {
+            setErrorUsername("error");
             setError("Te falta por rellenar el campo usuario");
         } else if (inputUser && !inputPass) {
+            setErrorPass("error");
             setError("Te falta por rellenar el campo password");
         } else {
-            setError("Te falta por rellenar los campos usuario y password");
+            console.log("inputUser " + inputUser);
+            console.log("inputPass " + inputPass);
+            setErrorPass("error");
+            setErrorUsername("error");
+            setError("Campos usuario y password estan vacios");
         }
     }
 
     return (
         <div className="container">
             <div className="login">
-            <Form className="inputsLogin">
-                <Form.Group as={Row} className="inputsCenter" controlId="formGroupUsername">
-                    <Form.Label>Username</Form.Label>
-                    <input type="text" className={error?"form-control form-control-red":"form-control"} id="uname" placeholder="Enter username"  required onChange={UpdateUser} />
-                    {/* <Form.Control type="text" placeholder="Enter username" onChange={UpdateUser} /> */}
-                </Form.Group>
-                <Form.Group as={Row} className="inputsCenter" controlId="formGroupPassword">
-                    <Form.Label>Password</Form.Label>
-                    <input type="password" className="form-control" id="pwd" placeholder="Enter password" onChange={UpdatePass} />
-                    {/* <input type="password" placeholder="Password" onChange={UpdatePass} /> */}
-                </Form.Group>
-                <Form.Group as={Row}>
-                    {/* <Col sm={{ span: 10, offset: 6 }}> */}
-                        <Button type="button" onClick={log}>Sign in</Button>
-                    {/* </Col> */}
-                    <Col sm={{ span: 10, offset: 6 }}>
-                        {error && <p>{error}</p>}
-                    </Col>
+                <Form className="FormLogin">
+                    <Form.Group as={Row} className="groupUsername" controlId="formGroupUsername">
+                        <Form.Label>Usuario</Form.Label>
+                        <input type="text" className={errorUsername ? "form-control form-control-red" : "form-control"} id="uname" placeholder="Escriba su usuario" required onChange={UpdateUser} />
+                        {/* <Form.Control type="text" placeholder="Enter username" onChange={UpdateUser} /> */}
+                    </Form.Group>
+                    <Form.Group as={Row} className="groupPass" controlId="formGroupPassword">
+                        <Form.Label>Contraseña</Form.Label>
+                        <input type="password" className={errorPass ? "form-control form-control-red" : "form-control"} id="pwd" placeholder="Escriba su contraseña" required onChange={UpdatePass} />
+                        {/* <input type="password" placeholder="Password" onChange={UpdatePass} /> */}
+                    </Form.Group>
 
-                </Form.Group>
-            </Form>
+                    <div className="row">
+                        <div className="col">
+                            {error && <p className="error">{error}</p>}
+                            {!error && <p className="error"></p>}
+                        </div>
+
+
+                    </div>
+
+                    <Form.Group as={Row} className="groupButton" controlId="formGroupButton">
+                        {/* <Col sm={{ span: 10, offset: 6 }}> */}
+
+
+                        <div className="col containerButtonLogin">
+                            <Button className="buttonForm" type="button" onClick={log}>Iniciar Sesión</Button>
+                        </div>
+                        {/* </Col> */}
+                        {/* <Col sm={{ span: 10, offset: 6 }}>
+                            {error && <p>{error}</p>}
+                        </Col> */}
+
+                    </Form.Group>
+                    {/* <Form.Group as={Row}>
+                       
+                        <Col sm={{ span: 10, offset: 6 }}>
+                            {error && <p>{error}</p>}
+                        </Col>
+
+                    </Form.Group> */}
+                </Form>
             </div>
         </div>
     )

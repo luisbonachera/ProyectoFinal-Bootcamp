@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Col, Button } from 'react-bootstrap';
+import { Form, Col, Button, FormLabel } from 'react-bootstrap';
 import { RouteComponentProps } from 'react-router-dom';
 import * as actions from '../actions/actions';
 import { connect } from 'react-redux';
@@ -235,84 +235,98 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
 
 
     return (
-        <div>
-            <Form>
-                <Form.Row>
-                    <img className="avatarListProfile"
-                        src={"images/avatar-tenis.png"} alt="" />
+        <div className="container containerAddPlayer">
+            <Form className="formAddPlayer">
+                <Form.Row className="containerImage">
+                    <div className="col-5">
+                        <img className="avatarListProfile marginUpdateAvatar"
+                            src={"images/avatar-tenis.png"} alt="imagen de tu perfil" />
+                    </div>
+                    <div className="col-1"></div>
+                    <Form.Group className="col-6 colUsername" as={Col} controlId="formGridUsername">
+                        <Form.Label>Usuario</Form.Label>
+                        <Form.Control placeholder="Escriba su usuario" onChange={updateUsername} required />
+                    </Form.Group>
                 </Form.Row>
                 <Form.Row>
-                    <Form.Group controlId="formGridUsername">
-                        <input type="file" className="btn btn-info" placeholder="Enter username" onChange={updateImage} />
+                   
+                    <div className="custom-file uploadAvatar col-5">
+                        <input
+                            type="file"
+                            className="custom-file-input"
+                            id="inputGroupFile01"
+                            aria-describedby="inputGroupFileAddon01"
+                            onChange={updateImage}
+                        />
+                        <label className="custom-file-label marginUpdateAvatar" htmlFor="inputGroupFile01">
+                            Elige Foto
+                            </label>
+                    </div>
+                    <div className="col-1"></div>
+                    <Form.Group className="col-6" as={Col} controlId="formGridPassword">
+                        <Form.Label>Contraseña</Form.Label>
+                        <Form.Control type="password" placeholder="Escriba su contraseña" onChange={updatePassword} required />
                     </Form.Group>
-                    <Form.Group controlId="formGridUsername">
-                        <Form.Label>Username</Form.Label>
-                        <Form.Control placeholder="Enter username" onChange={updateUsername} />
+
+                </Form.Row>
+                <Form.Row>
+
+                    <Form.Group className="col" as={Col} controlId="formGridEmail">
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control type="email" placeholder="Escriba su email" onChange={updateEmail} required />
                     </Form.Group>
+                </Form.Row>
+
+
+                {/* <Form.Row>
                     <Form.Group as={Col} controlId="formGridEmail">
                         <Form.Label>Email</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" onChange={updateEmail} />
+                        <Form.Control type="email" placeholder="Escriba su email" onChange={updateEmail} required />
                     </Form.Group>
-                </Form.Row>
-                <Form.Row>
-                    <Form.Group as={Col} controlId="formGridPassword">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" onChange={updatePassword} />
-                    </Form.Group>
-
-
-                    <Form.Group as={Col} controlId="formGridCity">
-                        <Form.Label>City</Form.Label>
-                        <Form.Control type="text" placeholder="Enter city" onChange={updateCity} />
-                    </Form.Group>
-                </Form.Row>
+                </Form.Row> */}
                 <Form.Row>
 
-                    <Form.Group as={Col} controlId="formGridState">
+
+
+                    <Form.Group className="col-6" as={Col} controlId="formGridCity">
+                        <Form.Label>Ciudad</Form.Label>
+                        <Form.Control type="text" placeholder="Escriba su ciudad" onChange={updateCity} required />
+                    </Form.Group>
+                    {/* <div className="col-1"></div> */}
+
+
+                    <Form.Group className="col-3" as={Col} controlId="formGridGenre">
                         <Form.Label>Genero</Form.Label>
-                        <Form.Control as="select" value={genre} onChange={updateGenre}>
-                            <option value="" selected hidden>Introduce Genero</option>
+                        <Form.Control as="select" value={genre} onChange={updateGenre} required>
+                            <option value="" selected hidden>Elige</option>
                             <option value={"Hombre"}>Hombre</option>
                             <option value={"Mujer"}>Mujer</option>
                         </Form.Control>
                     </Form.Group>
-
-
-                    <Form.Group as={Col} controlId="formGridState">
+                    {/* <div className="col-1"></div> */}
+                    <Form.Group className="col-3" as={Col} controlId="formGridRating">
                         <Form.Label>Level</Form.Label>
-                        <Form.Control as="select" value={rating + ""} onChange={updateRating}>
-                            <option selected hidden>Introduce Level</option>
+                        <Form.Control as="select" value={rating + ""} onChange={updateRating} required>
+                            <option selected hidden>Elige</option>
                             <option value={1}>1</option>
                             <option value={2}>2</option>
                             <option value={3}>3</option>
                             <option value={4}>4</option>
                             <option value={5}>5</option>
                         </Form.Control>
+
+                    </Form.Group>
+                </Form.Row>
+                <Form.Row>
+                    <Form.Group className="containerButtonAddPlayer" as={Col} controlId="formButton">
+                        {/* <Form.Label>Level</Form.Label> */}
+                        <Button className="buttonAddPlahyer" variant="primary" type="button" onClick={add}>
+                            Crear
+                            </Button>
                     </Form.Group>
 
 
                 </Form.Row>
-                {/* <Form.Row>
-                    <Form.Group as={Col} controlId="formGridDay">
-                        <Form.Label>Day</Form.Label>
-                        <Form.Control type="text" placeholder="Enter day" onChange={updateGenre} />
-                    </Form.Group>
-
-                    <Form.Group as={Col} controlId="formGridMonth">
-                        <Form.Label>Month</Form.Label>
-                        <Form.Control type="number" placeholder="Enter month" onChange={updateRating} />
-                    </Form.Group>
-
-                    <Form.Group as={Col} controlId="formGridYear">
-                        <Form.Label>Year</Form.Label>
-                        <Form.Control type="number" placeholder="Enter year" onChange={updateRating} />
-                    </Form.Group>
-
-
-                </Form.Row> */}
-                <Button variant="primary" type="button" onClick={add}>
-                    Submit
-                </Button>
             </Form>
         </div>
     )

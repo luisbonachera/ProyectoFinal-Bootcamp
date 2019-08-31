@@ -13,11 +13,13 @@ authModel.checkUser = user => {
             (err,result)=>{
                 console.log("ya he terminado la consulata buscar usuario");
                 if(err){
-                    console.log("error en la consulta");
+                    console.log(err)
+                    console.log("error en la consulta " + err);
                     reject(err);
                 }else{
-                    console.log("consulta de buscar usuario correcta");
-                    console.log(result);
+                    console.log(err)
+                    console.log("consulta de buscar usuario correcta " + err);
+                    console.log(result); 
                     resolve(result);
                 }
             }
