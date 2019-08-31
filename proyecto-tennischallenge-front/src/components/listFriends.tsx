@@ -420,7 +420,7 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                                 <Card>
 
                                     <Card.Img className="avatarListProfile" variant="top"
-                                        src={f.avatar ? "http://localhost:8080/uploads/avatar/" + f.avatar : "images/avatar-tenis.png"} alt="" />
+                                        src={f.avatar ? "http://localhost:8080/uploads/avatar/" + f.avatar + "?" + Date() : "images/avatar-tenis.png"} alt="" />
                                     {!f.watched && f.id_player1 === props.player.id_player && f.accepted &&
                                         <>
                                             <Card.Img className="avatarListProfile newFriend" variant="top" src="images/Pelota Luis brochazo.png" alt="" height="30px"/>

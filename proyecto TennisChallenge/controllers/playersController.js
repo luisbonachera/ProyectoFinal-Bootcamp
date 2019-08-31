@@ -79,10 +79,13 @@ playersController.add = (req, res) => {
           });
         })
         .catch(err => {
-          res.send({
-            type: "error",
-            data: err
-          });
+          res.status(400).send({ e: err });
+
+          // res.status(400).send({ e: err.errno });
+          // res.send({
+          //   type: "error",
+          //   data: err
+          // });
         });
   } else {
     res.send({

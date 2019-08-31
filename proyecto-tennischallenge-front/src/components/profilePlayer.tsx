@@ -23,14 +23,16 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
     console.log(id);
 
     console.log(props.players);
+    let player = props.players.find(p => p.id_player === +id);
 
+    React.useEffect(() => {
+        player = props.players.find(p => p.id_player === +id);
+        console.log(player);
+    },[props.player]);
 
-    const player = props.players.find(p => p.id_player === +id);
-    console.log(player);
     // if(!player){
     //     return null;
     // }
-
 
 
     // esta funcion no es borrar, es editar campo del player de borrado a true
@@ -61,7 +63,7 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
                             props.deletePlayer(id);
                             const playerNull: IPlayer = {
                                 id_player: 0,
-                                avatar:"",
+                                avatar: "",
                                 username: "",
                                 email: "",
                                 city: "",
@@ -96,8 +98,8 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
 
                     <Card style={{ display: 'flex', flexDirection: 'row' }}>
                         <Card.Img className="avatarListProfile" variant="top"
-                            src={player.avatar?"http://localhost:8080/uploads/avatar/" + player.avatar + "?" + Date() :
-                            "../../images/avatar-tenis.png"} alt=""/>
+                            src={player.avatar ? "http://localhost:8080/uploads/avatar/" + player.avatar + "?" + Date() :
+                                "../../images/avatar-tenis.png"} alt="" />
                         <Card.Body>
                             <Card.Title>{player.username}</Card.Title>
                             <Card.Text>
@@ -118,8 +120,8 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
                             <Link to={"/players/edit/" + player.id_player}>
                                 <Button variant="primary">Editar</Button>
                             </Link>
-                            <br/>
-                            <br/>
+                            <br />
+                            <br />
                             <Button variant="primary" onClick={borrar}>Borrar</Button>
                         </Card.Footer>
                     </Card>

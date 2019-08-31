@@ -316,7 +316,7 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
                 </div>
                 {/* <CardDeck > */}
 
-                <div className="col-sm">
+                <div className="col-sm containerListCardPlayer">
                     {filteresList && filteresList.map(p => (
                         <div className="cardsJugadores" key={p.id_player}>
                             {/* <Card style={{ display: 'flex', flexDirection: 'row' }}> */}

@@ -20,23 +20,24 @@ interface IPropsGlobal {
 
 const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_destiny: string }>> = props => {
 
-    const [error, setError] = React.useState("");
+    
     const [subject, setSubject] = React.useState("");
     const [text, SetText] = React.useState("");
     // const [inputPlayerDestiny, SetinputPlayerDestiny] = React.useState("");
     const [inputListPlayerTo, SetinputListPlayerTo] = React.useState("");
+    const [error, setError] = React.useState("");
 
     // const [usernameDestiny, setUsernameDestiny] = React.useState("");
     // const [usernameSent, setUsernameSent] = React.useState("");
 
     const updateSubject = (event: any) => {
         setSubject(event.currentTarget.value);
-        // setError("");
+        setError("");
     };
 
     const updateText = (event: any) => {
         SetText(event.currentTarget.value);
-        // setError("");
+        setError("");
     };
 
     // const updateInputPlayerDestiny = (event: any) => {

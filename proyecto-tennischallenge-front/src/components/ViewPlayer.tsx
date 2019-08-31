@@ -300,6 +300,11 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                 "../../images/avatar-tenis.png"} alt="" />
                         <Card.Body>
                             <Card.Title>{thisplayer.username}</Card.Title>
+                            {props.player.isAdmin &&
+                                <Card.Text>
+                                    {thisplayer.email}
+                                </Card.Text>
+                            }
                             <Card.Text>
                                 {thisplayer.city}
                             </Card.Text>

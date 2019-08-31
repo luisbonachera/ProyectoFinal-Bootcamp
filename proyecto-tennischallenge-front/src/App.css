@@ -77,12 +77,18 @@
 
 #dropdwnMenuShowNavbar {
   background-color: #f8f9fab5;
-  ;
-  margin-left: -20px;
+  margin-top: 17px;
+  margin-left: -81px;
   border-radius: 15px;
 }
+#dropdwnMenuShowNavbarNotifications{
+  background-color: #f8f9fab5;
+  margin-top: 17px;
+  border-radius: 15px;
+  margin-left: -48px !important;
+}
 
-#dropdwnMenuShowNavbar .span-logo:hover {
+#dropdwnMenuShowNavbar .span-logo:hover, .dropdwnMenuShowNavbarNotifications .span-logo:hover {
   color: black;
 }
 
@@ -134,8 +140,8 @@ span:hover, a:hover {
   text-decoration: none;
 }
 
-.dropdown-menu {
-  left: -27px !important;
+.dropdwnMenuShowNavbarNotifications{
+  left: -61px !important;
 }
 
 .dropdown-menu a {
@@ -345,6 +351,10 @@ a:hover {
   width: auto; */
 }
 
+.containerListCardPlayer{
+  /* margin-right: 160px; */
+  max-width: 1033px;
+}
 .cardsJugadores {
   width: 130px;
   height: auto;
@@ -529,6 +539,7 @@ a:hover {
 }
 
 .fondoCorreo {
+  max-width: 1115px;
   box-shadow: 0 6px 11px 0 black;
   background-color: #adb5bd45;
   /* background-image: -webkit-gradient( linear, left top, right bottom, from(rgba(92, 80, 80, 0.2)), to(rgba(255, 255, 255, 0.37)), color-stop(.5, #d34f08d1));
@@ -615,7 +626,7 @@ a:hover {
 }
 
 .selectUsernameEmail {
-  width: 7.2rem;
+  width: 7.5rem;
   padding: 0 20px 0 20px;
 }
 
@@ -706,4 +717,8 @@ a:hover {
 
 .colUsername {
   padding: 2rem 0 0 0;
+}
+
+.containerGenero{
+  max-width: 29%;
 }
