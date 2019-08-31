@@ -81,7 +81,8 @@
   margin-left: -81px;
   border-radius: 15px;
 }
-#dropdwnMenuShowNavbarNotifications{
+
+#dropdwnMenuShowNavbarNotifications {
   background-color: #f8f9fab5;
   margin-top: 17px;
   border-radius: 15px;
@@ -140,7 +141,7 @@ span:hover, a:hover {
   text-decoration: none;
 }
 
-.dropdwnMenuShowNavbarNotifications{
+.dropdwnMenuShowNavbarNotifications {
   left: -61px !important;
 }
 
@@ -351,10 +352,11 @@ a:hover {
   width: auto; */
 }
 
-.containerListCardPlayer{
+.containerListCardPlayer {
   /* margin-right: 160px; */
   max-width: 1033px;
 }
+
 .cardsJugadores {
   width: 130px;
   height: auto;
@@ -593,6 +595,32 @@ a:hover {
   text-align: center; */
 }
 
+.butttonRespondMessage {
+  color: white !important;
+  font-size: 18px;
+  justify-content: left;
+  background-color: #808080a6;
+  border: 1px solid white;
+  border-radius: 10px 10px;
+  margin-bottom: 10px;
+  box-shadow: 2px 2px 2px 2px black;
+  padding: .375rem .75rem;
+}
+
+.butttonRespondMessage:hover {
+  color: #081d60 !important;
+  box-shadow: 6px 6px 2px 2px black;
+  background-color: #808080a6;
+  border: 1px solid white;
+}
+
+.containerSubjectDetail {
+  margin: 1rem 0;
+  padding: 0 16px;
+  color: white;
+  font-size: 18px;
+}
+
 /* .mensajeNuevo {
   margin: auto;
 } */
@@ -615,10 +643,9 @@ a:hover {
   margin-bottom: 10px;
 }
 
-/*esto no me hace que el button se vaya al final*/
-
 .containerButtonSend {
   text-align: end;
+  margin-top: 1rem;
 }
 
 .textarea.form-control {
@@ -634,7 +661,42 @@ a:hover {
   height: 40vh !important;
 }
 
-/* List friends */
+.butttonSendMessage {
+  color: white !important;
+  font-size: 18px;
+  justify-content: left;
+  background-color: #808080a6;
+  border: 1px solid white;
+  border-radius: 10px 10px;
+  margin-bottom: 10px;
+  box-shadow: 2px 2px 2px 2px black;
+}
+
+.butttonSendMessage:hover {
+  color: #081d60 !important;
+  box-shadow: 6px 6px 2px 2px black;
+  background-color: #808080a6;
+  border: 1px solid white;
+}
+
+.ErrorAddMessage {
+  color: white;
+  text-align: left;
+}
+
+.containerErrorRed {
+  border: 1.2px solid red;
+}
+
+/* .MenuMensajes li a:hover {
+  /* font-size: 25px; */
+
+/* color: #081d60 !important;
+  box-shadow: 6px 6px 2px 2px black;
+} */
+
+*/
+/******************** List friends **************************/
 
 .newFriend {
   margin-top: -36px;
@@ -719,6 +781,13 @@ a:hover {
   padding: 2rem 0 0 0;
 }
 
-.containerGenero{
+.containerGenero {
   max-width: 29%;
+}
+
+/******************** Editar Player **************************/
+
+.CheckBoxAdmin {
+  text-align: center;
+  transform: scale(2);
 }

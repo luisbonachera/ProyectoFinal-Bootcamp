@@ -20,12 +20,17 @@ interface IPropsGlobal {
 
 const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_destiny: string }>> = props => {
 
-    
+    let id: number = +props.match.params.id_player_destiny;
+    let decoded: any = jwt.decode(props.token);
+
     const [subject, setSubject] = React.useState("");
     const [text, SetText] = React.useState("");
-    // const [inputPlayerDestiny, SetinputPlayerDestiny] = React.useState("");
-    const [inputListPlayerTo, SetinputListPlayerTo] = React.useState("");
+    const [inputPlayerDestiny, SetInputPlayerDestiny] = React.useState("");
+    // const [inputListPlayerTo, SetinputListPlayerTo] = React.useState("");
     const [error, setError] = React.useState("");
+    const [errorSubject, setErrorSubject] = React.useState("");
+    const [errorText, setErrorText] = React.useState("");
+    const [errorInputPlayerDestiny, setErrorInputPlayerDestiny] = React.useState(false);
 
     // const [usernameDestiny, setUsernameDestiny] = React.useState("");
     // const [usernameSent, setUsernameSent] = React.useState("");
@@ -33,113 +38,142 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
     const updateSubject = (event: any) => {
         setSubject(event.currentTarget.value);
         setError("");
+        setErrorSubject("");
     };
 
     const updateText = (event: any) => {
         SetText(event.currentTarget.value);
         setError("");
+        setErrorText("");
     };
 
-    // const updateInputPlayerDestiny = (event: any) => {
-    //     SetinputPlayerDestiny(event.currentTarget.value);
-    //     // setError("");
+    const updateInputPlayerDestiny = (event: any) => {
+        SetInputPlayerDestiny(event.currentTarget.value);
+        setError("");
+        setErrorInputPlayerDestiny(false);
+    };
+
+    // const updateErrorInputPlayerDestiny = (event: any) => {
+    //     setErrorInputPlayerDestiny(s => !s);
+    //     setError("");
     // };
-
-    const updateInputListPlayerTo = (event: any) => {
-        SetinputListPlayerTo(event.target.value);
-        // setError("");
-    };
 
 
     const addMsg = () => {
-        console.log("entra al fetch");
-        if (playerDestiny) {
-            let id_player_destiny;
-            if (soyYo) {
-                id_player_destiny = inputListPlayerTo;
-                console.log("voy a enviar mensaje a alguien: " + id_player_destiny);
-            } else {
-                id_player_destiny = playerDestiny.id_player;
-                console.log("voy a enviar mensaje a " + id_player_destiny);
-            }
-            fetch("http://localhost:8080/api/msgs/add", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + props.token
-                },
-                body: JSON.stringify({
-                    id_player_destiny: id_player_destiny,
-                    id_player_sent: props.player.id_player,
-                    subject: subject,
-                    text: text,
+
+        if (subject && text && (!inputPlayerDestiny || id === +decoded.id_player) ) {
+            if (playerDestiny) {
+                let id_player_destiny;
+                if (soyYo) {
+                    id_player_destiny = inputPlayerDestiny;
+                    console.log("voy a enviar mensaje a alguien: " + id_player_destiny);
+                } else {
+                    id_player_destiny = playerDestiny.id_player;
+                    console.log("voy a enviar mensaje a " + id_player_destiny);
+                }
+                console.log("entra al fetch");
+                fetch("http://localhost:8080/api/msgs/add", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + props.token
+                    },
+                    body: JSON.stringify({
+                        id_player_destiny: id_player_destiny,
+                        id_player_sent: props.player.id_player,
+                        subject: subject,
+                        text: text,
+                    })
                 })
-            })
-                .then(response => {
-                    if (response.ok) {
-                        console.log("mensaje creado")
-                        fetch("http://localhost:8080/api/msgs", {
-                            headers: {
-                                "Content-Type": "application/json",
-                                Authorization: "Bearer " + props.token
-                            }
-                        })
-                            .then(response => {
-                                if (response.ok) {
-                                    response
-                                        .json()
-                                        .then((listaMsgs: IMsg[]) => {
-                                            if (listaMsgs.length > 0) {
-                                                console.log(listaMsgs);
-                                                props.setMessages(listaMsgs);
-                                                props.history.push("/mailTray/sent");
-
-                                            } else {
-                                                console.log("la BD no ha devuelto ningun mensaje.");
-                                            }
-                                        })
-                                        .catch(err => {
-                                            console.log("error al devolver mis mensajes." + err);
-                                        })
-
-                                } else {
-                                    setError("Response.ok, Error ," + error);
-                                    console.log(error);
+                    .then(response => {
+                        if (response.ok) {
+                            console.log("mensaje creado")
+                            fetch("http://localhost:8080/api/msgs", {
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    Authorization: "Bearer " + props.token
                                 }
                             })
-                            .catch(error => {
-                                setError("Response Error , ha fallado la consulta" + error);
-                                console.log(error);
-                            });
-                    }
-                })
-                .catch(err => {
-                    console.log("Error," + err)
-                })
+                                .then(response => {
+                                    if (response.ok) {
+                                        response
+                                            .json()
+                                            .then((listaMsgs: IMsg[]) => {
+                                                if (listaMsgs.length > 0) {
+                                                    console.log(listaMsgs);
+                                                    props.setMessages(listaMsgs);
+                                                    props.history.push("/mailTray/sent");
+
+                                                } else {
+                                                    console.log("la BD no ha devuelto ningun mensaje.");
+                                                }
+                                            })
+                                            .catch(err => {
+                                                console.log("error al devolver mis mensajes." + err);
+                                            })
+
+                                    } else {
+                                        setError("Response.ok, Error ," + error);
+                                        console.log(error);
+                                    }
+                                })
+                                .catch(error => {
+                                    setError("Response Error , ha fallado la consulta" + error);
+                                    console.log(error);
+                                });
+                        }
+                    })
+                    .catch(err => {
+                        console.log("Error," + err)
+                    })
+            } else {
+                console.log("no existe playerDestiny");
+            }
         } else {
-            console.log(" no existe playerDestiny");
+            /**aqui comprobar si estan vacios o no los input */
+            if (!subject) {
+                setErrorSubject("error");
+            }
+            if (!text) {
+                setErrorText("error");
+            }
+            if (!inputPlayerDestiny) {
+                setErrorInputPlayerDestiny(true);
+            }
+            setError("Completa todos los campos.")
+
         }
     }
 
 
-    let id: number = +props.match.params.id_player_destiny;
-    let decoded: any = jwt.decode(props.token);
+    
+    
     let soyYo = false;
     // let playerDestiny: any = null;
-    if (id === +decoded.id_player) {
-        soyYo = true;
-    }
+    
     // else {
     let playerDestiny = props.players.find(p => p.id_player === +id);
+    
+    if(!playerDestiny){
+        return null;
+    }
+    if (id === +decoded.id_player) {
+        soyYo = true; 
+    }
+    // else{
+    //     setErrorInputPlayerDestiny("");
     // }
+    // else{
+    //     setErrorInputPlayerDestiny("");
+        // SetInputPlayerDestiny(playerDestiny.id_player + "");
+    //  }
 
 
     console.log(playerDestiny);
-    console.log("persona de destino: " + inputListPlayerTo)
+    console.log("persona de destino: " + inputPlayerDestiny)
     return (
         // <div className="col-9">
         <div className="col receivedOrSent">
-
             {playerDestiny !== null && playerDestiny !== undefined && (
                 <Fragment>
                     <div className="container row containerMessageNew">
@@ -167,7 +201,7 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                                         alt="" width="auto" height="50" />
                                 </div>
                                 <div className="col-1">
-                                <p className="usernameMailFrom">{playerDestiny.username}</p>
+                                    <p className="usernameMailFrom">{playerDestiny.username}</p>
                                 </div>
                             </div>
                             // <Form.Group className="containerPlayerDestinyMessage" controlId="formGridTo">
@@ -182,7 +216,8 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                                 <img className="imgAvatarMsg" src={inputListPlayerTo.avatar ? "http://localhost:8080/uploads/avatar/" + inputListPlayerTo.avatar : "/images/avatar-tenis.png"}
                                     alt="" width="auto" height="50" />
                             </div> */}
-                                <Form.Control className="selectUsernameEmail" as="select" type="text" value={inputListPlayerTo + ""} onChange={updateInputListPlayerTo}>
+                                <Form.Control className={errorInputPlayerDestiny?"selectUsernameEmail containerErrorRed":"selectUsernameEmail"}
+                                as="select" type="text" value={inputPlayerDestiny + ""} onChange={updateInputPlayerDestiny}>
                                     <option defaultValue="" hidden>destino</option>
                                     {props.players.sort(function (a, b) {
                                         let nameA = a.username.toLowerCase();
@@ -202,27 +237,31 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                                         // )
                                     )
                                     )}
-
                                 </Form.Control>
-
                             </Form.Group>
                         )}
                         <Form.Group controlId="formGridSubject">
                             {/* <Form.Label>Asunto</Form.Label> */}
-                            <Form.Control onChange={updateSubject} placeholder="Asunto" />
+                            <Form.Control className={errorSubject?"containerErrorRed":""}onChange={updateSubject} placeholder="Asunto" />
                         </Form.Group>
 
 
                         <Form.Group controlId="formGridTextAreaText">
                             {/* <Form.Label>Texto: </Form.Label> */}
-                            <Form.Control className="textAreaMensajeNuevo" as="textarea" rows="3" onChange={updateText} placeholder="Escriba aqui el texto del mensaje" />
+                            <Form.Control className={errorText?"textAreaMensajeNuevo containerErrorRed":"textAreaMensajeNuevo"}
+                             as="textarea" rows="3" onChange={updateText} placeholder="Escriba aqui el texto del mensaje" />
                         </Form.Group>
 
                         <Form.Group controlId="formButttonSend">
                             <div className="row">
                                 {/* <div className="col-9"></div> */}
+                                <div className="col">
+                                    {error &&
+                                        <p className="ErrorAddMessage">{error}</p>
+                                    }
+                                </div>
                                 <div className="col containerButtonSend">
-                                    <Button variant="primary" type="button" onClick={addMsg}>
+                                    <Button className="butttonSendMessage" variant="primary" type="button" onClick={addMsg}>
                                         Enviar
                                 </Button>
                                 </div>

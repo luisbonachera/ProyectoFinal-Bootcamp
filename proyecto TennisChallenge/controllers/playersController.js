@@ -204,8 +204,9 @@ playersController.edit = (req, res) => {
             });
         })
         .catch(err => {
-          console.log(err);
-          res.status(401).send("ErrorEditController....Petaaaaso " + err);
+            res.status(400).send({ e: err });
+          // console.log(err);
+          // res.status(401).send("ErrorEditController....Petaaaaso " + err);
         });
     } else {
       // error tu no puedes editar

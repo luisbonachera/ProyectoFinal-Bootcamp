@@ -42,7 +42,7 @@ const MailDetail: React.FC<IPropsGlobal & RouteComponentProps<{ typeMessage: str
                 </div>
                 <div className="col-2 colum ">
                     {/* {typeMsg === "received" ? message[0].username : props.player.username} */}
-                    {message[0].username}
+                    <p className="usernameMailFrom">{message[0].username}</p>
                 </div>
                 <div className="col-6"></div>
                 <div className="col-3 containerDateMessageDetail">
@@ -58,19 +58,19 @@ const MailDetail: React.FC<IPropsGlobal & RouteComponentProps<{ typeMessage: str
                 To: {typeMsg === "sent" ? message[0].username : props.player.username}
             </div> */}
             <div className="row container">
-                <div className="col">
+                <div className="col containerSubjectDetail">
                     Asunto: {message[0].subject}
                 </div>
             </div>
             <div className="row container">
-                <div className="col">
+                <div className="col containerSubjectDetail">
                     {message[0].text}
                 </div>
             </div>
             {typeMsg === "received" &&
                 <div className="row container">
                     <div className="col containerButtonSend">
-                        <Link className="btn btn-primary" to={"/mailTray/add/" + message[0].id_player_sent}> Responder </Link>
+                        <Link className="butttonRespondMessage" to={"/mailTray/add/" + message[0].id_player_sent}> Responder </Link>
                     </div>
                 </div>
             }
