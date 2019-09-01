@@ -27,9 +27,10 @@ friendsModel.add = (my_id,id_player_friend) => {
 friendsModel.list = (my_id) => {
     return new Promise((resolve, reject) => {
         console.log("entra en el modelo listmessage")
-        dbConn.query('SELECT * FROM friends AS f INNER JOIN players AS p WHERE (f.id_player1 = ' +
-        my_id + ' && f.id_player2 = p.id_player) OR ' + 
-        '(f.id_player2 = '+ my_id + ' && f.id_player1 = p.id_player)',
+        dbConn.query('SELECT * FROM friends AS f INNER JOIN players AS p WHERE ' +
+        '( (f.id_player1 = ' + my_id + ' && f.id_player2 = p.id_player) OR ' + 
+        '(f.id_player2 = '+ my_id + ' && f.id_player1 = p.id_player) ) ' +
+        'AND p.erased = false',
             (err, result) => {
                 console.log("ya he terminado la consula buscar mis amigos");
                 if (err) {

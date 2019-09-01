@@ -21,7 +21,7 @@ interface IpropsGlobal {
     setNotifications: (notification: INotifications) => void;
 };
 
-const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
+const auxListFriends: React.FC<Iprops & IpropsGlobal> = props => {
     const [error, setError] = React.useState("");
     const [errorRating, setErrorRating] = React.useState("");
     const [inputUsername, setInputUsername] = React.useState("");
@@ -338,135 +338,125 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
 
 
     return (
-        <div className="container-fluid">
-            <div className="row">
-                <div className="col-2 containerBuscador">
-                    <div className="buscador">
-                        {/* <div className="barraFiltros" style={{ display: 'flex', flexDirection: 'row' }}> */}
+        // <div>
+<div className="container-fluid">
+            {/* <div className="row"> */}
 
-                        {/* <div className="form-group row">
+            <div className="container">
+                <div className="barraFiltros" style={{ display: 'flex', flexDirection: 'row' }}>
+
+                    <div className="form-group row">
                         <label className="col-sm-2 col-form-label"></label>
                         <div className="col-sm-10">
-                            <input type="text" className="form-control" id="idUsername" placeholder="username" onChange={UpdateUsername} />
+                            <input type="text" className="form-control" id="idUsername" placeholder="username" onChange={UpdateUsernameF} />
                         </div>
                     </div>
                     <div className="form-group row">
                         <label className="col-sm-2 col-form-label"></label>
                         <div className="col-sm-10">
-                            <input type="text" className="form-control" id="idCity" placeholder="City" onChange={UpdateCity} />
-                        </div>
-                    </div> */}
-
-                        <div className="form-group">
-                            <input type="text" className="form-control" id="idUsername" placeholder="username" onChange={UpdateUsernameF} />
-                        </div>
-                        <div className="form-group">
                             <input type="text" className="form-control" id="idCity" placeholder="City" onChange={UpdateCityF} />
                         </div>
-                        <div className="form-check">
-                            <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Hombre" onChange={UpdateSexF} />
-                            <label className="form-check-label" >Hombre</label>
-                        </div>
-
-
-                        <div className="form-check">
-                            <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="Mujer" onChange={UpdateSexF} />
-                            <label className="form-check-label" >
-                                Mujer
-                        </label>
-                        </div>
-                        <div className="form-check">
-                            <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="" onChange={UpdateSexF} defaultChecked />
-                            <label className="form-check-label" >
-                                Ambos
-                        </label>
-                        </div>
-
-                        <DropdownButton id="dropdown-basic-button" drop='right' title="Nivel">
-
-                            <Form.Group as={Col} id="dropdwnRatingListPlayer" controlId="formGridState">
-                                <Form.Label>Desde</Form.Label>
-                                <Form.Control as="select" value={inputRatingFrom + ""} onChange={UpdateRatingFromF}>
-                                    <option value={1}>1</option>
-                                    <option value={2}>2</option>
-                                    <option value={3}>3</option>
-                                    <option value={4}>4</option>
-                                    <option value={5}>5</option>
-                                </Form.Control>
-                            </Form.Group>
-
-                            <Form.Group as={Col} id="dropdwnRatingListPlayer" controlId="formGridState">
-                                <Form.Label>Hasta</Form.Label>
-                                <Form.Control as="select" value={inputRatingTo + ""} onChange={UpdateRatingToF}>
-                                    <option value={1}>1</option>
-                                    <option value={2}>2</option>
-                                    <option value={3}>3</option>
-                                    <option value={4}>4</option>
-                                    <option value={5}>5</option>
-                                </Form.Control>
-                            </Form.Group>
-                            {/* {errorRating &&
-                                <Form.Text>{errorRating}</Form.Text>
-                            } */}
-                        </DropdownButton>
-
                     </div>
+
+                    <div className="form-check">
+                        <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Hombre" onChange={UpdateSexF} />
+                        {/* <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked /> */}
+                        <label className="form-check-label" >
+                            Hombre
+                        </label>
+                    </div>
+                    <div className="form-check">
+                        <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="Mujer" onChange={UpdateSexF} />
+                        <label className="form-check-label" >
+                            Mujer
+                        </label>
+                    </div>
+                    <div className="form-check">
+                        <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="" onChange={UpdateSexF} defaultChecked />
+                        <label className="form-check-label" >
+                            Ambos
+                        </label>
+                    </div>
+
+                    <DropdownButton id="dropdown-basic-button" title="Nivel">
+
+                        <Form.Group as={Col} controlId="formGridState">
+                            <Form.Label>Desde</Form.Label>
+                            <Form.Control as="select" value={inputRatingFrom + ""} onChange={UpdateRatingFromF}>
+                                <option value={1}>1</option>
+                                <option value={2}>2</option>
+                                <option value={3}>3</option>
+                                <option value={4}>4</option>
+                                <option value={5}>5</option>
+                            </Form.Control>
+                        </Form.Group>
+
+                        <Form.Group as={Col} controlId="formGridState">
+                            <Form.Label>Hasta</Form.Label>
+                            <Form.Control as="select" value={inputRatingTo + ""} onChange={UpdateRatingToF}>
+                                <option value={1}>1</option>
+                                <option value={2}>2</option>
+                                <option value={3}>3</option>
+                                <option value={4}>4</option>
+                                <option value={5}>5</option>
+                            </Form.Control>
+                        </Form.Group>
+                        {errorRating &&
+                            <Form.Text>{errorRating}</Form.Text>
+                        }
+                    </DropdownButton>
+
                 </div>
-                {/* <CardDeck > */}
 
-                <div className="col-sm containerListCardPlayer">
-                    {friendsFiltros && friendsFiltros.map(f => (
-                        <div className="cardsJugadores" key={f.id_player}>
-                            {/* <Card style={{ display: 'flex', flexDirection: 'row' }}> */}
-                            <Card className="cardListPlayer">
+                
+                {error &&
+                    <div>
+                        {error}
+                    </div>
+                }
+                {friendsFiltros &&
+                    <CardDeck >
+                        {friendsFiltros.map(f => (
+                            // {props.players.map(u =>
+                            <Link key={f.id_player} to={"/players/" + f.id_player} onClick={() => watched(f.id_player)} >
+                                {/* <Card style={{ display: 'flex', flexDirection: 'row' }}> */}
+                                <Card>
 
-                                <Card.Img className="avatarListProfile" variant="top"
-                                    src={f.avatar ? "http://localhost:8080/uploads/avatar/" + f.avatar + "?" + Date() :
-                                        "images/avatar-tenis.png"} alt="" />
-                                <Card.Body className="cardBodyListPlayer" >
-                                    <Link to={"/players/" + f.id_player} onClick={() => watched(f.id_player)} >
-                                        <Card.Title className="cardTitleListPlayer">
-                                            {f.username}
-                                        </Card.Title>
-                                        <Card.Text className="cardTextListPlayer">
+                                    <Card.Img className="avatarListProfile" variant="top"
+                                        src={f.avatar ? "http://localhost:8080/uploads/avatar/" + f.avatar + "?" + Date() : "images/avatar-tenis.png"} alt="" />
+                                    {!f.watched && f.id_player1 === props.player.id_player && f.accepted &&
+                                        <>
+                                            <Card.Img className="avatarListProfile newFriend" variant="top" src="images/Pelota Luis brochazo.png" alt="" height="30px"/>
+                                            {/* <Badge pill variant="light">Nuevo</Badge> */}
+                                        </>
+                                    }
+                                    <Card.Body >
+                                        <Card.Title>{f.username}</Card.Title>
+                                        <Card.Text>
                                             {f.city}
-                                        </Card.Text >
-                                        <Card.Text className="cardTextListPlayer">
-                                            <img src={f.genre === "HOMBRE"?"images/hombre30.png":"images/mujer.png"} width="15" height="15" alt=""/>
-                                            {f.genre}
-                                        </Card.Text >
-                                        <Card.Text className="cardTextListPlayer">
-                                            {f.rating > 0 &&
-                                                <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
-                                            }
-                                            {f.rating > 1 &&
-                                                <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
-                                            }
-                                            {f.rating > 2 &&
-                                                <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
-                                            }
-                                            {f.rating > 3 &&
-                                                <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
-                                            }
-                                            {f.rating > 4 &&
-                                                <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
-                                            }
-                                            {/* Level {p.rating} */}
                                         </Card.Text>
-                                    </Link>
-                                </Card.Body>
+                                        <Card.Text>
+                                            {f.genre}
+                                        </Card.Text>
+                                        <Card.Text>
+                                            {f.rating}
+                                        </Card.Text>
 
-                            </Card>
-                            <br />
+                                    </Card.Body>
+                                    {/* <Card.Footer>
+                                        <small className="text-muted">Last updated 3 mins ago</small>
+                                    </Card.Footer> */}
 
-                        </div>
-                    ))}
-                    {/* </CardDeck> */}
-                    {error &&
-                        <Form.Text className="errorListPlayerOrFriendOrRequest">{error}</Form.Text>
-                    }
-                </div>
+                                </Card>
+                                <br />
+
+                            </Link>
+                        ))}
+                    </CardDeck>
+                }
+
             </div>
+            
         </div>
     )
 };
@@ -487,4 +477,4 @@ const mapDispachToProps = {
 export default connect(
     mapStateToProps,
     mapDispachToProps
-)(ListFriends);
+)(auxListFriends);

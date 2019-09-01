@@ -222,6 +222,11 @@ a:hover {
 
 .dropdown-menu.show {
   width: 206px;
+  margin-left: 1.8rem;
+  margin-top: -7.2rem;
+  color: #081d60 !important;
+  font-size: 20px;
+  line-height: 1;
 }
 
 .iconDropdown {
@@ -304,6 +309,16 @@ a:hover {
   border-color: rgba(255, 255, 255, 0.2); */
 }
 
+.buttonForm:disabled , .buttonForm:disabled:hover {
+  background-color: #38303f6b;
+  border-radius: .25rem;
+  border: #38303f6b;
+  color: white;
+  /* background-color: #38303fe3;
+  border-radius: .25rem;
+  border: 1px solid #38303fe3; */
+}
+
 .btn-primary:focus, .btn:focus {
   box-shadow: none !important;
 }
@@ -324,6 +339,10 @@ a:hover {
   border: none;
 }
 
+.dropdwnContainerRatingListPlayer{
+  margin-left: 3rem;
+  margin-top: -7.7rem;
+}
 .containerBuscador {
   /* background-color: rgba(255, 255, 255, 0.2); */
   text-align: left;
@@ -420,7 +439,9 @@ a:hover {
   padding-left: 1.25rem;
   box-shadow: none;
   color: #081d60;
+  
 }
+
 
 .dropdown-toggle::after {
   display: none;
@@ -704,6 +725,13 @@ a:hover {
   height: 46px;
 }
 
+.errorListPlayerOrFriendOrRequest {
+  font-size: 20px;
+  text-align: center;
+  margin-top: 35vh;
+  color: white;
+}
+
 /******************** Player nuevo **************************/
 
 .containerAddPlayer {
@@ -790,4 +818,14 @@ a:hover {
 .CheckBoxAdmin {
   text-align: center;
   transform: scale(2);
+}
+
+/******************** Profile Player **************************/
+
+.cardHorizont {
+  line-height: 0.4;
+}
+
+.cardFooterHorizont {
+  margin: auto;
 }

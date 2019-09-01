@@ -158,6 +158,8 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
         return null;
     }
     if (id === +decoded.id_player) {
+        //estoy en mi bandeja de correo y tengo que elegir el destinatario
+        //si soyYo es false entonces el destinatario esta en la url
         soyYo = true; 
     }
     // else{

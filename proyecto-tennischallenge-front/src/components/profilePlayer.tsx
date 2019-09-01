@@ -28,7 +28,7 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
     React.useEffect(() => {
         player = props.players.find(p => p.id_player === +id);
         console.log(player);
-    },[props.player]);
+    }, [props.player]);
 
     // if(!player){
     //     return null;
@@ -94,7 +94,7 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
         <div>
 
             {player !== null && player !== undefined && (
-                <CardDeck >
+                <CardDeck className="cardHorizont">
 
                     <Card style={{ display: 'flex', flexDirection: 'row' }}>
                         <Card.Img className="avatarListProfile" variant="top"
@@ -109,20 +109,43 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
                                 {player.city}
                             </Card.Text>
                             <Card.Text>
+                                <img src={player.genre === "HOMBRE" ? "../../images/hombre30.png" : "../../images/mujer.png"} width="15" height="15" alt="" />
                                 {player.genre}
                             </Card.Text>
                             <Card.Text>
-                                {player.rating}
+                                {player.rating > 0 &&
+                                    <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
+                                }
+                                {player.rating > 1 &&
+                                    <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
+                                }
+                                {player.rating > 2 &&
+                                    <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
+                                }
+                                {player.rating > 3 &&
+                                    <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
+                                }
+                                {player.rating > 4 &&
+                                    <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
+                                }
                             </Card.Text>
                         </Card.Body>
-                        <Card.Footer >
-                            {/* <small className="text-muted">Last updated 3 mins ago</small> */}
-                            <Link to={"/players/edit/" + player.id_player}>
-                                <Button variant="primary">Editar</Button>
-                            </Link>
-                            <br />
-                            <br />
-                            <Button variant="primary" onClick={borrar}>Borrar</Button>
+                        <Card.Footer>
+                            <div className="container-fluid cardFooterHorizont">
+                                <div className="row">
+                                    <Link to={"/players/edit/" + player.id_player}>
+                                        <Button className="buttonForm" variant="primary">Editar</Button>
+                                    </Link>
+                                </div>
+                                <br/><br/>
+                                <div className="row">
+                                    <Button className="buttonForm" variant="primary" onClick={borrar}>Borrar</Button>
+                                </div>
+                            </div>
+
+                            {/* <br />
+                            <br /> */}
+
                         </Card.Footer>
                     </Card>
 

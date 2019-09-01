@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, DropdownButton, Form, Col } from 'react-bootstrap';
+import { Card, DropdownButton, Form, Col, CardGroup, CardDeck, Dropdown } from 'react-bootstrap';
 import { IPlayer } from '../interfaceIPlayer';
 import { IGlobalState } from '../reducers/reducers';
 import { connect } from 'react-redux';
@@ -82,10 +82,14 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
                             response
                                 .json()
                                 .then((lista: IPlayer[]) => {
-                                    console.log(lista);
-                                    console.log("va bien");
-                                    props.setPlayers(lista);
-                                    console.log(lista);
+                                    if (lista.length === 0) {
+                                        setError("No hay jugadores");
+                                    } else {
+                                        console.log(lista);
+                                        console.log("va bien");
+                                        props.setPlayers(lista);
+                                        console.log(lista);
+                                    }
                                 })
                                 .catch(err => {
                                     setError("Error en el json.");
@@ -132,55 +136,55 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
 
             .filter(p => !inputSex || (p.genre === inputSex.toLocaleUpperCase()));
 
-        // if (lista.length === 0) {
-        //     setError("No tienes amigos con estos requisitos.");
-        // } else {
-        //     setError("");
+        if (lista.length === 0) {
+            setError("No tienes amigos con estos requisitos.");
+        } else {
+            setError("");
 
+        }//supongo que esta llave va al final
+            if (inputUsername) {
+                lista.sort(function (a, b) {
+                    let nameA = a.username.toLowerCase();
+                    let nameB = b.username.toLowerCase();
+                    if (nameA < nameB) //sort string ascending
+                        return -1;
+                    if (nameA > nameB)
+                        return 1;
+                    return 0; //default return value (no sorting)
+                })
+            }
+            if (inputCity) {
+                lista.sort(function (a, b) {
+                    let cityA = a.city.toLowerCase();
+                    let cityB = b.city.toLowerCase();
+                    if (cityA < cityB) //sort string ascending
+                        return -1;
+                    if (cityA > cityB)
+                        return 1;
+                    return 0; //default return value (no sorting)
+                })
+            }
 
-        if (inputUsername) {
-            lista.sort(function (a, b) {
-                let nameA = a.username.toLowerCase();
-                let nameB = b.username.toLowerCase();
-                if (nameA < nameB) //sort string ascending
-                    return -1;
-                if (nameA > nameB)
-                    return 1;
-                return 0; //default return value (no sorting)
-            })
-        }
-        if (inputCity) {
-            lista.sort(function (a, b) {
-                let cityA = a.city.toLowerCase();
-                let cityB = b.city.toLowerCase();
-                if (cityA < cityB) //sort string ascending
-                    return -1;
-                if (cityA > cityB)
-                    return 1;
-                return 0; //default return value (no sorting)
-            })
-        }
+            if (inputRatingFrom || inputRatingTo) {
+                lista.sort(function (a, b) { return a.rating - b.rating })
+            }
 
-        if (inputRatingFrom || inputRatingTo) {
-            lista.sort(function (a, b) { return a.rating - b.rating })
+            if (inputSex) {
+                lista.sort(function (a, b) {
+                    let genreA = a.genre.toLowerCase();
+                    let genreB = b.genre.toLowerCase();
+                    if (genreA < genreB) //sort string ascending
+                        return -1;
+                    if (genreA > genreB)
+                        return 1;
+                    return 0; //default return value (no sorting)
+                })
+            }
+            console.log("lista despues de filtrar")
+            console.log(lista);
+            setFilterestList(lista);
+            // }
         }
-
-        if (inputSex) {
-            lista.sort(function (a, b) {
-                let genreA = a.genre.toLowerCase();
-                let genreB = b.genre.toLowerCase();
-                if (genreA < genreB) //sort string ascending
-                    return -1;
-                if (genreA > genreB)
-                    return 1;
-                return 0; //default return value (no sorting)
-            })
-        }
-        console.log("lista despues de filtrar")
-        console.log(lista);
-        setFilterestList(lista);
-        // }
-    }
 
     React.useEffect(filtrar, [inputUsername, inputCity, inputRatingFrom, inputRatingTo, inputSex]);
 
@@ -284,8 +288,7 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
                         </label>
                         </div>
 
-                        <DropdownButton id="dropdown-basic-button" title="Nivel">
-
+                        <DropdownButton id="dropdown-basic-button" drop='right' title="Nivel">
                             <Form.Group as={Col} id="dropdwnRatingListPlayer" controlId="formGridState">
                                 <Form.Label>Desde</Form.Label>
                                 <Form.Control as="select" value={inputRatingFrom + ""} onChange={UpdateRatingFrom}>
@@ -307,9 +310,9 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
                                     <option value={5}>5</option>
                                 </Form.Control>
                             </Form.Group>
-                            {errorRating &&
+                            {/* {errorRating &&
                                 <Form.Text>{errorRating}</Form.Text>
-                            }
+                            } */}
                         </DropdownButton>
 
                     </div>
@@ -333,8 +336,9 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
                                         <Card.Text className="cardTextListPlayer">
                                             {p.city}
                                         </Card.Text >
+                                        
                                         <Card.Text className="cardTextListPlayer">
-                                            <img src={p.genre === "HOMBRE"?"images/hombre30.png":"images/mujer.png"} width="15" height="15" alt=""/>
+                                            <img src={p.genre === "HOMBRE" ? "images/hombre30.png" : "images/mujer.png"} width="15" height="15" alt="" />
                                             {p.genre}
                                         </Card.Text >
                                         <Card.Text className="cardTextListPlayer">
@@ -360,12 +364,11 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
 
                             </Card>
                             <br />
-
                         </div>
                     ))}
                     {/* </CardDeck> */}
                     {error &&
-                        <Form.Text>{error}</Form.Text>
+                        <Form.Text className="errorListPlayerOrFriendOrRequest">{error}</Form.Text>
                     }
                 </div>
             </div>
