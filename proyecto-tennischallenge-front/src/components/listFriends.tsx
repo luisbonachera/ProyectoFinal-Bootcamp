@@ -1,5 +1,5 @@
 import React from 'react';
-import { CardDeck, Card, DropdownButton, Form, Col} from 'react-bootstrap';
+import { CardDeck, Card, DropdownButton, Form, Col } from 'react-bootstrap';
 import { IGlobalState } from '../reducers/reducers';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { IFriendship } from '../interfaceIFriendship';
 import { IPlayer } from '../interfaceIPlayer';
 import { INotifications } from '../interfaceINotifications';
+import styles from '../App.module.css';
 
 
 interface Iprops { }
@@ -246,7 +247,7 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                                     //   // console.log("no hay notificaciones");
                                     // }
 
-                                }else{
+                                } else {
                                     console.log("no me actualiza las notificaciones porque notificacion[0] no existe")
                                 }
 
@@ -420,9 +421,16 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                             {/* <Card style={{ display: 'flex', flexDirection: 'row' }}> */}
                             <Card className="cardListPlayer">
 
-                                <Card.Img className="avatarListProfile" variant="top"
-                                    src={f.avatar ? "http://localhost:8080/uploads/avatar/" + f.avatar + "?" + Date() :
+                                <Card.Img className="avatarListProfile"
+                                    src={f.avatar ? "http://localhost:8080/uploads/avatar/" + f.avatar + "?" + (new Date()).valueOf() :
                                         "images/avatar-tenis.png"} alt="" />
+
+                                {!f.watched && f.id_player1 === props.player.id_player && f.accepted &&
+                                    <Card.ImgOverlay className="containerBadgeNewPlayer" onClick={() => watched(f.id_player)}>
+                                        <Card.Img className={styles.newFriend} id="newFriend" src="images/Pelota Luis brochazo.png" alt="" />
+                                    </Card.ImgOverlay>
+                                }
+
                                 <Card.Body className="cardBodyListPlayer" >
                                     <Link to={"/players/" + f.id_player} onClick={() => watched(f.id_player)} >
                                         <Card.Title className="cardTitleListPlayer">
@@ -432,7 +440,7 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                                             {f.city}
                                         </Card.Text >
                                         <Card.Text className="cardTextListPlayer">
-                                            <img src={f.genre === "HOMBRE"?"images/hombre30.png":"images/mujer.png"} width="15" height="15" alt=""/>
+                                            <img src={f.genre === "HOMBRE" ? "images/hombre30.png" : "images/mujer.png"} width="15" height="15" alt="" />
                                             {f.genre}
                                         </Card.Text >
                                         <Card.Text className="cardTextListPlayer">

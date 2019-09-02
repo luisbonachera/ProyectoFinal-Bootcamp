@@ -134,6 +134,8 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
             if (friends.length === 0) {
                 console.log("null")
                 setError("No tienes peticiones de amistad.")
+                setMyFriends(friends);
+                setFriendsFiltros(friends)
                 // return null;
             } else {
                 setError("");
@@ -233,6 +235,7 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
                         console.log("amistad creada");
                         //actualizo mis notificaciones
                         updatednotificationsFriendship();
+                        amigos();
                         fetch("http://localhost:8080/api/friends", {
                             headers: {
                                 "Content-Type": "application/json",
@@ -407,7 +410,7 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
 
     if (!friends || !myFriends || !friendsFiltros) {
         console.log("null")
-        setError("Tu lista de amigos esta vacia.")
+        setError("Tu lista de peticiones de amigos esta vacia.")
         return null;
     }
 

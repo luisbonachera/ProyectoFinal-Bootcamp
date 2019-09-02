@@ -31,7 +31,7 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
     // const [username, setUsername] = React.useState(props.player.username);
     // const [avatar, setAvatar] = React.useState(props.player.avatar);
     // const [id_player, setId_player] = React.useState(props.player.id_player);
-    const [ocultar, setOcultar] = React.useState(false);
+    // const [ocultar, setOcultar] = React.useState(false);
 
     // const actualizar = () => {
     //     setUsername(props.player.username)
@@ -42,7 +42,7 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
         // let cambiar = !ocultar;
         const aux: any = document.getElementById((props.notifications.numbers_messages > 0 ||
             props.notifications.numbers_requestFriend > 0 ||
-            props.notifications.numbers_acceptedFriend > 0) ? "dropdwnMenuShowNavbarNotifications":"dropdwnMenuShowNavbar");
+            props.notifications.numbers_acceptedFriend > 0) ? "dropdwnMenuShowNavbarNotifications" : "dropdwnMenuShowNavbar");
         aux.classList.remove("show");
         // aux.classname="dropdown-basic";
         // setOcultar(s=> !s);
@@ -172,14 +172,14 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                                             </Fragment>
                                         }
                                         <Card.Img className="avatarNavbar" variant="top"
-                                            src={props.player.avatar ? "http://localhost:8080/uploads/avatar/" + props.player.avatar + "?" + Date() :
+                                            src={props.player.avatar ? "http://localhost:8080/uploads/avatar/" + props.player.avatar + "?" + (new Date()).valueOf() :
                                                 "images/avatar-tenis.png"} alt="" />
                                         {/* {props.player.username} */}
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu id={(props.notifications.numbers_messages > 0 ||
-                                            props.notifications.numbers_requestFriend > 0 ||
-                                            props.notifications.numbers_acceptedFriend > 0) ?
-                                            "dropdwnMenuShowNavbarNotifications":"dropdwnMenuShowNavbar"}>
+                                        props.notifications.numbers_requestFriend > 0 ||
+                                        props.notifications.numbers_acceptedFriend > 0) ?
+                                        "dropdwnMenuShowNavbarNotifications" : "dropdwnMenuShowNavbar"}>
                                         {/* <Link className="span-logo span-logo-dropdown" to="/mailTray" onClick={()=>unmountDropdown('dropdown-content','myDropdown','show','.dropbtn')}> */}
                                         <Link className="span-logo span-logo-dropdown" to={"/profile/" + props.player.id_player} onClick={UpdateOcultar}>
                                             <i className="material-icons iconDropdown md-48">person</i>

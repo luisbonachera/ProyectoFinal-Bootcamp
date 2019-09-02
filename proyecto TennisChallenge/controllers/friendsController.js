@@ -87,6 +87,43 @@ friendsController.list = (req, res) => {
     }
 }
 
+// Listar amigos de playerID
+friendsController.listById = (req, res) => {
+    try {
+        console.log(req.headers.authorization);
+        const token = req.headers.authorization.replace("Bearer ", "");
+        console.log(token);
+        const decoded = jwt.verify(token, "mysecret");
+        let my_id = req.params.id;
+        if (my_id) {
+            friendsModel.listById(my_id)
+                .then(rows => {
+                    if (rows.length > 0) {
+                        console.log("bien, hay amigos");
+                        res.send(rows);
+                    } else {
+                        console.log("no hay amigos");
+                        res.send(rows);
+                    }
+
+                })
+                .catch(err => {
+                    console.log("mal");
+                    res.send({
+                        type: "error",
+                        data: err
+                    });
+                });
+
+        } else {
+            res.status(401).send("error mi id esta vacio en listFriend");
+        }
+    } catch (err) {
+        res.status(401).send("error en token o al verficarlo en listFriend. " + err);
+    }
+}
+
+
 //Aceptar amistad  la amistad
 friendsController.edit = (req, res) => {
     try {

@@ -17,5 +17,4 @@ export const friendshipsReducer = (
     return [...state]; //aqui me retorna los estados
     }
     return state;
-
 }

@@ -34,10 +34,11 @@ messageController.add = (req, res) => {
                     })
                     .catch(err => {
                         console.log("mal");
-                        res.send({
-                            type: "error",
-                            data: err
-                        });
+                        res.status(400).send({ e: err });
+                        // res.send({
+                        //     type: "error",
+                        //     data: err
+                        // });
                     });
 
             } else {

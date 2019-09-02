@@ -34,6 +34,7 @@
   /* background-image: url("http://www.hoerbranz.at/system/web/GetImage.ashx?fileid=922469&mode=O"); */
   padding-top: 120px;
   /*121*/
+  background-attachment: fixed;
 }
 
 /* .App-header2{
@@ -363,14 +364,27 @@ a:hover {
 }
 
 .avatarListProfile {
-  height: 150px;
-  width: 150px;
+  height: 9.4rem;
+    width: 9.4rem;
+  /* height: 150px;
+  width: 150px; */
   border: 0.1px solid black;
   border-radius: 6% 35% 0% 35%;
   /* height: 220px;
   width: auto; */
 }
+.card .img .newFriend{
+  /* margin-top: -36px; */
+  /* width: auto !important;
+  /* height: 46px; */
+  /*height: 15% !important;
+  /* margin-top: -2.69rem !important; */
+  /*margin-top: -2.94rem !important; */
+  visibility: hidden !important;
 
+  position: absolute !important;
+  margin-top: 103px !important;
+}
 .containerListCardPlayer {
   /* margin-right: 160px; */
   max-width: 1033px;
@@ -719,17 +733,17 @@ a:hover {
 */
 /******************** List friends **************************/
 
-.newFriend {
-  margin-top: -36px;
-  width: auto;
-  height: 46px;
-}
+
 
 .errorListPlayerOrFriendOrRequest {
   font-size: 20px;
   text-align: center;
   margin-top: 35vh;
   color: white;
+}
+
+.containerBadgeNewPlayer{
+  padding: 0;
 }
 
 /******************** Player nuevo **************************/

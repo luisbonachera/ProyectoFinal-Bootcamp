@@ -104,6 +104,9 @@ router.post("/friends/add", friendsController.add);
 // Listar mis amigos
 router.get("/friends", friendsController.list);
 
+// Listar amigos de playerID
+router.get("/friends/:id", friendsController.listById);
+
 //Aceptar amistad la amistad
 router.put("/friends/accepted/:id", friendsController.edit);
 

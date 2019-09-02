@@ -1,13 +1,12 @@
 import React, { Fragment } from 'react';
 import { IPlayer } from '../interfaceIPlayer';
 import { RouteComponentProps, Link } from 'react-router-dom';
-import { CardDeck, Card, Button } from 'react-bootstrap';
+import { CardDeck, Card, Button, Form } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { IGlobalState } from '../reducers/reducers';
 import jwt from 'jsonwebtoken';
 import * as actions from '../actions/actions';
 import { IFriendship } from '../interfaceIFriendship';
-
 
 interface IProps { }
 
@@ -19,6 +18,8 @@ interface IPropsGlobal {
     deletePlayer: (id_player: number) => void;
     setFriendships: (friendships: IFriendship[]) => void;
     friendships: IFriendship[];
+    // friendshipsById: IFriendship[];
+    // setFriendshipsById: (friendships: IFriendship[]) => void;
     deleteFriendship: (id_friendship: number) => void;
 }
 
@@ -226,6 +227,9 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
             setThisPlayer(player);
             console.log("thisPlayer");
             console.log(thisplayer);
+            //Funcion que trae de BD los amigos de este player, no los mios
+            // ylos guarda en redux
+            list();
             // let lista = props.friendships.filter(f =>
             //     ((f.id_player1 === player.id_player && f.id_player2 === props.player.id_player) ||
             //         (f.id_player2 === player.id_player && f.id_player1 === props.player.id_player)) &&
@@ -270,8 +274,59 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
         }
 
     };
-    React.useEffect(findThisPlayer, []);
+    React.useEffect(findThisPlayer, [props.match.params.id_player]);
 
+    const list = () => {
+        if (props.token) {
+            let decoded = jwt.decode(props.token);
+            if (decoded !== null) {
+                console.log(decoded);
+
+                fetch("http://localhost:8080/api/friends/" + id, {
+                    headers: {
+                        "Content-type": "application/json",
+                        Authorization: "Bearer " + props.token
+                    }
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            response
+                                .json()
+                                .then((lista: IFriendship[]) => {
+                                    if (lista.length === 0) {
+                                        setError("Tu lista de amigos esta vacia");
+                                        props.setFriendships([]);
+                                    }
+                                    else {
+                                        setError("");
+                                        console.log("va bien");
+                                        props.setFriendships(lista);
+
+                                        console.log("friends desde BD");
+                                        console.log(lista);
+                                    }
+                                    // 
+                                })
+                                .catch(err => {
+                                    setError("Error en el json.");
+                                });
+                        } else {
+                            setError("responde.ok da error.");
+                        }
+                    })
+                    .catch(err => {
+                        setError("Error en response.");
+                    });
+            }
+            else {
+                setError("El token no se pudo decodificar");
+            }
+        }
+        else {
+            setError("El token no existe");
+        }
+    };
+    React.useEffect(list, [props.players, props.match.params.id_player]);
     // const findMyFriend = () => {
     //     let lista = props.friendships.filter(f =>
     //         ((f.id_player1 === thisplayer.id_player && f.id_player2 === props.player.id_player) ||
@@ -292,11 +347,12 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
     return (
         <div>
             {thisplayer !== null && thisplayer !== undefined && (
+                <Fragment>
                 <CardDeck className="cardHorizont">
 
                     <Card style={{ display: 'flex', flexDirection: 'row' }}>
                         <Card.Img className="avatarListProfile" variant="top"
-                            src={thisplayer.avatar ? "http://localhost:8080/uploads/avatar/" + thisplayer.avatar + "?" + Date() :
+                            src={thisplayer.avatar ? "http://localhost:8080/uploads/avatar/" + thisplayer.avatar + "?" + (new Date()).valueOf() :
                                 "../../images/avatar-tenis.png"} alt="" />
                         <Card.Body>
                             <Card.Title>{thisplayer.username}</Card.Title>
@@ -426,6 +482,59 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                     </Card>
 
                 </CardDeck>
+                <div className="col-sm containerListCardPlayer">
+                {props.friendships && props.friendships.map(f => (
+                    <div className="cardsJugadores" key={f.id_player}>
+                        {/* <Card style={{ display: 'flex', flexDirection: 'row' }}> */}
+                        <Card className="cardListPlayer">
+
+                            <Card.Img className="avatarListProfile" variant="top"
+                                src={f.avatar ? "http://localhost:8080/uploads/avatar/" + f.avatar + "?" + Date() :
+                                    "/images/avatar-tenis.png"} alt="" />
+                            <Card.Body className="cardBodyListPlayer" >
+                                <Link to={"/players/" + f.id_player} >
+                                    <Card.Title className="cardTitleListPlayer">
+                                        {f.username}
+                                    </Card.Title>
+                                    <Card.Text className="cardTextListPlayer">
+                                        {f.city}
+                                    </Card.Text >
+                                    <Card.Text className="cardTextListPlayer">
+                                        <img src={f.genre === "HOMBRE"?"images/hombre30.png":"images/mujer.png"} width="15" height="15" alt=""/>
+                                        {f.genre}
+                                    </Card.Text >
+                                    <Card.Text className="cardTextListPlayer">
+                                        {f.rating > 0 &&
+                                            <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
+                                        }
+                                        {f.rating > 1 &&
+                                            <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
+                                        }
+                                        {f.rating > 2 &&
+                                            <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
+                                        }
+                                        {f.rating > 3 &&
+                                            <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
+                                        }
+                                        {f.rating > 4 &&
+                                            <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
+                                        }
+                                        {/* Level {p.rating} */}
+                                    </Card.Text>
+                                </Link>
+                            </Card.Body>
+
+                        </Card>
+                        <br />
+
+                    </div>
+                ))}
+                {/* </CardDeck> */}
+                {props.friendships.length === 0 &&
+                    <Form.Text className="errorListPlayerOrFriendOrRequest">No tienes ningún amigo</Form.Text>
+                }
+            </div>
+            </Fragment>
             )}
         </div>
     )
@@ -435,7 +544,8 @@ const mapStateToProps = (state: IGlobalState) => ({
     token: state.token,
     players: state.players,
     player: state.player,
-    friendships: state.friendships
+    friendships: state.friendships,
+    // friendshipsById : state.friendshipsById
 
 });
 
@@ -444,6 +554,7 @@ const mapDispachToProps = {
     deletePlayer: actions.deletePlayer,
     setFriendships: actions.setFriendships,
     deleteFriendship: actions.deleteFriendship
+    // setFriendshipsById: actions.setFriendshipsById
 }
 
 export default connect(

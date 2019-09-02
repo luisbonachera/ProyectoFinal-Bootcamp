@@ -31,6 +31,7 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
     const [errorSubject, setErrorSubject] = React.useState("");
     const [errorText, setErrorText] = React.useState("");
     const [errorInputPlayerDestiny, setErrorInputPlayerDestiny] = React.useState(false);
+    const [maximunCharacterText, SetMaximunCharacterText] = React.useState();
 
     // const [usernameDestiny, setUsernameDestiny] = React.useState("");
     // const [usernameSent, setUsernameSent] = React.useState("");
@@ -45,6 +46,8 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
         SetText(event.currentTarget.value);
         setError("");
         setErrorText("");
+        
+        SetMaximunCharacterText(event.currentTarget.value.length);
     };
 
     const updateInputPlayerDestiny = (event: any) => {
@@ -109,18 +112,75 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                                                 }
                                             })
                                             .catch(err => {
+                                                console.log(err);
                                                 console.log("error al devolver mis mensajes." + err);
                                             })
 
                                     } else {
-                                        setError("Response.ok, Error ," + error);
-                                        console.log(error);
+                                        console.log("Error en response.ok");
+                                    //     response.json().then(({ e }) => {
+                                    //         // setError("Response.ok, Error ," + e);
+                                    //     console.log(e);
+                                    //     console.log(e.sqlMessage)
+                                    //    let array = e.sqlMessage.split(" ");
+                                    //    array[array.length -1] =  array[array.length -1].replace("'", "");
+                                    //    array[array.length -1] =  array[array.length -1].replace("'", "");
+                                    //    console.log(array);
+                                    //    console.log(array[array.length -1]);
+                                    //    let err = array[array.length -1];
+                                    //     if (e.errno === 1406) {
+                                    //         if(err === "subject"){
+                                    //             setError("El contenido del asunto es demasiado largo.");
+                                    //         setErrorSubject("error");
+                                    //         }else if (err === "text"){
+                                    //             setError("El contenido del texto es demasiado largo.");
+                                    //         setErrorText("error");
+                                    //         }
+                                    //         console.log(e.sqlMessage)
+                                    //         console.log(array[array.length -1]);
+                                    //     } else {
+                                    //         console.log("no se porque entra aqui")
+                                    //     }
+                                    //     })
+                                    //     .catch(err => {
+                                    //         console.log("Error," + err)
+                                    //     });
+                                        
                                     }
                                 })
                                 .catch(error => {
                                     setError("Response Error , ha fallado la consulta" + error);
                                     console.log(error);
                                 });
+                        }else {
+                            response.json().then(({ e }) => {
+                                // setError("Response.ok, Error ," + e);
+                            console.log(e);
+                            console.log(e.sqlMessage)
+                           let array = e.sqlMessage.split(" ");
+                           array[array.length -4] =  array[array.length -4].replace("'", "");
+                           array[array.length -4] =  array[array.length -4].replace("'", "");
+                           console.log(array);
+                           console.log(array[array.length -4]);
+                           let err = array[array.length -4];
+                            if (e.errno === 1406) {
+                                if(err === "subject"){
+                                    setError("El contenido del asunto es demasiado largo.");
+                                setErrorSubject("error");
+                                }else if (err === "text"){
+                                    setError("El contenido del texto es demasiado largo.");
+                                setErrorText("error");
+                                }
+                                console.log(e.sqlMessage)
+                                console.log(array[array.length -4]);
+                            } else {
+                                console.log("no se porque entra aqui")
+                            }
+                            })
+                            .catch(err => {
+                                console.log("Error," + err)
+                            });
+                            
                         }
                     })
                     .catch(err => {
@@ -244,19 +304,25 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                         )}
                         <Form.Group controlId="formGridSubject">
                             {/* <Form.Label>Asunto</Form.Label> */}
-                            <Form.Control className={errorSubject?"containerErrorRed":""}onChange={updateSubject} placeholder="Asunto" />
+                            <Form.Control className={errorSubject?"containerErrorRed":""} as="input" maxlength="100" onChange={updateSubject} placeholder="Asunto" />
                         </Form.Group>
 
 
                         <Form.Group controlId="formGridTextAreaText">
                             {/* <Form.Label>Texto: </Form.Label> */}
                             <Form.Control className={errorText?"textAreaMensajeNuevo containerErrorRed":"textAreaMensajeNuevo"}
-                             as="textarea" rows="3" onChange={updateText} placeholder="Escriba aqui el texto del mensaje" />
+                             as="textarea" rows="3" onChange={updateText} maxlength="1000"
+                             placeholder="Escriba aqui el texto del mensaje máximo 1000 caracteres" />
                         </Form.Group>
 
                         <Form.Group controlId="formButttonSend">
                             <div className="row">
                                 {/* <div className="col-9"></div> */}
+                                <div className="col">
+                                    {maximunCharacterText &&
+                                        <p className="ErrorAddMessage">Maximo Caracteres {maximunCharacterText} / 1000</p>
+                                    }
+                                </div>
                                 <div className="col">
                                     {error &&
                                         <p className="ErrorAddMessage">{error}</p>

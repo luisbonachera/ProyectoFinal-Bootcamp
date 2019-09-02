@@ -320,7 +320,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                     <Form.Row className="containerImage">
                         <div className="col-5">
                             <img className="avatarListProfile"
-                                src={player.avatar ? "http://localhost:8080/uploads/avatar/" + player.avatar + "?" + Date() :
+                                src={player.avatar ? "http://localhost:8080/uploads/avatar/" + player.avatar + "?" + (new Date()).valueOf() :
                                     "../../../images/avatar-tenis.png"} alt="" />
                         </div>
                         <div className="col-1"></div>

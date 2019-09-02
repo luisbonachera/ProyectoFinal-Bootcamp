@@ -326,7 +326,7 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
                             <Card className="cardListPlayer">
 
                                 <Card.Img className="avatarListProfile" variant="top"
-                                    src={p.avatar ? "http://localhost:8080/uploads/avatar/" + p.avatar + "?" + Date() :
+                                    src={p.avatar ? "http://localhost:8080/uploads/avatar/" + p.avatar + "?" + (new Date()).valueOf() :
                                         "images/avatar-tenis.png"} alt="" />
                                 <Card.Body className="cardBodyListPlayer" >
                                     <Link to={"/players/" + p.id_player} >

@@ -46,6 +46,28 @@ friendsModel.list = (my_id) => {
 };
 
 
+// Listar amigos de playerID
+friendsModel.listById = (my_id) => {
+    return new Promise((resolve, reject) => {
+        console.log("entra en el modelo listmessage")
+        dbConn.query('SELECT * FROM friends AS f INNER JOIN players AS p WHERE ' +
+        '( (f.id_player1 = ' + my_id + ' && f.id_player2 = p.id_player) OR ' + 
+        '(f.id_player2 = '+ my_id + ' && f.id_player1 = p.id_player) ) ' +
+        'AND p.erased = false AND f.accepted = true',
+            (err, result) => {
+                console.log("ya he terminado la consula buscar mis amigos");
+                if (err) {
+                    console.log("error en la consulta buscar mis amigos");
+                    reject(err);
+                } else {
+                    console.log("consulta de buscar mis amigos termian bien.");
+                    resolve(result);
+                }
+            }
+        );
+    });
+};
+
 //Aceptar amistad y poner a watched=true la amistad
 friendsModel.edit = (accepted,id_friends,my_id) => {
     return new Promise((resolve, reject) => {
