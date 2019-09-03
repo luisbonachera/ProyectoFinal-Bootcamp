@@ -211,6 +211,9 @@ a:hover {
   padding-right: 15px;
 }
 
+.span-title{
+  padding-left: 35px;
+}
 /**/
 
 .span-logo:hover, .span-Dropdown:hover {
@@ -355,7 +358,6 @@ a:hover {
   text-align: left;
   /* color: #081d60; */
   color: white;
-  
 }
 
 .buscador {
@@ -397,11 +399,12 @@ a:hover {
   /* margin-right: 160px; */
   /* max-width: 1033px; */
   max-width: 60vw;
-  margin-left: 9vw;
+  /* margin-left: 9vw; */
   padding-right: 2.5vw;
   background: #f8f9fa42;
   border-radius: 13px;
   min-height: 41.3vh;
+  margin: auto;
 }
 
 .errorListPlayerOrFriendOrRequest {
@@ -411,7 +414,8 @@ a:hover {
   padding-top: 15%;
   height: 15px;
 }
-.bottonErrorEdit{
+
+.bottonErrorEdit {
   padding-top: 15px !important;
 }
 
@@ -447,10 +451,13 @@ a:hover {
 
 .cardTitleListPlayer {
   margin-bottom: 0.5rem;
+ 
 }
 
 .cardTextListPlayer {
   margin-bottom: 0.3rem;
+  display: flex;
+  justify-content: center;
 }
 
 .card:hover {
@@ -479,6 +486,9 @@ a:hover {
   box-shadow: none;
   /* color: #081d60; */
   color: #fff;
+}
+#dropdwnMenuShowNavbar.show {
+ line-height: 1.5;
 }
 
 .dropdown-toggle::after {
@@ -541,10 +551,12 @@ a:hover {
   align-content: center; */
   background-color: #808080a6;
 }
+
 .divIconAndNameMenuMensaje:focus {
   color: #081d60 !important;
   box-shadow: 6px 6px 2px 2px black;
 }
+
 .iconMenuMensajes {
   /**/
   font-size: 29px;
@@ -760,8 +772,6 @@ a:hover {
 */
 /******************** List friends **************************/
 
-
-
 .containerBadgeNewPlayer {
   padding: 0;
 }
@@ -869,9 +879,25 @@ a:hover {
 .cardHorizontRequest {
   line-height: 0.4;
   width: 35%;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 1), 0 2px 10px 0 rgba(0, 0, 0, 1);
+  border-radius: 10px 0px 0px 55px;
 }
 
-.containerListFriendshipRequest{
+.cardHorizontRequest:hover {
+  box-shadow: 10px 10px 15px 3px rgba(0, 0, 0, 1), 0 2px 10px 0 rgba(0, 0, 0, 1);
+  margin-bottom: 0px;
+  margin-left: -25px;
+}
+
+.containerListFriendshipRequest {
   display: flex;
-    justify-content: center;
+  justify-content: center;
+  margin: 1%;
+}
+
+.cardFooterFriendsRequest{
+  display: flex;
+    align-items: center;
 }

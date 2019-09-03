@@ -239,7 +239,11 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
             {playerDestiny !== null && playerDestiny !== undefined && (
                 <Fragment>
                     <div className="container row containerMessageNew">
-                        <div className="col-1">
+                    <div className="col-1" >
+                                <p className="usernameMailFrom" >De:</p>
+                                </div>
+                        <div className="col-2">
+                        <p className="usernameMailFrom"></p>
                             <img className="imgAvatarMsg" src={props.player.avatar ? "http://localhost:8080/uploads/avatar/" + props.player.avatar : "/images/avatar-tenis.png"}
                                 alt="" width="auto" height="50" />
                         </div>
@@ -247,19 +251,22 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                             <p className="usernameMailFrom">{props.player.username}</p>
                         </div>
                     </div>
-                    <div className="col-2 colum ">
+                    {/* <div className="col-2 colum "> */}
                         {/* {m.id_player_destiny} to*/}
 
-                    </div>
-                    <Form className="container">
+                    {/* </div> */}
+                    
                         {/* <Form.Group controlId="formGridFrom">
                         <Form.Label>De:</Form.Label>
                         <Form.Label> {props.player.username} </Form.Label>
                     </Form.Group> */}
                         {soyYo === false && (
-                            <div className="row containerMessageNew">
-                                <div className="col-1">
-                                    <img className="imgAvatarMsg" src={playerDestiny.avatar ? "http://localhost:8080/uploads/avatar/" + playerDestiny.avatar : "/images/avatar-tenis.png"}
+                            <div className="container row containerMessageNew">
+                                <div className="col-1" >
+                                <p className="usernameMailFrom" >Para: </p>
+                                </div>
+                                <div className="col-2" >
+                                     <img className="imgAvatarMsg" src={playerDestiny.avatar ? "http://localhost:8080/uploads/avatar/" + playerDestiny.avatar : "/images/avatar-tenis.png"}
                                         alt="" width="auto" height="50" />
                                 </div>
                                 <div className="col-1">
@@ -271,7 +278,9 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                             //     <Form.Label> {playerDestiny.username} </Form.Label>
                             // </Form.Group>
                         )}
+                        <Form className="container">
                         {soyYo && (
+                            
                             <Form.Group className="containerPlayerDestinyMessage" controlId="formGridState">
                                 {/* <Form.Label>Para</Form.Label> */}
                                 {/* <div className="col-1 colum ">
@@ -319,7 +328,7 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                             <div className="row">
                                 {/* <div className="col-9"></div> */}
                                 <div className="col">
-                                    {maximunCharacterText &&
+                                    {maximunCharacterText > 0 &&
                                         <p className="ErrorAddMessage">Maximo Caracteres {maximunCharacterText} / 1000</p>
                                     }
                                 </div>

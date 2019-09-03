@@ -418,6 +418,7 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
     return (
         <div className="container-fluid">
             <div className="row">
+            {/* {friendsFiltros.length > 0 &&  */}
                 <div className="col-2 containerBuscador">
                     <div className="buscador">
                         {/* <div className="barraFiltros" style={{ display: 'flex', flexDirection: 'row' }}> */}
@@ -490,9 +491,9 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
 
                     </div>
                 </div>
-                {/* <CardDeck > */}
-
-                <div className="col-sm ">
+                 {/* <CardDeck > */}
+                        {/* } */}
+                <div className="col-sm">
                     {friendsFiltros && friendsFiltros.map(f => (
                         // <div className="cardsJugadores" key={f.id_player}>
                         <div className="containerListFriendshipRequest">
@@ -507,6 +508,11 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
                                     <Card.Title className="cardTitleListPlayer">
                                         {f.username}
                                     </Card.Title>
+                                    {props.player.isAdmin &&
+                                    <Card.Text className="cardTextListPlayer">
+                                        {f.email}
+                                    </Card.Text >
+                                    }
                                     <Card.Text className="cardTextListPlayer">
                                         {f.city}
                                     </Card.Text >
@@ -536,7 +542,7 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
 
                                     {/* </Link> */}
                                 </Card.Body>
-                                <Card.Footer>
+                                <Card.Footer className="cardFooterFriendsRequest">
 
                                     <div className="container-fluid">
                                         <div className="row">

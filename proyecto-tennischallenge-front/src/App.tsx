@@ -27,6 +27,7 @@ interface IPropsGlobal {
   setNotifications: (notification: INotifications) => void;
   setToken: (token: string) => void;
   setPlayer: (player: IPlayer) => void;
+  setPlayers: (player: IPlayer[]) => void;
 }
 
 const App: React.FC<IProps & IPropsGlobal> = props => {
@@ -49,6 +50,42 @@ const App: React.FC<IProps & IPropsGlobal> = props => {
       
       props.setPlayer(player);
       props.setToken(token);
+
+      fetch("http://localhost:8080/api/players", {
+        headers: {
+            "Content-type": "application/json",
+            Authorization: "Bearer " + token
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                response
+                    .json()
+                    .then((lista) => {
+                        console.log("va bien");
+                        console.log(lista);
+                        for (let i = 0; i < lista.length; i++) {
+                            lista[i].isAdmin = (lista[i].isAdmin === '1' ? true : false)
+                        }
+                        props.setPlayer(player);
+                        props.setPlayers(lista);
+                        // props.history.push("/");
+                        sessionStorage.setItem("token", token);
+                        props.setToken(token);
+
+
+                    })
+                    .catch(err => {
+                        console.log("Error en el json.");
+                    });
+            } else {
+              console.log("responde.ok da error.");
+            }
+        })
+        .catch(err => {
+          console.log("Error en response." + err);
+        });
+
     }
   }
   },[]);
@@ -152,7 +189,8 @@ const mapStateToProps = (state: IGlobalState) => ({
 const mapDispachToProps = {
   setNotifications: actions.setNotifications,
   setToken: actions.setToken,
-  setPlayer: actions.setPlayer
+  setPlayer: actions.setPlayer,
+  setPlayers: actions.setPlayers
 }
 
 export default connect(

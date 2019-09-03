@@ -328,7 +328,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                         <Form.Group className="col-6 colUsername" as={Col} controlId="formGridUsername">
                             <Form.Label>Usuario</Form.Label>
                             <Form.Control className={errorUsername ? "form-control form-control-red" : "form-control"}
-                                placeholder="Escriba su usuario" value={username} onChange={updateUsername} required />
+                               type="text" as="input" placeholder="Escriba su usuario" maxlength="12" value={username} onChange={updateUsername} required />
                         </Form.Group>
                     </Form.Row>
 
@@ -349,8 +349,8 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                         <div className="col-1"></div>
                         <Form.Group className="col-6" as={Col} controlId="formGridCity">
                             <Form.Label>Ciudad</Form.Label>
-                            <Form.Control type="text" className={errorCity ? "form-control form-control-red" : "form-control"}
-                                placeholder="Escriba su ciudad" value={city} onChange={updateCity} required />
+                            <Form.Control type="text" as="input" className={errorCity ? "form-control form-control-red" : "form-control"}
+                                placeholder="Escriba su ciudad" maxlength="20" value={city} onChange={updateCity} required />
                         </Form.Group>
 
 
@@ -373,8 +373,8 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                         </Form.Group> */}
                         <Form.Group className="col" as={Col} controlId="formGridEmail">
                             <Form.Label>Email</Form.Label>
-                            <Form.Control type="email" className={errorEmail ? "form-control form-control-red" : "form-control"}
-                                placeholder="Escriba su email" value={email} onChange={updateEmail} required />
+                            <Form.Control type="email" as="input" className={errorEmail ? "form-control form-control-red" : "form-control"}
+                                placeholder="Escriba su email" maxlength="30" value={email} onChange={updateEmail} required />
                         </Form.Group>
                         {/* <Form.Group as={Col} controlId="formGridEmail">
                             <Form.Label>Email</Form.Label>

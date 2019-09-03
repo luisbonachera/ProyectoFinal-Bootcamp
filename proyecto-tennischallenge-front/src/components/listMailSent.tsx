@@ -46,7 +46,7 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
                     } else {
                         console.log("error:");
                         console.log("no hay mensajes enviados");
-                        setError("no hay mensajes enviados");
+                        setError("No tienes mensajes enviados");
                         // props.history.push("/mailTray/received");
                     }
 
@@ -57,7 +57,7 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
                 console.log("no hay token");
             }
         } else {
-            setError("no hay mensajes en la store, haciendo UseEffect.");
+            console.log("no hay mensajes en la store, haciendo UseEffect.");
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.msgs,props.notifications]);
@@ -135,7 +135,7 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
                 </Link>
             )}
             {error && (
-                <div className="col">
+                <div className="col errorListPlayerOrFriendOrRequest">
                     {error}
                 </div>
             )}

@@ -245,7 +245,9 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
 
     return (
         <div className="container-fluid">
+            
             <div className="row">
+                 {/* {filteresList.length > 0 &&  */}
                 <div className="col-2 containerBuscador">
                     <div className="buscador">
                         {/* <div className="barraFiltros" style={{ display: 'flex', flexDirection: 'row' }}> */}
@@ -317,6 +319,7 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
 
                     </div>
                 </div>
+                 {/* } */}
                 {/* <CardDeck > */}
 
                 <div className="col-sm containerListCardPlayer">
@@ -339,7 +342,7 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
                                         
                                         <Card.Text className="cardTextListPlayer">
                                             <img src={p.genre === "HOMBRE" ? "images/hombre30.png" : "images/mujer.png"} width="15" height="15" alt="" />
-                                            {p.genre}
+                                            <span className="text-capitalize">{p.genre.toLowerCase()}</span>
                                         </Card.Text >
                                         <Card.Text className="cardTextListPlayer">
                                             {p.rating > 0 &&

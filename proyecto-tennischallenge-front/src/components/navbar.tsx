@@ -43,6 +43,7 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
         const aux: any = document.getElementById((props.notifications.numbers_messages > 0 ||
             props.notifications.numbers_requestFriend > 0 ||
             props.notifications.numbers_acceptedFriend > 0) ? "dropdwnMenuShowNavbarNotifications" : "dropdwnMenuShowNavbar");
+        // const aux: any = document.getElementById("dropdwnMenuShowNavbar");
         aux.classList.remove("show");
         // aux.classname="dropdown-basic";
         // setOcultar(s=> !s);
@@ -128,7 +129,7 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
 
                     <Link to="/">
                         <img src={logo} className="logo" alt="imagen de logo de mi pagina" />
-                        <span className="span-logo">Tennis Challenge</span>
+                        <span className="span-logo span-title">Tennis Challenge</span>
                     </Link>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -161,28 +162,30 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                                 {/* <NavDropdown className="span-logo" title={props.player.username} id="collasible-nav-dropdown"> */}
                                 <Dropdown className="span-logo" >
                                     <Dropdown.Toggle id="dropdown-basic" className="DropdownNavbar"  >
+
+
                                         {(props.notifications.numbers_messages > 0 ||
                                             props.notifications.numbers_requestFriend > 0 ||
                                             props.notifications.numbers_acceptedFriend > 0) &&
                                             // <Fragment>
-                                                <div className="animated infinite bounce delay-1s">
-                                                    <Badge className="notifications"
+                                            <div className="animated infinite bounce delay-1s">
+                                                <Badge className="notifications"
                                                     variant="light">{props.notifications.numbers_messages + props.notifications.numbers_requestFriend + props.notifications.numbers_acceptedFriend > 0 ?
                                                         props.notifications.numbers_messages + props.notifications.numbers_acceptedFriend + props.notifications.numbers_requestFriend : ""}
                                                 </Badge>
                                                 <img className="animated" src="images\pelota-tenis.png" alt="" width="35px" height="35px"></img>
-                                                </div>
+                                            </div>
                                             //  </Fragment>
                                         }
+
                                         <Card.Img className="avatarNavbar" variant="top"
                                             src={props.player.avatar ? "http://localhost:8080/uploads/avatar/" + props.player.avatar + "?" + (new Date()).valueOf() :
                                                 "images/avatar-tenis.png"} alt="" />
                                         {/* {props.player.username} */}
                                     </Dropdown.Toggle>
-                                    <Dropdown.Menu id={(props.notifications.numbers_messages > 0 ||
-                                        props.notifications.numbers_requestFriend > 0 ||
-                                        props.notifications.numbers_acceptedFriend > 0) ?
-                                        "dropdwnMenuShowNavbarNotifications" : "dropdwnMenuShowNavbar"}>
+                                    <Dropdown.Menu id={props.notifications.numbers_messages > 0 ||
+            props.notifications.numbers_requestFriend > 0 ||
+            props.notifications.numbers_acceptedFriend > 0 ? "dropdwnMenuShowNavbarNotifications" : "dropdwnMenuShowNavbar"}>
                                         {/* <Link className="span-logo span-logo-dropdown" to="/mailTray" onClick={()=>unmountDropdown('dropdown-content','myDropdown','show','.dropbtn')}> */}
                                         <Link className="span-logo span-logo-dropdown" to={"/profile/" + props.player.id_player} onClick={UpdateOcultar}>
                                             <i className="material-icons iconDropdown md-48">person</i>

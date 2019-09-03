@@ -341,6 +341,7 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
     return (
         <div className="container-fluid">
             <div className="row">
+                {/* {friendsFiltros.length > 0 &&  */}
                 <div className="col-2 containerBuscador">
                     <div className="buscador">
                         {/* <div className="barraFiltros" style={{ display: 'flex', flexDirection: 'row' }}> */}
@@ -413,8 +414,8 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
 
                     </div>
                 </div>
-                {/* <CardDeck > */}
-
+                {/* }  */}
+                {!error &&
                 <div className="col-sm containerListCardPlayer">
                     {friendsFiltros && friendsFiltros.map(f => (
                         <div className="cardsJugadores" key={f.id_player}>
@@ -465,15 +466,19 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                                 </Card.Body>
 
                             </Card>
-                            <br />
-
+                            {/* <br /> */}
                         </div>
                     ))}
-                    {/* </CardDeck> */}
-                    {error &&
-                        <Form.Text className="errorListPlayerOrFriendOrRequest">{error}</Form.Text>
-                    }
                 </div>
+                }
+                {/* </CardDeck> */}
+
+                {error &&
+                    <div className="col-sm containerListCardPlayer">
+                        <Form.Text className="errorListPlayerOrFriendOrRequest">{error}</Form.Text>
+                    </div>
+                }
+
             </div>
         </div>
     )
