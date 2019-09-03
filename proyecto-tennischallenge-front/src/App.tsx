@@ -17,15 +17,41 @@ import listFriends from './components/listFriends';
 import FriendRequests from './components/friendRequests';
 import { INotifications } from './interfaceINotifications';
 import * as actions from './actions/actions';
+import jwt from 'jsonwebtoken';
+import { IPlayer } from './interfaceIPlayer';
 
 interface IProps { }
 
 interface IPropsGlobal {
   token: string;
   setNotifications: (notification: INotifications) => void;
+  setToken: (token: string) => void;
+  setPlayer: (player: IPlayer) => void;
 }
 
 const App: React.FC<IProps & IPropsGlobal> = props => {
+
+  React.useEffect( ()=> {
+    const token = sessionStorage.getItem("token");
+    if(token){
+      const decoded:any = jwt.decode(token);
+      if (decoded) {
+        let player: IPlayer = {
+            id_player: decoded.id_player,
+            avatar: decoded.avatar,
+            username: decoded.username,
+            isAdmin: decoded.isAdmin,
+            email: decoded.email,
+            city: decoded.city,
+            genre: decoded.genre,
+            rating: decoded.rating
+        }
+      
+      props.setPlayer(player);
+      props.setToken(token);
+    }
+  }
+  },[]);
 
   React.useEffect(() => {
     if (props.token) {
@@ -82,7 +108,7 @@ const App: React.FC<IProps & IPropsGlobal> = props => {
       // console.log("aun no hay token");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.token]);
+}, [props.token]);
 
   return (
     <BrowserRouter>
@@ -124,7 +150,9 @@ const mapStateToProps = (state: IGlobalState) => ({
 });
 
 const mapDispachToProps = {
-  setNotifications: actions.setNotifications
+  setNotifications: actions.setNotifications,
+  setToken: actions.setToken,
+  setPlayer: actions.setPlayer
 }
 
 export default connect(

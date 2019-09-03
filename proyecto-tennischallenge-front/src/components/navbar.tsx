@@ -86,6 +86,7 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
         props.setNotifications(initialStateNotifications);
         props.setFriendships([]);
         props.setMessages([]);
+        sessionStorage.clear();
         props.setToken("")
     }
 

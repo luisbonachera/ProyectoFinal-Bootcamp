@@ -108,6 +108,7 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
                                                             props.setPlayer(player);
                                                             props.setPlayers(lista);
                                                             props.history.push("/");
+                                                            sessionStorage.setItem("token", token);
                                                             props.setToken(token);
 
 

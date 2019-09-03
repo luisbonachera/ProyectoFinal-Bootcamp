@@ -496,7 +496,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                         {error &&
                             <div className="col">
 
-                                <p>{error}</p>
+                                <p className="bottonErrorEdit">{error}</p>
 
                             </div>
                         }

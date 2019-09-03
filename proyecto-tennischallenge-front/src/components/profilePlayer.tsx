@@ -132,7 +132,7 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
                             </Card.Text>
                         </Card.Body>
                         <Card.Footer>
-                            <div className="container-fluid cardFooterHorizont">
+                            <div className="container-fluid">
                                 <div className="row">
                                     <Link to={"/players/edit/" + player.id_player}>
                                         <Button className="buttonForm" variant="primary">Editar</Button>

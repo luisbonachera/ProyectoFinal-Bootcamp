@@ -359,10 +359,10 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                     </div> */}
 
                         <div className="form-group">
-                            <input type="text" className="form-control" id="idUsername" placeholder="username" onChange={UpdateUsernameF} />
+                            <input type="text" className="form-control" id="idUsername" placeholder="Usuario" onChange={UpdateUsernameF} />
                         </div>
                         <div className="form-group">
-                            <input type="text" className="form-control" id="idCity" placeholder="City" onChange={UpdateCityF} />
+                            <input type="text" className="form-control" id="idCity" placeholder="Ciudad" onChange={UpdateCityF} />
                         </div>
                         <div className="form-check">
                             <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Hombre" onChange={UpdateSexF} />

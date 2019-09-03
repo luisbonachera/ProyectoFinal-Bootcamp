@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, DropdownButton, Form, Col, Button } from 'react-bootstrap';
+import { Card, DropdownButton, Form, Col, Button, CardDeck } from 'react-bootstrap';
 import { IPlayer } from '../interfaceIPlayer';
 import { IGlobalState } from '../reducers/reducers';
 import { connect } from 'react-redux';
@@ -436,10 +436,10 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
                     </div> */}
 
                         <div className="form-group">
-                            <input type="text" className="form-control" id="idUsername" placeholder="username" onChange={UpdateUsernameF} />
+                            <input type="text" className="form-control" id="idUsername" placeholder="Usuario" onChange={UpdateUsernameF} />
                         </div>
                         <div className="form-group">
-                            <input type="text" className="form-control" id="idCity" placeholder="City" onChange={UpdateCityF} />
+                            <input type="text" className="form-control" id="idCity" placeholder="Ciudad" onChange={UpdateCityF} />
                         </div>
                         <div className="form-check">
                             <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Hombre" onChange={UpdateSexF} />
@@ -492,12 +492,13 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
                 </div>
                 {/* <CardDeck > */}
 
-                <div className="col-sm containerListCardPlayer">
+                <div className="col-sm ">
                     {friendsFiltros && friendsFiltros.map(f => (
-                        <div className="cardsJugadores" key={f.id_player}>
+                        // <div className="cardsJugadores" key={f.id_player}>
+                        <div className="containerListFriendshipRequest">
                             {/* <Card style={{ display: 'flex', flexDirection: 'row' }}> */}
-                            <Card className="cardListPlayer">
-
+                            {/* <Card className="cardListPlayer"> */}
+                            <Card className="cardHorizontRequest" key={f.id_player} style={{ display: 'flex', flexDirection: 'row' }}>
                                 <Card.Img className="avatarListProfile" variant="top"
                                     src={f.avatar ? "http://localhost:8080/uploads/avatar/" + f.avatar + "?" + Date() :
                                         "images/avatar-tenis.png"} alt="" />
@@ -536,25 +537,36 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
                                     {/* </Link> */}
                                 </Card.Body>
                                 <Card.Footer>
-                                    <div className="row">
-                                        {/* {stateFriend === "amigo" && */}
-                                    <Button className="buttonForm" variant="primary" onClick={() => borrarFriend(f.id_friends)}>Cancelar</Button>
-                                    {/* } */}
-                                    {/* {stateFriend === "amigo" && */}
-                                    <Button className="buttonForm" variant="primary" onClick={() => acceptedFriendship(f.id_friends)}>Aceptar</Button>
-                                    {/* } */}
-                                    {/* <small className="text-muted">Last updated 3 mins ago</small> */}
+
+                                    <div className="container-fluid">
+                                        <div className="row">
+                                            
+                                        <Button className="buttonForm" variant="primary" onClick={() => acceptedFriendship(f.id_friends)}>Aceptar</Button>
+                                            
+                                        </div>
+                                        <br /><br />
+                                        <div className="row">
+                                        <Button className="buttonForm" variant="primary" onClick={() => borrarFriend(f.id_friends)}>Cancelar</Button>
+                                        </div>
                                     </div>
-                                    
+                                    {/* <div className="row">
+                                     
+                                    <Button className="buttonForm" variant="primary" onClick={() => borrarFriend(f.id_friends)}>Cancelar</Button>
+                                  
+                                    <Button className="buttonForm" variant="primary" onClick={() => acceptedFriendship(f.id_friends)}>Aceptar</Button>
+                                
+                                    </div> */}
+
                                 </Card.Footer>
 
+                                {/* </Card> */}
                             </Card>
                             <br />
                         </div>
                     ))}
                     {/* </CardDeck> */}
                     {error &&
-                        <Form.Text className="errorListPlayerOrFriendOrRequest">{error}</Form.Text>
+                        <p className="errorListPlayerOrFriendOrRequest" id="errorListPlayerOrFriendOrRequest">{error}</p>
                     }
                 </div>
             </div>

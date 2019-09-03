@@ -53,8 +53,8 @@
   background-color: rgba(210, 184, 169, 0.74);
 }
 
-.DropdownNavbar{
-display: flex;
+.DropdownNavbar {
+  display: flex;
 }
 
 .notifications {
@@ -229,7 +229,8 @@ a:hover {
   width: 206px;
   margin-left: 1.8rem;
   margin-top: -7.2rem;
-  color: #081d60 !important;
+  color: #fff;
+  /* color: #081d60 !important; */
   font-size: 20px;
   line-height: 1;
 }
@@ -314,7 +315,7 @@ a:hover {
   border-color: rgba(255, 255, 255, 0.2); */
 }
 
-.buttonForm:disabled , .buttonForm:disabled:hover {
+.buttonForm:disabled, .buttonForm:disabled:hover {
   background-color: #38303f6b;
   border-radius: .25rem;
   border: #38303f6b;
@@ -344,15 +345,17 @@ a:hover {
   border: none;
 }
 
-.dropdwnContainerRatingListPlayer{
+.dropdwnContainerRatingListPlayer {
   margin-left: 3rem;
   margin-top: -7.7rem;
 }
+
 .containerBuscador {
   /* background-color: rgba(255, 255, 255, 0.2); */
   text-align: left;
-  color: #081d60;
-  /* color: white; */
+  /* color: #081d60; */
+  color: white;
+  
 }
 
 .buscador {
@@ -369,7 +372,7 @@ a:hover {
 
 .avatarListProfile {
   height: 9.4rem;
-    width: 9.4rem;
+  width: 9.4rem;
   /* height: 150px;
   width: 150px; */
   border: 0.1px solid black;
@@ -377,7 +380,8 @@ a:hover {
   /* height: 220px;
   width: auto; */
 }
-.card .img .newFriend{
+
+.card .img .newFriend {
   /* margin-top: -36px; */
   /* width: auto !important;
   /* height: 46px; */
@@ -385,14 +389,30 @@ a:hover {
   /* margin-top: -2.69rem !important; */
   /*margin-top: -2.94rem !important; */
   visibility: hidden !important;
-
   position: absolute !important;
   margin-top: 103px !important;
 }
+
 .containerListCardPlayer {
   /* margin-right: 160px; */
   /* max-width: 1033px; */
-  max-width: 70vw;
+  max-width: 60vw;
+  margin-left: 9vw;
+  padding-right: 2.5vw;
+  background: #f8f9fa42;
+  border-radius: 13px;
+  min-height: 41.3vh;
+}
+
+.errorListPlayerOrFriendOrRequest {
+  font-size: 20px;
+  text-align: center;
+  color: white !important;
+  padding-top: 15%;
+  height: 15px;
+}
+.bottonErrorEdit{
+  padding-top: 15px !important;
 }
 
 .cardsJugadores {
@@ -457,10 +477,9 @@ a:hover {
   font-size: 23px;
   padding-left: 1.25rem;
   box-shadow: none;
-  color: #081d60;
-  
+  /* color: #081d60; */
+  color: #fff;
 }
-
 
 .dropdown-toggle::after {
   display: none;
@@ -522,7 +541,10 @@ a:hover {
   align-content: center; */
   background-color: #808080a6;
 }
-
+.divIconAndNameMenuMensaje:focus {
+  color: #081d60 !important;
+  box-shadow: 6px 6px 2px 2px black;
+}
 .iconMenuMensajes {
   /**/
   font-size: 29px;
@@ -740,14 +762,7 @@ a:hover {
 
 
 
-.errorListPlayerOrFriendOrRequest {
-  font-size: 20px;
-  text-align: center;
-  margin-top: 35vh;
-  color: white;
-}
-
-.containerBadgeNewPlayer{
+.containerBadgeNewPlayer {
   padding: 0;
 }
 
@@ -847,4 +862,16 @@ a:hover {
 
 .cardFooterHorizont {
   margin: auto;
+}
+
+/******************** FriendshipRequest **************************/
+
+.cardHorizontRequest {
+  line-height: 0.4;
+  width: 35%;
+}
+
+.containerListFriendshipRequest{
+  display: flex;
+    justify-content: center;
 }
