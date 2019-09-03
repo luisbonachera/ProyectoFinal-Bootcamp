@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Col, Button, FormLabel } from 'react-bootstrap';
+import { Form, Col, Button } from 'react-bootstrap';
 import { RouteComponentProps } from 'react-router-dom';
 import * as actions from '../actions/actions';
 import { connect } from 'react-redux';

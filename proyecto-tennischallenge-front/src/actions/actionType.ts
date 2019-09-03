@@ -38,12 +38,12 @@ type TUpdatePlayersAction = {
   player: IPlayer;
 };
 
-type TsetFriendshipAction = {
+type TSetFriendshipAction = {
   type: "SET_FRIENDSHIPS";
   friendships: IFriendship[];
 };
 
-type TdeleteFriendshipAction = {
+type TDeleteFriendshipAction = {
   type: "DELETE_FRIENDSHIP";
   id_friendship: number;
 };
@@ -51,6 +51,16 @@ type TdeleteFriendshipAction = {
 type TSetNotificationsAction = {
   type: "SET_NOTIFICATIONS";
   notifications: INotifications;
+};
+
+type TSetYourFriendshipAction = {
+  type: "SET_YOURFRIENDSHIPS";
+  yourFriendships: IFriendship[];
+};
+
+type TDeleteYourFriendshipAction = {
+  type: "DELETE_YOURFRIENDSHIP";
+  id_friendship: number;
 };
 
 export type TAction =
@@ -61,6 +71,8 @@ export type TAction =
   | TDeletePlayerAction
   | TUpdatePlayerAction
   | TUpdatePlayersAction
-  | TsetFriendshipAction
-  | TdeleteFriendshipAction
-  | TSetNotificationsAction;
+  | TSetFriendshipAction
+  | TDeleteFriendshipAction
+  | TSetNotificationsAction
+  | TSetYourFriendshipAction
+  | TDeleteYourFriendshipAction;

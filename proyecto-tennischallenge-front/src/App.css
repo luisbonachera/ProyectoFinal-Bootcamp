@@ -53,6 +53,10 @@
   background-color: rgba(210, 184, 169, 0.74);
 }
 
+.DropdownNavbar{
+display: flex;
+}
+
 .notifications {
   border-radius: 50% !important;
   background-color: transparent !important;
@@ -387,7 +391,8 @@ a:hover {
 }
 .containerListCardPlayer {
   /* margin-right: 160px; */
-  max-width: 1033px;
+  /* max-width: 1033px; */
+  max-width: 70vw;
 }
 
 .cardsJugadores {

@@ -56,3 +56,13 @@ export const setNotifications: ActionCreator<TAction> = (notifications: INotific
     type: "SET_NOTIFICATIONS",
     notifications
 });
+
+export const setYourFriendships: ActionCreator<TAction> = (yourFriendships: IFriendship []) => ({
+    type: "SET_YOURFRIENDSHIPS",
+    yourFriendships
+});
+
+export const deleteYourFriendship: ActionCreator<TAction> = (id_friendship: number) => ({
+    type: "DELETE_YOURFRIENDSHIP",
+    id_friendship
+});

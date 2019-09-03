@@ -10,6 +10,7 @@ import { IFriendship } from '../interfaceIFriendship';
 import { friendshipsReducer } from './friendshipReducers';
 import { INotifications } from '../interfaceINotifications';
 import { notificationsReducer } from './notificationsReducer';
+import { yourFriendshipsReducer } from './yourFrinedshipReducers';
 
 export interface IGlobalState {
     token: string;
@@ -18,6 +19,7 @@ export interface IGlobalState {
     msgs: IMsg [];
     friendships: IFriendship [];
     notifications: INotifications;
+    yourFriendships: IFriendship [];
 };
 
 export const reducers = combineReducers({
@@ -27,4 +29,5 @@ export const reducers = combineReducers({
     msgs: messagesReducer,
     friendships: friendshipsReducer,
     notifications: notificationsReducer,
+    yourFriendships: yourFriendshipsReducer
 })

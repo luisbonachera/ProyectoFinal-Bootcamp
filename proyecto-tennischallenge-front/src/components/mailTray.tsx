@@ -22,7 +22,7 @@ interface IPropsGloblal {
 const MailTray: React.FC<IPropsGloblal> = props => {
 
     const [error, setError] = React.useState("");
-    const [messagesHooks, setMessagesHooks] = React.useState<IMsg[]>([]);
+    // const [messagesHooks, setMessagesHooks] = React.useState<IMsg[]>([]);
 
     const listMsgs = () => {
         if (props.token) {
@@ -55,7 +55,7 @@ const MailTray: React.FC<IPropsGloblal> = props => {
                                                     console.log("hay msg recibidos y los guardo");
                                                     // setMessagesSent([]);
                                                     // setMessagesReceived(msgsReceived);
-                                                    setMessagesHooks(msgsReceived);
+                                                    // setMessagesHooks(msgsReceived);
                                                 } else {
                                                     console.log("no hay mensajes recibidos");
                                                 }

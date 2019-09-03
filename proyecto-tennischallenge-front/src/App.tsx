@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import styles from './App.module.css';
+// import styles from './App.module.css';
 import NavBar from './components/navbar';
 import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom';
 import Home from './components/home';
@@ -17,7 +17,6 @@ import listFriends from './components/listFriends';
 import FriendRequests from './components/friendRequests';
 import { INotifications } from './interfaceINotifications';
 import * as actions from './actions/actions';
-import SimpleMap from './components/googleMaps';
 
 interface IProps { }
 
@@ -82,6 +81,7 @@ const App: React.FC<IProps & IPropsGlobal> = props => {
     } else {
       // console.log("aun no hay token");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.token]);
 
   return (
@@ -108,7 +108,7 @@ const App: React.FC<IProps & IPropsGlobal> = props => {
 
             <Route path="/add" exact component={AddPlayer} />
             <Route path="/" exact component={Home} />
-            <Route path="/maps" exact component={SimpleMap} />
+            {/* <Route path="/maps" exact component={SimpleMap} /> */}
             {/* <Route component={Notfound} /> */}
             <Redirect to="/" />
 

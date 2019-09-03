@@ -59,6 +59,7 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
         } else {
             setError("no hay mensajes en la store, haciendo UseEffect.");
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.msgs,props.notifications]);
 
     if (!props.msgs) {

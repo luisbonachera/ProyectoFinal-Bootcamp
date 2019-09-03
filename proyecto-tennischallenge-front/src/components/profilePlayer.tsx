@@ -17,7 +17,7 @@ interface IPRopsGlobal {
 }
 
 const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: string }>> = props => {
-    const [error, setError] = React.useState("");
+    // const [error, setError] = React.useState("");
 
     const id = props.match.params.id_player;
     console.log(id);
@@ -26,6 +26,7 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
     let player = props.players.find(p => p.id_player === +id);
 
     React.useEffect(() => {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         player = props.players.find(p => p.id_player === +id);
         console.log(player);
     }, [props.player]);
@@ -82,11 +83,11 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
                     })
             }
             else {
-                setError("El token no se pudo decodificar");
+                console.log("El token no se pudo decodificar");
             }
         }
         else {
-            setError("El token no existe");
+            console.log("El token no existe");
         }
     };
 

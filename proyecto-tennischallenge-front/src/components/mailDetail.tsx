@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { IMsg } from '../interfaceIMsg';
 import { RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
@@ -22,6 +22,7 @@ const MailDetail: React.FC<IPropsGlobal & RouteComponentProps<{ typeMessage: str
     console.log(props.msgs);
 
     React.useEffect(() => {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         message = props.msgs.filter(m => m.id_messages === +id_msg);
         
     }, [props.msgs])

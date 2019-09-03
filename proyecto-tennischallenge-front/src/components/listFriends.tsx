@@ -1,5 +1,5 @@
 import React from 'react';
-import { CardDeck, Card, DropdownButton, Form, Col } from 'react-bootstrap';
+import { Card, DropdownButton, Form, Col } from 'react-bootstrap';
 import { IGlobalState } from '../reducers/reducers';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
@@ -24,7 +24,7 @@ interface IpropsGlobal {
 
 const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
     const [error, setError] = React.useState("");
-    const [errorRating, setErrorRating] = React.useState("");
+    // const [errorRating, setErrorRating] = React.useState("");
     const [inputUsername, setInputUsername] = React.useState("");
     const [inputCity, setInputCity] = React.useState("");
     const [inputSex, setInputSex] = React.useState("");
@@ -53,9 +53,9 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
 
         if (inputRatingTo >= event.target.value) {
             setInputRatingFrom(event.target.value);
-            setErrorRating("");
+            // setErrorRating("");
         } else {
-            setErrorRating("Rango no permitido");
+            // setErrorRating("Rango no permitido");
         }
     };
 
@@ -63,9 +63,9 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
 
         if (inputRatingFrom <= event.target.value) {
             setInputRatingTo(event.target.value);
-            setErrorRating("");
+            // setErrorRating("");
         } else {
-            setErrorRating("Rango no permitido");
+            // setErrorRating("Rango no permitido");
         }
 
     };

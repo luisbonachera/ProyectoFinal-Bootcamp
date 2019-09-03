@@ -159,17 +159,19 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                                 {/* {console.log(props.player.username)} */}
                                 {/* <NavDropdown className="span-logo" title={props.player.username} id="collasible-nav-dropdown"> */}
                                 <Dropdown className="span-logo" >
-                                    <Dropdown.Toggle id="dropdown-basic" >
+                                    <Dropdown.Toggle id="dropdown-basic" className="DropdownNavbar"  >
                                         {(props.notifications.numbers_messages > 0 ||
                                             props.notifications.numbers_requestFriend > 0 ||
                                             props.notifications.numbers_acceptedFriend > 0) &&
-                                            <Fragment>
-                                                <Badge className="notifications"
+                                            // <Fragment>
+                                                <div className="animated infinite bounce delay-1s">
+                                                    <Badge className="notifications"
                                                     variant="light">{props.notifications.numbers_messages + props.notifications.numbers_requestFriend + props.notifications.numbers_acceptedFriend > 0 ?
                                                         props.notifications.numbers_messages + props.notifications.numbers_acceptedFriend + props.notifications.numbers_requestFriend : ""}
                                                 </Badge>
-                                                <img src="images\pelota-tenis.png" alt="" width="35px" height="35px"></img>
-                                            </Fragment>
+                                                <img className="animated" src="images\pelota-tenis.png" alt="" width="35px" height="35px"></img>
+                                                </div>
+                                            //  </Fragment>
                                         }
                                         <Card.Img className="avatarNavbar" variant="top"
                                             src={props.player.avatar ? "http://localhost:8080/uploads/avatar/" + props.player.avatar + "?" + (new Date()).valueOf() :

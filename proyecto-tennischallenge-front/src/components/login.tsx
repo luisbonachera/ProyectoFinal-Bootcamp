@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Col, Row, Button } from 'react-bootstrap';
+import { Form, Row, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions'
 import { RouteComponentProps } from 'react-router-dom';
@@ -103,7 +103,7 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
                                                             console.log("va bien");
                                                             console.log(lista);
                                                             for (let i = 0; i < lista.length; i++) {
-                                                                lista[i].isAdmin = (lista[i].isAdmin == '1' ? true : false)
+                                                                lista[i].isAdmin = (lista[i].isAdmin === '1' ? true : false)
                                                             }
                                                             props.setPlayer(player);
                                                             props.setPlayers(lista);

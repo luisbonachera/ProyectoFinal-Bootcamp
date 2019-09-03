@@ -18,6 +18,8 @@ interface IPropsGlobal {
     deletePlayer: (id_player: number) => void;
     setFriendships: (friendships: IFriendship[]) => void;
     friendships: IFriendship[];
+    setYourFriendships: (friendships: IFriendship[]) => void;
+    yourFriendships: IFriendship[];
     // friendshipsById: IFriendship[];
     // setFriendshipsById: (friendships: IFriendship[]) => void;
     deleteFriendship: (id_friendship: number) => void;
@@ -36,11 +38,11 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
         isAdmin: false
     };
 
-    const [error, setError] = React.useState("");
+    // const [error, setError] = React.useState("");
     const [thisplayer, setThisPlayer] = React.useState<IPlayer>(initialStatePlayer);
     const [stateFriend, setStateFriend] = React.useState("");
     const [id_friend, setId_friend] = React.useState(0);
-
+    // const [yourFriends, setyourFiends] = React.useState<IFriendship[]>([]);
 
     const id = props.match.params.id_player;
     console.log(id);
@@ -209,11 +211,11 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                     })
             }
             else {
-                setError("El token no se pudo decodificar");
+                console.log("El token no se pudo decodificar");
             }
         }
         else {
-            setError("El token no existe");
+            console.log("El token no existe");
         }
     };
 
@@ -269,7 +271,7 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
 
         } else {
-            setError("Aun no existe el player")
+            // setError("Aun no existe el player")
             console.log("este usuario no es tu amigo")
         }
 
@@ -294,13 +296,14 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                 .json()
                                 .then((lista: IFriendship[]) => {
                                     if (lista.length === 0) {
-                                        setError("Tu lista de amigos esta vacia");
-                                        props.setFriendships([]);
+                                        console.log("entra");
+                                        // setError("Tu lista de amigos esta vacia");
+                                        props.setYourFriendships([]);
                                     }
                                     else {
-                                        setError("");
+                                        // setError("");
                                         console.log("va bien");
-                                        props.setFriendships(lista);
+                                        props.setYourFriendships(lista);
 
                                         console.log("friends desde BD");
                                         console.log(lista);
@@ -308,22 +311,22 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                     // 
                                 })
                                 .catch(err => {
-                                    setError("Error en el json.");
+                                    console.log("Error en el json.");
                                 });
                         } else {
-                            setError("responde.ok da error.");
+                            console.log("responde.ok da error.");
                         }
                     })
                     .catch(err => {
-                        setError("Error en response.");
+                        console.log("Error en response.");
                     });
             }
             else {
-                setError("El token no se pudo decodificar");
+                console.log("El token no se pudo decodificar");
             }
         }
         else {
-            setError("El token no existe");
+            console.log("El token no existe");
         }
     };
     React.useEffect(list, [props.players, props.match.params.id_player]);
@@ -348,64 +351,64 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
         <div>
             {thisplayer !== null && thisplayer !== undefined && (
                 <Fragment>
-                <CardDeck className="cardHorizont">
+                    <CardDeck className="cardHorizont">
 
-                    <Card style={{ display: 'flex', flexDirection: 'row' }}>
-                        <Card.Img className="avatarListProfile" variant="top"
-                            src={thisplayer.avatar ? "http://localhost:8080/uploads/avatar/" + thisplayer.avatar + "?" + (new Date()).valueOf() :
-                                "../../images/avatar-tenis.png"} alt="" />
-                        <Card.Body>
-                            <Card.Title>{thisplayer.username}</Card.Title>
-                            {props.player.isAdmin &&
+                        <Card style={{ display: 'flex', flexDirection: 'row' }}>
+                            <Card.Img className="avatarListProfile" variant="top"
+                                src={thisplayer.avatar ? "http://localhost:8080/uploads/avatar/" + thisplayer.avatar + "?" + (new Date()).valueOf() :
+                                    "../../images/avatar-tenis.png"} alt="" />
+                            <Card.Body>
+                                <Card.Title>{thisplayer.username}</Card.Title>
+                                {props.player.isAdmin &&
+                                    <Card.Text>
+                                        {thisplayer.email}
+                                    </Card.Text>
+                                }
                                 <Card.Text>
-                                    {thisplayer.email}
+                                    {thisplayer.city}
                                 </Card.Text>
-                            }
-                            <Card.Text>
-                                {thisplayer.city}
-                            </Card.Text>
-                            <Card.Text>
-                                <img src={thisplayer.genre === "HOMBRE" ? "../../images/hombre30.png" : "../../images/mujer.png"} width="15" height="15" alt="" />
-                                {thisplayer.genre}
-                            </Card.Text>
-                            <Card.Text>
-                                {thisplayer.rating > 0 &&
-                                    <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
-                                }
-                                {thisplayer.rating > 1 &&
-                                    <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
-                                }
-                                {thisplayer.rating > 2 &&
-                                    <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
-                                }
-                                {thisplayer.rating > 3 &&
-                                    <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
-                                }
-                                {thisplayer.rating > 4 &&
-                                    <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
-                                }
-                            </Card.Text>
-                        </Card.Body>
-                        <Card.Footer >
-                            <div className="row">
-                                <div className="col">
-
-                                    <Link  to={"/mailTray/add/" + thisplayer.id_player}>
-                                        <Button className="buttonForm" variant="primary">Enviar Mensaje</Button>
-                                    </Link>
-                                </div>
-                                <div className="col-4">
-                                    {props.player.isAdmin &&
-                                        <Link  to={"/players/edit/" + thisplayer.id_player}>
-                                             {/* {console.log(thisplayer.id_player)} */}
-                                            <Button className="buttonForm" variant="primary">Editar</Button>                                        </Link>
+                                <Card.Text>
+                                    <img src={thisplayer.genre === "HOMBRE" ? "../../images/hombre30.png" : "../../images/mujer.png"} width="15" height="15" alt="" />
+                                    {thisplayer.genre}
+                                </Card.Text>
+                                <Card.Text>
+                                    {thisplayer.rating > 0 &&
+                                        <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
                                     }
+                                    {thisplayer.rating > 1 &&
+                                        <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
+                                    }
+                                    {thisplayer.rating > 2 &&
+                                        <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
+                                    }
+                                    {thisplayer.rating > 3 &&
+                                        <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
+                                    }
+                                    {thisplayer.rating > 4 &&
+                                        <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
+                                    }
+                                </Card.Text>
+                            </Card.Body>
+                            <Card.Footer >
+                                <div className="row">
+                                    <div className="col">
+
+                                        <Link to={"/mailTray/add/" + thisplayer.id_player}>
+                                            <Button className="buttonForm" variant="primary">Enviar Mensaje</Button>
+                                        </Link>
+                                    </div>
+                                    <div className="col-4">
+                                        {props.player.isAdmin &&
+                                            <Link to={"/players/edit/" + thisplayer.id_player}>
+                                                {/* {console.log(thisplayer.id_player)} */}
+                                                <Button className="buttonForm" variant="primary">Editar</Button>                                        </Link>
+                                        }
+                                    </div>
                                 </div>
-                            </div>
-                            {/* <br />
+                                {/* <br />
                             <br /> */}
-                            {/* aqui tengo que poner mi lista de frienship */}
-                            {/* {props.friendships.map(f=> 
+                                {/* aqui tengo que poner mi lista de frienship */}
+                                {/* {props.friendships.map(f=> 
                 ( ({console.log(f)}) &&  
                 ( (f.id_player1 === player.id_player && f.id_player2 === props.player.id_player) ||
                 (f.id_player2 === player.id_player && f.id_player1 === props.player.id_player) ) 
@@ -413,59 +416,59 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                 && (
                   
                (  f.accepted && ( */}
-                            {/* {myFriendship && (myFriendship.map(mF => (
+                                {/* {myFriendship && (myFriendship.map(mF => (
                                 ((mF.username === thisplayer.username) && ( */}
-                                <br/>
-                                <br/>
-                            <div className="row">
-                                <div className="col">
+                                <br />
+                                <br />
+                                <div className="row">
+                                    <div className="col">
 
 
 
-                                    {stateFriend === "amigo" &&
-                                        <Fragment>
-                                            <Button className="buttonForm" variant="primary" onClick={borrarFriend}>Eliminar Amigo</Button>
-                                            <br />
-                                            <br />
-                                        </Fragment>
-                                    }
-                                    {/* ))
+                                        {stateFriend === "amigo" &&
+                                            <Fragment>
+                                                <Button className="buttonForm" variant="primary" onClick={borrarFriend}>Eliminar Amigo</Button>
+                                                <br />
+                                                <br />
+                                            </Fragment>
+                                        }
+                                        {/* ))
                                 ||
                                 ((mF.username !== thisplayer.username) && ( */}
-                                    {stateFriend === "responderPeticion" &&
-                                        <Fragment>
-                                            <Button className="buttonForm" variant="primary" disabled>Responder Amistad</Button>
-                                            <br />
-                                            <br />
-                                        </Fragment>
-                                    }
-                                    {stateFriend === "EsperandoPeticion" &&
-                                        <Fragment>
-                                            <Button className="buttonForm" variant="primary" disabled>Esperando Amistad</Button>
-                                            <br />
-                                            <br />
-                                        </Fragment>
-                                    }
-                                    {stateFriend === "" && props.player.id_player !== +id &&
-                                        <Fragment>
-                                            <Button className="buttonForm" variant="primary" onClick={amistad}>Solicitar Amistad</Button>
-                                            <br />
-                                            <br />
-                                        </Fragment>
-                                    }
+                                        {stateFriend === "responderPeticion" &&
+                                            <Fragment>
+                                                <Button className="buttonForm" variant="primary" disabled>Responder Amistad</Button>
+                                                <br />
+                                                <br />
+                                            </Fragment>
+                                        }
+                                        {stateFriend === "EsperandoPeticion" &&
+                                            <Fragment>
+                                                <Button className="buttonForm" variant="primary" disabled>Esperando Amistad</Button>
+                                                <br />
+                                                <br />
+                                            </Fragment>
+                                        }
+                                        {stateFriend === "" && props.player.id_player !== +id &&
+                                            <Fragment>
+                                                <Button className="buttonForm" variant="primary" onClick={amistad}>Solicitar Amistad</Button>
+                                                <br />
+                                                <br />
+                                            </Fragment>
+                                        }
 
+                                    </div>
+                                    <div className="col-4">
+                                        {props.player.isAdmin &&
+                                            <Button className="buttonForm" variant="primary" onClick={borrar}>Borrar</Button>
+                                        }
+                                    </div>
                                 </div>
-                                <div className="col-4">
-                                    {props.player.isAdmin &&
-                                        <Button className="buttonForm" variant="primary" onClick={borrar}>Borrar</Button>
-                                    }
-                                </div>
-                            </div>
-                            {/* )
+                                {/* )
                                 )
                             )))} */}
 
-                            {/* {props.player.isAdmin &&
+                                {/* {props.player.isAdmin &&
                                 <Fragment>
                                     <Link to={"/players/edit/" + thisplayer.id_player}>
                                         {console.log(thisplayer.id_player)}
@@ -478,63 +481,63 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                     <br />
                                 </Fragment>
                             } */}
-                        </Card.Footer>
-                    </Card>
-
-                </CardDeck>
-                <div className="col-sm containerListCardPlayer">
-                {props.friendships && props.friendships.map(f => (
-                    <div className="cardsJugadores" key={f.id_player}>
-                        {/* <Card style={{ display: 'flex', flexDirection: 'row' }}> */}
-                        <Card className="cardListPlayer">
-
-                            <Card.Img className="avatarListProfile" variant="top"
-                                src={f.avatar ? "http://localhost:8080/uploads/avatar/" + f.avatar + "?" + Date() :
-                                    "/images/avatar-tenis.png"} alt="" />
-                            <Card.Body className="cardBodyListPlayer" >
-                                <Link to={"/players/" + f.id_player} >
-                                    <Card.Title className="cardTitleListPlayer">
-                                        {f.username}
-                                    </Card.Title>
-                                    <Card.Text className="cardTextListPlayer">
-                                        {f.city}
-                                    </Card.Text >
-                                    <Card.Text className="cardTextListPlayer">
-                                        <img src={f.genre === "HOMBRE"?"images/hombre30.png":"images/mujer.png"} width="15" height="15" alt=""/>
-                                        {f.genre}
-                                    </Card.Text >
-                                    <Card.Text className="cardTextListPlayer">
-                                        {f.rating > 0 &&
-                                            <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
-                                        }
-                                        {f.rating > 1 &&
-                                            <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
-                                        }
-                                        {f.rating > 2 &&
-                                            <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
-                                        }
-                                        {f.rating > 3 &&
-                                            <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
-                                        }
-                                        {f.rating > 4 &&
-                                            <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
-                                        }
-                                        {/* Level {p.rating} */}
-                                    </Card.Text>
-                                </Link>
-                            </Card.Body>
-
+                            </Card.Footer>
                         </Card>
-                        <br />
 
+                    </CardDeck>
+                    <div className="col-sm containerListCardPlayer">
+                        {props.yourFriendships && props.yourFriendships.map(f => (
+                            <div className="cardsJugadores" key={f.id_player}>
+                                {/* <Card style={{ display: 'flex', flexDirection: 'row' }}> */}
+                                <Card className="cardListPlayer">
+
+                                    <Card.Img className="avatarListProfile" variant="top"
+                                        src={f.avatar ? "http://localhost:8080/uploads/avatar/" + f.avatar + "?" + Date() :
+                                            "/images/avatar-tenis.png"} alt="" />
+                                    <Card.Body className="cardBodyListPlayer" >
+                                        <Link to={"/players/" + f.id_player} >
+                                            <Card.Title className="cardTitleListPlayer">
+                                                {f.username}
+                                            </Card.Title>
+                                            <Card.Text className="cardTextListPlayer">
+                                                {f.city}
+                                            </Card.Text >
+                                            <Card.Text className="cardTextListPlayer">
+                                                <img src={f.genre === "HOMBRE" ? "images/hombre30.png" : "images/mujer.png"} width="15" height="15" alt="" />
+                                                {f.genre}
+                                            </Card.Text >
+                                            <Card.Text className="cardTextListPlayer">
+                                                {f.rating > 0 &&
+                                                    <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
+                                                }
+                                                {f.rating > 1 &&
+                                                    <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
+                                                }
+                                                {f.rating > 2 &&
+                                                    <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
+                                                }
+                                                {f.rating > 3 &&
+                                                    <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
+                                                }
+                                                {f.rating > 4 &&
+                                                    <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
+                                                }
+                                                {/* Level {p.rating} */}
+                                            </Card.Text>
+                                        </Link>
+                                    </Card.Body>
+
+                                </Card>
+                                <br />
+
+                            </div>
+                        ))}
+                        {/* </CardDeck> */}
+                        {props.yourFriendships.length === 0 &&
+                            <Form.Text className="errorListPlayerOrFriendOrRequest">No tienes ningún amigo</Form.Text>
+                        }
                     </div>
-                ))}
-                {/* </CardDeck> */}
-                {props.friendships.length === 0 &&
-                    <Form.Text className="errorListPlayerOrFriendOrRequest">No tienes ningún amigo</Form.Text>
-                }
-            </div>
-            </Fragment>
+                </Fragment>
             )}
         </div>
     )
@@ -545,6 +548,7 @@ const mapStateToProps = (state: IGlobalState) => ({
     players: state.players,
     player: state.player,
     friendships: state.friendships,
+    yourFriendships: state.yourFriendships
     // friendshipsById : state.friendshipsById
 
 });
@@ -553,7 +557,9 @@ const mapDispachToProps = {
     setToken: actions.setToken,
     deletePlayer: actions.deletePlayer,
     setFriendships: actions.setFriendships,
-    deleteFriendship: actions.deleteFriendship
+    deleteFriendship: actions.deleteFriendship,
+    setYourFriendships: actions.setYourFriendships
+
     // setFriendshipsById: actions.setFriendshipsById
 }
 

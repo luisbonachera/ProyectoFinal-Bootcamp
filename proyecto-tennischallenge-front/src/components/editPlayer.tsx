@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Form, Col, Button } from 'react-bootstrap';
 import { RouteComponentProps } from 'react-router-dom';
 // import jwt from 'jsonwebtoken';
@@ -34,7 +34,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
     const [error, setError] = React.useState("");
     const [errorUsername, setErrorUsername] = React.useState("");
     const [errorEmail, setErrorEmail] = React.useState("");
-    const [errorPassword, setErrorPassword] = React.useState("");
+    // const [errorPassword, setErrorPassword] = React.useState("");
     const [errorCity, setErrorCity] = React.useState("");
     const [errorGenre, setErrorGenre] = React.useState("");
     const [errorRating, setErrorRating] = React.useState("");
@@ -162,7 +162,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                             /***************************************** */
                                             lista[0] = {
                                                 ...lista[0],
-                                                ...({ isAdmin: lista[0].isAdmin == '1' ? true : false })
+                                                ...({ isAdmin: lista[0].isAdmin === '1' ? true : false })
                                             }
                                             props.updatePlayers(lista[0]);
                                             /***************************************** */
@@ -310,6 +310,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
             setRating(player.rating + "");
             setIsAdmin(player.isAdmin);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

@@ -1,11 +1,11 @@
 import React from 'react';
-import { CardDeck, Card, DropdownButton, Form, Col, Button } from 'react-bootstrap';
+import { Card, DropdownButton, Form, Col, Button } from 'react-bootstrap';
 import { IPlayer } from '../interfaceIPlayer';
 import { IGlobalState } from '../reducers/reducers';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 import jwt from 'jsonwebtoken';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import { IFriendship } from '../interfaceIFriendship';
 import { INotifications } from '../interfaceINotifications';
 
@@ -23,7 +23,7 @@ interface IpropsGlobal {
 
 const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = props => {
     const [error, setError] = React.useState("");
-    const [errorRating, setErrorRating] = React.useState("");
+    // const [errorRating, setErrorRating] = React.useState("");
     const [inputUsername, setInputUsername] = React.useState("");
     const [inputCity, setInputCity] = React.useState("");
     const [inputSex, setInputSex] = React.useState("");
@@ -52,9 +52,9 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
 
         if (inputRatingTo >= event.target.value) {
             setInputRatingFrom(event.target.value);
-            setErrorRating("");
+            // setErrorRating("");
         } else {
-            setErrorRating("Rango no permitido");
+            // setErrorRating("Rango no permitido");
         }
     };
 
@@ -62,9 +62,9 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
 
         if (inputRatingFrom <= event.target.value) {
             setInputRatingTo(event.target.value);
-            setErrorRating("");
+            // setErrorRating("");
         } else {
-            setErrorRating("Rango no permitido");
+            // setErrorRating("Rango no permitido");
         }
 
     };
