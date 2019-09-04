@@ -239,6 +239,8 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
             //         (f.id_player2 === player.id_player && f.id_player1 === props.player.id_player)) &&
             //     (f.accepted));
             //     console.log(lista);
+
+            // eslint-disable-next-line
             props.friendships.map(f => {
                 if ((f.id_player1 === player.id_player && f.id_player2 === props.player.id_player) ||
                     (f.id_player2 === player.id_player && f.id_player1 === props.player.id_player)) {
@@ -361,18 +363,20 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                 src={thisplayer.avatar ? "http://localhost:8080/uploads/avatar/" + thisplayer.avatar + "?" + (new Date()).valueOf() :
                                     "../../images/avatar-tenis.png"} alt="" />
                             <Card.Body>
-                                <Card.Title>{thisplayer.username}</Card.Title>
+                                <Card.Title className="text-capitalize">
+                                {thisplayer.username.toLocaleLowerCase()}
+                                </Card.Title>
                                 {props.player.isAdmin &&
                                     <Card.Text>
                                         {thisplayer.email}
                                     </Card.Text>
                                 }
-                                <Card.Text>
-                                    {thisplayer.city}
+                                <Card.Text className="text-capitalize">
+                                    {thisplayer.city.toLocaleLowerCase()}
                                 </Card.Text>
-                                <Card.Text>
+                                <Card.Text className="containerTextGenreAndIcon">
                                     <img src={thisplayer.genre === "HOMBRE" ? "../../images/hombre30.png" : "../../images/mujer.png"} width="15" height="15" alt="" />
-                                    <span className="text-capitalize">{thisplayer.genre}</span>
+                                    <span className="text-capitalize">{thisplayer.genre.toLocaleLowerCase()}</span>
                                 </Card.Text>
                                 <Card.Text>
                                     {thisplayer.rating > 0 &&
@@ -400,13 +404,15 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                             <Button className="buttonForm" variant="primary">Enviar Mensaje</Button>
                                         </Link>
                                     </div>
+                                    {props.player.isAdmin &&
                                     <div className="col-4">
-                                        {props.player.isAdmin &&
+                                       
                                             <Link to={"/players/edit/" + thisplayer.id_player}>
                                                 {/* {console.log(thisplayer.id_player)} */}
                                                 <Button className="buttonForm" variant="primary">Editar</Button>                                        </Link>
-                                        }
+                                       
                                     </div>
+                                     }
                                 </div>
                                 {/* <br />
                             <br /> */}
@@ -425,9 +431,6 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                 <br />
                                 <div className="row">
                                     <div className="col">
-
-
-
                                         {stateFriend === "amigo" &&
                                             <Fragment>
                                                 <Button className="buttonForm" variant="primary" onClick={borrarFriend}>Eliminar Amigo</Button>
@@ -461,11 +464,11 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                         }
 
                                     </div>
-                                    <div className="col-4">
-                                        {props.player.isAdmin &&
+                                    {props.player.isAdmin &&
+                                    <div className="col-4"> 
                                             <Button className="buttonForm" variant="primary" onClick={borrar}>Borrar</Button>
-                                        }
                                     </div>
+                                    }
                                 </div>
                                 {/* )
                                 )
@@ -505,9 +508,9 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                             <Card.Text className="cardTextListPlayer">
                                                 {f.city}
                                             </Card.Text >
-                                            <Card.Text className="cardTextListPlayer">
+                                            <Card.Text className="cardTextListPlayer containerTextGenreAndIcon">
                                                 <img src={f.genre === "HOMBRE" ? "/images/hombre30.png" : "/images/mujer.png"} width="15" height="15" alt="" />
-                                                <span className="text-capitalize">{thisplayer.genre.toLowerCase()}</span>
+                                                <span className="text-capitalize">{f.genre.toLowerCase()}</span>
                                             </Card.Text >
                                             <Card.Text className="cardTextListPlayer">
                                                 {f.rating > 0 &&

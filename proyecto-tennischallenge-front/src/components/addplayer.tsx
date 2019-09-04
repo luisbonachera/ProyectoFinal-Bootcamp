@@ -5,6 +5,8 @@ import * as actions from '../actions/actions';
 import { connect } from 'react-redux';
 import { IPlayer } from '../interfaceIPlayer';
 import jwt from 'jsonwebtoken';
+// import RegExp from 'regex';
+// var Regex = require("regex");
 
 interface IProps { }
 
@@ -78,7 +80,16 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
     //     // setError("");
     // };
 
-
+//     const validEmailRegex =  // codigo regex para verificacion
+//     RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+// ​
+//   const validateEmail = validEmailRegex.test(email); //emailvalue es el valor de mi hook para el email, que recojo del onchange del inpu
+  
+//   cons newUser = () => {
+//    if(ValidateEmail) {
+//    	/* aqui tu fetch que llame a la base de datos*/
+   
+//    }
 
 
 
@@ -87,6 +98,9 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
         // console.log(isAdmin);
         ///requerir campos*********************************************************************
         if (username && password && email && city && genre && rating) {
+            // if(validateUsername && validateEmail && validateCity) {
+                // if(validateEmail) {
+
             const formData = new FormData();
             if (image) {
                 formData.append("file", image);
@@ -271,6 +285,12 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                 .catch(err => {
                     console.log("Error," + err)
                 });
+            // }else{
+            //     if(!validEmailRegex){
+            //         setErrorEmail("error");
+            //         setError("El email no es un email valido.");
+            //     }
+            // }
         } else {
             if (!username) {
                 setErrorUsername("error");
@@ -294,7 +314,7 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
             setError("Completa los campos requeridos");
             /**Faltan algun o todos los campos */
         }
-    }
+}
 
 
     return (

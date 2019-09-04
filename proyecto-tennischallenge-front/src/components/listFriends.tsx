@@ -435,13 +435,13 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
 
                                 <Card.Body className="cardBodyListPlayer" >
                                     <Link to={"/players/" + f.id_player} onClick={() => watched(f.id_player)} >
-                                        <Card.Title className="cardTitleListPlayer">
-                                            {f.username}
+                                        <Card.Title className="cardTitleListPlayer text-capitalize">
+                                            {f.username.toLocaleLowerCase()}
                                         </Card.Title>
-                                        <Card.Text className="cardTextListPlayer">
-                                            {f.city}
+                                        <Card.Text className="cardTextListPlayer text-capitalize">
+                                            {f.city.toLocaleLowerCase()}
                                         </Card.Text >
-                                        <Card.Text className="cardTextListPlayer">
+                                        <Card.Text className="cardTextListPlayer containerTextGenreAndIcon">
                                             <img src={f.genre === "HOMBRE" ? "images/hombre30.png" : "images/mujer.png"} width="15" height="15" alt="" />
                                             <span className="text-capitalize">{f.genre.toLowerCase()}</span>
                                         </Card.Text >

@@ -37,6 +37,11 @@
   background-attachment: fixed;
 }
 
+.card-footer {
+  background: none !important;
+  border-top: none !important;
+}
+
 /* .App-header2{
   padding-top: 116px;/*121*/
 
@@ -211,14 +216,16 @@ a:hover {
   padding-right: 15px;
 }
 
-.span-title{
+.span-title {
   padding-left: 35px;
 }
+
 /**/
 
 .span-logo:hover, .span-Dropdown:hover {
   /* color: #081d60 !important; */
   color: #6c757d !important;
+  
 }
 
 .span-Dropdown {
@@ -226,6 +233,7 @@ a:hover {
   /* color: white !important; */
   padding-right: 10px;
   font-size: 23px;
+  /* text-transform: capitalize !important; */
 }
 
 .dropdown-menu.show {
@@ -452,7 +460,6 @@ a:hover {
 
 .cardTitleListPlayer {
   margin-bottom: 0.5rem;
- 
 }
 
 .cardTextListPlayer {
@@ -488,8 +495,9 @@ a:hover {
   /* color: #081d60; */
   color: #fff;
 }
+
 #dropdwnMenuShowNavbar.show {
- line-height: 1.5;
+  line-height: 1.5;
 }
 
 .dropdown-toggle::after {
@@ -644,18 +652,20 @@ a:hover {
   color: rgb(13, 75, 220);
 }
 
-.containerErrorMailSentorReceived{
+.containerErrorMailSentorReceived {
   display: flex;
   align-items: center;
   width: 100%;
   height: 100%;
 }
-.errorMailSentorReceived{
+
+.errorMailSentorReceived {
   font-size: 20px;
   text-align: center;
   color: white !important;
   height: auto;
 }
+
 /******************** Detalle mensaje **************************/
 
 .detalleMensaje {
@@ -889,23 +899,34 @@ a:hover {
   margin: auto;
 }
 
-.cardProfile{
- height: 150px;
- border-radius: .55rem .25rem .25rem 3.3rem;
-}
-
-.cardProfileViewPlayer{
+.cardProfile {
   height: 150px;
   border-radius: .55rem .25rem .25rem 3.3rem;
-  max-width: 640px;
+}
+
+.cardProfileViewPlayer {
+  height: 150px;
+  border-radius: .55rem .25rem .25rem 3.3rem;
+  /* max-width: 640px; */
+  max-width: 700px;
   margin-bottom: 2rem !important;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.containerTextGenreAndIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /******************** FriendshipRequest **************************/
 
 .cardHorizontRequest {
   line-height: 0.4;
-  width: 35%;
+  width: 40%;
   border: none;
   background-color: rgba(255, 255, 255, 0.8);
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 1), 0 2px 10px 0 rgba(0, 0, 0, 1);
@@ -924,10 +945,9 @@ a:hover {
   margin: 1%;
 }
 
-.cardFooterFriendsRequest{
+.cardFooterFriendsRequest {
   display: flex;
-    align-items: center;
+  align-items: center;
 }
 
 /******************** ViewPlayer **************************/
-

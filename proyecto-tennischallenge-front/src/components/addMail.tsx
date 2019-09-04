@@ -46,7 +46,7 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
         SetText(event.currentTarget.value);
         setError("");
         setErrorText("");
-        
+
         SetMaximunCharacterText(event.currentTarget.value.length);
     };
 
@@ -64,7 +64,7 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
 
     const addMsg = () => {
 
-        if (subject && text && (!inputPlayerDestiny || id === +decoded.id_player) ) {
+        if (subject && text && (!inputPlayerDestiny || id === +decoded.id_player)) {
             if (playerDestiny) {
                 let id_player_destiny;
                 if (soyYo) {
@@ -118,69 +118,69 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
 
                                     } else {
                                         console.log("Error en response.ok");
-                                    //     response.json().then(({ e }) => {
-                                    //         // setError("Response.ok, Error ," + e);
-                                    //     console.log(e);
-                                    //     console.log(e.sqlMessage)
-                                    //    let array = e.sqlMessage.split(" ");
-                                    //    array[array.length -1] =  array[array.length -1].replace("'", "");
-                                    //    array[array.length -1] =  array[array.length -1].replace("'", "");
-                                    //    console.log(array);
-                                    //    console.log(array[array.length -1]);
-                                    //    let err = array[array.length -1];
-                                    //     if (e.errno === 1406) {
-                                    //         if(err === "subject"){
-                                    //             setError("El contenido del asunto es demasiado largo.");
-                                    //         setErrorSubject("error");
-                                    //         }else if (err === "text"){
-                                    //             setError("El contenido del texto es demasiado largo.");
-                                    //         setErrorText("error");
-                                    //         }
-                                    //         console.log(e.sqlMessage)
-                                    //         console.log(array[array.length -1]);
-                                    //     } else {
-                                    //         console.log("no se porque entra aqui")
-                                    //     }
-                                    //     })
-                                    //     .catch(err => {
-                                    //         console.log("Error," + err)
-                                    //     });
-                                        
+                                        //     response.json().then(({ e }) => {
+                                        //         // setError("Response.ok, Error ," + e);
+                                        //     console.log(e);
+                                        //     console.log(e.sqlMessage)
+                                        //    let array = e.sqlMessage.split(" ");
+                                        //    array[array.length -1] =  array[array.length -1].replace("'", "");
+                                        //    array[array.length -1] =  array[array.length -1].replace("'", "");
+                                        //    console.log(array);
+                                        //    console.log(array[array.length -1]);
+                                        //    let err = array[array.length -1];
+                                        //     if (e.errno === 1406) {
+                                        //         if(err === "subject"){
+                                        //             setError("El contenido del asunto es demasiado largo.");
+                                        //         setErrorSubject("error");
+                                        //         }else if (err === "text"){
+                                        //             setError("El contenido del texto es demasiado largo.");
+                                        //         setErrorText("error");
+                                        //         }
+                                        //         console.log(e.sqlMessage)
+                                        //         console.log(array[array.length -1]);
+                                        //     } else {
+                                        //         console.log("no se porque entra aqui")
+                                        //     }
+                                        //     })
+                                        //     .catch(err => {
+                                        //         console.log("Error," + err)
+                                        //     });
+
                                     }
                                 })
                                 .catch(error => {
                                     setError("Response Error , ha fallado la consulta" + error);
                                     console.log(error);
                                 });
-                        }else {
+                        } else {
                             response.json().then(({ e }) => {
                                 // setError("Response.ok, Error ," + e);
-                            console.log(e);
-                            console.log(e.sqlMessage)
-                           let array = e.sqlMessage.split(" ");
-                           array[array.length -4] =  array[array.length -4].replace("'", "");
-                           array[array.length -4] =  array[array.length -4].replace("'", "");
-                           console.log(array);
-                           console.log(array[array.length -4]);
-                           let err = array[array.length -4];
-                            if (e.errno === 1406) {
-                                if(err === "subject"){
-                                    setError("El contenido del asunto es demasiado largo.");
-                                setErrorSubject("error");
-                                }else if (err === "text"){
-                                    setError("El contenido del texto es demasiado largo.");
-                                setErrorText("error");
-                                }
+                                console.log(e);
                                 console.log(e.sqlMessage)
-                                console.log(array[array.length -4]);
-                            } else {
-                                console.log("no se porque entra aqui")
-                            }
+                                let array = e.sqlMessage.split(" ");
+                                array[array.length - 4] = array[array.length - 4].replace("'", "");
+                                array[array.length - 4] = array[array.length - 4].replace("'", "");
+                                console.log(array);
+                                console.log(array[array.length - 4]);
+                                let err = array[array.length - 4];
+                                if (e.errno === 1406) {
+                                    if (err === "subject") {
+                                        setError("El contenido del asunto es demasiado largo.");
+                                        setErrorSubject("error");
+                                    } else if (err === "text") {
+                                        setError("El contenido del texto es demasiado largo.");
+                                        setErrorText("error");
+                                    }
+                                    console.log(e.sqlMessage)
+                                    console.log(array[array.length - 4]);
+                                } else {
+                                    console.log("no se porque entra aqui")
+                                }
                             })
-                            .catch(err => {
-                                console.log("Error," + err)
-                            });
-                            
+                                .catch(err => {
+                                    console.log("Error," + err)
+                                });
+
                         }
                     })
                     .catch(err => {
@@ -206,28 +206,31 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
     }
 
 
-    
-    
+
+
     let soyYo = false;
     // let playerDestiny: any = null;
-    
+
     // else {
     let playerDestiny = props.players.find(p => p.id_player === +id);
-    
-    if(!playerDestiny){
-        return null;
+    // if (!playerDestiny) {
+    //     setError("no hay destinatario");
+    // }
+
+    if (!playerDestiny) {
+        return null;  
     }
     if (id === +decoded.id_player) {
         //estoy en mi bandeja de correo y tengo que elegir el destinatario
         //si soyYo es false entonces el destinatario esta en la url
-        soyYo = true; 
+        soyYo = true;
     }
     // else{
     //     setErrorInputPlayerDestiny("");
     // }
     // else{
     //     setErrorInputPlayerDestiny("");
-        // SetInputPlayerDestiny(playerDestiny.id_player + "");
+    // SetInputPlayerDestiny(playerDestiny.id_player + "");
     //  }
 
 
@@ -239,56 +242,56 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
             {playerDestiny !== null && playerDestiny !== undefined && (
                 <Fragment>
                     <div className="container row containerMessageNew">
-                    <div className="col-1" >
-                                <p className="usernameMailFrom" >De:</p>
-                                </div>
+                        <div className="col-1" >
+                            <p className="usernameMailFrom" >De:</p>
+                        </div>
                         <div className="col-1">
-                        <p className="usernameMailFrom"></p>
+                            <p className="usernameMailFrom"></p>
                             <img className="imgAvatarMsg" src={props.player.avatar ? "http://localhost:8080/uploads/avatar/" + props.player.avatar : "/images/avatar-tenis.png"}
                                 alt="" width="auto" height="50" />
                         </div>
                         <div className="col-1">
-                            <p className="usernameMailFrom">{props.player.username}</p>
+                            <p className="usernameMailFrom text-capitalize">{props.player.username.toLocaleLowerCase()}</p>
                         </div>
                     </div>
                     {/* <div className="col-2 colum "> */}
-                        {/* {m.id_player_destiny} to*/}
+                    {/* {m.id_player_destiny} to*/}
 
                     {/* </div> */}
-                    
-                        {/* <Form.Group controlId="formGridFrom">
+
+                    {/* <Form.Group controlId="formGridFrom">
                         <Form.Label>De:</Form.Label>
                         <Form.Label> {props.player.username} </Form.Label>
                     </Form.Group> */}
-                        {soyYo === false && (
-                            <div className="container row containerMessageNew">
-                                <div className="col-1" >
+                    {soyYo === false && (
+                        <div className="container row containerMessageNew">
+                            <div className="col-1" >
                                 <p className="usernameMailFrom" >Para: </p>
-                                </div>
-                                <div className="col-1" >
-                                     <img className="imgAvatarMsg" src={playerDestiny.avatar ? "http://localhost:8080/uploads/avatar/" + playerDestiny.avatar : "/images/avatar-tenis.png"}
-                                        alt="" width="auto" height="50" />
-                                </div>
-                                <div className="col-1">
-                                    <p className="usernameMailFrom">{playerDestiny.username}</p>
-                                </div>
                             </div>
-                            // <Form.Group className="containerPlayerDestinyMessage" controlId="formGridTo">
-                            //     {/* <Form.Label>Para:</Form.Label> */}
-                            //     <Form.Label> {playerDestiny.username} </Form.Label>
-                            // </Form.Group>
-                        )}
-                        <Form className="container">
+                            <div className="col-1" >
+                                <img className="imgAvatarMsg" src={playerDestiny.avatar ? "http://localhost:8080/uploads/avatar/" + playerDestiny.avatar : "/images/avatar-tenis.png"}
+                                    alt="" width="auto" height="50" />
+                            </div>
+                            <div className="col-1">
+                                <p className="usernameMailFrom text-capitalize">{playerDestiny.username.toLocaleLowerCase()}</p>
+                            </div>
+                        </div>
+                        // <Form.Group className="containerPlayerDestinyMessage" controlId="formGridTo">
+                        //     {/* <Form.Label>Para:</Form.Label> */}
+                        //     <Form.Label> {playerDestiny.username} </Form.Label>
+                        // </Form.Group>
+                    )}
+                    <Form className="container">
                         {soyYo && (
-                            
+
                             <Form.Group className="containerPlayerDestinyMessage" controlId="formGridState">
                                 {/* <Form.Label>Para</Form.Label> */}
                                 {/* <div className="col-1 colum ">
                                 <img className="imgAvatarMsg" src={inputListPlayerTo.avatar ? "http://localhost:8080/uploads/avatar/" + inputListPlayerTo.avatar : "/images/avatar-tenis.png"}
                                     alt="" width="auto" height="50" />
                             </div> */}
-                                <Form.Control className={errorInputPlayerDestiny?"selectUsernameEmail containerErrorRed":"selectUsernameEmail"}
-                                as="select" type="text" value={inputPlayerDestiny + ""} onChange={updateInputPlayerDestiny}>
+                                <Form.Control className={errorInputPlayerDestiny ? "selectUsernameEmail containerErrorRed" : "selectUsernameEmail"}
+                                    as="select" type="text" value={inputPlayerDestiny + ""} onChange={updateInputPlayerDestiny}>
                                     <option defaultValue="" hidden>destino</option>
                                     {props.players.sort(function (a, b) {
                                         let nameA = a.username.toLowerCase();
@@ -303,7 +306,7 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                                         //     <option defaultValue={p.id_player+""}>{p.username}</option>
 
                                         // ) ||  (
-                                        <option key={p.id_player} value={p.id_player + ""}>{p.username}</option>
+                                        <option className="text-capitalize" key={p.id_player} value={p.id_player + ""}>{p.username.toLocaleLowerCase()}</option>
 
                                         // )
                                     )
@@ -313,15 +316,15 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                         )}
                         <Form.Group controlId="formGridSubject">
                             {/* <Form.Label>Asunto</Form.Label> */}
-                            <Form.Control className={errorSubject?"containerErrorRed":""} as="input" maxLength="100" onChange={updateSubject} placeholder="Asunto" />
+                            <Form.Control className={errorSubject ? "containerErrorRed" : ""} as="input" maxLength="100" onChange={updateSubject} placeholder="Asunto" />
                         </Form.Group>
 
 
                         <Form.Group controlId="formGridTextAreaText">
                             {/* <Form.Label>Texto: </Form.Label> */}
-                            <Form.Control className={errorText?"textAreaMensajeNuevo containerErrorRed":"textAreaMensajeNuevo"}
-                             as="textarea" rows="3" onChange={updateText} maxLength="1000"
-                             placeholder="Escriba aqui el texto del mensaje máximo 1000 caracteres" />
+                            <Form.Control className={errorText ? "textAreaMensajeNuevo containerErrorRed" : "textAreaMensajeNuevo"}
+                                as="textarea" rows="3" onChange={updateText} maxLength="1000"
+                                placeholder="Escriba aqui el texto del mensaje máximo 1000 caracteres" />
                         </Form.Group>
 
                         <Form.Group controlId="formButttonSend">
@@ -347,6 +350,13 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                     </Form>
                 </Fragment>
             )}
+            {(playerDestiny === null || playerDestiny === undefined) &&
+                <div className="col">
+                    {error === "no hay destinatario" &&
+                        <p className="ErrorAddMessage">No puedes enviar un mensaje a este usuario ha borrado su cuenta.</p>
+                    }
+                </div>
+            }
 
 
         </div>

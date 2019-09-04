@@ -24,6 +24,7 @@
     "react-scripts": "3.0.1",
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
+    "regex": "^0.1.1",
     "typescript": "3.5.3"
   },
   "scripts": {

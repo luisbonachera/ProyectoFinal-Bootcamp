@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, DropdownButton, Form, Col, Button, CardDeck } from 'react-bootstrap';
+import { Card, DropdownButton, Form, Col, Button } from 'react-bootstrap';
 import { IPlayer } from '../interfaceIPlayer';
 import { IGlobalState } from '../reducers/reducers';
 import { connect } from 'react-redux';
@@ -505,19 +505,19 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
                                         "images/avatar-tenis.png"} alt="" />
                                 <Card.Body className="cardBodyListPlayer" >
                                     {/* <Link to={"/players/" + f.id_player} > */}
-                                    <Card.Title className="cardTitleListPlayer">
-                                        {f.username}
+                                    <Card.Title className="cardTitleListPlayer text-capitalize">
+                                        {f.username.toLocaleLowerCase()}
                                     </Card.Title>
                                     {props.player.isAdmin &&
                                     <Card.Text className="cardTextListPlayer">
                                         {f.email}
                                     </Card.Text >
                                     }
-                                    <Card.Text className="cardTextListPlayer">
-                                        {f.city}
+                                    <Card.Text className="cardTextListPlayer text-capitalize">
+                                        {f.city.toLocaleLowerCase()}
                                     </Card.Text >
 
-                                    <Card.Text className="cardTextListPlayer">
+                                    <Card.Text className="cardTextListPlayer containerTextGenreAndIcon">
                                         <img src={f.genre === "HOMBRE" ? "images/hombre30.png" : "images/mujer.png"} width="15" height="15" alt="" />
                                         <span className="text-capitalize">{f.genre.toLowerCase()}</span>
                                     </Card.Text >

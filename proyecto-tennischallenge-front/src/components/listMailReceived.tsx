@@ -91,6 +91,8 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
                     .then(response => {
                         if (response.ok) {
                             ///deberia comprobar mas cosas?
+
+                            // eslint-disable-next-line
                             let msgs = props.msgs.map(m => {
                                 if (m.id_messages === id_message) {
                                     m.watched = true;
@@ -191,7 +193,7 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
                 </div> */}
             {/* </div>
             } */}
-            {messagesHooks.length > 0 && messagesHooks.map(m =>
+            {messagesHooks.length > 0 && messagesHooks.map((m:any) =>
                 // <Link to={"/mailTray/"+props.match.params.typeMessage + "/" + m.id_messages} >
                 // los mensajes received y no vistos son los que se deberian de poner de otro color
                 <Link key={m.id_messages} to={"/mailTray/received/" + m.id_messages} onClick={() => viewMsg(m.id_messages)}>
@@ -201,8 +203,8 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
                             <img className="imgAvatarMsg" src={m.avatar ? "http://localhost:8080/uploads/avatar/" + m.avatar : "/images/avatar-tenis.png"}
                                 alt="" width="auto" height="50" />
                         </div>
-                        <div className="col-2 colum ">
-                            {m.username}
+                        <div className="col-2 colum text-capitalize">
+                            {m.username.toLocaleLowerCase()}
                         </div>
                         {/* <div className="col">
                             {props.player.username}

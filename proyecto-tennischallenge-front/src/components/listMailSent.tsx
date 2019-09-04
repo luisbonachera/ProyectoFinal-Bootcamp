@@ -94,7 +94,7 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
                     </div>
                 </div>
             } */}
-            {messagesHooks.length > 0 && messagesHooks.map(m =>
+            {messagesHooks.length > 0 && messagesHooks.map((m:any) =>
                 // <Link to={"/mailTray/"+props.match.params.typeMessage + "/" + m.id_messages} >
                 // los mensajes received y no vistos son los que se deberian de poner de otro color
                 <Link key={m.id_messages} to={"/mailTray/sent/" + m.id_messages}>
@@ -110,9 +110,9 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
                                 <img className="imgAvatarMsg" src={m.avatar ? "http://localhost:8080/uploads/avatar/" + m.avatar : "/images/avatar-tenis.png"}
                                     alt="" width="auto" height="50" />
                             </div>
-                            <div className="col-2 colum ">
+                            <div className="col-2 colum text-capitalize">
                                 {/* {m.id_player_destiny} to*/}
-                                {m.username}
+                                {m.username.toLocaleLowerCase()}
                             </div>
                             <div className="col-6 colum ">
                                 {m.subject}

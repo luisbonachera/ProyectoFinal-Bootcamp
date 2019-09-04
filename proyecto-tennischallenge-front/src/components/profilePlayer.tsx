@@ -95,21 +95,23 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
         <div>
 
             {player !== null && player !== undefined && (
-                <CardDeck className="cardHorizont cardProfileViewPlayer">
+                <CardDeck className="cardHorizont ">
 
-                    <Card className="cardProfile" style={{ display: 'flex', flexDirection: 'row' }}>
+                    <Card className="cardProfile cardProfileViewPlayer" style={{ display: 'flex', flexDirection: 'row' }}>
                         <Card.Img className="avatarListProfile" variant="top"
                             src={player.avatar ? "http://localhost:8080/uploads/avatar/" + player.avatar + "?" + (new Date()).valueOf() :
                                 "../../images/avatar-tenis.png"} alt="" />
                         <Card.Body>
-                            <Card.Title>{player.username}</Card.Title>
+                            <Card.Title className="text-capitalize">
+                            {player.username.toLocaleLowerCase()}
+                            </Card.Title>
                             <Card.Text>
                                 {player.email}
                             </Card.Text>
-                            <Card.Text>
-                                {player.city}
+                            <Card.Text className="text-capitalize">
+                                {player.city.toLocaleLowerCase()}
                             </Card.Text>
-                            <Card.Text>
+                            <Card.Text className="containerTextGenreAndIcon">
                                 <img src={player.genre === "HOMBRE" ? "../../images/hombre30.png" : "../../images/mujer.png"} width="15" height="15" alt="" />
                                 <span className="text-capitalize">{player.genre.toLowerCase()}</span>
                             </Card.Text>

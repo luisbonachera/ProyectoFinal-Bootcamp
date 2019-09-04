@@ -90,6 +90,7 @@ const App: React.FC<IProps & IPropsGlobal> = props => {
 
     }
   }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
   React.useEffect(() => {

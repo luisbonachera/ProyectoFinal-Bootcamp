@@ -171,8 +171,8 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
 
             if (inputSex) {
                 lista.sort(function (a, b) {
-                    let genreA = a.genre.toLowerCase();
-                    let genreB = b.genre.toLowerCase();
+                    let genreA = a.genre.toLocaleLowerCase();
+                    let genreB = b.genre.toLocaleLowerCase();
                     if (genreA < genreB) //sort string ascending
                         return -1;
                     if (genreA > genreB)
@@ -333,16 +333,16 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
                                         "images/avatar-tenis.png"} alt="" />
                                 <Card.Body className="cardBodyListPlayer" >
                                     <Link to={"/players/" + p.id_player} >
-                                        <Card.Title className="cardTitleListPlayer">
-                                            {p.username}
+                                        <Card.Title className="cardTitleListPlayer text-capitalize">
+                                            {p.username.toLocaleLowerCase()}
                                         </Card.Title>
-                                        <Card.Text className="cardTextListPlayer">
-                                            {p.city}
+                                        <Card.Text className="cardTextListPlayer text-capitalize">
+                                            {p.city.toLocaleLowerCase()}
                                         </Card.Text >
                                         
-                                        <Card.Text className="cardTextListPlayer">
+                                        <Card.Text className="cardTextListPlayer containerTextGenreAndIcon">
                                             <img src={p.genre === "HOMBRE" ? "images/hombre30.png" : "images/mujer.png"} width="15" height="15" alt="" />
-                                            <span className="text-capitalize">{p.genre.toLowerCase()}</span>
+                                            <span className="text-capitalize">{p.genre.toLocaleLowerCase()}</span>
                                         </Card.Text >
                                         <Card.Text className="cardTextListPlayer">
                                             {p.rating > 0 &&

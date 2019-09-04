@@ -18,7 +18,7 @@ const MailDetail: React.FC<IPropsGlobal & RouteComponentProps<{ typeMessage: str
 
     const id_msg = props.match.params.id_message;
     const typeMsg = props.match.params.typeMessage;
-    let message = props.msgs.filter(m => m.id_messages === +id_msg);
+    let message:any = props.msgs.filter(m => m.id_messages === +id_msg);
     // console.log(props.msgs);
 
     React.useEffect(() => {
@@ -53,7 +53,7 @@ const MailDetail: React.FC<IPropsGlobal & RouteComponentProps<{ typeMessage: str
                 </div>
                 <div className="col-1 colum ">
                     {/* {typeMsg === "received" ? message[0].username : props.player.username} */}
-                    <p className="usernameMailFrom">{message[0].username}</p>
+                    <p className="usernameMailFrom text-capitalize">{message[0].username.toLocaleLowerCase()}</p>
                 </div>
                 <div className="col-6"></div>
                 <div className="col-3 containerDateMessageDetail">
