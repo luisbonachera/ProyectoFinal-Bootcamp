@@ -496,10 +496,10 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
                 <div className="col-sm">
                     {friendsFiltros && friendsFiltros.map(f => (
                         // <div className="cardsJugadores" key={f.id_player}>
-                        <div className="containerListFriendshipRequest">
+                        <div className="containerListFriendshipRequest" key={f.id_player}>
                             {/* <Card style={{ display: 'flex', flexDirection: 'row' }}> */}
                             {/* <Card className="cardListPlayer"> */}
-                            <Card className="cardHorizontRequest" key={f.id_player} style={{ display: 'flex', flexDirection: 'row' }}>
+                            <Card className="cardHorizontRequest"  style={{ display: 'flex', flexDirection: 'row' }}>
                                 <Card.Img className="avatarListProfile" variant="top"
                                     src={f.avatar ? "http://localhost:8080/uploads/avatar/" + f.avatar + "?" + Date() :
                                         "images/avatar-tenis.png"} alt="" />
@@ -519,7 +519,7 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
 
                                     <Card.Text className="cardTextListPlayer">
                                         <img src={f.genre === "HOMBRE" ? "images/hombre30.png" : "images/mujer.png"} width="15" height="15" alt="" />
-                                        {f.genre}
+                                        <span className="text-capitalize">{f.genre.toLowerCase()}</span>
                                     </Card.Text >
                                     <Card.Text className="cardTextListPlayer">
                                         {f.rating > 0 &&

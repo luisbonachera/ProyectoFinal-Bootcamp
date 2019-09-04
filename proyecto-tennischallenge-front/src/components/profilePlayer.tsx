@@ -95,9 +95,9 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
         <div>
 
             {player !== null && player !== undefined && (
-                <CardDeck className="cardHorizont">
+                <CardDeck className="cardHorizont cardProfileViewPlayer">
 
-                    <Card style={{ display: 'flex', flexDirection: 'row' }}>
+                    <Card className="cardProfile" style={{ display: 'flex', flexDirection: 'row' }}>
                         <Card.Img className="avatarListProfile" variant="top"
                             src={player.avatar ? "http://localhost:8080/uploads/avatar/" + player.avatar + "?" + (new Date()).valueOf() :
                                 "../../images/avatar-tenis.png"} alt="" />
@@ -111,7 +111,7 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
                             </Card.Text>
                             <Card.Text>
                                 <img src={player.genre === "HOMBRE" ? "../../images/hombre30.png" : "../../images/mujer.png"} width="15" height="15" alt="" />
-                                {player.genre}
+                                <span className="text-capitalize">{player.genre.toLowerCase()}</span>
                             </Card.Text>
                             <Card.Text>
                                 {player.rating > 0 &&

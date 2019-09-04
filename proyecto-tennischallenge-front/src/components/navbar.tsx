@@ -173,7 +173,7 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                                                     variant="light">{props.notifications.numbers_messages + props.notifications.numbers_requestFriend + props.notifications.numbers_acceptedFriend > 0 ?
                                                         props.notifications.numbers_messages + props.notifications.numbers_acceptedFriend + props.notifications.numbers_requestFriend : ""}
                                                 </Badge>
-                                                <img className="animated" src="images\pelota-tenis.png" alt="" width="35px" height="35px"></img>
+                                                <img className="animated" src="/images/pelota-tenis.png" alt="" width="35px" height="35px"></img>
                                             </div>
                                             //  </Fragment>
                                         }
@@ -198,7 +198,7 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                                             {props.notifications.numbers_messages > 0 &&
                                                 <Fragment>
                                                     <Badge className="notifications" variant="light">{props.notifications.numbers_messages > 0 ? props.notifications.numbers_messages : ""}</Badge>
-                                                    <img src="images\pelota-tenis.png" alt="" width="35px" height="35px"></img>
+                                                    <img src="/images/pelota-tenis.png" alt="" width="35px" height="35px"></img>
                                                 </Fragment>
                                             }
                                         </Link>
@@ -210,7 +210,7 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                                             {props.notifications.numbers_acceptedFriend > 0 &&
                                                 <Fragment>
                                                     <Badge className="notifications" variant="light">{props.notifications.numbers_acceptedFriend > 0 ? props.notifications.numbers_acceptedFriend : ""}</Badge>
-                                                    <img src="images\pelota-tenis.png" alt="" width="35px" height="35px"></img>
+                                                    <img src="/images/pelota-tenis.png" alt="" width="35px" height="35px"></img>
                                                 </Fragment>
                                             }
                                         </Link>
@@ -221,7 +221,7 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                                             {props.notifications.numbers_requestFriend > 0 &&
                                                 <Fragment>
                                                     <Badge className="notifications" variant="light">{props.notifications.numbers_requestFriend > 0 ? props.notifications.numbers_requestFriend : ""}</Badge>
-                                                    <img src="images\pelota-tenis.png" alt="" width="35px" height="35px"></img>
+                                                    <img src="/images/pelota-tenis.png" alt="" width="35px" height="35px"></img>
                                                 </Fragment>
                                             }
                                         </Link>

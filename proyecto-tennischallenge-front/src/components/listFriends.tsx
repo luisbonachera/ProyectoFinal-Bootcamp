@@ -20,6 +20,7 @@ interface IpropsGlobal {
     player: IPlayer;
     players: IPlayer[];
     setNotifications: (notification: INotifications) => void;
+    notifications: INotifications;
 };
 
 const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
@@ -442,7 +443,7 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                                         </Card.Text >
                                         <Card.Text className="cardTextListPlayer">
                                             <img src={f.genre === "HOMBRE" ? "images/hombre30.png" : "images/mujer.png"} width="15" height="15" alt="" />
-                                            {f.genre}
+                                            <span className="text-capitalize">{f.genre.toLowerCase()}</span>
                                         </Card.Text >
                                         <Card.Text className="cardTextListPlayer">
                                             {f.rating > 0 &&
@@ -488,7 +489,8 @@ const mapStateToProps = (state: IGlobalState) => ({
     token: state.token,
     friendships: state.friendships,
     player: state.player,
-    players: state.players
+    players: state.players,
+    notifications: state.notifications
 
 });
 

@@ -96,8 +96,8 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
                                     m.watched = true;
                                 }
                             });
-                            console.log("mensajes");
-                            console.log(msgs);
+                            // console.log("mensajes");
+                            // console.log(msgs);
                             setMessages(msgs);
                             //actualizo mis notificaciones
                             updatednotificationsFriendship();
@@ -131,19 +131,19 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
                     ////mirar y cambiar y descomentar/////////////////////////////////////////////////////
                     let msgsReceived = props.msgs.filter(m => m.id_player_destiny === decoded.id_player);
                     // let msgsReceived = props.msgs.filter(m => m.id_player_sent === decoded.id_player);
-                    console.log(msgsReceived);
+                    // console.log(msgsReceived);
                     if (msgsReceived.length > 0) {
-                        console.log("hay msg recibidos y los guardo");
+                        // console.log("hay msg recibidos y los guardo");
                         // setMessagesSent([]);
                         // setMessagesReceived(msgsReceived);
                         setError("");
                         setMessagesHooks(msgsReceived);
-                        console.log("error:" + error);
-                        console.log("msgsReceived");
-                        console.log(msgsReceived);
+                        // console.log("error:" + error);
+                        // console.log("msgsReceived");
+                        // console.log(msgsReceived);
                     } else {
-                        console.log("no hay mensajes recibidos");
-                        setError("no hay mensajes recibidos");
+                        // console.log("no hay mensajes recibidos");
+                        setError("No tienes mensajes recibidos.");
                         // props.history.push("/mailTray/received");
                     }
 
@@ -154,19 +154,19 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
                 console.log("no hay token");
             }
         } else {
-            setError("no hay mensajes en la store, haciendo UseEffect.");
+            console.log("no hay mensajes en la store, haciendo UseEffect.");
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.msgs]);
 
     if (!props.msgs) {
-        console.log("no hay mensajes en la store");
-        setError("No tienes mensajes Recibidos.")
+        // console.log("no hay mensajes en la store");
+        setError("No tienes mensajes recibidos.")
         return null;
     }
 
-    console.log("mensajes received fuera de useEffect:");
-    console.log(messagesHooks);
+    // console.log("mensajes received fuera de useEffect:");
+    // console.log(messagesHooks);
 
     if (!props.player) {
         return null;
@@ -222,9 +222,12 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
                     </div>
                 </Link>
             )}
+
             {error && (
-                <div className="col">
-                    {error}
+                <div className="containerErrorMailSentorReceived">
+                    <div className="col errorMailSentorReceived">
+                        {error}
+                    </div>
                 </div>
             )}
 

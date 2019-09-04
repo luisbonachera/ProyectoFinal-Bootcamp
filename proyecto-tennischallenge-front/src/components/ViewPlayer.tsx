@@ -7,6 +7,7 @@ import { IGlobalState } from '../reducers/reducers';
 import jwt from 'jsonwebtoken';
 import * as actions from '../actions/actions';
 import { IFriendship } from '../interfaceIFriendship';
+import { INotifications } from '../interfaceINotifications';
 
 interface IProps { }
 
@@ -23,6 +24,7 @@ interface IPropsGlobal {
     // friendshipsById: IFriendship[];
     // setFriendshipsById: (friendships: IFriendship[]) => void;
     deleteFriendship: (id_friendship: number) => void;
+    notifications: INotifications;
 }
 
 const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player: string }>> = props => {
@@ -145,8 +147,8 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                             //     props.history.push("/");
                             //     props.deletePlayer(id);
                             // } else if (props.player.isAdmin) {
-                            props.history.push("/players");
-
+                            props.deleteFriendship(id_friend);
+                            props.history.push("/friends");
                             // } else {
                             //     console.log("no deberia entrar aqui, o eres admin o te borras a ti.")
                             // }
@@ -190,7 +192,7 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                             console.log("usuario borrado")
                             if (props.player.id_player === id) {
                                 props.setToken("");
-
+                                /****borrar todo */
                                 props.deletePlayer(id);
                                 props.deleteFriendship(id_friend);
                                 props.history.push("/");
@@ -274,9 +276,8 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
             // setError("Aun no existe el player")
             console.log("este usuario no es tu amigo")
         }
-
     };
-    React.useEffect(findThisPlayer, [props.match.params.id_player]);
+    React.useEffect(findThisPlayer, [props.match.params.id_player, props.friendships]);
 
     const list = () => {
         if (props.token) {
@@ -330,6 +331,8 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
         }
     };
     React.useEffect(list, [props.players, props.match.params.id_player]);
+    // React.useEffect(list, [props.players, props.notifications]);
+
     // const findMyFriend = () => {
     //     let lista = props.friendships.filter(f =>
     //         ((f.id_player1 === thisplayer.id_player && f.id_player2 === props.player.id_player) ||
@@ -351,9 +354,9 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
         <div>
             {thisplayer !== null && thisplayer !== undefined && (
                 <Fragment>
-                    <CardDeck className="cardHorizont">
+                    <CardDeck className="cardHorizont ">
 
-                        <Card style={{ display: 'flex', flexDirection: 'row' }}>
+                        <Card className="cardProfileViewPlayer" style={{ display: 'flex', flexDirection: 'row' }}>
                             <Card.Img className="avatarListProfile" variant="top"
                                 src={thisplayer.avatar ? "http://localhost:8080/uploads/avatar/" + thisplayer.avatar + "?" + (new Date()).valueOf() :
                                     "../../images/avatar-tenis.png"} alt="" />
@@ -369,7 +372,7 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                 </Card.Text>
                                 <Card.Text>
                                     <img src={thisplayer.genre === "HOMBRE" ? "../../images/hombre30.png" : "../../images/mujer.png"} width="15" height="15" alt="" />
-                                    {thisplayer.genre}
+                                    <span className="text-capitalize">{thisplayer.genre}</span>
                                 </Card.Text>
                                 <Card.Text>
                                     {thisplayer.rating > 0 &&
@@ -503,8 +506,8 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                                 {f.city}
                                             </Card.Text >
                                             <Card.Text className="cardTextListPlayer">
-                                                <img src={f.genre === "HOMBRE" ? "images/hombre30.png" : "images/mujer.png"} width="15" height="15" alt="" />
-                                                {f.genre}
+                                                <img src={f.genre === "HOMBRE" ? "/images/hombre30.png" : "/images/mujer.png"} width="15" height="15" alt="" />
+                                                <span className="text-capitalize">{thisplayer.genre.toLowerCase()}</span>
                                             </Card.Text >
                                             <Card.Text className="cardTextListPlayer">
                                                 {f.rating > 0 &&
@@ -534,7 +537,7 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                         ))}
                         {/* </CardDeck> */}
                         {props.yourFriendships.length === 0 &&
-                            <Form.Text className="errorListPlayerOrFriendOrRequest">No tienes ningún amigo</Form.Text>
+                            <Form.Text className="errorListPlayerOrFriendOrRequest">No tiene ningún amigo</Form.Text>
                         }
                     </div>
                 </Fragment>
@@ -548,9 +551,9 @@ const mapStateToProps = (state: IGlobalState) => ({
     players: state.players,
     player: state.player,
     friendships: state.friendships,
-    yourFriendships: state.yourFriendships
+    yourFriendships: state.yourFriendships,
+    notifications: state.notifications
     // friendshipsById : state.friendshipsById
-
 });
 
 const mapDispachToProps = {

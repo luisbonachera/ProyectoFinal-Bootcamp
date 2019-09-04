@@ -231,8 +231,8 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
     //  }
 
 
-    console.log(playerDestiny);
-    console.log("persona de destino: " + inputPlayerDestiny)
+    // console.log(playerDestiny);
+    // console.log("persona de destino: " + inputPlayerDestiny)
     return (
         // <div className="col-9">
         <div className="col receivedOrSent">
@@ -242,7 +242,7 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                     <div className="col-1" >
                                 <p className="usernameMailFrom" >De:</p>
                                 </div>
-                        <div className="col-2">
+                        <div className="col-1">
                         <p className="usernameMailFrom"></p>
                             <img className="imgAvatarMsg" src={props.player.avatar ? "http://localhost:8080/uploads/avatar/" + props.player.avatar : "/images/avatar-tenis.png"}
                                 alt="" width="auto" height="50" />
@@ -265,7 +265,7 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                                 <div className="col-1" >
                                 <p className="usernameMailFrom" >Para: </p>
                                 </div>
-                                <div className="col-2" >
+                                <div className="col-1" >
                                      <img className="imgAvatarMsg" src={playerDestiny.avatar ? "http://localhost:8080/uploads/avatar/" + playerDestiny.avatar : "/images/avatar-tenis.png"}
                                         alt="" width="auto" height="50" />
                                 </div>
@@ -313,14 +313,14 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                         )}
                         <Form.Group controlId="formGridSubject">
                             {/* <Form.Label>Asunto</Form.Label> */}
-                            <Form.Control className={errorSubject?"containerErrorRed":""} as="input" maxlength="100" onChange={updateSubject} placeholder="Asunto" />
+                            <Form.Control className={errorSubject?"containerErrorRed":""} as="input" maxLength="100" onChange={updateSubject} placeholder="Asunto" />
                         </Form.Group>
 
 
                         <Form.Group controlId="formGridTextAreaText">
                             {/* <Form.Label>Texto: </Form.Label> */}
                             <Form.Control className={errorText?"textAreaMensajeNuevo containerErrorRed":"textAreaMensajeNuevo"}
-                             as="textarea" rows="3" onChange={updateText} maxlength="1000"
+                             as="textarea" rows="3" onChange={updateText} maxLength="1000"
                              placeholder="Escriba aqui el texto del mensaje máximo 1000 caracteres" />
                         </Form.Group>
 

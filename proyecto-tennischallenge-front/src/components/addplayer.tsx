@@ -309,7 +309,7 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                     <Form.Group className="col-6 colUsername" as={Col} controlId="formGridUsername">
                         <Form.Label>Usuario</Form.Label>
                         <Form.Control className={errorUsername ? "form-control form-control-red" : "form-control"}
-                            type="text" as="input" maxlength="12" placeholder="Escriba su usuario" onChange={updateUsername} required />
+                            type="text" as="input" maxLength="12" placeholder="Escriba su usuario" onChange={updateUsername} required />
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
@@ -330,7 +330,7 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                     <Form.Group className="col-6" as={Col} controlId="formGridPassword">
                         <Form.Label>Contraseña</Form.Label>
                         <Form.Control type="password" className={errorPassword ? "form-control form-control-red" : "form-control"}
-                            as="input" maxlength="20" placeholder="Escriba su contraseña" onChange={updatePassword} required />
+                            as="input" maxLength="20" placeholder="Escriba su contraseña" onChange={updatePassword} required />
                     </Form.Group>
 
                 </Form.Row>
@@ -339,7 +339,7 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                     <Form.Group className="col" as={Col} controlId="formGridEmail">
                         <Form.Label>Email</Form.Label>
                         <Form.Control type="email" className={errorEmail ? "form-control form-control-red" : "form-control"}
-                            as="input" maxlength="30" placeholder="Escriba su email" onChange={updateEmail} required />
+                            as="input" maxLength="30" placeholder="Escriba su email" onChange={updateEmail} required />
                     </Form.Group>
                 </Form.Row>
 
@@ -357,7 +357,7 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                     <Form.Group className="col-6" as={Col} controlId="formGridCity">
                         <Form.Label>Ciudad</Form.Label>
                         <Form.Control type="text" className={errorCity ? "form-control form-control-red" : "form-control"}
-                            as="input" maxlength="20" placeholder="Escriba su ciudad" onChange={updateCity} required />
+                            as="input" maxLength="20" placeholder="Escriba su ciudad" onChange={updateCity} required />
                     </Form.Group>
                     {/* <div className="col-1"></div> */}
 
@@ -365,8 +365,8 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                     <Form.Group className="col-4 containerGenero" as={Col} controlId="formGridGenre">
                         <Form.Label>Genero</Form.Label>
                         <Form.Control as="select" className={errorGenre ? "form-control form-control-red" : "form-control"}
-                            value={genre} onChange={updateGenre} required>
-                            <option value="" selected hidden>Elige</option>
+                            value={genre + ""} onChange={updateGenre} required>
+                            <option defaultValue={""} hidden>Elige</option>
                             <option value={"Hombre"}>Hombre</option>
                             <option value={"Mujer"}>Mujer</option>
                         </Form.Control>
@@ -376,7 +376,7 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                         <Form.Label>Level</Form.Label>
                         <Form.Control as="select" className={errorRating ? "form-control form-control-red" : "form-control"}
                             value={rating + ""} onChange={updateRating} required>
-                            <option selected hidden>Elige</option>
+                            <option defaultValue={""} hidden>Elige</option>
                             <option value={1}>1</option>
                             <option value={2}>2</option>
                             <option value={3}>3</option>

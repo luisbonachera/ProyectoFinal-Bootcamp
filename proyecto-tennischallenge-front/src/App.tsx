@@ -64,8 +64,10 @@ const App: React.FC<IProps & IPropsGlobal> = props => {
                     .then((lista) => {
                         console.log("va bien");
                         console.log(lista);
+                        console.log(lista);
                         for (let i = 0; i < lista.length; i++) {
-                            lista[i].isAdmin = (lista[i].isAdmin === '1' ? true : false)
+                            lista[i].isAdmin = lista[i].isAdmin === 1 ? true : false;
+                            console.log(lista[i].isAdmin);
                         }
                         props.setPlayer(player);
                         props.setPlayers(lista);

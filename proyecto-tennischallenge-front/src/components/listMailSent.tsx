@@ -33,19 +33,19 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
                     ////mirar y cambiar y descomentar/////////////////////////////////////////////////////
                     let msgsSent = props.msgs.filter(m => m.id_player_sent === decoded.id_player);
                     // let msgsReceived = props.msgs.filter(m => m.id_player_sent === decoded.id_player);
-                    console.log(msgsSent);
+                    // console.log(msgsSent);
                     if (msgsSent.length > 0) {
-                        console.log("hay msg enviados y los guardo");
+                        // console.log("hay msg enviados y los guardo");
                         // setMessagesSent([]);
                         // setMessagesReceived(msgsReceived);
                         setError("");
                         setMessagesHooks(msgsSent);
 
-                        console.log("msgsSent");
-                        console.log(msgsSent);
+                        // console.log("msgsSent");
+                        // console.log(msgsSent);
                     } else {
-                        console.log("error:");
-                        console.log("no hay mensajes enviados");
+                        // console.log("error:");
+                        // console.log("no hay mensajes enviados");
                         setError("No tienes mensajes enviados");
                         // props.history.push("/mailTray/received");
                     }
@@ -60,16 +60,16 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
             console.log("no hay mensajes en la store, haciendo UseEffect.");
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.msgs,props.notifications]);
+    }, [props.msgs, props.notifications]);
 
     if (!props.msgs) {
-        console.log("no hay mensajes en la store");
+        // console.log("no hay mensajes en la store");
         setError("No tienes mensajes Enviados.")
         return null;
     }
 
-    console.log("mensajes sent fuera de useEffect:");
-    console.log(messagesHooks);
+    // console.log("mensajes sent fuera de useEffect:");
+    // console.log(messagesHooks);
 
     if (!props.player) {
         return null;
@@ -88,8 +88,8 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
                     <div className="col-2 colum colBorder">
                         Fecha
                     </div> */}
-                    {/* esto cuanto haya colores en la lista de los msgs lo deberia quitar */}
-                    {/* <div className="col-1 colum colBorder">
+            {/* esto cuanto haya colores en la lista de los msgs lo deberia quitar */}
+            {/* <div className="col-1 colum colBorder">
                         Visto
                     </div>
                 </div>
@@ -119,14 +119,14 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
                             </div>
                             <div className="col-2 colum ">
                                 <Badge className="badge-date" variant="secondary">
-                                {new Date(m.date).toLocaleDateString()}
+                                    {new Date(m.date).toLocaleDateString()}
                                 </Badge>
                             </div>
                             {/* esto cuanto haya colores en la lista de los msgs lo deberia quitar */}
                             <div className="col-1 colum ">
                                 <Badge className="badge-mailSent-watched">
-                                {m.watched ? <i className="material-icons blue300">done_all</i> : <i className="material-icons green600">done</i>
-                                }
+                                    {m.watched ? <i className="material-icons blue300">done_all</i> : <i className="material-icons green600">done</i>
+                                    }
                                 </Badge>
 
                             </div>
@@ -135,8 +135,10 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
                 </Link>
             )}
             {error && (
-                <div className="col errorListPlayerOrFriendOrRequest">
-                    {error}
+                <div className="containerErrorMailSentorReceived">
+                    <div className="col errorMailSentorReceived">
+                        {error}
+                    </div>
                 </div>
             )}
 

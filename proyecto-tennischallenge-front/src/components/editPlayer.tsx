@@ -162,7 +162,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                             /***************************************** */
                                             lista[0] = {
                                                 ...lista[0],
-                                                ...({ isAdmin: lista[0].isAdmin === '1' ? true : false })
+                                                ...({ isAdmin: lista[0].isAdmin === 1 ? true : false })
                                             }
                                             props.updatePlayers(lista[0]);
                                             /***************************************** */
@@ -328,7 +328,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                         <Form.Group className="col-6 colUsername" as={Col} controlId="formGridUsername">
                             <Form.Label>Usuario</Form.Label>
                             <Form.Control className={errorUsername ? "form-control form-control-red" : "form-control"}
-                               type="text" as="input" placeholder="Escriba su usuario" maxlength="12" value={username} onChange={updateUsername} required />
+                               type="text" as="input" placeholder="Escriba su usuario" maxLength="12" value={username} onChange={updateUsername} required />
                         </Form.Group>
                     </Form.Row>
 
@@ -350,7 +350,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                         <Form.Group className="col-6" as={Col} controlId="formGridCity">
                             <Form.Label>Ciudad</Form.Label>
                             <Form.Control type="text" as="input" className={errorCity ? "form-control form-control-red" : "form-control"}
-                                placeholder="Escriba su ciudad" maxlength="20" value={city} onChange={updateCity} required />
+                                placeholder="Escriba su ciudad" maxLength="20" value={city} onChange={updateCity} required />
                         </Form.Group>
 
 
@@ -374,7 +374,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                         <Form.Group className="col" as={Col} controlId="formGridEmail">
                             <Form.Label>Email</Form.Label>
                             <Form.Control type="email" as="input" className={errorEmail ? "form-control form-control-red" : "form-control"}
-                                placeholder="Escriba su email" maxlength="30" value={email} onChange={updateEmail} required />
+                                placeholder="Escriba su email" maxLength="30" value={email} onChange={updateEmail} required />
                         </Form.Group>
                         {/* <Form.Group as={Col} controlId="formGridEmail">
                             <Form.Label>Email</Form.Label>
@@ -398,10 +398,10 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                         <Form.Group className="col containerGenero" as={Col} controlId="formGridGenre">
                             <Form.Label>Genero</Form.Label>
                             <Form.Control as="select" className={errorGenre ? "form-control form-control-red" : "form-control"}
-                                value={genre} onChange={updateGenre} required>
+                                value={genre} selected onChange={updateGenre} required>
                                 {/* <option value="" selected hidden>Elige</option> */}
-                                <option value={"Hombre"}>Hombre</option>
-                                <option value={"Mujer"}>Mujer</option>
+                                <option value={"HOMBRE"}>Hombre</option>
+                                <option value={"MUJER"}>Mujer</option>
                             </Form.Control>
                         </Form.Group>
                         {/* <Form.Group className="col-4 containerGenero" as={Col} controlId="formGridState">
@@ -423,12 +423,12 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                         <Form.Group className="col-2" as={Col} controlId="formGridRating">
                             <Form.Label>Level</Form.Label>
                             <Form.Control as="select" className={errorRating ? "form-control form-control-red" : "form-control"}
-                                value={rating + ""} onChange={updateRating} required>
-                                <option value={1}>1</option>
-                                <option value={2}>2</option>
-                                <option value={3}>3</option>
-                                <option value={4}>4</option>
-                                <option value={5}>5</option>
+                                value={rating + ""} selected onChange={updateRating} required>
+                                <option value={"1"}>1</option>
+                                <option value={"2"}>2</option>
+                                <option value={"3"}>3</option>
+                                <option value={"4"}>4</option>
+                                <option value={"5"}>5</option>
                             </Form.Control>
 
                         </Form.Group>

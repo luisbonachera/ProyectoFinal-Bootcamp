@@ -28,7 +28,7 @@ const MailTray: React.FC<IPropsGloblal> = props => {
         if (props.token) {
             let decoded = jwt.decode(props.token);
             if (decoded !== null) {
-                console.log(decoded);
+                // console.log(decoded);
 
                 fetch("http://localhost:8080/api/msgs", {
                     headers: {
@@ -42,30 +42,30 @@ const MailTray: React.FC<IPropsGloblal> = props => {
                                 .json()
                                 .then((lista: IMsg[]) => {
                                     if (lista.length > 0) {
-                                        console.log(lista);
-                                        console.log("va bien");
-                                        console.log(lista);
+                                        // console.log(lista);
+                                        // console.log("va bien");
+                                        // console.log(lista);
                                         props.setMessages(lista);
                                         //esto es para recoger los msg received
-                                        if (props.token) {
-                                            const decoded = jwt.decode(props.token);
-                                            if (decoded !== null && typeof decoded !== "string") {
-                                                let msgsReceived = props.msgs.filter(m => m.id_player_destiny === decoded.id_player);
-                                                if (msgsReceived.length > 0) {
-                                                    console.log("hay msg recibidos y los guardo");
-                                                    // setMessagesSent([]);
-                                                    // setMessagesReceived(msgsReceived);
-                                                    // setMessagesHooks(msgsReceived);
-                                                } else {
-                                                    console.log("no hay mensajes recibidos");
-                                                }
+                                        // if (props.token) {
+                                        //     const decoded = jwt.decode(props.token);
+                                        //     if (decoded !== null && typeof decoded !== "string") {
+                                        //         let msgsReceived = props.msgs.filter(m => m.id_player_destiny === decoded.id_player);
+                                        //         if (msgsReceived.length > 0) {
+                                        //             console.log("hay msg recibidos y los guardo");
+                                        //             // setMessagesSent([]);
+                                        //             // setMessagesReceived(msgsReceived);
+                                        //             // setMessagesHooks(msgsReceived);
+                                        //         } else {
+                                        //             console.log("no hay mensajes recibidos");
+                                        //         }
 
-                                            } else {
-                                                console.log("no se ha podido decodificar token")
-                                            }
-                                        } else {
-                                            console.log("no hay token");
-                                        }
+                                        //     } else {
+                                        //         console.log("no se ha podido decodificar token")
+                                        //     }
+                                        // } else {
+                                        //     console.log("no hay token");
+                                        // }
                                     } else {
                                         console.log("la lista de msg esta vacia");
                                     }
