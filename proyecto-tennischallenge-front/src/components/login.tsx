@@ -148,7 +148,7 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
                             }
                             console.log(e)
                         }).catch(err=> {
-
+                            // console.log(err);
                         })
                         setError("Usuario o Contraseña incorrectos.");
                         setErrorPass("error");

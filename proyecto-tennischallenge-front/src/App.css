@@ -86,14 +86,16 @@
 }
 
 #dropdwnMenuShowNavbar {
-  background-color: #f8f9fab5;
+  background-color: #dec7b985;
+  /* background-color: #f8f9fab5; */
   margin-top: 17px;
   margin-left: -81px;
   border-radius: 15px;
 }
 
 #dropdwnMenuShowNavbarNotifications {
-  background-color: #f8f9fab5;
+  background-color: #dec7b985;
+  /* background-color: #f8f9fab5; */
   margin-top: 17px;
   border-radius: 15px;
   margin-left: -48px !important;

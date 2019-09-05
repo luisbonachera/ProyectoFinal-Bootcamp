@@ -87,7 +87,7 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
     const validateEmail = (e: string) => validEmailRegex.test(e); //emailvalue es el valor de mi hook para el email, que recojo del onchange del inpu
 
     const validateCity = //eslint-disable-line
-        /^([a-zA-Z' ]+)$/.test(city);
+        /^([a-zA-ZÀ-ÿ' ]+)$/.test(city);
 
     const validateUsername = //eslint-disable-line
         /^([a-zA-Z0-9' ]+)$/.test(username);
@@ -311,7 +311,7 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                 }
                 if (!validatePassword) {
                     setErrorPassword("error");
-                    setError("El password debe contener al menos 8 caracteres, 1 minúscula, 1 mayúscula y 1 núnmero.");
+                    setError("El password debe contener al menos 8 caracteres, 1 minúscula, 1 mayúscula y 1 número.");
                 }
                 if ((!validateUsername && !validateEmail(email)) || (!validateUsername && !validateCity) || (!validateUsername && !validatePassword)
                     || (!validateEmail(email) && !validateCity) || (!validateEmail(email) && !validatePassword) || (!validateCity && !validatePassword)

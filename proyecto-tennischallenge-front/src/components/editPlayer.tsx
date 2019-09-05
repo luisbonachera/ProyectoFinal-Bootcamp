@@ -92,7 +92,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
     const validateEmail = (e: string) => validEmailRegex.test(e); //emailvalue es el valor de mi hook para el email, que recojo del onchange del inpu
 
     const validateCity = //eslint-disable-line
-        /^([a-zA-Z' ]+)$/.test(city);
+        /^([a-zA-ZÀ-ÿ' ]+)$/.test(city);
 
     const validateUsername = //eslint-disable-line
         /^([a-zA-Z0-9' ]+)$/.test(username);
@@ -110,205 +110,205 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
     const edit = () => {
         if (username && email && city && genre && rating) {
             if (validateEmail(email) && validateCity && validateUsername) {
-            if (props.token) {
-                let decoded: any = jwt.decode(props.token);
-                const id: number = +props.match.params.id_player;
-                if (decoded !== null && (id === decoded.id_player || props.player.isAdmin === true)) {
-                    console.log(decoded);
+                if (props.token) {
+                    let decoded: any = jwt.decode(props.token);
+                    const id: number = +props.match.params.id_player;
+                    if (decoded !== null && (id === decoded.id_player || props.player.isAdmin === true)) {
+                        console.log(decoded);
 
-                    console.log("entra al fetch");
-                    console.log(isAdmin);
+                        console.log("entra al fetch");
+                        console.log(isAdmin);
 
-                    const formData = new FormData();
-                    // esto es para poder cambiarle la foto y pnerle el nombre de su id.extension 
-                    // a otra persona que no sea yo si soy Admin
-                    formData.append("id_player", "" + id);
-                    if (image) {
-                        formData.append("file", image);
-                    } else {
-                        formData.append("file", "");
-                    }
-                    formData.append("username", username);
-                    formData.append("email", email);
-                    formData.append("city", city);
-                    formData.append("genre", genre);
-                    formData.append("rating", rating);
-                    let administador = isAdmin ? "1" : "0";
-                    formData.append("isAdmin", administador);
+                        const formData = new FormData();
+                        // esto es para poder cambiarle la foto y pnerle el nombre de su id.extension 
+                        // a otra persona que no sea yo si soy Admin
+                        formData.append("id_player", "" + id);
+                        if (image) {
+                            formData.append("file", image);
+                        } else {
+                            formData.append("file", "");
+                        }
+                        formData.append("username", username);
+                        formData.append("email", email);
+                        formData.append("city", city);
+                        formData.append("genre", genre);
+                        formData.append("rating", rating);
+                        let administador = isAdmin ? "1" : "0";
+                        formData.append("isAdmin", administador);
 
 
-                    console.log(isAdmin);
+                        console.log(isAdmin);
 
-                    console.log(administador);
-                    fetch("http://localhost:8080/api/players/" + id, {
-                        method: "PUT",
-                        headers: {
-                            // "Content-Type": "application/json"
-                            Authorization: "Bearer " + props.token
-                        },
-                        body: formData
-                    })
-                        // fetch("http://localhost:8080/api/players/" + id, {
-                        //     method: "PUT",
-                        //     headers: {
-                        //         "Content-Type": "application/json",
-                        //         Authorization: "Bearer " + props.token
-                        //     },
-                        //     body: JSON.stringify({
-                        //         ...(username && { username: username }),
-                        //         ...(email && { email: email }),
-                        //         // password: password,
-                        //         ...(city && { city: city }),
-                        //         ...(genre && { genre: genre }),
-                        //         ...(rating && { rating: rating }),
-                        //         ...(isAdmin && { isAdmin: isAdmin })
-                        //     })
-                        // })
-                        .then(response => {
-                            if (response.ok) {
-                                response
-                                    .json()
-                                    .then((lista: any) => {
-                                        console.log(lista);
-                                        if (lista.length === 1) {
-                                            console.log("usuario modificado y listado");
+                        console.log(administador);
+                        fetch("http://localhost:8080/api/players/" + id, {
+                            method: "PUT",
+                            headers: {
+                                // "Content-Type": "application/json"
+                                Authorization: "Bearer " + props.token
+                            },
+                            body: formData
+                        })
+                            // fetch("http://localhost:8080/api/players/" + id, {
+                            //     method: "PUT",
+                            //     headers: {
+                            //         "Content-Type": "application/json",
+                            //         Authorization: "Bearer " + props.token
+                            //     },
+                            //     body: JSON.stringify({
+                            //         ...(username && { username: username }),
+                            //         ...(email && { email: email }),
+                            //         // password: password,
+                            //         ...(city && { city: city }),
+                            //         ...(genre && { genre: genre }),
+                            //         ...(rating && { rating: rating }),
+                            //         ...(isAdmin && { isAdmin: isAdmin })
+                            //     })
+                            // })
+                            .then(response => {
+                                if (response.ok) {
+                                    response
+                                        .json()
+                                        .then((lista: any) => {
                                             console.log(lista);
-                                            /***************************************** */
-                                            lista[0] = {
-                                                ...lista[0],
-                                                ...({ isAdmin: lista[0].isAdmin === 1 ? true : false })
+                                            if (lista.length === 1) {
+                                                console.log("usuario modificado y listado");
+                                                console.log(lista);
+                                                /***************************************** */
+                                                lista[0] = {
+                                                    ...lista[0],
+                                                    ...({ isAdmin: lista[0].isAdmin === 1 ? true : false })
+                                                }
+                                                props.updatePlayers(lista[0]);
+                                                /***************************************** */
+                                                // entro aqui porque yo me he editado, pero si soy admin puedo editar a otros
+                                                if (id === decoded.id_player) {
+                                                    console.log("soy yo o deberia:")
+                                                    console.log(lista[0]);
+                                                    props.updatePlayer(lista[0]);
+                                                }
+
+                                                props.history.push("/profile/" + id);
+                                            } else if (lista.length > 1) {
+                                                console.log("viene mas de 1 player");
+                                            } else {
+                                                console.log("no viene ningun usuario.")
                                             }
-                                            props.updatePlayers(lista[0]);
-                                            /***************************************** */
-                                            // entro aqui porque yo me he editado, pero si soy admin puedo editar a otros
-                                            if (id === decoded.id_player) {
-                                                console.log("soy yo o deberia:")
-                                                console.log(lista[0]);
-                                                props.updatePlayer(lista[0]);
+                                            ;
+                                        })
+                                        .catch(err => {
+                                            setError("Error en el json.");
+                                        });
+                                    // console.log("usuario creado")
+                                    // const us: IPlayer = {
+                                    //     ...props.player,
+                                    //     //hay que traerte primero el nombre y luego lo guardas aqui
+                                    //     // ...(avatar && { avatar: image }),
+                                    //     ...(username && { username: username }),
+                                    //     ...(email && { email: email }),
+                                    //     // password: password,
+                                    //     ...(city && { city: city }),
+                                    //     ...(genre && { genre: genre }),
+                                    //     ...(rating && { rating: +rating }),
+                                    //     ...(isAdmin && { isAdmin: isAdmin })
+                                    // }
+                                    // console.log(us);
+
+                                    // props.history.push("/");
+                                    // fetch("http://localhost:8080/api/auth", {
+                                    //     method: "post",
+                                    //     headers: {
+                                    //         "Content-Type": "application/json"
+                                    //     },
+                                    //     body: JSON.stringify({
+                                    //         username: username,
+                                    //         password: props.player.password
+                                    //     })
+                                    // })
+                                    //     .then(response => {
+                                    //         if (response.ok) {
+                                    //             response
+                                    //                 .text()
+                                    //                 .then((token: string) => {
+                                    //                     props.setToken(token);
+                                    //                     // const token_decoded: any = jwt.decode(token);
+                                    //                     // console.log(token_decoded);
+                                    //                     // if (token_decoded !== null && typeof token_decoded !== "string") {
+                                    //                     //     props.setUser(token_decoded);
+
+                                    //                     // }
+                                    //                     props.history.push("/")
+
+                                    //                 })
+
+                                    //         } else {
+                                    //             setError("Usuario o Contraseña incorrectos ," + error );
+                                    //             console.log(error);
+                                    //         }
+                                    //     })
+                                    //     .catch(error => {
+                                    //         setError("Usuario o Contraseña incorrectos ,"+ error );
+                                    //         console.log(error);
+                                    //     });
+                                } else {
+                                    response.json().then(({ e }) => {
+                                        console.log(e);
+                                        console.log(e.sqlMessage)
+                                        let array = e.sqlMessage.split(" ");
+                                        array[array.length - 1] = array[array.length - 1].replace("'", "");
+                                        array[array.length - 1] = array[array.length - 1].replace("'", "");
+                                        console.log(array);
+                                        console.log(array[array.length - 1]);
+                                        let err = array[array.length - 1];
+                                        if (e.errno === 1062) {
+                                            if (err === "email") {
+                                                setError("El nombre del email ya existe");
+                                                setErrorEmail("error");
+                                            } else if (err === "username") {
+                                                setError("El nombre del usuario ya existe");
+                                                setErrorUsername("error");
                                             }
 
-                                            props.history.push("/profile/" + id);
-                                        } else if (lista.length > 1) {
-                                            console.log("viene mas de 1 player");
                                         } else {
-                                            console.log("no viene ningun usuario.")
+                                            console.log("no se porque entra aqui")
                                         }
-                                        ;
                                     })
-                                    .catch(err => {
-                                        setError("Error en el json.");
-                                    });
-                                // console.log("usuario creado")
-                                // const us: IPlayer = {
-                                //     ...props.player,
-                                //     //hay que traerte primero el nombre y luego lo guardas aqui
-                                //     // ...(avatar && { avatar: image }),
-                                //     ...(username && { username: username }),
-                                //     ...(email && { email: email }),
-                                //     // password: password,
-                                //     ...(city && { city: city }),
-                                //     ...(genre && { genre: genre }),
-                                //     ...(rating && { rating: +rating }),
-                                //     ...(isAdmin && { isAdmin: isAdmin })
-                                // }
-                                // console.log(us);
+                                        .catch(err => {
+                                            console.log("Error," + err)
+                                        });
 
-                                // props.history.push("/");
-                                // fetch("http://localhost:8080/api/auth", {
-                                //     method: "post",
-                                //     headers: {
-                                //         "Content-Type": "application/json"
-                                //     },
-                                //     body: JSON.stringify({
-                                //         username: username,
-                                //         password: props.player.password
-                                //     })
-                                // })
-                                //     .then(response => {
-                                //         if (response.ok) {
-                                //             response
-                                //                 .text()
-                                //                 .then((token: string) => {
-                                //                     props.setToken(token);
-                                //                     // const token_decoded: any = jwt.decode(token);
-                                //                     // console.log(token_decoded);
-                                //                     // if (token_decoded !== null && typeof token_decoded !== "string") {
-                                //                     //     props.setUser(token_decoded);
-
-                                //                     // }
-                                //                     props.history.push("/")
-
-                                //                 })
-
-                                //         } else {
-                                //             setError("Usuario o Contraseña incorrectos ," + error );
-                                //             console.log(error);
-                                //         }
-                                //     })
-                                //     .catch(error => {
-                                //         setError("Usuario o Contraseña incorrectos ,"+ error );
-                                //         console.log(error);
-                                //     });
-                            } else {
-                                response.json().then(({ e }) => {
-                                    console.log(e);
-                                    console.log(e.sqlMessage)
-                                    let array = e.sqlMessage.split(" ");
-                                    array[array.length - 1] = array[array.length - 1].replace("'", "");
-                                    array[array.length - 1] = array[array.length - 1].replace("'", "");
-                                    console.log(array);
-                                    console.log(array[array.length - 1]);
-                                    let err = array[array.length - 1];
-                                    if (e.errno === 1062) {
-                                        if (err === "email") {
-                                            setError("El nombre del email ya existe");
-                                            setErrorEmail("error");
-                                        } else if (err === "username") {
-                                            setError("El nombre del usuario ya existe");
-                                            setErrorUsername("error");
-                                        }
-
-                                    } else {
-                                        console.log("no se porque entra aqui")
-                                    }
-                                })
-                                    .catch(err => {
-                                        console.log("Error," + err)
-                                    });
-
-                                /***************** Hacer lo mismo que en add para ver si email o username existe**********************/
-                                console.log("Error el usuario o el emial ya existe.");
-                                setError("Error el usuario o el emial ya existe.");
-                            }
-                        })
-                        .catch(err => {
-                            console.log("Error," + err)
-                        })
+                                    /***************** Hacer lo mismo que en add para ver si email o username existe**********************/
+                                    console.log("Error el usuario o el emial ya existe.");
+                                    setError("Error el usuario o el emial ya existe.");
+                                }
+                            })
+                            .catch(err => {
+                                console.log("Error," + err)
+                            })
+                    }
+                    else {
+                        console.log("El token no se pudo decodificar");
+                    }
                 }
                 else {
-                    console.log("El token no se pudo decodificar");
+                    console.log("El token no existe");
+                }
+            } else {
+                if (!validateUsername) {
+                    setErrorUsername("error");
+                    setError("El usuario debe contener sólo letras y numeros).");
+                }
+                if (!validateEmail(email)) {
+                    setErrorEmail("error");
+                    setError("El email no es válido.");
+                }
+                if (!validateCity) {
+                    setErrorCity("error");
+                    setError("La ciudad sólo debe contener letras.");
+                }
+                if ((!validateUsername && !validateEmail(email)) || (!validateUsername && !validateCity) || (!validateEmail(email) && !validateCity)) {
+                    setError("Estos campos no son validos.");
                 }
             }
-            else {
-                console.log("El token no existe");
-            }
-        } else {
-            if (!validateUsername) {
-                setErrorUsername("error");
-                setError("El usuario debe contener sólo letras y numeros).");
-            }
-            if (!validateEmail(email)) {
-                setErrorEmail("error");
-                setError("El email no es válido.");
-            }
-            if (!validateCity) {
-                setErrorCity("error");
-                setError("La ciudad sólo debe contener letras.");
-            }
-            if ((!validateUsername && !validateEmail(email)) || (!validateUsername && !validateCity) || (!validateEmail(email) && !validateCity) ) {
-                setError("Estos campos no son validos.");
-            }
-        }
         } else {
             if (!username) {
                 setErrorUsername("error");
