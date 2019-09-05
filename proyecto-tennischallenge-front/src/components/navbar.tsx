@@ -189,7 +189,7 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                                         {/* <Link className="span-logo span-logo-dropdown" to="/mailTray" onClick={()=>unmountDropdown('dropdown-content','myDropdown','show','.dropbtn')}> */}
                                         <Link className="span-logo span-logo-dropdown" to={"/profile/" + props.player.id_player} onClick={UpdateOcultar}>
                                             <i className="material-icons iconDropdown md-48">person</i>
-                                            <span className="span-Dropdown text-capitalize">{props.player.username.toLocaleLowerCase()}</span>
+                                            <span className="span-Dropdown text-capitalize" style={{display: 'inline-table'}}>{props.player.username.toLocaleLowerCase()}</span>
                                         </Link>
                                         <br />
                                         <Link className="span-logo span-logo-dropdown" to="/mailTray" onClick={UpdateOcultar}>

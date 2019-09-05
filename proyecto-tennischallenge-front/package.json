@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@types/google-map-react": "^0.23.12",
     "@types/jest": "24.0.15",
     "@types/jsonwebtoken": "^8.3.2",
     "@types/node": "12.6.8",
@@ -13,7 +12,6 @@
     "@types/react-router-dom": "^4.3.4",
     "animate.css": "^3.7.2",
     "bootstrap": "^4.3.1",
-    "google-map-react": "^1.1.4",
     "jsonwebtoken": "^8.5.1",
     "material-design-icons": "^3.0.1",
     "react": "^16.8.6",
@@ -24,7 +22,6 @@
     "react-scripts": "3.0.1",
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
-    "regex": "^0.1.1",
     "typescript": "3.5.3"
   },
   "scripts": {

@@ -78,12 +78,25 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
         // setIsAdmin(event.target.checked);
         console.log("isAdmin en updatedIsAdmin: " + isAdmin);
         setError("");
-        
+
     };
 
     const updateImage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setImage(event.currentTarget.files![0]);
     };
+
+    const validEmailRegex = new RegExp(
+        /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i //eslint-disable-line
+    );
+
+    const validateEmail = (e: string) => validEmailRegex.test(e); //emailvalue es el valor de mi hook para el email, que recojo del onchange del inpu
+
+    const validateCity = //eslint-disable-line
+        /^([a-zA-Z' ]+)$/.test(city);
+
+    const validateUsername = //eslint-disable-line
+        /^([a-zA-Z0-9' ]+)$/.test(username);
+
 
     let id_player: number = +props.match.params.id_player;
     let player = props.players.find(p => p.id_player === id_player);
@@ -96,6 +109,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
     const edit = () => {
         if (username && email && city && genre && rating) {
+            if (validateEmail(email) && validateCity && validateUsername) {
             if (props.token) {
                 let decoded: any = jwt.decode(props.token);
                 const id: number = +props.match.params.id_player;
@@ -272,12 +286,29 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                         })
                 }
                 else {
-                    setError("El token no se pudo decodificar");
+                    console.log("El token no se pudo decodificar");
                 }
             }
             else {
-                setError("El token no existe");
+                console.log("El token no existe");
             }
+        } else {
+            if (!validateUsername) {
+                setErrorUsername("error");
+                setError("El usuario debe contener sólo letras y numeros).");
+            }
+            if (!validateEmail(email)) {
+                setErrorEmail("error");
+                setError("El email no es válido.");
+            }
+            if (!validateCity) {
+                setErrorCity("error");
+                setError("La ciudad sólo debe contener letras.");
+            }
+            if ((!validateUsername && !validateEmail(email)) || (!validateUsername && !validateCity) || (!validateEmail(email) && !validateCity) ) {
+                setError("Estos campos no son validos.");
+            }
+        }
         } else {
             if (!username) {
                 setErrorUsername("error");
@@ -328,7 +359,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                         <Form.Group className="col-6 colUsername" as={Col} controlId="formGridUsername">
                             <Form.Label>Usuario</Form.Label>
                             <Form.Control className={errorUsername ? "form-control form-control-red" : "form-control"}
-                               type="text" as="input" placeholder="Escriba su usuario" maxLength="12" value={username} onChange={updateUsername} required />
+                                type="text" as="input" placeholder="Escriba su usuario" maxLength="12" value={username} onChange={updateUsername} required />
                         </Form.Group>
                     </Form.Row>
 
@@ -350,7 +381,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                         <Form.Group className="col-6" as={Col} controlId="formGridCity">
                             <Form.Label>Ciudad</Form.Label>
                             <Form.Control type="text" as="input" className={errorCity ? "form-control form-control-red" : "form-control"}
-                                placeholder="Escriba su ciudad" maxLength="20" value={city} onChange={updateCity} required />
+                                placeholder="Escriba su ciudad" maxLength="14" value={city} onChange={updateCity} required />
                         </Form.Group>
 
 

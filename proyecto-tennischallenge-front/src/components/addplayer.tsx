@@ -80,216 +80,245 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
     //     // setError("");
     // };
 
-//     const validEmailRegex =  // codigo regex para verificacion
-//     RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
-// ​
-//   const validateEmail = validEmailRegex.test(email); //emailvalue es el valor de mi hook para el email, que recojo del onchange del inpu
-  
-//   cons newUser = () => {
-//    if(ValidateEmail) {
-//    	/* aqui tu fetch que llame a la base de datos*/
-   
-//    }
+    const validEmailRegex = new RegExp(
+        /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i //eslint-disable-line
+    );
 
+    const validateEmail = (e: string) => validEmailRegex.test(e); //emailvalue es el valor de mi hook para el email, que recojo del onchange del inpu
 
+    const validateCity = //eslint-disable-line
+        /^([a-zA-Z' ]+)$/.test(city);
+
+    const validateUsername = //eslint-disable-line
+        /^([a-zA-Z0-9' ]+)$/.test(username);
+
+    const mediumRegex = new RegExp(
+        "^(((?=.*[a-z])(?=.*[A-Z]))((?=.*[a-z])(?=.*[0-9]))((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})" //eslint-disable-line
+    );
+    const validatePassword = mediumRegex.test(password);
 
     const add = () => {
-        console.log("entra al fetch");
+        console.log("entra al add");
         // console.log(isAdmin);
         ///requerir campos*********************************************************************
         if (username && password && email && city && genre && rating) {
             // if(validateUsername && validateEmail && validateCity) {
-                // if(validateEmail) {
+            if (validateEmail && validateCity && validateUsername && validatePassword) {
+                console.log("entra al fetch");
+                const formData = new FormData();
+                if (image) {
+                    formData.append("file", image);
+                } else {
+                    formData.append("file", "");
+                }
+                formData.append("id_player", "");
+                formData.append("username", username);
+                formData.append("email", email);
+                formData.append("password", password);
+                formData.append("city", city);
+                formData.append("genre", genre);
+                formData.append("rating", rating);
 
-            const formData = new FormData();
-            if (image) {
-                formData.append("file", image);
-            } else {
-                formData.append("file", "");
-            }
-            formData.append("id_player", "");
-            formData.append("username", username);
-            formData.append("email", email);
-            formData.append("password", password);
-            formData.append("city", city);
-            formData.append("genre", genre);
-            formData.append("rating", rating);
-
-            fetch("http://localhost:8080/api/add", {
-                method: "POST",
-                headers: {
-                    // "Content-Type": "application/json"
-                },
-                body: formData
-                // body: JSON.stringify({
-                //     username: username,
-                //     email: email,
-                //     password: password,
-                //     city: city,
-                //     genre: genre,
-                //     rating: rating,
-                //     // isAdmin: isAdmin,
-                // })
-            })
-                .then(response => {
-                    if (response.ok) {
-                        console.log("usuario creado")
-                        fetch("http://localhost:8080/api/auth", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({
-                                username: username,
-                                password: password
+                fetch("http://localhost:8080/api/add", {
+                    method: "POST",
+                    headers: {
+                        // "Content-Type": "application/json"
+                    },
+                    body: formData
+                    // body: JSON.stringify({
+                    //     username: username,
+                    //     email: email,
+                    //     password: password,
+                    //     city: city,
+                    //     genre: genre,
+                    //     rating: rating,
+                    //     // isAdmin: isAdmin,
+                    // })
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log("usuario creado")
+                            fetch("http://localhost:8080/api/auth", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({
+                                    username: username,
+                                    password: password
+                                })
                             })
-                        })
-                            .then(response => {
-                                if (response.ok) {
-                                    response
-                                        .text()
-                                        .then((token: string) => {
-                                            if (token) {
-                                                console.log(token);
+                                .then(response => {
+                                    if (response.ok) {
+                                        response
+                                            .text()
+                                            .then((token: string) => {
+                                                if (token) {
+                                                    console.log(token);
 
-                                                let decoded: any = jwt.decode(token);
-                                                console.log("decoded:")
-                                                console.log(decoded);
-                                                if (decoded) {
-                                                    let player: IPlayer = {
-                                                        id_player: decoded.id_player,
-                                                        avatar: decoded.avatar,
-                                                        username: decoded.username,
-                                                        isAdmin: decoded.isAdmin,
-                                                        email: decoded.email,
-                                                        city: decoded.city,
-                                                        genre: decoded.genre,
-                                                        rating: +decoded.rating
-                                                    }
-
-                                                    fetch("http://localhost:8080/api/players", {
-                                                        headers: {
-                                                            "Content-type": "application/json",
-                                                            Authorization: "Bearer " + token
+                                                    let decoded: any = jwt.decode(token);
+                                                    console.log("decoded:")
+                                                    console.log(decoded);
+                                                    if (decoded) {
+                                                        let player: IPlayer = {
+                                                            id_player: decoded.id_player,
+                                                            avatar: decoded.avatar,
+                                                            username: decoded.username,
+                                                            isAdmin: decoded.isAdmin,
+                                                            email: decoded.email,
+                                                            city: decoded.city,
+                                                            genre: decoded.genre,
+                                                            rating: +decoded.rating
                                                         }
-                                                    })
-                                                        .then(response => {
-                                                            if (response.ok) {
-                                                                response
-                                                                    .json()
-                                                                    .then((lista: IPlayer[]) => {
-                                                                        console.log("va bien");
 
-                                                                        console.log(lista);
-                                                                        props.setPlayer(player);
-                                                                        props.setPlayers(lista);
-                                                                        props.setToken(token);
-                                                                        props.history.push("/");
-
-                                                                    })
-                                                                    .catch(err => {
-                                                                        setError("Error en el json.");
-                                                                    });
-                                                            } else {
-                                                                setError("responde.ok da error.");
+                                                        fetch("http://localhost:8080/api/players", {
+                                                            headers: {
+                                                                "Content-type": "application/json",
+                                                                Authorization: "Bearer " + token
                                                             }
                                                         })
-                                                        .catch(err => {
-                                                            setError("Error en response." + err);
-                                                        });
+                                                            .then(response => {
+                                                                if (response.ok) {
+                                                                    response
+                                                                        .json()
+                                                                        .then((lista: IPlayer[]) => {
+                                                                            console.log("va bien");
+
+                                                                            console.log(lista);
+                                                                            props.setPlayer(player);
+                                                                            props.setPlayers(lista);
+                                                                            props.setToken(token);
+                                                                            props.history.push("/");
+
+                                                                        })
+                                                                        .catch(err => {
+                                                                            setError("Error en el json.");
+                                                                        });
+                                                                } else {
+                                                                    setError("responde.ok da error.");
+                                                                }
+                                                            })
+                                                            .catch(err => {
+                                                                setError("Error en response." + err);
+                                                            });
 
 
-                                                    // console.log("entra");
-                                                    // console.log(player);
-                                                    // props.setPlayer(player);
-                                                    // props.setToken(token);
-                                                    // props.history.push("/");
+                                                        // console.log("entra");
+                                                        // console.log(player);
+                                                        // props.setPlayer(player);
+                                                        // props.setToken(token);
+                                                        // props.history.push("/");
 
-                                                    // const formData = new FormData();
-                                                    // formData.append("file", image);
-                                                    // formData.append("id", decoded.id_player);
+                                                        // const formData = new FormData();
+                                                        // formData.append("file", image);
+                                                        // formData.append("id", decoded.id_player);
 
-                                                    // fetch("http://localhost:8080/api/addImage/" + decoded.id_player, {
-                                                    //     method: "PUT",
-                                                    //     headers: {
-                                                    //         Authorization: "Bearer " + token
-                                                    //     },
-                                                    //     body: formData
-                                                    // }).then(response => {
-                                                    //     if (response.ok) {
-                                                    //         response.json().then((player: IPlayer) => {
-                                                    //             props.setPlayer(player);
-                                                    //             props.setToken(token);
-                                                    //             props.history.push("/");
-                                                    //         }).catch(err => {
-                                                    //             console.log("error al subir la imagen " + err);
-                                                    //         });
-                                                    //     } else {
-                                                    //         console.log("error en el response.ok")
-                                                    //     }
-                                                    // }).catch(err => {
-                                                    //     console.log("error en la consula, error response. " + err);
-                                                    // });
+                                                        // fetch("http://localhost:8080/api/addImage/" + decoded.id_player, {
+                                                        //     method: "PUT",
+                                                        //     headers: {
+                                                        //         Authorization: "Bearer " + token
+                                                        //     },
+                                                        //     body: formData
+                                                        // }).then(response => {
+                                                        //     if (response.ok) {
+                                                        //         response.json().then((player: IPlayer) => {
+                                                        //             props.setPlayer(player);
+                                                        //             props.setToken(token);
+                                                        //             props.history.push("/");
+                                                        //         }).catch(err => {
+                                                        //             console.log("error al subir la imagen " + err);
+                                                        //         });
+                                                        //     } else {
+                                                        //         console.log("error en el response.ok")
+                                                        //     }
+                                                        // }).catch(err => {
+                                                        //     console.log("error en la consula, error response. " + err);
+                                                        // });
 
 
 
-                                                    // props.setPlayer(player);
-                                                    // props.history.push("/");
+                                                        // props.setPlayer(player);
+                                                        // props.history.push("/");
+                                                    } else {
+                                                        console.log("Ha fallado el decode en login");
+                                                    }
+
                                                 } else {
-                                                    console.log("Ha fallado el decode en login");
+                                                    console.log("la BD no ha devuelto el token vacio.");
                                                 }
 
-                                            } else {
-                                                console.log("la BD no ha devuelto el token vacio.");
-                                            }
+                                            })
 
-                                        })
+                                    } else {
+                                        setError("Usuario o Contraseña incorrectos");
+                                        console.log("Usuario o Contraseña incorrectos");;
+                                    }
+                                })
+                                .catch(error => {
+                                    setError("Usuario o Contraseña incorrectos ," + error);
+                                    console.log("Usuario o Contraseña incorrectos" + error);
+                                });
+                        } else {
+                            response.json().then(({ e }) => {
+                                console.log(e);
+                                console.log(e.sqlMessage)
+                                let array = e.sqlMessage.split(" ");
+                                array[array.length - 1] = array[array.length - 1].replace("'", "");
+                                array[array.length - 1] = array[array.length - 1].replace("'", "");
+                                console.log(array);
+                                console.log(array[array.length - 1]);
+                                let err = array[array.length - 1];
+                                if (e.errno === 1062) {
+                                    if (err === "email") {
+                                        setError("El nombre del email ya existe");
+                                        setErrorEmail("error");
+                                    } else if (err === "username") {
+                                        setError("El nombre del usuario ya existe");
+                                        setErrorUsername("error");
+                                    }
 
                                 } else {
-                                    setError("Usuario o Contraseña incorrectos");
-                                    console.log("Usuario o Contraseña incorrectos");;
+                                    console.log("no se porque entra aqui")
                                 }
                             })
-                            .catch(error => {
-                                setError("Usuario o Contraseña incorrectos ," + error);
-                                console.log("Usuario o Contraseña incorrectos" + error);
-                            });
-                    } else {
-                        response.json().then(({ e }) => {
-                            console.log(e);
-                            console.log(e.sqlMessage)
-                           let array = e.sqlMessage.split(" ");
-                           array[array.length -1] =  array[array.length -1].replace("'", "");
-                           array[array.length -1] =  array[array.length -1].replace("'", "");
-                           console.log(array);
-                           console.log(array[array.length -1]);
-                           let err = array[array.length -1];
-                            if (e.errno === 1062) {
-                                if(err === "email"){
-                                    setError("El nombre del email ya existe");
-                                setErrorEmail("error");
-                                }else if (err === "username"){
-                                    setError("El nombre del usuario ya existe");
-                                setErrorUsername("error");
-                                }
-                                
-                            } else {
-                                console.log("no se porque entra aqui")
-                            }
-                        })
-                        .catch(err => {
-                            console.log("Error," + err)
-                        });
-                    }
-                })
-                .catch(err => {
-                    console.log("Error," + err)
-                });
-            // }else{
-            //     if(!validEmailRegex){
-            //         setErrorEmail("error");
-            //         setError("El email no es un email valido.");
-            //     }
+                                .catch(err => {
+                                    console.log("Error," + err)
+                                });
+                        }
+                    })
+                    .catch(err => {
+                        console.log("Error," + err)
+                    });
+            } else {
+                // if (!validateUsername && !validateEmail && !validateCity && !validatePassword) {
+                //     setErrorUsername("error");
+                //     setErrorEmail("error");
+                //     setErrorCity("error");
+                //     setError("Estos campos no son validos.");
+                // }
+                // else {
+                if (!validateUsername) {
+                    setErrorUsername("error");
+                    setError("El usuario debe contener sólo letras y numeros).");
+                }
+                if (!validateEmail(email)) {
+                    setErrorEmail("error");
+                    setError("El email no es válido.");
+                }
+                if (!validateCity) {
+                    setErrorCity("error");
+                    setError("La ciudad sólo debe contener letras.");
+                }
+                if (!validatePassword) {
+                    setErrorPassword("error");
+                    setError("El password debe contener al menos 8 caracteres, 1 minúscula, 1 mayúscula y 1 núnmero.");
+                }
+                if ((!validateUsername && !validateEmail(email)) || (!validateUsername && !validateCity) || (!validateUsername && !validatePassword)
+                    || (!validateEmail(email) && !validateCity) || (!validateEmail(email) && !validatePassword) || (!validateCity && !validatePassword)
+                ) {
+                    setError("Estos campos no son validos.");
+                }
+            }
             // }
         } else {
             if (!username) {
@@ -311,10 +340,10 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                 setErrorRating("error");
             }
 
-            setError("Completa los campos requeridos");
+            setError("Completa estos campos.");
             /**Faltan algun o todos los campos */
         }
-}
+    }
 
 
     return (
@@ -377,7 +406,7 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                     <Form.Group className="col-6" as={Col} controlId="formGridCity">
                         <Form.Label>Ciudad</Form.Label>
                         <Form.Control type="text" className={errorCity ? "form-control form-control-red" : "form-control"}
-                            as="input" maxLength="20" placeholder="Escriba su ciudad" onChange={updateCity} required />
+                            as="input" maxLength="14" placeholder="Escriba su ciudad" onChange={updateCity} required />
                     </Form.Group>
                     {/* <div className="col-1"></div> */}
 
