@@ -4,8 +4,8 @@ const Home = () => {
     return (
         <div className="container ">
             <div className="row">
-                <div className="col-4"></div>
-                <div className="col-4 tituloIndex text-center" >
+                <div className="col" id="colHome"></div>
+                <div className="col tituloIndex text-center" >
                 <h1> Registrate y
                     difruta del tenis
                     con otros jugadores
@@ -16,7 +16,7 @@ const Home = () => {
                     <h1> de tu zona.</h1>  */}
                     {/* <h1></h1> */}
                 </div>
-                <div className="col-4"></div>
+                <div className="col" id="colHome"></div>
             </div>
 
 

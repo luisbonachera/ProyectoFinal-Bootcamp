@@ -178,7 +178,7 @@ const NavBar: React.FC<IProps & IPropsGlobal> = props => {
                                             //  </Fragment>
                                         }
 
-                                        <Card.Img className="avatarNavbar" variant="top"
+                                        <Card.Img className="avatarNavbar botonsNavbar" variant="top"
                                             src={props.player.avatar ? "http://localhost:8080/uploads/avatar/" + props.player.avatar + "?" + (new Date()).valueOf() :
                                                 "images/avatar-tenis.png"} alt="" />
                                         {/* {props.player.username} */}

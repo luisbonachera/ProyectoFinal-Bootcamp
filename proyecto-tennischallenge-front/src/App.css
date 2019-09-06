@@ -951,5 +951,78 @@ a:hover {
   display: flex;
   align-items: center;
 }
-
+.navbar-light .navbar-toggler-icon {
+  background-image: url(https://image.flaticon.com/icons/png/512/1/1707.png) !important;
+}
 /******************** ViewPlayer **************************/
+
+@media (max-width: 600px) {
+  .tituloIndex  {
+    padding-top: 43vw;
+    }
+    
+  .tituloIndex h1 {
+  font-size: 21px;
+  margin: 30px;
+    display: flex;
+  height: 130px;
+  justify-content: center;
+  align-items: center;
+  margin: 35px;
+
+  }
+  #colHome{
+visibility: hidden;
+display: none;
+}
+.span-title{
+  visibility: hidden;
+  display: none;
+}
+.navbar-collapse {
+  text-align: right;
+  display: block;
+}
+.span-logo  button{
+  float: right !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+#dropdwnMenuShowNavbar.show {
+  margin-left: 127px;
+  margin-top: 71px;
+}
+/* .containerBuscador{
+
+} */
+.buscador{
+  position: relative;
+    height: 297px;
+    width: 352px;
+}
+.containerListCardPlayer{
+  margin-top: 8px;
+  max-width: unset;
+  padding-left: unset;
+  padding-right: 18px;
+}
+.login {
+
+  margin: unset;
+ 
+}
+.FormLogin{
+  margin-top:75px;
+
+}
+.groupUsername label{
+  text-align: center;
+}
+.groupPass label{
+  text-align: center;
+}
+.FormLogin input, .FormLogin label {
+  width: 64%;
+
+}
+}

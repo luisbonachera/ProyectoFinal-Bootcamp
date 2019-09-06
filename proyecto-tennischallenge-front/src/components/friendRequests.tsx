@@ -570,9 +570,12 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
                             <br />
                         </div>
                     ))}
+                   
                     {/* </CardDeck> */}
                     {error &&
+                     <div className="containerListCardPlayer">
                         <p className="errorListPlayerOrFriendOrRequest" id="errorListPlayerOrFriendOrRequest">{error}</p>
+                        </div>
                     }
                 </div>
             </div>
