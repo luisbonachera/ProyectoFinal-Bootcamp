@@ -206,7 +206,7 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
                                 .json()
                                 .then((lista: IFriendship[]) => {
                                     if (lista.length === 0) {
-                                        setError("Tu lista de amigos esta vacia");
+                                        // setError("Tu lista de amigos esta vacia");
                                     }
                                     else {
                                         setError("");
