@@ -96,7 +96,7 @@ const MailTray: React.FC<IPropsGloblal> = props => {
     return (
         <div className="container">
             <div className="row fondoCorreo">
-                <div className="col-2">
+                <div className="col-sm-12 col-lg-2">
                     <MenuMail />
                 </div>
                 <Switch>

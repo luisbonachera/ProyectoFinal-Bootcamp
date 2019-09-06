@@ -92,13 +92,13 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
     };
 
     return (
-        <div>
+        <div className="container">
 
             {player !== null && player !== undefined && (
                 <CardDeck className="cardHorizont ">
 
                     <Card className="cardProfile cardProfileViewPlayer" style={{ display: 'flex', flexDirection: 'row' }}>
-                        <Card.Img className="avatarListProfile" variant="top"
+                        <Card.Img className="avatarListProfile " variant="top"
                             src={player.avatar ? "http://localhost:8080/uploads/avatar/" + player.avatar + "?" + (new Date()).valueOf() :
                                 "../../images/avatar-tenis.png"} alt="" />
                         <Card.Body>
@@ -135,13 +135,13 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
                         </Card.Body>
                         <Card.Footer>
                             <div className="container-fluid">
-                                <div className="row">
+                                <div className="row btonProfile">
                                     <Link to={"/players/edit/" + player.id_player}>
                                         <Button className="buttonForm" variant="primary">Editar</Button>
                                     </Link>
                                 </div>
                                 <br/><br/>
-                                <div className="row">
+                                <div className="row btonProfile">
                                     <Button className="buttonForm" variant="primary" onClick={borrar}>Borrar</Button>
                                 </div>
                             </div>

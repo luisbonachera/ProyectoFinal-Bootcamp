@@ -493,7 +493,7 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
                 </div>
                  {/* <CardDeck > */}
                         {/* } */}
-                <div className="col-sm">
+                <div className="col-sm-12">
                     {friendsFiltros && friendsFiltros.map(f => (
                         // <div className="cardsJugadores" key={f.id_player}>
                         <div className="containerListFriendshipRequest" key={f.id_player}>
@@ -545,13 +545,13 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
                                 <Card.Footer className="cardFooterFriendsRequest">
 
                                     <div className="container-fluid">
-                                        <div className="row">
+                                        <div className="row btonRequest">
                                             
                                         <Button className="buttonForm" variant="primary" onClick={() => acceptedFriendship(f.id_friends)}>Aceptar</Button>
                                             
                                         </div>
                                         <br /><br />
-                                        <div className="row">
+                                        <div className="row btonRequest">
                                         <Button className="buttonForm" variant="primary" onClick={() => borrarFriend(f.id_friends)}>Cancelar</Button>
                                         </div>
                                     </div>
@@ -573,7 +573,7 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
                    
                     {/* </CardDeck> */}
                     {error &&
-                     <div className="containerListCardPlayer">
+                     <div className="col-sm containerListCardPlayer marginPlayerContainer">
                         <p className="errorListPlayerOrFriendOrRequest" id="errorListPlayerOrFriendOrRequest">{error}</p>
                         </div>
                     }

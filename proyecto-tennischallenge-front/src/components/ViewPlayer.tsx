@@ -353,7 +353,7 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
     // }
 
     return (
-        <div>
+        <Fragment>
             {thisplayer !== null && thisplayer !== undefined && (
                 <Fragment>
                     <CardDeck className="cardHorizont ">
@@ -545,7 +545,7 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                     </div>
                 </Fragment>
             )}
-        </div>
+        </Fragment>
     )
 }
 

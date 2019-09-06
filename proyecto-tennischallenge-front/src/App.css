@@ -414,16 +414,21 @@ a:hover {
   padding-right: 2.5vw;
   background: #f8f9fa42;
   border-radius: 13px;
-  min-height: 41.3vh;
+  /* min-height: 41.3vh; */
   margin: auto;
 }
 
+.marginPlayerContainer {
+  margin-left: 27.6vw;
+}
 .errorListPlayerOrFriendOrRequest {
   font-size: 20px;
   text-align: center;
   color: white !important;
   padding-top: 15%;
   height: 15px;
+  min-height: 41.3vh;
+
 }
 
 .bottonErrorEdit {
@@ -1024,5 +1029,34 @@ display: none;
 .FormLogin input, .FormLogin label {
   width: 64%;
 
+}
+
+.cardProfileViewPlayer {
+  height: 100%;
+  border-radius: .55rem .25rem .25rem 3.3rem;
+  /* max-width: 640px; */
+  max-width: 700px;
+  margin-bottom: 2rem !important;
+  display: block !important;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.botonProfilePlayer button{
+  margin: 15px;
+}
+.btonProfile{
+  justify-content: center;
+}
+#dropdwnMenuShowNavbarNotifications {
+  margin-top: 74px;
+  margin-left: 131px !important;
+}
+.cardHorizontRequest {
+  display:  block !important;
+  width: 60% !important;
+}
+.btonRequest{
+  justify-content: center;
 }
 }

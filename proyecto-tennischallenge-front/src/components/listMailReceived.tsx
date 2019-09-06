@@ -199,11 +199,11 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
                 <Link key={m.id_messages} to={"/mailTray/received/" + m.id_messages} onClick={() => viewMsg(m.id_messages)}>
 
                     <div className={m.watched ? "row messageResume colBorder" : "row messageResume rowMsgReceived colBorder"}>
-                        <div className="col-1 colum">
+                        <div className="col-sm-5 col-lg-1  colum">
                             <img className="imgAvatarMsg" src={m.avatar ? "http://localhost:8080/uploads/avatar/" + m.avatar : "/images/avatar-tenis.png"}
                                 alt="" width="auto" height="50" />
                         </div>
-                        <div className="col-2 colum text-capitalize">
+                        <div className="col-sm-5 col-lg-2 colum text-capitalize">
                             {m.username.toLocaleLowerCase()}
                         </div>
                         {/* <div className="col">
