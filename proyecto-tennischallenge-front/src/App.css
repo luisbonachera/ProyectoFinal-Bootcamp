@@ -183,6 +183,7 @@ a:hover {
 .tituloIndex {
   padding-top: 12vw;
   padding-bottom: 6.9vw;
+  padding-left: 25px;
   /* padding-top: 18vw;
   padding-bottom: 18vw; */
   /* padding-top: 25vh;
@@ -227,7 +228,6 @@ a:hover {
 .span-logo:hover, .span-Dropdown:hover {
   /* color: #081d60 !important; */
   color: #6c757d !important;
-  
 }
 
 .span-Dropdown {
@@ -421,14 +421,15 @@ a:hover {
 .marginPlayerContainer {
   margin-left: 27.6vw;
 }
+
 .errorListPlayerOrFriendOrRequest {
   font-size: 20px;
   text-align: center;
   color: white !important;
-  padding-top: 15%;
+  padding-top: 9%;
+  /* padding-top: 15%; */
   height: 15px;
   min-height: 41.3vh;
-
 }
 
 .bottonErrorEdit {
@@ -671,6 +672,7 @@ a:hover {
   text-align: center;
   color: white !important;
   height: auto;
+  margin-top: -15px;
 }
 
 /******************** Detalle mensaje **************************/
@@ -956,107 +958,108 @@ a:hover {
   display: flex;
   align-items: center;
 }
+
 .navbar-light .navbar-toggler-icon {
   background-image: url(https://image.flaticon.com/icons/png/512/1/1707.png) !important;
 }
+
 /******************** ViewPlayer **************************/
 
 @media (max-width: 600px) {
-  .tituloIndex  {
+  .tituloIndex {
     padding-top: 43vw;
-    }
-    
-  .tituloIndex h1 {
-  font-size: 21px;
-  margin: 30px;
-    display: flex;
-  height: 130px;
-  justify-content: center;
-  align-items: center;
-  margin: 35px;
-
   }
-  #colHome{
-visibility: hidden;
-display: none;
-}
-.span-title{
-  visibility: hidden;
-  display: none;
-}
-.navbar-collapse {
-  text-align: right;
-  display: block;
-}
-.span-logo  button{
-  float: right !important;
-  background-color: transparent !important;
-  border-color: transparent !important;
-}
-#dropdwnMenuShowNavbar.show {
-  margin-left: 127px;
-  margin-top: 71px;
-}
-/* .containerBuscador{
+  .tituloIndex h1 {
+    font-size: 21px;
+    margin: 30px;
+    display: flex;
+    height: 130px;
+    justify-content: center;
+    align-items: center;
+    margin: 35px;
+  }
+  #colHome {
+    visibility: hidden;
+    display: none;
+  }
+  .span-title {
+    visibility: hidden;
+    display: none;
+  }
+  .navbar-collapse {
+    text-align: right;
+    display: block;
+  }
+  .span-logo button {
+    float: right !important;
+    background-color: transparent !important;
+    border-color: transparent !important;
+  }
+  #dropdwnMenuShowNavbar.show {
+    margin-left: 127px;
+    margin-top: 71px;
+  }
+  .marginPlayerContainer {
+    margin-left: 0px;
+  }
+  /* .containerBuscador{
 
 } */
-.buscador{
-  position: relative;
+  .buscador {
+    position: relative;
     height: 297px;
     width: 352px;
-}
-.containerListCardPlayer{
-  margin-top: 8px;
-  max-width: unset;
-  padding-left: unset;
-  padding-right: 18px;
-}
-.login {
-
-  margin: unset;
- 
-}
-.FormLogin{
-  margin-top:75px;
-
-}
-.groupUsername label{
-  text-align: center;
-}
-.groupPass label{
-  text-align: center;
-}
-.FormLogin input, .FormLogin label {
-  width: 64%;
-
-}
-
-.cardProfileViewPlayer {
-  height: 100%;
-  border-radius: .55rem .25rem .25rem 3.3rem;
-  /* max-width: 640px; */
-  max-width: 700px;
-  margin-bottom: 2rem !important;
-  display: block !important;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-.botonProfilePlayer button{
-  margin: 15px;
-}
-.btonProfile{
-  justify-content: center;
-}
-#dropdwnMenuShowNavbarNotifications {
-  margin-top: 74px;
-  margin-left: 131px !important;
-}
-.cardHorizontRequest {
-  display:  block !important;
-  width: 60% !important;
-}
-.btonRequest{
-  justify-content: center;
-}
+  }
+  .containerListCardPlayer {
+    margin-top: 8px;
+    max-width: unset;
+    padding-left: unset;
+    padding-right: 18px;
+  }
+  .login {
+    margin: unset;
+  }
+  .FormLogin {
+    margin-top: 75px;
+  }
+  .groupUsername label {
+    text-align: center;
+  }
+  .groupPass label {
+    text-align: center;
+  }
+  .FormLogin input, .FormLogin label {
+    width: 64%;
+  }
+  .cardProfileViewPlayer {
+    height: 100%;
+    border-radius: .55rem .25rem .25rem 3.3rem;
+    /* max-width: 640px; */
+    max-width: 700px;
+    margin-bottom: 2rem !important;
+    display: block !important;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  .botonProfilePlayer button {
+    margin: 15px;
+  }
+  .btonProfile {
+    justify-content: center;
+  }
+  #dropdwnMenuShowNavbarNotifications {
+    margin-top: 74px;
+    margin-left: 131px !important;
+  }
+  .cardHorizontRequest {
+    display: block !important;
+    width: 60% !important;
+  }
+  .btonRequest {
+    justify-content: center;
+  }
+  .errorListPlayerOrFriendOrRequest {
+    padding-top: 15% !important;
+  }
 }
