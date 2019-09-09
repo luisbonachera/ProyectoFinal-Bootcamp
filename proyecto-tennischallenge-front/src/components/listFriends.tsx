@@ -75,7 +75,7 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
         if (props.token) {
             let decoded = jwt.decode(props.token);
             if (decoded !== null) {
-                console.log(decoded);
+                // console.log(decoded);
 
                 fetch("http://localhost:8080/api/friends", {
                     headers: {
@@ -93,11 +93,11 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                                     }
                                     else {
                                         setError("");
-                                        console.log("va bien");
+                                        // console.log("va bien");
                                         props.setFriendships(lista);
 
-                                        console.log("friends desde BD");
-                                        console.log(lista);
+                                        // console.log("friends desde BD");
+                                        // console.log(lista);
                                     }
                                     // 
                                 })
@@ -128,20 +128,20 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
         friends = props.friendships.filter(f => f.accepted);
 
         if (friends.length === 0) {
-            console.log("null")
+            // console.log("null")
             setError("Tu lista de amigos esta vacia.")
             // return null;
         } else {
             setError("");
             setMyFriends(friends);
-            console.log("friends primera vez")
-            console.log(friends)
+            // console.log("friends primera vez")
+            // console.log(friends)
             setFriendsFiltros(friends)
-            console.log("listafriends primera vez")
-            console.log(friends)
+            // console.log("listafriends primera vez")
+            // console.log(friends)
         }
 
-        console.log(friends)
+        // console.log(friends)
     };
 
     React.useEffect(amigos, [props.friendships]);
@@ -168,10 +168,10 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
         } else {
             setError("");
         }
-        console.log("myFriends");
-        console.log(myFriends);
-        console.log("listaFriends");
-        console.log(friends);
+        // console.log("myFriends");
+        // console.log(myFriends);
+        // console.log("listaFriends");
+        // console.log(friends);
 
 
         if (inputUsername) {
@@ -240,8 +240,8 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                                     // if (notifications[0].numbers_messages > 0 || 
                                     //   notifications[0].numbers_requestFriend > 0 ||
                                     //   notifications[0].numbers_acceptedFriend > 0) {
-                                    console.log("actualizando mis notificaciones");
-                                    console.log(notifications);
+                                    // console.log("actualizando mis notificaciones");
+                                    // console.log(notifications);
                                     props.setNotifications(notifications[0]);
                                     // console.log(notifications);
                                     // } else {
@@ -249,7 +249,7 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                                     // }
 
                                 } else {
-                                    console.log("no me actualiza las notificaciones porque notificacion[0] no existe")
+                                    // console.log("no me actualiza las notificaciones porque notificacion[0] no existe")
                                 }
 
                             })
@@ -285,7 +285,6 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                 .then(response => {
                     if (response.ok) {
 
-                        console.log("amistad creada");
                         //actualizo mis notificaciones
                         updatednotificationsFriendship();
                         fetch("http://localhost:8080/api/friends", {
@@ -300,12 +299,12 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                                         .json()
                                         .then((listaFriendship: IFriendship[]) => {
                                             if (listaFriendship.length > 0) {
-                                                console.log("mi lista deberia de peticiones de amistad tener estar reducida en una")
-                                                console.log(listaFriendship);
+                                                // console.log("mi lista deberia de peticiones de amistad tener estar reducida en una")
+                                                // console.log(listaFriendship);
                                                 props.setFriendships(listaFriendship);
 
                                             } else {
-                                                console.log("la BD no ha devuelto ningun mensaje.");
+                                                // console.log("la BD no ha devuelto ningun mensaje.");
                                             }
                                         })
                                         .catch(err => {
@@ -333,7 +332,7 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
 
 
     if (!friends || !myFriends || !friendsFiltros) {
-        console.log("null")
+        // console.log("null")
         setError("Tu lista de amigos esta vacia.")
         return null;
     }

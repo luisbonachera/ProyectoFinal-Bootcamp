@@ -59,16 +59,16 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
             })
                 .then(response => {
                     if (response.ok) {
-                        console.log("ok");
+                        // console.log("ok");
                         response
                             .text() //el text()es una promesa
                             .then((token: string) => {
                                 if (token) {
-                                    console.log(token);
+                                    // console.log(token);
 
                                     let decoded: any = jwt.decode(token);
-                                    console.log("decoded:")
-                                    console.log(decoded);
+                                    // console.log("decoded:")
+                                    // console.log(decoded);
                                     if (decoded) {
                                         let player: IPlayer = {
                                             id_player: decoded.id_player,
@@ -80,14 +80,14 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
                                             genre: decoded.genre,
                                             rating: decoded.rating
                                         }
-                                        console.log("entra");
-                                        console.log(player);
+                                        // console.log("entra");
+                                        // console.log(player);
 
                                         // if (props.token) {
                                         // let decoded = jwt.decode(props.token);
                                         // if (decoded) {
                                         //     console.log(decoded);
-                                        console.log("ahora deberia entrar a listar players")
+                                        // console.log("ahora deberia entrar a listar players")
                                         // abortController.abort();
                                         fetch("http://localhost:8080/api/players", {
                                             headers: {
@@ -100,8 +100,8 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
                                                     response
                                                         .json()
                                                         .then((lista) => {
-                                                            console.log("va bien");
-                                                            console.log(lista);
+                                                            // console.log("va bien");
+                                                            // console.log(lista);
                                                             for (let i = 0; i < lista.length; i++) {
                                                                 lista[i].isAdmin = (lista[i].isAdmin === '1' ? true : false)
                                                             }
@@ -153,7 +153,7 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
                         setError("Usuario o Contraseña incorrectos.");
                         setErrorPass("error");
                         setErrorUsername("error");
-                        console.log(error);
+                        // console.log(error);
                     }
                 })
                 .catch(err => {

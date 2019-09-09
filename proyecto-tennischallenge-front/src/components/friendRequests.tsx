@@ -74,7 +74,7 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
         if (props.token) {
             let decoded = jwt.decode(props.token);
             if (decoded !== null) {
-                console.log(decoded);
+                // console.log(decoded);
 
                 fetch("http://localhost:8080/api/friends", {
                     headers: {
@@ -92,11 +92,11 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
                                     }
                                     else {
                                         setError("");
-                                        console.log("va bien");
+                                        // console.log("va bien");
                                         props.setFriendships(lista);
 
-                                        console.log("friends desde BD");
-                                        console.log(lista);
+                                        // console.log("friends desde BD");
+                                        // console.log(lista);
                                     }
                                     // 
                                 })
@@ -126,13 +126,13 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
     const amigos = () => {
         let decoded: any = jwt.decode(props.token);
         if (!decoded) {
-            console.log("ha fallado el decode");
+            // console.log("ha fallado el decode");
         }
         else {
             friends = props.friendships.filter(f => !f.accepted && f.id_player2 === decoded.id_player);
 
             if (friends.length === 0) {
-                console.log("null")
+                // console.log("null")
                 setError("No tienes peticiones de amistad.")
                 setMyFriends(friends);
                 setFriendsFiltros(friends)
@@ -140,14 +140,14 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
             } else {
                 setError("");
                 setMyFriends(friends);
-                console.log("friends primera vez")
-                console.log(friends)
+                // console.log("friends primera vez")
+                // console.log(friends)
                 setFriendsFiltros(friends)
-                console.log("listafriends primera vez")
-                console.log(friends)
+                // console.log("listafriends primera vez")
+                // console.log(friends)
             }
 
-            console.log(friends)
+            // console.log(friends)
         }
     };
 
@@ -178,8 +178,8 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
                                     // if (notifications[0].numbers_messages > 0 || 
                                     //   notifications[0].numbers_requestFriend > 0 ||
                                     //   notifications[0].numbers_acceptedFriend > 0) {
-                                    console.log("actualizando mis notificaciones");
-                                    console.log(notifications);
+                                    // console.log("actualizando mis notificaciones");
+                                    // console.log(notifications);
                                     props.setNotifications(notifications[0]);
                                     // console.log(notifications);
                                     // } else {
@@ -187,7 +187,7 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
                                     // }
 
                                 } else {
-                                    console.log("no me actualiza las notificaciones porque notificacion[0] no existe")
+                                    // console.log("no me actualiza las notificaciones porque notificacion[0] no existe")
                                 }
 
                             })
@@ -210,15 +210,15 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
 
     const acceptedFriendship = (id_friend: number) => {
         let decoded: any = jwt.decode(props.token);
-        console.log(decoded);
+        // console.log(decoded);
         // const id: number = +props.match.params.id_player;
         // if (decoded !== null && (id === decoded.id_player || props.player.isAdmin)) {
         if (decoded !== null) {
 
-            console.log(decoded);
+            // console.log(decoded);
 
-            console.log("entra al fetch");
-            console.log("Soy admin: " + props.player.isAdmin);
+            // console.log("entra al fetch");
+            // console.log("Soy admin: " + props.player.isAdmin);
             fetch("http://localhost:8080/api//friends/accepted/" + id_friend, {
                 method: "PUT",
                 headers: {
@@ -232,7 +232,7 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
                 .then(response => {
                     if (response.ok) {
                         ////habira que ver si es correcto o no
-                        console.log("amistad creada");
+                        // console.log("amistad creada");
                         //actualizo mis notificaciones
                         updatednotificationsFriendship();
                         amigos();
@@ -248,12 +248,12 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
                                         .json()
                                         .then((listaFriendship: IFriendship[]) => {
                                             if (listaFriendship.length > 0) {
-                                                console.log(listaFriendship);
+                                                // console.log(listaFriendship);
                                                 props.setFriendships(listaFriendship);
                                                 props.history.push("/friendRequests");
 
                                             } else {
-                                                console.log("la BD no ha devuelto ningun mensaje.");
+                                                // console.log("la BD no ha devuelto ningun mensaje.");
                                             }
                                         })
                                         .catch(err => {
@@ -288,13 +288,13 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
     const borrarFriend = (id_friend: number) => {
         try {
             if (props.token) {
-                let decoded: any = jwt.decode(props.token);
+                // let decoded: any = jwt.decode(props.token);
                 // const id: number = +props.match.params.id_player;
                 // if (decoded !== null && (id !== decoded.id_player || props.player.isAdmin)) {
-                console.log(decoded);
+                // console.log(decoded);
 
-                console.log("entra al fetch");
-                console.log("Soy admin: " + props.player.isAdmin);
+                // console.log("entra al fetch");
+                // console.log("Soy admin: " + props.player.isAdmin);
                 fetch("http://localhost:8080/api/friends/delete/" + id_friend, {
                     method: "DELETE",
                     headers: {
@@ -304,7 +304,7 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
                 })
                     .then(response => {
                         if (response.ok) {
-                            console.log("amistad borrada")
+                            // console.log("amistad borrada")
                             // if (props.player.id_player === id) {
                             //     props.setToken("");
                             //     props.history.push("/");
@@ -332,7 +332,7 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
                 console.log("no hay token en redux");
             }
         } catch (err) {
-            console.log("ha fallado el decode");
+            console.log("ha fallado el decode " + err);
         }
 
     }
@@ -357,10 +357,10 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
         } else {
             setError("");
         }
-        console.log("myFriends");
-        console.log(myFriends);
-        console.log("listaFriends");
-        console.log(friends);
+        // console.log("myFriends");
+        // console.log(myFriends);
+        // console.log("listaFriends");
+        // console.log(friends);
 
 
         if (inputUsername) {
@@ -409,7 +409,7 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
 
 
     if (!friends || !myFriends || !friendsFiltros) {
-        console.log("null")
+        // console.log("null")
         setError("Tu lista de peticiones de amigos esta vacia.")
         return null;
     }

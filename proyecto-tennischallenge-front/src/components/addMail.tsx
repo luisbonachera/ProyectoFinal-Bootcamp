@@ -69,12 +69,12 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                 let id_player_destiny;
                 if (soyYo) {
                     id_player_destiny = inputPlayerDestiny;
-                    console.log("voy a enviar mensaje a alguien: " + id_player_destiny);
+                    // console.log("voy a enviar mensaje a alguien: " + id_player_destiny);
                 } else {
                     id_player_destiny = playerDestiny.id_player;
-                    console.log("voy a enviar mensaje a " + id_player_destiny);
+                    // console.log("voy a enviar mensaje a " + id_player_destiny);
                 }
-                console.log("entra al fetch");
+                // console.log("entra al fetch");
                 fetch("http://localhost:8080/api/msgs/add", {
                     method: "POST",
                     headers: {
@@ -90,7 +90,7 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                 })
                     .then(response => {
                         if (response.ok) {
-                            console.log("mensaje creado")
+                            // console.log("mensaje creado")
                             fetch("http://localhost:8080/api/msgs", {
                                 headers: {
                                     "Content-Type": "application/json",
@@ -103,12 +103,12 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                                             .json()
                                             .then((listaMsgs: IMsg[]) => {
                                                 if (listaMsgs.length > 0) {
-                                                    console.log(listaMsgs);
+                                                    // console.log(listaMsgs);
                                                     props.setMessages(listaMsgs);
                                                     props.history.push("/mailTray/sent");
 
                                                 } else {
-                                                    console.log("la BD no ha devuelto ningun mensaje.");
+                                                    // console.log("la BD no ha devuelto ningun mensaje.");
                                                 }
                                             })
                                             .catch(err => {
@@ -155,13 +155,13 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                         } else {
                             response.json().then(({ e }) => {
                                 // setError("Response.ok, Error ," + e);
-                                console.log(e);
-                                console.log(e.sqlMessage)
+                                // console.log(e);
+                                // console.log(e.sqlMessage)
                                 let array = e.sqlMessage.split(" ");
                                 array[array.length - 4] = array[array.length - 4].replace("'", "");
                                 array[array.length - 4] = array[array.length - 4].replace("'", "");
-                                console.log(array);
-                                console.log(array[array.length - 4]);
+                                // console.log(array);
+                                // console.log(array[array.length - 4]);
                                 let err = array[array.length - 4];
                                 if (e.errno === 1406) {
                                     if (err === "subject") {
@@ -171,10 +171,10 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                                         setError("El contenido del texto es demasiado largo.");
                                         setErrorText("error");
                                     }
-                                    console.log(e.sqlMessage)
-                                    console.log(array[array.length - 4]);
+                                    // console.log(e.sqlMessage)
+                                    // console.log(array[array.length - 4]);
                                 } else {
-                                    console.log("no se porque entra aqui")
+                                    // console.log("no se porque entra aqui")
                                 }
                             })
                                 .catch(err => {
@@ -187,7 +187,7 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                         console.log("Error," + err)
                     })
             } else {
-                console.log("no existe playerDestiny");
+                // console.log("no existe playerDestiny");
             }
         } else {
             /**aqui comprobar si estan vacios o no los input */

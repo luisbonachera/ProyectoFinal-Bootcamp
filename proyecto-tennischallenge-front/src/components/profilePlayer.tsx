@@ -20,15 +20,15 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
     // const [error, setError] = React.useState("");
 
     const id = props.match.params.id_player;
-    console.log(id);
+    // console.log(id);
 
-    console.log(props.players);
+    // console.log(props.players);
     let player = props.players.find(p => p.id_player === +id);
 
     React.useEffect(() => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
         player = props.players.find(p => p.id_player === +id);
-        console.log(player);
+        // console.log(player);
     }, [props.player]);
 
     // if(!player){
@@ -43,10 +43,10 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
             let decoded: any = jwt.decode(props.token);
             const id: number = +props.match.params.id_player;
             if (decoded !== null && (id === decoded.id_player || props.player.isAdmin)) {
-                console.log(decoded);
+                // console.log(decoded);
 
-                console.log("entra al fetch");
-                console.log("Soy admin: " + props.player.isAdmin);
+                // console.log("entra al fetch");
+                // console.log("Soy admin: " + props.player.isAdmin);
                 fetch("http://localhost:8080/api/players/erased/" + id, {
                     method: "PUT",
                     // fetch("http://localhost:8080/api/players/" + id, {
@@ -58,7 +58,7 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
                 })
                     .then(response => {
                         if (response.ok) {
-                            console.log("usuario borrado")
+                            // console.log("usuario borrado")
                             props.setToken("");
                             props.history.push("/");
                             props.deletePlayer(id);

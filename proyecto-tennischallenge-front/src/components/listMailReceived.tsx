@@ -45,8 +45,8 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
                                     // if (notifications[0].numbers_messages > 0 || 
                                     //   notifications[0].numbers_requestFriend > 0 ||
                                     //   notifications[0].numbers_acceptedFriend > 0) {
-                                    console.log("actualizando mis notificaciones");
-                                    console.log(notifications);
+                                    // console.log("actualizando mis notificaciones");
+                                    // console.log(notifications);
                                     props.setNotifications(notifications[0]);
                                     // console.log(notifications);
                                     // } else {
@@ -54,7 +54,7 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
                                     // }
 
                                 } else {
-                                    console.log("no me actualiza las notificaciones porque notificacion[0] no existe")
+                                    // console.log("no me actualiza las notificaciones porque notificacion[0] no existe")
                                 }
 
                             })
@@ -106,7 +106,7 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
                             setError("");
                             props.history.push("/mailTray/received/" + id_message);
                         } else {
-                            console.log("error en response.ok");
+                            // console.log("error en response.ok");
                         }
                     })
                     .catch(error => {
@@ -114,7 +114,7 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
                         console.log(error);
                     });
             } else {
-                console.log("el msg ya esta visto o no es mensaje recibido");
+                // console.log("el msg ya esta visto o no es mensaje recibido");
                 props.history.push("/mailTray/received/" + id_message);
             }
         } else {
@@ -156,7 +156,7 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
                 console.log("no hay token");
             }
         } else {
-            console.log("no hay mensajes en la store, haciendo UseEffect.");
+            // console.log("no hay mensajes en la store, haciendo UseEffect.");
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.msgs]);

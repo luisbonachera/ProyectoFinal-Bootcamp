@@ -76,7 +76,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
     const updateIsAdmin = (event: any) => {
         setIsAdmin(s => !s);
         // setIsAdmin(event.target.checked);
-        console.log("isAdmin en updatedIsAdmin: " + isAdmin);
+        // console.log("isAdmin en updatedIsAdmin: " + isAdmin);
         setError("");
 
     };
@@ -104,8 +104,8 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
 
 
-    console.log("player:");
-    console.log(player);
+    // console.log("player:");
+    // console.log(player);
 
     const edit = () => {
         if (username && email && city && genre && rating) {
@@ -114,10 +114,10 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                     let decoded: any = jwt.decode(props.token);
                     const id: number = +props.match.params.id_player;
                     if (decoded !== null && (id === decoded.id_player || props.player.isAdmin === true)) {
-                        console.log(decoded);
+                        // console.log(decoded);
 
-                        console.log("entra al fetch");
-                        console.log(isAdmin);
+                        // console.log("entra al fetch");
+                        // console.log(isAdmin);
 
                         const formData = new FormData();
                         // esto es para poder cambiarle la foto y pnerle el nombre de su id.extension 
@@ -137,9 +137,9 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                         formData.append("isAdmin", administador);
 
 
-                        console.log(isAdmin);
+                        // console.log(isAdmin);
 
-                        console.log(administador);
+                        // console.log(administador);
                         fetch("http://localhost:8080/api/players/" + id, {
                             method: "PUT",
                             headers: {
@@ -169,10 +169,10 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                     response
                                         .json()
                                         .then((lista: any) => {
-                                            console.log(lista);
+                                            // console.log(lista);
                                             if (lista.length === 1) {
-                                                console.log("usuario modificado y listado");
-                                                console.log(lista);
+                                                // console.log("usuario modificado y listado");
+                                                // console.log(lista);
                                                 /***************************************** */
                                                 lista[0] = {
                                                     ...lista[0],
@@ -182,8 +182,8 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                                 /***************************************** */
                                                 // entro aqui porque yo me he editado, pero si soy admin puedo editar a otros
                                                 if (id === decoded.id_player) {
-                                                    console.log("soy yo o deberia:")
-                                                    console.log(lista[0]);
+                                                    // console.log("soy yo o deberia:")
+                                                    // console.log(lista[0]);
                                                     props.updatePlayer(lista[0]);
                                                 }
 
@@ -251,13 +251,13 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                     //     });
                                 } else {
                                     response.json().then(({ e }) => {
-                                        console.log(e);
-                                        console.log(e.sqlMessage)
+                                        // console.log(e);
+                                        // console.log(e.sqlMessage);
                                         let array = e.sqlMessage.split(" ");
                                         array[array.length - 1] = array[array.length - 1].replace("'", "");
                                         array[array.length - 1] = array[array.length - 1].replace("'", "");
-                                        console.log(array);
-                                        console.log(array[array.length - 1]);
+                                        // console.log(array);
+                                        // console.log(array[array.length - 1]);
                                         let err = array[array.length - 1];
                                         if (e.errno === 1062) {
                                             if (err === "email") {
@@ -333,7 +333,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
     React.useEffect(() => {
         if (player) {
-            console.log(player)
+            // console.log(player)
             setUsername(player.username);
             setEmail(player.email)
             setCity(player.city);
@@ -479,9 +479,8 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                             <Form.Group className="col-5 containerGenero" as={Col} controlId="formGridRating">
                                 <Form.Group id="formGridCeckbox">
                                     <Form.Label>Administrador</Form.Label>
-                                    <Form.Check id="admin" className="CheckBoxAdmin" type="checkbox" name="Administrador" onChange={updateIsAdmin} checked={isAdmin} />
+                                    <Form.Check id="admin" className="CheckBoxAdmin" type="checkbox" onChange={updateIsAdmin} checked={isAdmin} />
                                 </Form.Group>
-
                                 {/* <Form.Group id="formGridCheckbox2">
             <Form.Check type="checkbox" label="PrebaAdmin" onChange={updateIsAdmin} checked={isAdmin} />
         </Form.Group> */}
@@ -507,7 +506,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
 
                 </Form.Row> */}{
-                        console.log(props.player.isAdmin)
+                        // console.log(props.player.isAdmin)
                     }
                     {/* {props.player.isAdmin &&
                         <Fragment>

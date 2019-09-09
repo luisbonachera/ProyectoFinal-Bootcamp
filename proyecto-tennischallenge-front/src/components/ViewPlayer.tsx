@@ -47,21 +47,21 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
     // const [yourFriends, setyourFiends] = React.useState<IFriendship[]>([]);
 
     const id = props.match.params.id_player;
-    console.log(id);
+    // console.log(id);
 
-    console.log(props.players);
+    // console.log(props.players);
 
     const amistad = () => {
         let decoded: any = jwt.decode(props.token);
-        console.log(decoded);
+        // console.log(decoded);
         const id: number = +props.match.params.id_player;
         // if (decoded !== null && (id === decoded.id_player || props.player.isAdmin)) {
         if (decoded !== null) {
 
-            console.log(decoded);
+            // console.log(decoded);
 
-            console.log("entra al fetch");
-            console.log("Soy admin: " + props.player.isAdmin);
+            // console.log("entra al fetch");
+            // console.log("Soy admin: " + props.player.isAdmin);
             fetch("http://localhost:8080/api/friends/add", {
                 method: "POST",
                 headers: {
@@ -75,7 +75,7 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                 .then(response => {
                     if (response.ok) {
                         ////habira que ver si es correcto o no
-                        console.log("amistad creada")
+                        // console.log("amistad creada")
                         fetch("http://localhost:8080/api/friends", {
                             headers: {
                                 "Content-Type": "application/json",
@@ -88,7 +88,7 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                         .json()
                                         .then((listaFriendship: IFriendship[]) => {
                                             if (listaFriendship.length > 0) {
-                                                console.log(listaFriendship);
+                                                // console.log(listaFriendship);
                                                 props.setFriendships(listaFriendship);
                                                 props.deleteFriendship(id);
                                                 props.history.push("/players");
@@ -128,10 +128,10 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
             let decoded: any = jwt.decode(props.token);
             const id: number = +props.match.params.id_player;
             if (decoded !== null && (id !== decoded.id_player || props.player.isAdmin)) {
-                console.log(decoded);
+                // console.log(decoded);
 
-                console.log("entra al fetch");
-                console.log("Soy admin: " + props.player.isAdmin);
+                // console.log("entra al fetch");
+                // console.log("Soy admin: " + props.player.isAdmin);
                 fetch("http://localhost:8080/api/friends/delete/" + id_friend, {
                     method: "DELETE",
                     headers: {
@@ -141,7 +141,7 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                 })
                     .then(response => {
                         if (response.ok) {
-                            console.log("amistad borrada")
+                            // console.log("amistad borrada")
                             // if (props.player.id_player === id) {
                             //     props.setToken("");
                             //     props.history.push("/");
@@ -174,10 +174,10 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
             let decoded: any = jwt.decode(props.token);
             const id: number = +props.match.params.id_player;
             if (decoded !== null && (id === decoded.id_player || props.player.isAdmin)) {
-                console.log(decoded);
+                // console.log(decoded);
 
-                console.log("entra al fetch");
-                console.log("Soy admin: " + props.player.isAdmin);
+                // console.log("entra al fetch");
+                // console.log("Soy admin: " + props.player.isAdmin);
                 fetch("http://localhost:8080/api/players/erased/" + id, {
                     // fetch("http://localhost:8080/api/players/" + id, {
                     // method: "DELETE",
@@ -189,7 +189,7 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                 })
                     .then(response => {
                         if (response.ok) {
-                            console.log("usuario borrado")
+                            // console.log("usuario borrado")
                             if (props.player.id_player === id) {
                                 props.setToken("");
                                 /****borrar todo */
@@ -224,13 +224,13 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
     const findThisPlayer = () => {
         let player: any = props.players.find(p => p.id_player === +id);
-        console.log(player);
+        // console.log(player);
 
         if (player) {
-            console.log(player);
+            // console.log(player);
             setThisPlayer(player);
-            console.log("thisPlayer");
-            console.log(thisplayer);
+            // console.log("thisPlayer");
+            // console.log(thisplayer);
             //Funcion que trae de BD los amigos de este player, no los mios
             // ylos guarda en redux
             list();
@@ -249,21 +249,21 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                         setId_friend(f.id_friends);
                     } else if (!f.accepted) {
                         if (f.id_player1 === player.id_player) {
-                            console.log("entra id_player1 es este player, el me envio peticion")
+                            // console.log("entra id_player1 es este player, el me envio peticion")
                             setStateFriend("responderPeticion");
                             setId_friend(f.id_friends);
                         } else if (f.id_player1 === props.player.id_player) {
-                            console.log("entra id_player1 soy yo, yo envie peticion.")
+                            // console.log("entra id_player1 soy yo, yo envie peticion.")
                             setStateFriend("EsperandoPeticion");
                             setId_friend(f.id_friends);
                         } else {
-                            console.log("aqui no deberia de entrar");
+                            // console.log("aqui no deberia de entrar");
                             setStateFriend("");
                             setId_friend(f.id_friends);
                         }
                     }
                 } else {
-                    console.log("aqui no deberia entrar")
+                    // console.log("aqui no deberia entrar")
                 }
 
             });
@@ -276,7 +276,7 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
 
         } else {
             // setError("Aun no existe el player")
-            console.log("este usuario no es tu amigo")
+            // console.log("este usuario no es tu amigo")
         }
     };
     React.useEffect(findThisPlayer, [props.match.params.id_player, props.friendships]);
@@ -285,7 +285,7 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
         if (props.token) {
             let decoded = jwt.decode(props.token);
             if (decoded !== null) {
-                console.log(decoded);
+                // console.log(decoded);
 
                 fetch("http://localhost:8080/api/friends/" + id, {
                     headers: {
@@ -299,17 +299,17 @@ const ViewPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                 .json()
                                 .then((lista: IFriendship[]) => {
                                     if (lista.length === 0) {
-                                        console.log("entra");
+                                        // console.log("entra");
                                         // setError("Tu lista de amigos esta vacia");
                                         props.setYourFriendships([]);
                                     }
                                     else {
                                         // setError("");
-                                        console.log("va bien");
+                                        // console.log("va bien");
                                         props.setYourFriendships(lista);
 
-                                        console.log("friends desde BD");
-                                        console.log(lista);
+                                        // console.log("friends desde BD");
+                                        // console.log(lista);
                                     }
                                     // 
                                 })

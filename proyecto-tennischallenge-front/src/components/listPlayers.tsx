@@ -69,7 +69,7 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
         if (props.token) {
             let decoded = jwt.decode(props.token);
             if (decoded !== null) {
-                console.log(decoded);
+                // console.log(decoded);
 
                 fetch("http://localhost:8080/api/players", {
                     headers: {
@@ -85,10 +85,10 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
                                     if (lista.length === 0) {
                                         setError("No hay jugadores");
                                     } else {
-                                        console.log(lista);
-                                        console.log("va bien");
+                                        // console.log(lista);
+                                        // console.log("va bien");
                                         props.setPlayers(lista);
-                                        console.log(lista);
+                                        // console.log(lista);
                                     }
                                 })
                                 .catch(err => {
@@ -180,8 +180,8 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
                     return 0; //default return value (no sorting)
                 })
             }
-            console.log("lista despues de filtrar")
-            console.log(lista);
+            // console.log("lista despues de filtrar")
+            // console.log(lista);
             setFilterestList(lista);
             // }
         }
@@ -192,7 +192,7 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
         if (props.token) {
             let decoded = jwt.decode(props.token);
             if (decoded !== null) {
-                console.log(decoded);
+                // console.log(decoded);
 
                 fetch("http://localhost:8080/api/friends", {
                     headers: {
@@ -210,11 +210,11 @@ const ListPlayers: React.FC<Iprops & IpropsGlobal> = props => {
                                     }
                                     else {
                                         setError("");
-                                        console.log("va bien");
+                                        // console.log("va bien");
                                         props.setFriendships(lista);
 
-                                        console.log("friends desde BD");
-                                        console.log(lista);
+                                        // console.log("friends desde BD");
+                                        // console.log(lista);
                                     }
                                     // 
                                 })

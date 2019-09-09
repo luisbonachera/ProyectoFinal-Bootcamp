@@ -103,7 +103,7 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
         ///requerir campos*********************************************************************
         if (username && password && email && city && genre && rating) {
             // if(validateUsername && validateEmail && validateCity) {
-            if (validateEmail && validateCity && validateUsername && validatePassword) {
+            if (validateEmail(email) && validateCity && validateUsername && validatePassword) {
                 console.log("entra al fetch");
                 const formData = new FormData();
                 if (image) {
