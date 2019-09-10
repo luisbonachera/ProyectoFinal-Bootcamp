@@ -186,8 +186,13 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                                     // console.log(lista[0]);
                                                     props.updatePlayer(lista[0]);
                                                 }
-
-                                                props.history.push("/profile/" + id);
+                                                if(props.player.isAdmin && id !== decoded.id){
+                                                    props.history.push("/players/" + id);
+                                                }
+                                                else{
+                                                    props.history.push("/profile/" + id);
+                                                }
+                                                
                                             } else if (lista.length > 1) {
                                                 console.log("viene mas de 1 player");
                                             } else {
@@ -269,7 +274,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                             }
 
                                         } else {
-                                            console.log("no se porque entra aqui")
+                                            // console.log("no se porque entra aqui")
                                         }
                                     })
                                         .catch(err => {
@@ -277,7 +282,8 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                         });
 
                                     /***************** Hacer lo mismo que en add para ver si email o username existe**********************/
-                                    console.log("Error el usuario o el emial ya existe.");
+                                    // console.log("Error el usuario o el emial ya existe.");
+                                    // no se si esto es correcto
                                     setError("Error el usuario o el emial ya existe.");
                                 }
                             })

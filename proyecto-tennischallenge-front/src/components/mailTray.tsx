@@ -67,7 +67,7 @@ const MailTray: React.FC<IPropsGloblal> = props => {
                                         //     console.log("no hay token");
                                         // }
                                     } else {
-                                        console.log("la lista de msg esta vacia");
+                                        // console.log("la lista de msg esta vacia");
                                     }
 
                                 })

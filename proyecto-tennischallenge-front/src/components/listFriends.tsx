@@ -326,7 +326,7 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                     console.log("error en response " + err);
                 })
         } else {
-            console.log("este no es tu amigo nuevo.")
+            // console.log("este no es tu amigo nuevo.")
         }
     }
 

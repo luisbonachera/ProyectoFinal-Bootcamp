@@ -79,7 +79,7 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
                         }
                     })
                     .catch(err => {
-                        console.log("Error," + err)
+                        // console.log("Error," + err)
                     })
             }
             else {

@@ -98,13 +98,13 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
     const validatePassword = mediumRegex.test(password);
 
     const add = () => {
-        console.log("entra al add");
+        // console.log("entra al add");
         // console.log(isAdmin);
         ///requerir campos*********************************************************************
         if (username && password && email && city && genre && rating) {
             // if(validateUsername && validateEmail && validateCity) {
             if (validateEmail(email) && validateCity && validateUsername && validatePassword) {
-                console.log("entra al fetch");
+                // console.log("entra al fetch");
                 const formData = new FormData();
                 if (image) {
                     formData.append("file", image);
@@ -137,7 +137,7 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                 })
                     .then(response => {
                         if (response.ok) {
-                            console.log("usuario creado")
+                            // console.log("usuario creado")
                             fetch("http://localhost:8080/api/auth", {
                                 method: "POST",
                                 headers: {
@@ -154,11 +154,11 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                                             .text()
                                             .then((token: string) => {
                                                 if (token) {
-                                                    console.log(token);
+                                                    // console.log(token);
 
                                                     let decoded: any = jwt.decode(token);
-                                                    console.log("decoded:")
-                                                    console.log(decoded);
+                                                    // console.log("decoded:")
+                                                    // console.log(decoded);
                                                     if (decoded) {
                                                         let player: IPlayer = {
                                                             id_player: decoded.id_player,
@@ -182,9 +182,9 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                                                                     response
                                                                         .json()
                                                                         .then((lista: IPlayer[]) => {
-                                                                            console.log("va bien");
+                                                                            // console.log("va bien");
 
-                                                                            console.log(lista);
+                                                                            // console.log(lista);
                                                                             props.setPlayer(player);
                                                                             props.setPlayers(lista);
                                                                             props.setToken(token);
@@ -311,7 +311,7 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                 }
                 if (!validatePassword) {
                     setErrorPassword("error");
-                    setError("El password debe contener al menos 8 caracteres, 1 minúscula, 1 mayúscula y 1 número.");
+                    setError("La contraseña debe contener al menos 8 caracteres, 1 minúscula, 1 mayúscula y 1 número.");
                 }
                 if ((!validateUsername && !validateEmail(email)) || (!validateUsername && !validateCity) || (!validateUsername && !validatePassword)
                     || (!validateEmail(email) && !validateCity) || (!validateEmail(email) && !validatePassword) || (!validateCity && !validatePassword)
@@ -379,7 +379,7 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                     <Form.Group className="col-6" as={Col} controlId="formGridPassword">
                         <Form.Label>Contraseña</Form.Label>
                         <Form.Control type="password" className={errorPassword ? "form-control form-control-red" : "form-control"}
-                            as="input" maxLength="20" placeholder="Escriba su contraseña" onChange={updatePassword} required />
+                            as="input" maxLength="20" placeholder="Escriba su contraseña" onChange={updatePassword} required/>
                     </Form.Group>
 
                 </Form.Row>
