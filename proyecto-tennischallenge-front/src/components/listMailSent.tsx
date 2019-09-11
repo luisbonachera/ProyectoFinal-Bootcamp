@@ -51,13 +51,13 @@ const ListMailSent: React.FC<IPropsGloblal & RouteComponentProps> = props => {
                     }
 
                 } else {
-                    console.log("no se ha podido decodificar token")
+                    // console.log("no se ha podido decodificar token")
                 }
             } else {
-                console.log("no hay token");
+                // console.log("no hay token");
             }
         } else {
-            console.log("no hay mensajes en la store, haciendo UseEffect.");
+            // console.log("no hay mensajes en la store, haciendo UseEffect.");
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.msgs, props.notifications]);

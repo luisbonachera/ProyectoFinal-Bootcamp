@@ -112,12 +112,12 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                                                 }
                                             })
                                             .catch(err => {
-                                                console.log(err);
-                                                console.log("error al devolver mis mensajes." + err);
+                                                // console.log(err);
+                                                // console.log("error al devolver mis mensajes." + err);
                                             })
 
                                     } else {
-                                        console.log("Error en response.ok");
+                                        // console.log("Error en response.ok");
                                         //     response.json().then(({ e }) => {
                                         //         // setError("Response.ok, Error ," + e);
                                         //     console.log(e);
@@ -150,7 +150,7 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                                 })
                                 .catch(error => {
                                     setError("Response Error , ha fallado la consulta" + error);
-                                    console.log(error);
+                                    // console.log(error);
                                 });
                         } else {
                             response.json().then(({ e }) => {
@@ -178,13 +178,13 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                                 }
                             })
                                 .catch(err => {
-                                    console.log("Error," + err)
+                                    // console.log("Error," + err)
                                 });
 
                         }
                     })
                     .catch(err => {
-                        console.log("Error," + err)
+                        // console.log("Error," + err)
                     })
             } else {
                 // console.log("no existe playerDestiny");

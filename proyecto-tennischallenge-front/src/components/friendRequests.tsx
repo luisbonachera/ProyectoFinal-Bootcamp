@@ -192,14 +192,14 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
 
                             })
                             .catch(err => {
-                                console.log("Error en el json. " + err);
+                                // console.log("Error en el json. " + err);
                             });
                     } else {
-                        console.log("responde.ok da error.");
+                        // console.log("responde.ok da error.");
                     }
                 })
                 .catch(err => {
-                    console.log("Error en response. " + err);
+                    // console.log("Error en response. " + err);
                 });
 
 
@@ -257,28 +257,28 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
                                             }
                                         })
                                         .catch(err => {
-                                            console.log("error al devolver mis mensajes." + err);
+                                            // console.log("error al devolver mis mensajes." + err);
                                         })
                                 } else {
-                                    console.log("Error en el response.ok");
+                                    // console.log("Error en el response.ok");
                                 }
 
 
 
                             })
                             .catch(err => {
-                                console.log("la consulta no fue bien. " + err);
+                                // console.log("la consulta no fue bien. " + err);
                                 // setError(" Error al añadir como amigo.");
                             });
                     } else {
-                        console.log("Error en el response.ok");
+                        // console.log("Error en el response.ok");
                     }
                 }).catch(err => {
-                    console.log("error en response" + err);
+                    // console.log("error en response" + err);
                 })
 
         } else {
-            console.log("Error en el decoded");
+            // console.log("Error en el decoded");
         }
     }
 
@@ -319,20 +319,20 @@ const FriendRequests: React.FC<Iprops & IpropsGlobal & RouteComponentProps> = pr
                             //     console.log("no deberia entrar aqui, o eres admin o te borras a ti.")
                             // }
                         } else {
-                            console.log("error en response.ok")
+                            // console.log("error en response.ok")
                         }
                     }).catch(err => {
-                        console.log("la consulta no fue bien. " + err);
+                        // console.log("la consulta no fue bien. " + err);
                         // setError(" Error al borrar como amigo.");
                     });
                 // } else {
                 //     console.log("ha fallado el decode")
                 // }
             } else {
-                console.log("no hay token en redux");
+                // console.log("no hay token en redux");
             }
         } catch (err) {
-            console.log("ha fallado el decode " + err);
+            // console.log("ha fallado el decode " + err);
         }
 
     }

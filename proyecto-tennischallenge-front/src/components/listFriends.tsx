@@ -254,14 +254,14 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
 
                             })
                             .catch(err => {
-                                console.log("Error en el json. " + err);
+                                // console.log("Error en el json. " + err);
                             });
                     } else {
-                        console.log("responde.ok da error.");
+                        // console.log("responde.ok da error.");
                     }
                 })
                 .catch(err => {
-                    console.log("Error en response. " + err);
+                    // console.log("Error en response. " + err);
                 });
 
 
@@ -308,22 +308,22 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                                             }
                                         })
                                         .catch(err => {
-                                            console.log("error al devolver mis mensajes." + err);
+                                            // console.log("error al devolver mis mensajes." + err);
                                         })
                                 } else {
-                                    console.log("Error en el response.ok");
+                                    // console.log("Error en el response.ok");
                                 }
                             })
                             .catch(err => {
-                                console.log("la consulta no fue bien. ");
+                                // console.log("la consulta no fue bien. ");
                                 // setError(" Error al añadir como amigo.");
                             })
                     } else {
-                        console.log("error en response.ok");
+                        // console.log("error en response.ok");
                     }
                 })
                 .catch(err => {
-                    console.log("error en response " + err);
+                    // console.log("error en response " + err);
                 })
         } else {
             // console.log("este no es tu amigo nuevo.")

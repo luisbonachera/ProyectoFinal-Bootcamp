@@ -194,9 +194,9 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                                 }
                                                 
                                             } else if (lista.length > 1) {
-                                                console.log("viene mas de 1 player");
+                                                // console.log("viene mas de 1 player");
                                             } else {
-                                                console.log("no viene ningun usuario.")
+                                                // console.log("no viene ningun usuario.")
                                             }
                                             ;
                                         })
@@ -278,7 +278,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                         }
                                     })
                                         .catch(err => {
-                                            console.log("Error," + err)
+                                            // console.log("Error," + err)
                                         });
 
                                     /***************** Hacer lo mismo que en add para ver si email o username existe**********************/
@@ -288,15 +288,15 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                                 }
                             })
                             .catch(err => {
-                                console.log("Error," + err)
+                                // console.log("Error," + err)
                             })
                     }
                     else {
-                        console.log("El token no se pudo decodificar");
+                        // console.log("El token no se pudo decodificar");
                     }
                 }
                 else {
-                    console.log("El token no existe");
+                    // console.log("El token no existe");
                 }
             } else {
                 if (!validateUsername) {

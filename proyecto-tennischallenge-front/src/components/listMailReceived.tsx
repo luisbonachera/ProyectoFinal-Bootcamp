@@ -59,14 +59,14 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
 
                             })
                             .catch(err => {
-                                console.log("Error en el json. " + err);
+                                // console.log("Error en el json. " + err);
                             });
                     } else {
-                        console.log("responde.ok da error.");
+                        // console.log("responde.ok da error.");
                     }
                 })
                 .catch(err => {
-                    console.log("Error en response. " + err);
+                    // console.log("Error en response. " + err);
                 });
 
 
@@ -111,14 +111,14 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
                     })
                     .catch(error => {
                         setError("Response Error , ha fallado la consulta" + error);
-                        console.log(error);
+                        // console.log(error);
                     });
             } else {
                 // console.log("el msg ya esta visto o no es mensaje recibido");
                 props.history.push("/mailTray/received/" + id_message);
             }
         } else {
-            console.log("el msg no existe");
+            // console.log("el msg no existe");
 
         }
     }
@@ -150,10 +150,10 @@ const ListMailReceived: React.FC<IPropsGloblal & RouteComponentProps> = props =>
                     }
 
                 } else {
-                    console.log("no se ha podido decodificar token")
+                    // console.log("no se ha podido decodificar token")
                 }
             } else {
-                console.log("no hay token");
+                // console.log("no hay token");
             }
         } else {
             // console.log("no hay mensajes en la store, haciendo UseEffect.");

@@ -133,20 +133,20 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
                                         // }
 
                                     } else {
-                                        console.log("Ha fallado el decode en login");
+                                        // console.log("Ha fallado el decode en login");
                                     }
 
                                 } else {
-                                    console.log("la BD no ha devuelto el token vacio.")
+                                    // console.log("la BD no ha devuelto el token vacio.")
                                 }
 
                             });
                     } else {
                         response.json().then(({ e }) => {
                             if (e === 1062) {
-                                console.log(e)
+                                // console.log(e)
                             }
-                            console.log(e)
+                            // console.log(e)
                         }).catch(err=> {
                             // console.log(err);
                         })
@@ -160,7 +160,7 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
                     setError("Usuario o Contraseña incorrectos. " + err);
                     setErrorPass("error");
                     setErrorUsername("error");
-                    console.log(error);
+                    // console.log(error);
                 });
         } else if (!inputUser && inputPass) {
             setErrorUsername("error");
@@ -169,8 +169,8 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
             setErrorPass("error");
             setError("Te falta por rellenar el campo password");
         } else {
-            console.log("inputUser " + inputUser);
-            console.log("inputPass " + inputPass);
+            // console.log("inputUser " + inputUser);
+            // console.log("inputPass " + inputPass);
             setErrorPass("error");
             setErrorUsername("error");
             setError("Campos usuario y password estan vacios");

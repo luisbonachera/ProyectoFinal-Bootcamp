@@ -75,7 +75,7 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
                             props.setPlayer(playerNull);
 
                         } else {
-                            console.log("error en el response.ok");
+                            // console.log("error en el response.ok");
                         }
                     })
                     .catch(err => {
@@ -83,11 +83,11 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
                     })
             }
             else {
-                console.log("El token no se pudo decodificar");
+                // console.log("El token no se pudo decodificar");
             }
         }
         else {
-            console.log("El token no existe");
+            // console.log("El token no existe");
         }
     };
 

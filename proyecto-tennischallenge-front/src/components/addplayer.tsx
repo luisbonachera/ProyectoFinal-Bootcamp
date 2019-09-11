@@ -240,33 +240,33 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                                                         // props.setPlayer(player);
                                                         // props.history.push("/");
                                                     } else {
-                                                        console.log("Ha fallado el decode en login");
+                                                        // console.log("Ha fallado el decode en login");
                                                     }
 
                                                 } else {
-                                                    console.log("la BD no ha devuelto el token vacio.");
+                                                    // console.log("la BD no ha devuelto el token vacio.");
                                                 }
 
                                             })
 
                                     } else {
                                         setError("Usuario o Contraseña incorrectos");
-                                        console.log("Usuario o Contraseña incorrectos");;
+                                        // console.log("Usuario o Contraseña incorrectos");;
                                     }
                                 })
                                 .catch(error => {
                                     setError("Usuario o Contraseña incorrectos ," + error);
-                                    console.log("Usuario o Contraseña incorrectos" + error);
+                                    // console.log("Usuario o Contraseña incorrectos" + error);
                                 });
                         } else {
                             response.json().then(({ e }) => {
-                                console.log(e);
-                                console.log(e.sqlMessage)
+                                // console.log(e);
+                                // console.log(e.sqlMessage)
                                 let array = e.sqlMessage.split(" ");
                                 array[array.length - 1] = array[array.length - 1].replace("'", "");
                                 array[array.length - 1] = array[array.length - 1].replace("'", "");
-                                console.log(array);
-                                console.log(array[array.length - 1]);
+                                // console.log(array);
+                                // console.log(array[array.length - 1]);
                                 let err = array[array.length - 1];
                                 if (e.errno === 1062) {
                                     if (err === "email") {
@@ -278,16 +278,16 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                                     }
 
                                 } else {
-                                    console.log("no se porque entra aqui")
+                                    // console.log("no se porque entra aqui")
                                 }
                             })
                                 .catch(err => {
-                                    console.log("Error," + err)
+                                    // console.log("Error," + err)
                                 });
                         }
                     })
                     .catch(err => {
-                        console.log("Error," + err)
+                        // console.log("Error," + err)
                     });
             } else {
                 // if (!validateUsername && !validateEmail && !validateCity && !validatePassword) {

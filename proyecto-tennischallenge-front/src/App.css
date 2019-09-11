@@ -37,6 +37,15 @@
   background-attachment: fixed;
 }
 
+.btn-primary:not(:disabled):not(.disabled):active{
+  /* color: #fff; */
+  /* background-color: #0062cc; */
+  /* border-color: #005cbf; */
+  color: burlywood;
+    background-color: #2c440291 !important;
+    border-color: #2c440291 !important;
+}
+
 .card-footer {
   background: none !important;
   border-top: none !important;
