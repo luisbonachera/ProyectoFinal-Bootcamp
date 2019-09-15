@@ -5,8 +5,6 @@ import * as actions from '../actions/actions';
 import { connect } from 'react-redux';
 import { IPlayer } from '../interfaceIPlayer';
 import jwt from 'jsonwebtoken';
-// import RegExp from 'regex';
-// var Regex = require("regex");
 
 interface IProps { }
 
@@ -25,7 +23,6 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
     const [genre, setGenre] = React.useState("");
     const [rating, setRating] = React.useState("");
     const [image, setImage] = React.useState();
-    // const [isAdmin, setIsAdmin] = React.useState<boolean>(false);
     const [error, setError] = React.useState("");
     const [errorUsername, setErrorUsername] = React.useState("");
     const [errorEmail, setErrorEmail] = React.useState("");
@@ -33,8 +30,6 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
     const [errorCity, setErrorCity] = React.useState("");
     const [errorGenre, setErrorGenre] = React.useState("");
     const [errorRating, setErrorRating] = React.useState("");
-
-
 
     const updateUsername = (event: any) => {
         setUsername(event.currentTarget.value);
@@ -53,6 +48,7 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
         setError("");
         setErrorPassword("");
     };
+
     const updateCity = (event: any) => {
         setCity(event.currentTarget.value);
         setError("");
@@ -75,11 +71,6 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
         setImage(event.currentTarget.files![0]);
     };
 
-    // const updateIsAdmin = (event: any) => {
-    //     setIsAdmin(s => !s);
-    //     // setError("");
-    // };
-
     const validEmailRegex = new RegExp(
         /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i //eslint-disable-line
     );
@@ -98,13 +89,8 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
     const validatePassword = mediumRegex.test(password);
 
     const add = () => {
-        // console.log("entra al add");
-        // console.log(isAdmin);
-        ///requerir campos*********************************************************************
         if (username && password && email && city && genre && rating) {
-            // if(validateUsername && validateEmail && validateCity) {
             if (validateEmail(email) && validateCity && validateUsername && validatePassword) {
-                // console.log("entra al fetch");
                 const formData = new FormData();
                 if (image) {
                     formData.append("file", image);
@@ -122,22 +108,11 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                 fetch("http://localhost:8080/api/add", {
                     method: "POST",
                     headers: {
-                        // "Content-Type": "application/json"
                     },
                     body: formData
-                    // body: JSON.stringify({
-                    //     username: username,
-                    //     email: email,
-                    //     password: password,
-                    //     city: city,
-                    //     genre: genre,
-                    //     rating: rating,
-                    //     // isAdmin: isAdmin,
-                    // })
                 })
                     .then(response => {
                         if (response.ok) {
-                            // console.log("usuario creado")
                             fetch("http://localhost:8080/api/auth", {
                                 method: "POST",
                                 headers: {
@@ -154,11 +129,7 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                                             .text()
                                             .then((token: string) => {
                                                 if (token) {
-                                                    // console.log(token);
-
                                                     let decoded: any = jwt.decode(token);
-                                                    // console.log("decoded:")
-                                                    // console.log(decoded);
                                                     if (decoded) {
                                                         let player: IPlayer = {
                                                             id_player: decoded.id_player,
@@ -170,7 +141,6 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                                                             genre: decoded.genre,
                                                             rating: +decoded.rating
                                                         }
-
                                                         fetch("http://localhost:8080/api/players", {
                                                             headers: {
                                                                 "Content-type": "application/json",
@@ -182,91 +152,40 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                                                                     response
                                                                         .json()
                                                                         .then((lista: IPlayer[]) => {
-                                                                            // console.log("va bien");
-
-                                                                            // console.log(lista);
                                                                             props.setPlayer(player);
                                                                             props.setPlayers(lista);
                                                                             props.setToken(token);
                                                                             props.history.push("/");
-
                                                                         })
                                                                         .catch(err => {
-                                                                            setError("Error en el json.");
+                                                                            // setError("Error en el json.");
                                                                         });
                                                                 } else {
-                                                                    setError("responde.ok da error.");
+                                                                    // setError("responde.ok da error.");
                                                                 }
                                                             })
                                                             .catch(err => {
-                                                                setError("Error en response." + err);
+                                                                // setError("Error en response." + err);
                                                             });
-
-
-                                                        // console.log("entra");
-                                                        // console.log(player);
-                                                        // props.setPlayer(player);
-                                                        // props.setToken(token);
-                                                        // props.history.push("/");
-
-                                                        // const formData = new FormData();
-                                                        // formData.append("file", image);
-                                                        // formData.append("id", decoded.id_player);
-
-                                                        // fetch("http://localhost:8080/api/addImage/" + decoded.id_player, {
-                                                        //     method: "PUT",
-                                                        //     headers: {
-                                                        //         Authorization: "Bearer " + token
-                                                        //     },
-                                                        //     body: formData
-                                                        // }).then(response => {
-                                                        //     if (response.ok) {
-                                                        //         response.json().then((player: IPlayer) => {
-                                                        //             props.setPlayer(player);
-                                                        //             props.setToken(token);
-                                                        //             props.history.push("/");
-                                                        //         }).catch(err => {
-                                                        //             console.log("error al subir la imagen " + err);
-                                                        //         });
-                                                        //     } else {
-                                                        //         console.log("error en el response.ok")
-                                                        //     }
-                                                        // }).catch(err => {
-                                                        //     console.log("error en la consula, error response. " + err);
-                                                        // });
-
-
-
-                                                        // props.setPlayer(player);
-                                                        // props.history.push("/");
                                                     } else {
                                                         // console.log("Ha fallado el decode en login");
                                                     }
-
                                                 } else {
                                                     // console.log("la BD no ha devuelto el token vacio.");
                                                 }
-
                                             })
-
                                     } else {
                                         setError("Usuario o Contraseña incorrectos");
-                                        // console.log("Usuario o Contraseña incorrectos");;
                                     }
                                 })
                                 .catch(error => {
                                     setError("Usuario o Contraseña incorrectos ," + error);
-                                    // console.log("Usuario o Contraseña incorrectos" + error);
                                 });
                         } else {
                             response.json().then(({ e }) => {
-                                // console.log(e);
-                                // console.log(e.sqlMessage)
                                 let array = e.sqlMessage.split(" ");
                                 array[array.length - 1] = array[array.length - 1].replace("'", "");
                                 array[array.length - 1] = array[array.length - 1].replace("'", "");
-                                // console.log(array);
-                                // console.log(array[array.length - 1]);
                                 let err = array[array.length - 1];
                                 if (e.errno === 1062) {
                                     if (err === "email") {
@@ -276,7 +195,6 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                                         setError("El nombre del usuario ya existe");
                                         setErrorUsername("error");
                                     }
-
                                 } else {
                                     // console.log("no se porque entra aqui")
                                 }
@@ -290,13 +208,6 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                         // console.log("Error," + err)
                     });
             } else {
-                // if (!validateUsername && !validateEmail && !validateCity && !validatePassword) {
-                //     setErrorUsername("error");
-                //     setErrorEmail("error");
-                //     setErrorCity("error");
-                //     setError("Estos campos no son validos.");
-                // }
-                // else {
                 if (!validateUsername) {
                     setErrorUsername("error");
                     setError("El usuario debe contener sólo letras y numeros).");
@@ -319,7 +230,6 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                     setError("Estos campos no son validos.");
                 }
             }
-            // }
         } else {
             if (!username) {
                 setErrorUsername("error");
@@ -339,12 +249,9 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
             if (!rating) {
                 setErrorRating("error");
             }
-
             setError("Completa estos campos.");
-            /**Faltan algun o todos los campos */
         }
     }
-
 
     return (
         <div className="container containerAddPlayer">
@@ -362,7 +269,6 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
-
                     <div className="custom-file uploadAvatar col-5">
                         <input
                             type="file"
@@ -379,38 +285,22 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                     <Form.Group className="col-6" as={Col} controlId="formGridPassword">
                         <Form.Label>Contraseña</Form.Label>
                         <Form.Control type="password" className={errorPassword ? "form-control form-control-red" : "form-control"}
-                            as="input" maxLength="20" placeholder="Escriba su contraseña" onChange={updatePassword} required/>
+                            as="input" maxLength="20" placeholder="Escriba su contraseña" onChange={updatePassword} required />
                     </Form.Group>
-
                 </Form.Row>
                 <Form.Row>
-
                     <Form.Group className="col" as={Col} controlId="formGridEmail">
                         <Form.Label>Email</Form.Label>
                         <Form.Control type="email" className={errorEmail ? "form-control form-control-red" : "form-control"}
                             as="input" maxLength="30" placeholder="Escriba su email" onChange={updateEmail} required />
                     </Form.Group>
                 </Form.Row>
-
-
-                {/* <Form.Row>
-                    <Form.Group as={Col} controlId="formGridEmail">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control type="email" placeholder="Escriba su email" onChange={updateEmail} required />
-                    </Form.Group>
-                </Form.Row> */}
                 <Form.Row>
-
-
-
                     <Form.Group className="col-6" as={Col} controlId="formGridCity">
                         <Form.Label>Ciudad</Form.Label>
                         <Form.Control type="text" className={errorCity ? "form-control form-control-red" : "form-control"}
                             as="input" maxLength="14" placeholder="Escriba su ciudad" onChange={updateCity} required />
                     </Form.Group>
-                    {/* <div className="col-1"></div> */}
-
-
                     <Form.Group className="col-4 containerGenero" as={Col} controlId="formGridGenre">
                         <Form.Label>Genero</Form.Label>
                         <Form.Control as="select" className={errorGenre ? "form-control form-control-red" : "form-control"}
@@ -420,7 +310,6 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                             <option value={"Mujer"}>Mujer</option>
                         </Form.Control>
                     </Form.Group>
-                    {/* <div className="col-1"></div> */}
                     <Form.Group className="col" as={Col} controlId="formGridRating">
                         <Form.Label>Level</Form.Label>
                         <Form.Control as="select" className={errorRating ? "form-control form-control-red" : "form-control"}
@@ -432,7 +321,6 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                             <option value={4}>4</option>
                             <option value={5}>5</option>
                         </Form.Control>
-
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
@@ -442,13 +330,10 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                         }
                     </div>
                     <Form.Group className="containerButtonAddPlayer col-2" as={Col} controlId="formButton">
-                        {/* <Form.Label>Level</Form.Label> */}
                         <Button className="buttonAddPlahyer" variant="primary" type="button" onClick={add}>
                             Crear
                             </Button>
                     </Form.Group>
-
-
                 </Form.Row>
             </Form>
         </div>

@@ -15,7 +15,6 @@ interface IPropsGlobal {
     players: IPlayer[];
     player: IPlayer;
     setMessages: (msgs: IMsg[]) => void;
-    // setPlayer: (player: IPlayer) => void;
 }
 
 const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_destiny: string }>> = props => {
@@ -26,15 +25,11 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
     const [subject, setSubject] = React.useState("");
     const [text, SetText] = React.useState("");
     const [inputPlayerDestiny, SetInputPlayerDestiny] = React.useState("");
-    // const [inputListPlayerTo, SetinputListPlayerTo] = React.useState("");
     const [error, setError] = React.useState("");
     const [errorSubject, setErrorSubject] = React.useState("");
     const [errorText, setErrorText] = React.useState("");
     const [errorInputPlayerDestiny, setErrorInputPlayerDestiny] = React.useState(false);
     const [maximunCharacterText, SetMaximunCharacterText] = React.useState();
-
-    // const [usernameDestiny, setUsernameDestiny] = React.useState("");
-    // const [usernameSent, setUsernameSent] = React.useState("");
 
     const updateSubject = (event: any) => {
         setSubject(event.currentTarget.value);
@@ -46,7 +41,6 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
         SetText(event.currentTarget.value);
         setError("");
         setErrorText("");
-
         SetMaximunCharacterText(event.currentTarget.value.length);
     };
 
@@ -56,25 +50,15 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
         setErrorInputPlayerDestiny(false);
     };
 
-    // const updateErrorInputPlayerDestiny = (event: any) => {
-    //     setErrorInputPlayerDestiny(s => !s);
-    //     setError("");
-    // };
-
-
     const addMsg = () => {
-
         if (subject && text && (!inputPlayerDestiny || id === +decoded.id_player)) {
             if (playerDestiny) {
                 let id_player_destiny;
                 if (soyYo) {
                     id_player_destiny = inputPlayerDestiny;
-                    // console.log("voy a enviar mensaje a alguien: " + id_player_destiny);
                 } else {
                     id_player_destiny = playerDestiny.id_player;
-                    // console.log("voy a enviar mensaje a " + id_player_destiny);
                 }
-                // console.log("entra al fetch");
                 fetch("http://localhost:8080/api/msgs/add", {
                     method: "POST",
                     headers: {
@@ -90,7 +74,6 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                 })
                     .then(response => {
                         if (response.ok) {
-                            // console.log("mensaje creado")
                             fetch("http://localhost:8080/api/msgs", {
                                 headers: {
                                     "Content-Type": "application/json",
@@ -103,7 +86,6 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                                             .json()
                                             .then((listaMsgs: IMsg[]) => {
                                                 if (listaMsgs.length > 0) {
-                                                    // console.log(listaMsgs);
                                                     props.setMessages(listaMsgs);
                                                     props.history.push("/mailTray/sent");
 
@@ -112,40 +94,10 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                                                 }
                                             })
                                             .catch(err => {
-                                                // console.log(err);
                                                 // console.log("error al devolver mis mensajes." + err);
                                             })
-
                                     } else {
                                         // console.log("Error en response.ok");
-                                        //     response.json().then(({ e }) => {
-                                        //         // setError("Response.ok, Error ," + e);
-                                        //     console.log(e);
-                                        //     console.log(e.sqlMessage)
-                                        //    let array = e.sqlMessage.split(" ");
-                                        //    array[array.length -1] =  array[array.length -1].replace("'", "");
-                                        //    array[array.length -1] =  array[array.length -1].replace("'", "");
-                                        //    console.log(array);
-                                        //    console.log(array[array.length -1]);
-                                        //    let err = array[array.length -1];
-                                        //     if (e.errno === 1406) {
-                                        //         if(err === "subject"){
-                                        //             setError("El contenido del asunto es demasiado largo.");
-                                        //         setErrorSubject("error");
-                                        //         }else if (err === "text"){
-                                        //             setError("El contenido del texto es demasiado largo.");
-                                        //         setErrorText("error");
-                                        //         }
-                                        //         console.log(e.sqlMessage)
-                                        //         console.log(array[array.length -1]);
-                                        //     } else {
-                                        //         console.log("no se porque entra aqui")
-                                        //     }
-                                        //     })
-                                        //     .catch(err => {
-                                        //         console.log("Error," + err)
-                                        //     });
-
                                     }
                                 })
                                 .catch(error => {
@@ -154,14 +106,9 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                                 });
                         } else {
                             response.json().then(({ e }) => {
-                                // setError("Response.ok, Error ," + e);
-                                // console.log(e);
-                                // console.log(e.sqlMessage)
                                 let array = e.sqlMessage.split(" ");
                                 array[array.length - 4] = array[array.length - 4].replace("'", "");
                                 array[array.length - 4] = array[array.length - 4].replace("'", "");
-                                // console.log(array);
-                                // console.log(array[array.length - 4]);
                                 let err = array[array.length - 4];
                                 if (e.errno === 1406) {
                                     if (err === "subject") {
@@ -171,8 +118,6 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                                         setError("El contenido del texto es demasiado largo.");
                                         setErrorText("error");
                                     }
-                                    // console.log(e.sqlMessage)
-                                    // console.log(array[array.length - 4]);
                                 } else {
                                     // console.log("no se porque entra aqui")
                                 }
@@ -180,7 +125,6 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                                 .catch(err => {
                                     // console.log("Error," + err)
                                 });
-
                         }
                     })
                     .catch(err => {
@@ -201,21 +145,11 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                 setErrorInputPlayerDestiny(true);
             }
             setError("Completa todos los campos.")
-
         }
     }
 
-
-
-
     let soyYo = false;
-    // let playerDestiny: any = null;
-
-    // else {
     let playerDestiny = props.players.find(p => p.id_player === +id);
-    // if (!playerDestiny) {
-    //     setError("no hay destinatario");
-    // }
 
     if (!playerDestiny) {
         return null;  
@@ -225,19 +159,7 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
         //si soyYo es false entonces el destinatario esta en la url
         soyYo = true;
     }
-    // else{
-    //     setErrorInputPlayerDestiny("");
-    // }
-    // else{
-    //     setErrorInputPlayerDestiny("");
-    // SetInputPlayerDestiny(playerDestiny.id_player + "");
-    //  }
-
-
-    // console.log(playerDestiny);
-    // console.log("persona de destino: " + inputPlayerDestiny)
     return (
-        // <div className="col-9">
         <div className="col receivedOrSent">
             {playerDestiny !== null && playerDestiny !== undefined && (
                 <Fragment>
@@ -254,15 +176,6 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                             <p className="usernameMailFrom text-capitalize">{props.player.username.toLocaleLowerCase()}</p>
                         </div>
                     </div>
-                    {/* <div className="col-2 colum "> */}
-                    {/* {m.id_player_destiny} to*/}
-
-                    {/* </div> */}
-
-                    {/* <Form.Group controlId="formGridFrom">
-                        <Form.Label>De:</Form.Label>
-                        <Form.Label> {props.player.username} </Form.Label>
-                    </Form.Group> */}
                     {soyYo === false && (
                         <div className="container row containerMessageNew">
                             <div className="col-1" >
@@ -276,20 +189,11 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                                 <p className="usernameMailFrom text-capitalize">{playerDestiny.username.toLocaleLowerCase()}</p>
                             </div>
                         </div>
-                        // <Form.Group className="containerPlayerDestinyMessage" controlId="formGridTo">
-                        //     {/* <Form.Label>Para:</Form.Label> */}
-                        //     <Form.Label> {playerDestiny.username} </Form.Label>
-                        // </Form.Group>
                     )}
                     <Form className="container">
                         {soyYo && (
 
                             <Form.Group className="containerPlayerDestinyMessage" controlId="formGridState">
-                                {/* <Form.Label>Para</Form.Label> */}
-                                {/* <div className="col-1 colum ">
-                                <img className="imgAvatarMsg" src={inputListPlayerTo.avatar ? "http://localhost:8080/uploads/avatar/" + inputListPlayerTo.avatar : "/images/avatar-tenis.png"}
-                                    alt="" width="auto" height="50" />
-                            </div> */}
                                 <Form.Control className={errorInputPlayerDestiny ? "selectUsernameEmail containerErrorRed" : "selectUsernameEmail"}
                                     as="select" type="text" value={inputPlayerDestiny + ""} onChange={updateInputPlayerDestiny}>
                                     <option defaultValue="" hidden>destino</option>
@@ -302,34 +206,22 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                                             return 1;
                                         return 0; //default return value (no sorting)
                                     }).map((p, i) => (
-                                        // (i=== 0) && (
-                                        //     <option defaultValue={p.id_player+""}>{p.username}</option>
-
-                                        // ) ||  (
                                         <option className="text-capitalize" key={p.id_player} value={p.id_player + ""}>{p.username.toLocaleLowerCase()}</option>
-
-                                        // )
                                     )
                                     )}
                                 </Form.Control>
                             </Form.Group>
                         )}
                         <Form.Group controlId="formGridSubject">
-                            {/* <Form.Label>Asunto</Form.Label> */}
                             <Form.Control className={errorSubject ? "containerErrorRed" : ""} as="input" maxLength="100" onChange={updateSubject} placeholder="Asunto" />
                         </Form.Group>
-
-
                         <Form.Group controlId="formGridTextAreaText">
-                            {/* <Form.Label>Texto: </Form.Label> */}
                             <Form.Control className={errorText ? "textAreaMensajeNuevo containerErrorRed" : "textAreaMensajeNuevo"}
                                 as="textarea" rows="3" onChange={updateText} maxLength="1000"
                                 placeholder="Escriba aqui el texto del mensaje máximo 1000 caracteres" />
                         </Form.Group>
-
                         <Form.Group controlId="formButttonSend">
                             <div className="row">
-                                {/* <div className="col-9"></div> */}
                                 <div className="col">
                                     {maximunCharacterText > 0 &&
                                         <p className="ErrorAddMessage">Maximo Caracteres {maximunCharacterText} / 1000</p>
@@ -357,8 +249,6 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                     }
                 </div>
             }
-
-
         </div>
     )
 };

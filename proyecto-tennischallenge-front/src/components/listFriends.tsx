@@ -10,7 +10,6 @@ import { IPlayer } from '../interfaceIPlayer';
 import { INotifications } from '../interfaceINotifications';
 import styles from '../App.module.css';
 
-
 interface Iprops { }
 
 interface IpropsGlobal {
@@ -25,7 +24,6 @@ interface IpropsGlobal {
 
 const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
     const [error, setError] = React.useState("");
-    // const [errorRating, setErrorRating] = React.useState("");
     const [inputUsername, setInputUsername] = React.useState("");
     const [inputCity, setInputCity] = React.useState("");
     const [inputSex, setInputSex] = React.useState("");
@@ -33,7 +31,6 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
     const [inputRatingTo, setInputRatingTo] = React.useState(5);
     const [myFriends, setMyFriends] = React.useState<IFriendship[]>([]);
     const [friendsFiltros, setFriendsFiltros] = React.useState<IFriendship[]>([]);
-
 
     const UpdateUsernameF = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputUsername(event.target.value);
@@ -54,7 +51,6 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
 
         if (inputRatingTo >= event.target.value) {
             setInputRatingFrom(event.target.value);
-            // setErrorRating("");
         } else {
             // setErrorRating("Rango no permitido");
         }
@@ -64,7 +60,6 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
 
         if (inputRatingFrom <= event.target.value) {
             setInputRatingTo(event.target.value);
-            // setErrorRating("");
         } else {
             // setErrorRating("Rango no permitido");
         }
@@ -75,8 +70,6 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
         if (props.token) {
             let decoded = jwt.decode(props.token);
             if (decoded !== null) {
-                // console.log(decoded);
-
                 fetch("http://localhost:8080/api/friends", {
                     headers: {
                         "Content-type": "application/json",
@@ -93,31 +86,26 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                                     }
                                     else {
                                         setError("");
-                                        // console.log("va bien");
                                         props.setFriendships(lista);
-
-                                        // console.log("friends desde BD");
-                                        // console.log(lista);
                                     }
-                                    // 
                                 })
                                 .catch(err => {
-                                    setError("Error en el json.");
+                                    // setError("Error en el json.");
                                 });
                         } else {
-                            setError("responde.ok da error.");
+                            // setError("responde.ok da error.");
                         }
                     })
                     .catch(err => {
-                        setError("Error en response.");
+                        // setError("Error en response.");
                     });
             }
             else {
-                setError("El token no se pudo decodificar");
+                // setError("El token no se pudo decodificar");
             }
         }
         else {
-            setError("El token no existe");
+            // setError("El token no existe");
         }
     };
     React.useEffect(list, [props.players]);
@@ -128,39 +116,23 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
         friends = props.friendships.filter(f => f.accepted);
 
         if (friends.length === 0) {
-            // console.log("null")
             setError("Tu lista de amigos esta vacia.")
-            // return null;
         } else {
             setError("");
             setMyFriends(friends);
-            // console.log("friends primera vez")
-            // console.log(friends)
             setFriendsFiltros(friends)
-            // console.log("listafriends primera vez")
-            // console.log(friends)
         }
-
-        // console.log(friends)
     };
 
     React.useEffect(amigos, [props.friendships]);
 
-
-
-    // let listaFriends: IFriendship[] = myFriends;
-
     const filtar = () => {
 
-        // listaFriends = listaFriends.filter(
         friends = myFriends.filter(
             p => p.username.toLocaleLowerCase().startsWith(inputUsername.toLocaleLowerCase())
-            // ).slice(0, 5
         )
             .filter(p => p.city.toLocaleLowerCase().startsWith(inputCity.toLocaleLowerCase()))
-
             .filter(p => (p.rating >= inputRatingFrom && p.rating <= inputRatingTo))
-
             .filter(p => !inputSex || (p.genre === inputSex.toLocaleUpperCase()));
 
         if (friends.length === 0) {
@@ -168,12 +140,6 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
         } else {
             setError("");
         }
-        // console.log("myFriends");
-        // console.log(myFriends);
-        // console.log("listaFriends");
-        // console.log(friends);
-
-
         if (inputUsername) {
             friends.sort(function (a, b) {
                 let nameA = a.username.toLowerCase();
@@ -185,6 +151,7 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                 return 0; //default return value (no sorting)
             })
         }
+
         if (inputCity) {
             friends.sort(function (a, b) {
                 let cityA = a.city.toLowerCase();
@@ -212,12 +179,10 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                 return 0; //default return value (no sorting)
             })
         }
-        // setMyFriends(listaFriends);
         setFriendsFiltros(friends);
     }
 
     React.useEffect(filtar, [inputUsername, inputCity, inputRatingFrom, inputRatingTo, inputSex, myFriends]);
-
 
     const updatednotificationsFriendship = () => {
         if (props.token) {
@@ -231,27 +196,12 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                     if (response.ok) {
                         response
                             .json()
-                            // .then((notifications: INotifications) => {
                             .then((notifications) => {
-
-                                // console.log(notifications);
-                                // console.log(notifications[0]);
                                 if (notifications[0]) {
-                                    // if (notifications[0].numbers_messages > 0 || 
-                                    //   notifications[0].numbers_requestFriend > 0 ||
-                                    //   notifications[0].numbers_acceptedFriend > 0) {
-                                    // console.log("actualizando mis notificaciones");
-                                    // console.log(notifications);
                                     props.setNotifications(notifications[0]);
-                                    // console.log(notifications);
-                                    // } else {
-                                    //   // console.log("no hay notificaciones");
-                                    // }
-
                                 } else {
                                     // console.log("no me actualiza las notificaciones porque notificacion[0] no existe")
                                 }
-
                             })
                             .catch(err => {
                                 // console.log("Error en el json. " + err);
@@ -263,13 +213,10 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                 .catch(err => {
                     // console.log("Error en response. " + err);
                 });
-
-
         } else {
             // console.log("aun no hay token");
         }
     }
-
 
     const watched = (id_player: number) => {
         let decoded: any = jwt.decode(props.token);
@@ -284,7 +231,6 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
             })
                 .then(response => {
                     if (response.ok) {
-
                         //actualizo mis notificaciones
                         updatednotificationsFriendship();
                         fetch("http://localhost:8080/api/friends", {
@@ -299,10 +245,7 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                                         .json()
                                         .then((listaFriendship: IFriendship[]) => {
                                             if (listaFriendship.length > 0) {
-                                                // console.log("mi lista deberia de peticiones de amistad tener estar reducida en una")
-                                                // console.log(listaFriendship);
                                                 props.setFriendships(listaFriendship);
-
                                             } else {
                                                 // console.log("la BD no ha devuelto ningun mensaje.");
                                             }
@@ -316,7 +259,6 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                             })
                             .catch(err => {
                                 // console.log("la consulta no fue bien. ");
-                                // setError(" Error al añadir como amigo.");
                             })
                     } else {
                         // console.log("error en response.ok");
@@ -330,35 +272,16 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
         }
     }
 
-
     if (!friends || !myFriends || !friendsFiltros) {
-        // console.log("null")
         setError("Tu lista de amigos esta vacia.")
         return null;
     }
 
-
     return (
         <div className="container-fluid">
             <div className="row">
-                {/* {friendsFiltros.length > 0 &&  */}
                 <div className="col-2 containerBuscador">
                     <div className="buscador">
-                        {/* <div className="barraFiltros" style={{ display: 'flex', flexDirection: 'row' }}> */}
-
-                        {/* <div className="form-group row">
-                        <label className="col-sm-2 col-form-label"></label>
-                        <div className="col-sm-10">
-                            <input type="text" className="form-control" id="idUsername" placeholder="username" onChange={UpdateUsername} />
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <label className="col-sm-2 col-form-label"></label>
-                        <div className="col-sm-10">
-                            <input type="text" className="form-control" id="idCity" placeholder="City" onChange={UpdateCity} />
-                        </div>
-                    </div> */}
-
                         <div className="form-group">
                             <input type="text" className="form-control" id="idUsername" placeholder="Usuario" onChange={UpdateUsernameF} />
                         </div>
@@ -369,8 +292,6 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                             <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Hombre" onChange={UpdateSexF} />
                             <label className="form-check-label" >Hombre</label>
                         </div>
-
-
                         <div className="form-check">
                             <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="Mujer" onChange={UpdateSexF} />
                             <label className="form-check-label" >
@@ -383,9 +304,7 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                                 Ambos
                         </label>
                         </div>
-
                         <DropdownButton id="dropdown-basic-button" drop='right' title="Nivel">
-
                             <Form.Group as={Col} id="dropdwnRatingListPlayer" controlId="formGridState">
                                 <Form.Label>Desde</Form.Label>
                                 <Form.Control as="select" value={inputRatingFrom + ""} onChange={UpdateRatingFromF}>
@@ -396,7 +315,6 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                                     <option value={5}>5</option>
                                 </Form.Control>
                             </Form.Group>
-
                             <Form.Group as={Col} id="dropdwnRatingListPlayer" controlId="formGridState">
                                 <Form.Label>Hasta</Form.Label>
                                 <Form.Control as="select" value={inputRatingTo + ""} onChange={UpdateRatingToF}>
@@ -407,31 +325,22 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                                     <option value={5}>5</option>
                                 </Form.Control>
                             </Form.Group>
-                            {/* {errorRating &&
-                                <Form.Text>{errorRating}</Form.Text>
-                            } */}
                         </DropdownButton>
-
                     </div>
                 </div>
-                {/* }  */}
                 {!error &&
                 <div className="col-sm containerListCardPlayer">
                     {friendsFiltros && friendsFiltros.map(f => (
                         <div className="cardsJugadores" key={f.id_player}>
-                            {/* <Card style={{ display: 'flex', flexDirection: 'row' }}> */}
                             <Card className="cardListPlayer">
-
                                 <Card.Img className="avatarListProfile"
                                     src={f.avatar ? "http://localhost:8080/uploads/avatar/" + f.avatar + "?" + (new Date()).valueOf() :
                                         "images/avatar-tenis.png"} alt="" />
-
                                 {!f.watched && f.id_player1 === props.player.id_player && f.accepted &&
                                     <Card.ImgOverlay className="containerBadgeNewPlayer" onClick={() => watched(f.id_player)}>
                                         <Card.Img className={styles.newFriend} id="newFriend" src="images/Pelota Luis brochazo.png" alt="" />
                                     </Card.ImgOverlay>
                                 }
-
                                 <Card.Body className="cardBodyListPlayer" >
                                     <Link to={"/players/" + f.id_player} onClick={() => watched(f.id_player)} >
                                         <Card.Title className="cardTitleListPlayer text-capitalize">
@@ -460,25 +369,19 @@ const ListFriends: React.FC<Iprops & IpropsGlobal> = props => {
                                             {f.rating > 4 &&
                                                 <i className="material-icons iconRatingTennis md-48">sports_tennis</i>
                                             }
-                                            {/* Level {p.rating} */}
                                         </Card.Text>
                                     </Link>
                                 </Card.Body>
-
                             </Card>
-                            {/* <br /> */}
                         </div>
                     ))}
                 </div>
                 }
-                {/* </CardDeck> */}
-
                 {error &&
                     <div className="col-sm containerListCardPlayer">
                         <Form.Text className="errorListPlayerOrFriendOrRequest">{error}</Form.Text>
                     </div>
                 }
-
             </div>
         </div>
     )
