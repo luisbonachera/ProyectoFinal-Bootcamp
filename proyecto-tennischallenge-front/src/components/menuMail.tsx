@@ -7,10 +7,7 @@ import { IGlobalState } from '../reducers/reducers';
 
 interface IPropsGloblal {
     token: string;
-    // players: IPlayer[];
     player: IPlayer;
-    // setMessages: (msgs: IMsg[]) => void;
-    // setPlayer: (player: IPlayer) => void;
 }
 
 const MenuMail: React.FC<IPropsGloblal> = props => {
@@ -19,7 +16,6 @@ const MenuMail: React.FC<IPropsGloblal> = props => {
     if (props.token) {
         decode = jwt.decode(props.token);
     }
-
 
     return (
         <Fragment>
@@ -36,19 +32,15 @@ const MenuMail: React.FC<IPropsGloblal> = props => {
                     <Link className="text divIconAndNameMenuMensaje" to="/mailTray/received">
                         <i className="material-icons iconMenuMensajes md-48">mail</i>
                         <p className="menuMensajesP"> <span>Recibidos</span> </p>
-                        
                     </Link>
                 </li>
                 <li>
                     <Link className="text divIconAndNameMenuMensaje" to="/mailTray/sent">
-                    <i className="material-icons iconMenuMensajes md-48">send</i>
-                    <p className="menuMensajesP"> <span>Enviados</span> </p>
-                        
+                        <i className="material-icons iconMenuMensajes md-48">send</i>
+                        <p className="menuMensajesP"> <span>Enviados</span> </p>
                     </Link>
                 </li>
             </ul>
-
-
         </Fragment>
     )
 }
@@ -58,10 +50,6 @@ const mapStateToProps = (state: IGlobalState) => ({
     player: state.player
 
 });
-
-// const mapDispachToProps = {
-//     setMessages: actions.setMessages
-// }
 
 export default connect(
     mapStateToProps

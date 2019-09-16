@@ -21,15 +21,10 @@ interface IPropsGloblal {
 
 const MailTray: React.FC<IPropsGloblal> = props => {
 
-    const [error, setError] = React.useState("");
-    // const [messagesHooks, setMessagesHooks] = React.useState<IMsg[]>([]);
-
     const listMsgs = () => {
         if (props.token) {
             let decoded = jwt.decode(props.token);
             if (decoded !== null) {
-                // console.log(decoded);
-
                 fetch("http://localhost:8080/api/msgs", {
                     headers: {
                         "Content-type": "application/json",
@@ -42,52 +37,28 @@ const MailTray: React.FC<IPropsGloblal> = props => {
                                 .json()
                                 .then((lista: IMsg[]) => {
                                     if (lista.length > 0) {
-                                        // console.log(lista);
-                                        // console.log("va bien");
-                                        // console.log(lista);
                                         props.setMessages(lista);
-                                        //esto es para recoger los msg received
-                                        // if (props.token) {
-                                        //     const decoded = jwt.decode(props.token);
-                                        //     if (decoded !== null && typeof decoded !== "string") {
-                                        //         let msgsReceived = props.msgs.filter(m => m.id_player_destiny === decoded.id_player);
-                                        //         if (msgsReceived.length > 0) {
-                                        //             console.log("hay msg recibidos y los guardo");
-                                        //             // setMessagesSent([]);
-                                        //             // setMessagesReceived(msgsReceived);
-                                        //             // setMessagesHooks(msgsReceived);
-                                        //         } else {
-                                        //             console.log("no hay mensajes recibidos");
-                                        //         }
-
-                                        //     } else {
-                                        //         console.log("no se ha podido decodificar token")
-                                        //     }
-                                        // } else {
-                                        //     console.log("no hay token");
-                                        // }
                                     } else {
                                         // console.log("la lista de msg esta vacia");
                                     }
-
                                 })
                                 .catch(err => {
-                                    setError("Error en el json.");
+                                    // setError("Error en el json.");
                                 });
                         } else {
-                            setError("responde.ok da error.");
+                            // setError("responde.ok da error.");
                         }
                     })
                     .catch(err => {
-                        setError("Error en response.");
+                        // setError("Error en response.");
                     });
             }
             else {
-                setError("El token no se pudo decodificar");
+                // setError("El token no se pudo decodificar");
             }
         }
         else {
-            setError("El token no existe");
+            // setError("El token no existe");
         }
     };
 
@@ -104,12 +75,8 @@ const MailTray: React.FC<IPropsGloblal> = props => {
                     <Route path="/mailTray/received" exact component={ListMailReceived} />
                     <Route path="/mailTray/sent" exact component={ListMailSent} />
                     <Route path="/mailTray/:typeMessage/:id_message" exact component={MailDetail} />
-                    {error
-                        // podria poner algun error
-                    }
                     <Redirect to="/mailTray/received" />
                 </Switch>
-
             </div>
         </div>
     )

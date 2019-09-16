@@ -17,40 +17,25 @@ interface IPRopsGlobal {
 }
 
 const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: string }>> = props => {
-    // const [error, setError] = React.useState("");
 
     const id = props.match.params.id_player;
-    // console.log(id);
 
-    // console.log(props.players);
     let player = props.players.find(p => p.id_player === +id);
 
     React.useEffect(() => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
         player = props.players.find(p => p.id_player === +id);
-        // console.log(player);
     }, [props.player]);
 
-    // if(!player){
-    //     return null;
-    // }
-
-
-    // esta funcion no es borrar, es editar campo del player de borrado a true
+    // esta funcion no es borrar, es editar campo del player de borrado a true en BD
     const borrar = () => {
 
         if (props.token) {
             let decoded: any = jwt.decode(props.token);
             const id: number = +props.match.params.id_player;
             if (decoded !== null && (id === decoded.id_player || props.player.isAdmin)) {
-                // console.log(decoded);
-
-                // console.log("entra al fetch");
-                // console.log("Soy admin: " + props.player.isAdmin);
                 fetch("http://localhost:8080/api/players/erased/" + id, {
                     method: "PUT",
-                    // fetch("http://localhost:8080/api/players/" + id, {
-                    //     method: "DELETE",
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: "Bearer " + props.token
@@ -58,7 +43,6 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
                 })
                     .then(response => {
                         if (response.ok) {
-                            // console.log("usuario borrado")
                             props.setToken("");
                             props.history.push("/");
                             props.deletePlayer(id);
@@ -93,17 +77,15 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
 
     return (
         <div className="container">
-
             {player !== null && player !== undefined && (
                 <CardDeck className="cardHorizont ">
-
                     <Card className="cardProfile cardProfileViewPlayer" style={{ display: 'flex', flexDirection: 'row' }}>
                         <Card.Img className="avatarListProfile " variant="top"
                             src={player.avatar ? "http://localhost:8080/uploads/avatar/" + player.avatar + "?" + (new Date()).valueOf() :
                                 "../../images/avatar-tenis.png"} alt="" />
                         <Card.Body>
                             <Card.Title className="text-capitalize">
-                            {player.username.toLocaleLowerCase()}
+                                {player.username.toLocaleLowerCase()}
                             </Card.Title>
                             <Card.Text>
                                 {player.email}
@@ -140,21 +122,15 @@ const ProfilePlayer: React.FC<IPRopsGlobal & RouteComponentProps<{ id_player: st
                                         <Button className="buttonForm" variant="primary">Editar</Button>
                                     </Link>
                                 </div>
-                                <br/><br/>
+                                <br /><br />
                                 <div className="row btonProfile">
                                     <Button className="buttonForm" variant="primary" onClick={borrar}>Borrar</Button>
                                 </div>
                             </div>
-
-                            {/* <br />
-                            <br /> */}
-
                         </Card.Footer>
                     </Card>
-
                 </CardDeck>
             )}
-
         </div>
     )
 };
