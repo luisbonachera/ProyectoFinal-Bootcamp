@@ -1,6 +1,0 @@
-/* 1 */
-{
-    "_id" : ObjectId("5d09fd12a025167cf09179e9"),
-    "name" : "Amy Winehouse",
-    "nacionality" : "UK"
-}
