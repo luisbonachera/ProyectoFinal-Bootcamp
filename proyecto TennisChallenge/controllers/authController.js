@@ -11,11 +11,8 @@ authController.checkUser = (req, res) => {
   authModel
     .checkUser(user)
     .then(rows => {
-      console.log("guayCheckUSer");
       if (rows.length == 1) {
-        console.log("user: " + rows[0].username + " rol: " + rows[0].isAdmin);
         let isAdmin = rows[0].isAdmin? true : false;
-        console.log("isAdmin" + isAdmin)
         var token = jwt.sign(
           {
             id_player: rows[0].id_player,
@@ -33,18 +30,16 @@ authController.checkUser = (req, res) => {
         console.log(token);
         res.send(token);
       } else if (rows.length > 1) {
-        res.status(401).send("Error en la consulta, sele mas de 1 resultado");
+        res.status(401).send({ e: "Error en la consulta, sele mas de 1 resultado" });
       } else {
-        res.status(401).send("El usuario no existe");
+        res.status(400).send({ e: "El usuario no existe" });
       }
-      // res.send({
-      //     type: "success",
-      //     data: result
-      // });
+     
+     
     })
     .catch(err => {
+      // sabiendo el numero de error, sabemos que tipo de error es.
       res.status(401).send({ e: err.errno });
-      // res.status(401).send("error al devolver la consulta de CheckUSer " + err);
     });
 };
 

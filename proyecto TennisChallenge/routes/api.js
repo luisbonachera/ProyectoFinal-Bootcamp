@@ -15,20 +15,21 @@ router.get("/", function(req, res, next) {
   res.send("respond with a resource");
 });
 
-///////////////Token////////////////////////////
+//-------------------------TOKEN  LOGIN----------------------------------------//
 
 // crear el token para logearte
 router.post("/auth", authController.checkUser);
 
-///////////////Jugadores////////////////////////////
 
-//listar jugadores por filtros
+//-------------------------PLAYER-------------------------------------------//
+
+//listar Players por filtros
 router.post("/playersFilter", playersController.listFiltros);
 
-// Listar jugadores con campo borrado a false
+// Listar Players con campo borrado a false
 router.get("/players", playersController.list);
 
-//---------SUBIDA DE IMAGENES----------//
+//---------subida de imagenes----------//
 
 // Set The Storage Engine
 const storage = multer.diskStorage({
@@ -57,21 +58,22 @@ const uploadAvatar = multer({
   storage
 }).single("file");
 
-//crear un Jugador
+//crear un Player
 router.post("/add", uploadAvatar, playersController.add);
 
 // router.put('/addImage/:id', uploadAvatar, playersController.editImage);
 
-// editar un Jugador
+// editar un Player
 router.put("/players/:id", uploadAvatar, playersController.edit);
 
 //editar Campo borrado a true (es como borrar)
 router.put("/players/erased/:id", playersController.editErased);
 
-// // borrar un Jugador
+// // borrar un Player
 // router.delete('/players/:id', playersController.delete);
 
-///////////////Mensajes////////////////////////////
+
+//-------------------------MENSAJES------------------------------------------//
 
 // crea un mensaje
 router.post("/msgs/add", messageController.add);
@@ -82,7 +84,8 @@ router.put("/msgs/:id", messageController.edit);
 // Listar mis mensajes
 router.get("/msgs", messageController.list);
 
-///////////////Centros Deportivos////////////////////////////
+//NO USADO, FALTA HACER EL FRONT DE ESTA PARTE
+//-------------------------CENTROS DEPORTIVOS--------------------------------//
 
 //crear un centro deportivo si eres admin
 router.post("/sportCenter/add", sportCenterController.add);
@@ -96,7 +99,8 @@ router.put("/sportCenter/edit/:id", sportCenterController.edit);
 // borrar Centro Deportivo si eres admin
 router.delete("/sportCenter/:id", sportCenterController.delete);
 
-///////////////Amigos////////////////////////////
+
+//-------------------------AMIGOS--------------------------------------------//
 
 //crear un amigo
 router.post("/friends/add", friendsController.add);

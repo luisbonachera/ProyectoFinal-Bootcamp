@@ -1,25 +1,28 @@
 const dbConn = require('../config/db');
 
-
 playersModel = {};
+
+const SQL_FIND_ALL_PLAYERS = () => 'SELECT id_player,username,email,city,genre'
+    + ',rating,avatar,isAdmin FROM players WHERE erased = 0';
+
+const SQL_FIND_PLAYER_BY_ID = () => 'SELECT id_player,username,email,city,genre'
+    + ',rating,avatar,isAdmin FROM players WHERE erased = 0 AND id_player = ? ';
+
+const SQL_ADD_PLAYER = () => 'INSERT INTO players set ?';
+
+const SQL_EDIT_PLAYER = () => 'UPDATE players SET ? WHERE id_player = ?';
+
+const SQL_DELETE_PLAYER = () => 'DELETE FROM players WHERE id_player = ?';
+
 
 //Listar Players con campo borrado == true
 playersModel.list = (isAmin) => {
     return new Promise((resolve, reject) => {
-        // if(!validate(data)) reject("Invalid data")
-        let SQL_FIND_ALL_PLAYERS = 'SELECT id_player,username,email,city,genre,rating,avatar,isAdmin';
-
-        // if(isAmin){
-        //     console.log("entra en la queray Admin= true")
-        //     SQL_FIND_ALL_PLAYERS = SQL_FIND_ALL_PLAYERS + ', isAdmin';
-        // }
         dbConn.query(
-            SQL_FIND_ALL_PLAYERS + " FROM players WHERE erased = 0",
+            SQL_FIND_ALL_PLAYERS,
             (err, result) => {
-                console.log("Hay respuesta de la db es :" + err);
                 if (err) reject(err);
                 else {
-                    console.log(result);
                     resolve(result);
                 }
             }
@@ -30,20 +33,11 @@ playersModel.list = (isAmin) => {
 //Listar Players con campo borrado == true
 playersModel.listById = (id_player) => {
     return new Promise((resolve, reject) => {
-        // if(!validate(data)) reject("Invalid data")
-        let SQL_FIND_ALL_PLAYERS = 'SELECT id_player,username,email,city,genre,rating,avatar,isAdmin';
-
-        // if(isAmin){
-        //     console.log("entra en la queray Admin= true")
-        //     SQL_FIND_ALL_PLAYERS = SQL_FIND_ALL_PLAYERS + ', isAdmin';
-        // }
         dbConn.query(
-            SQL_FIND_ALL_PLAYERS + " FROM players WHERE erased = 0 AND id_player = ? ", [id_player],
+            SQL_FIND_PLAYER_BY_ID, [id_player],
             (err, result) => {
-                console.log("Hay respuesta de la db es :" + err);
                 if (err) reject(err);
                 else {
-                    console.log(result);
                     resolve(result);
                 }
             }
@@ -52,53 +46,41 @@ playersModel.listById = (id_player) => {
 };
 
 //listar por filtros NO USADO
-playersModel.listFiltros = (isAmin,filtros) => {
+playersModel.listFiltros = (isAmin, filtros) => {
     return new Promise((resolve, reject) => {
-        // if(!validate(data)) reject("Invalid data")
         let SQL_FIND_ALL_PLAYERS = 'SELECT id_player,username,email,city,genre,rating';
-
-        if(isAmin){
-            console.log("entra en la queray Admin= true")
+        if (isAmin) {
             SQL_FIND_ALL_PLAYERS = SQL_FIND_ALL_PLAYERS + ',isAdmin';
         }
         SQL_FIND_ALL_PLAYERS = SQL_FIND_ALL_PLAYERS + ' FROM players WHERE erased = 0';
-        //quie entrar si existe algun campo de filtro
         const filtrosArray = [];
-        if(filtros.username || filtros.city || (filtros.ratingFrom && filtros.ratingTo) ){
-            console.log(filtros.username);
-            console.log(filtros.city );
-            console.log(filtros.ratingFrom);
-            console.log(filtros.ratingTo);
+        if (filtros.username || filtros.city || (filtros.ratingFrom && filtros.ratingTo)) {
             SQL = SQL_FIND_ALL_PLAYERS + ' AND';
-           
-            if(filtros.username){
+            if (filtros.username) {
                 SQL = SQL + ' username = ?';
                 filtrosArray.push(filtros.username);
-                if(filtros.city || (filtros.ratingFrom && filtros.ratingTo)){
+                if (filtros.city || (filtros.ratingFrom && filtros.ratingTo)) {
                     SQL = SQL + ' AND';
                 }
             }
-            if(filtros.city ){
+            if (filtros.city) {
                 SQL = SQL + ' city = ?';
                 filtrosArray.push(filtros.city);
-                //algo para decir que ponga ,[filtros.city] despues de la query
-                if(filtros.ratingFrom && filtros.ratingTo){
+                if (filtros.ratingFrom && filtros.ratingTo) {
                     SQL = SQL + ' AND';
                 }
             }
-            if(filtros.ratingFrom && filtros.ratingTo){
+            if (filtros.ratingFrom && filtros.ratingTo) {
                 SQL = SQL + ' rating >= ? AND rating <= ?';
                 filtrosArray.push(filtros.ratingFrom);
                 filtrosArray.push(filtros.ratingTo);
             }
         }
         dbConn.query(
-            SQL,filtrosArray,
+            SQL, filtrosArray,
             (err, result) => {
-                console.log("Hay respuesta de la db es listarFiltrar:" + err);
                 if (err) reject(err);
                 else {
-                    console.log(result);
                     resolve(result);
                 }
             }
@@ -111,18 +93,13 @@ playersModel.listFiltros = (isAmin,filtros) => {
 
 //crear un Jugador
 playersModel.add = player => {
-    return new Promise((resolve, reject)=>{
+    return new Promise((resolve, reject) => {
         dbConn.query(
-            'INSERT INTO players set ?', [player],
-            (err,result)=>{
-                console.log("ya he terminado la consula insertar player");
-                if(err){
-                    console.log("error en la consulta");
-                    console.log(err);
+            SQL_ADD_PLAYER, [player],
+            (err, result) => {
+                if (err) {
                     reject(err);
-                }else{
-                    console.log("consulta de insertar player correcta");
-                    console.log(result);
+                } else {
                     resolve(result);
                 }
             }
@@ -130,22 +107,15 @@ playersModel.add = player => {
     });
 };
 
-
-
- // editar un Jugador 
-playersModel.editImage = (player, id_player)=> {
-    console.log("en modelo editImage ver player debajo:");
-    console.log(player);
-    return new Promise((resolve, reject)=>{
+// editar imagen de un Jugador NO USADO 
+playersModel.editImage = (player, id_player) => {
+    return new Promise((resolve, reject) => {
         dbConn.query(
-            'UPDATE players SET ? WHERE id_player = ?', [player, id_player],
-            (err,result)=>{
-                console.log("ya he terminado la consula editar usuario");
-                if(err){
-                    console.log("error en la consulta editar " + err);
+            SQL_EDIT_PLAYER, [player, id_player],
+            (err, result) => {
+                if (err) {
                     reject(err);
-                }else{
-                    console.log("consulta de editar usuario correcta");
+                } else {
                     resolve(result);
                 }
             }
@@ -155,17 +125,31 @@ playersModel.editImage = (player, id_player)=> {
 
 
 // editar un Jugador 
-playersModel.edit = (player,id_player) => {
-    return new Promise((resolve, reject)=>{
+playersModel.edit = (player, id_player) => {
+    return new Promise((resolve, reject) => {
         dbConn.query(
-            'UPDATE players SET ? WHERE id_player = ?', [player, id_player],
-            (err,result)=>{
-                console.log("ya he terminado la consula editar player");
-                if(err){
-                    console.log("error en la consulta editar " + err);
+            SQL_EDIT_PLAYER, [player, id_player],
+            (err, result) => {
+                if (err) {
                     reject(err);
-                }else{
-                    console.log("consulta de editar player correcta");
+                } else {
+                    resolve(result);
+                }
+            }
+        );
+    });
+};
+
+// editar el campo borrado a true del player con id_player si eres tu 
+// o si eres Administrador
+playersModel.editErased = (user, id_player) => {
+    return new Promise((resolve, reject) => {
+        dbConn.query(
+            SQL_EDIT_PLAYER, [user, id_player],
+            (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
                     resolve(result);
                 }
             }
@@ -174,39 +158,15 @@ playersModel.edit = (player,id_player) => {
 };
 
 
-
-// editar el campo borrado a true del player con id_player si eres tu o si eres Administrador
-playersModel.editErased = (user,id_player) => {
-    return new Promise((resolve, reject)=>{
-        dbConn.query(
-            'UPDATE players SET ? WHERE id_player = ?', [user, id_player],
-            (err,result)=>{
-                console.log("ya he terminado la consula editar usuario");
-                if(err){
-                    console.log("error en la consulta editar " + err);
-                    reject(err);
-                }else{
-                    console.log("consulta de editar usuario correcta");
-                    resolve(result);
-                }
-            }
-        );
-    });
-};
-
-
-// borrar un Jugador 
+// borrar un Jugador NO USADO
 playersModel.delete = (id_player) => {
-    return new Promise((resolve, reject)=>{
+    return new Promise((resolve, reject) => {
         dbConn.query(
-            'DELETE FROM players WHERE id_player = ?', [id_player],
-            (err,result)=>{
-                console.log("ya he terminado la consula borrar usuario");
-                if(err){
-                    console.log("error en la consulta borrar " + err);
+            SQL_DELETE_PLAYER, [id_player],
+            (err, result) => {
+                if (err) {
                     reject(err);
-                }else{
-                    console.log("consulta de borrar usuario correcta");
+                } else {
                     resolve(result);
                 }
             }
