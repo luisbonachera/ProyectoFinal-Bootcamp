@@ -30,7 +30,7 @@ authController.checkUser = (req, res) => {
         console.log(token);
         res.send(token);
       } else if (rows.length > 1) {
-        res.status(401).send({ e: "Error en la consulta, sele mas de 1 resultado" });
+        res.status(401).send({ e: "Error en la consulta, sale mas de 1 resultado" });
       } else {
         res.status(400).send({ e: "El usuario no existe" });
       }

@@ -29,7 +29,7 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
     const [errorSubject, setErrorSubject] = React.useState("");
     const [errorText, setErrorText] = React.useState("");
     const [errorInputPlayerDestiny, setErrorInputPlayerDestiny] = React.useState(false);
-    const [maximunCharacterText, SetMaximunCharacterText] = React.useState();
+    const [maximunCharacterText, SetMaximunCharacterText] = React.useState(0);
 
     const updateSubject = (event: any) => {
         setSubject(event.currentTarget.value);
@@ -213,11 +213,11 @@ const AddMail: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_player_
                             </Form.Group>
                         )}
                         <Form.Group controlId="formGridSubject">
-                            <Form.Control className={errorSubject ? "containerErrorRed" : ""} as="input" maxLength="100" onChange={updateSubject} placeholder="Asunto" />
+                            <Form.Control className={errorSubject ? "containerErrorRed" : ""} as="input" maxLength={100} onChange={updateSubject} placeholder="Asunto" />
                         </Form.Group>
                         <Form.Group controlId="formGridTextAreaText">
                             <Form.Control className={errorText ? "textAreaMensajeNuevo containerErrorRed" : "textAreaMensajeNuevo"}
-                                as="textarea" rows="3" onChange={updateText} maxLength="1000"
+                                as="textarea" rows={3} onChange={updateText} maxLength={1000}
                                 placeholder="Escriba aqui el texto del mensaje máximo 1000 caracteres" />
                         </Form.Group>
                         <Form.Group controlId="formButttonSend">

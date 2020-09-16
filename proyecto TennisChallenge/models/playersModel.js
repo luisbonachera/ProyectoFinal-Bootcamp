@@ -18,8 +18,10 @@ const SQL_DELETE_PLAYER = () => 'DELETE FROM players WHERE id_player = ?';
 //Listar Players con campo borrado == true
 playersModel.list = (isAmin) => {
     return new Promise((resolve, reject) => {
+        // dbConn.query('SELECT id_player,username,email,city,genre'
+        // + ',rating,avatar,isAdmin FROM players WHERE erased = 0',
         dbConn.query(
-            SQL_FIND_ALL_PLAYERS,
+            SQL_FIND_ALL_PLAYERS(),
             (err, result) => {
                 if (err) reject(err);
                 else {
@@ -34,7 +36,7 @@ playersModel.list = (isAmin) => {
 playersModel.listById = (id_player) => {
     return new Promise((resolve, reject) => {
         dbConn.query(
-            SQL_FIND_PLAYER_BY_ID, [id_player],
+            SQL_FIND_PLAYER_BY_ID(), [id_player],
             (err, result) => {
                 if (err) reject(err);
                 else {
@@ -95,7 +97,7 @@ playersModel.listFiltros = (isAmin, filtros) => {
 playersModel.add = player => {
     return new Promise((resolve, reject) => {
         dbConn.query(
-            SQL_ADD_PLAYER, [player],
+            SQL_ADD_PLAYER(), [player],
             (err, result) => {
                 if (err) {
                     reject(err);
@@ -111,7 +113,7 @@ playersModel.add = player => {
 playersModel.editImage = (player, id_player) => {
     return new Promise((resolve, reject) => {
         dbConn.query(
-            SQL_EDIT_PLAYER, [player, id_player],
+            SQL_EDIT_PLAYER(), [player, id_player],
             (err, result) => {
                 if (err) {
                     reject(err);
@@ -128,7 +130,7 @@ playersModel.editImage = (player, id_player) => {
 playersModel.edit = (player, id_player) => {
     return new Promise((resolve, reject) => {
         dbConn.query(
-            SQL_EDIT_PLAYER, [player, id_player],
+            SQL_EDIT_PLAYER(), [player, id_player],
             (err, result) => {
                 if (err) {
                     reject(err);
@@ -145,7 +147,7 @@ playersModel.edit = (player, id_player) => {
 playersModel.editErased = (user, id_player) => {
     return new Promise((resolve, reject) => {
         dbConn.query(
-            SQL_EDIT_PLAYER, [user, id_player],
+            SQL_EDIT_PLAYER(), [user, id_player],
             (err, result) => {
                 if (err) {
                     reject(err);
@@ -162,7 +164,7 @@ playersModel.editErased = (user, id_player) => {
 playersModel.delete = (id_player) => {
     return new Promise((resolve, reject) => {
         dbConn.query(
-            SQL_DELETE_PLAYER, [id_player],
+            SQL_DELETE_PLAYER(), [id_player],
             (err, result) => {
                 if (err) {
                     reject(err);

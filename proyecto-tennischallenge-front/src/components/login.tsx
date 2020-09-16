@@ -147,12 +147,12 @@ const Login: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props => {
                     <Form.Group as={Row} className="groupUsername" controlId="formGroupUsername">
                         <Form.Label>Usuario</Form.Label>
                         <Form.Control type="text" className={errorUsername ? "form-control form-control-red" : "form-control"}
-                            as="input" maxLength="12" placeholder="Escriba su usuario" required onChange={UpdateUser} />
+                            as="input" maxLength={12} placeholder="Escriba su usuario" required onChange={UpdateUser} />
                     </Form.Group>
                     <Form.Group as={Row} className="groupPass" controlId="formGroupPassword">
                         <Form.Label>Contraseña</Form.Label>
                         <Form.Control type="password" className={errorPass ? "form-control form-control-red" : "form-control"}
-                            as="input" maxLength="20" placeholder="Escriba su contraseña" required onChange={UpdatePass} />
+                            as="input" maxLength={20} placeholder="Escriba su contraseña" required onChange={UpdatePass} />
                     </Form.Group>
                     <div className="row">
                         <div className="col">

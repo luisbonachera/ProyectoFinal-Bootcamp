@@ -11,9 +11,10 @@ database:'proyectotenis',
 //connect to database
 dbConn.connect(err => {
     if (err) throw err;
+    else console.log("Conected to database");
 });
 
-console.log('Conected to database ');
+// console.log('Conected to database ');
 // console.log(dbConn);
 
 

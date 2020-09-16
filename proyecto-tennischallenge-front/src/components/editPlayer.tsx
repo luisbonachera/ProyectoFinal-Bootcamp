@@ -25,7 +25,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
     const [genre, setGenre] = React.useState("");
     const [rating, setRating] = React.useState("");
     const [isAdmin, setIsAdmin] = React.useState<boolean>(false);
-    const [image, setImage] = React.useState();
+    const [image, setImage] = React.useState<any>();
     const [error, setError] = React.useState("");
     const [errorUsername, setErrorUsername] = React.useState("");
     const [errorEmail, setErrorEmail] = React.useState("");
@@ -246,7 +246,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                         <Form.Group className="col-6 colUsername" as={Col} controlId="formGridUsername">
                             <Form.Label>Usuario</Form.Label>
                             <Form.Control className={errorUsername ? "form-control form-control-red" : "form-control"}
-                                type="text" as="input" placeholder="Escriba su usuario" maxLength="12" value={username} onChange={updateUsername} required />
+                                type="text" as="input" placeholder="Escriba su usuario" maxLength={12} value={username} onChange={updateUsername} required />
                         </Form.Group>
                     </Form.Row>
                     <Form.Row>
@@ -266,21 +266,21 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                         <Form.Group className="col-6" as={Col} controlId="formGridCity">
                             <Form.Label>Ciudad</Form.Label>
                             <Form.Control type="text" as="input" className={errorCity ? "form-control form-control-red" : "form-control"}
-                                placeholder="Escriba su ciudad" maxLength="14" value={city} onChange={updateCity} required />
+                                placeholder="Escriba su ciudad" maxLength={14} value={city} onChange={updateCity} required />
                         </Form.Group>
                     </Form.Row>
                     <Form.Row>
                         <Form.Group className="col" as={Col} controlId="formGridEmail">
                             <Form.Label>Email</Form.Label>
                             <Form.Control type="email" as="input" className={errorEmail ? "form-control form-control-red" : "form-control"}
-                                placeholder="Escriba su email" maxLength="30" value={email} onChange={updateEmail} required />
+                                placeholder="Escriba su email" maxLength={30} value={email} onChange={updateEmail} required />
                         </Form.Group>
                     </Form.Row>
                     <Form.Row>
                         <Form.Group className="col containerGenero" as={Col} controlId="formGridGenre">
                             <Form.Label>Genero</Form.Label>
                             <Form.Control as="select" className={errorGenre ? "form-control form-control-red" : "form-control"}
-                                value={genre} selected onChange={updateGenre} required>
+                                value={genre} onChange={updateGenre} required> {/*TODO selected*/}
                                 {/* <option value="" selected hidden>Elige</option> */}
                                 <option value={"HOMBRE"}>Hombre</option>
                                 <option value={"MUJER"}>Mujer</option>
@@ -290,7 +290,7 @@ const EditPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps<{ id_play
                         <Form.Group className="col-2" as={Col} controlId="formGridRating">
                             <Form.Label>Level</Form.Label>
                             <Form.Control as="select" className={errorRating ? "form-control form-control-red" : "form-control"}
-                                value={rating + ""} selected onChange={updateRating} required>
+                                value={rating + ""} onChange={updateRating} required> {/*TODO  selected*/}
                                 <option value={"1"}>1</option>
                                 <option value={"2"}>2</option>
                                 <option value={"3"}>3</option>

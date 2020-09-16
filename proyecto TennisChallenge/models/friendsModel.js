@@ -43,7 +43,7 @@ friendsModel.add = (my_id, id_player_friend) => {
 friendsModel.list = (my_id) => {
     return new Promise((resolve, reject) => {
         dbConn.query(
-            SQL_LIST_MY_FRIENDS_JOIN_USER, [my_id, my_id],
+            SQL_LIST_MY_FRIENDS_JOIN_USER(), [my_id, my_id],
             (err, result) => {
                 if (err) {
                     reject(err);
@@ -59,7 +59,7 @@ friendsModel.list = (my_id) => {
 friendsModel.listById = (my_id) => {
     return new Promise((resolve, reject) => {
         dbConn.query(
-            SQL_LIST_FRIENDS_OF_PLAYER_ID_JOIN_USER, [my_id, my_id],
+            SQL_LIST_FRIENDS_OF_PLAYER_ID_JOIN_USER(), [my_id, my_id],
             (err, result) => {
                 if (err) {
                     reject(err);
@@ -75,7 +75,7 @@ friendsModel.listById = (my_id) => {
 friendsModel.edit = (accepted, id_friends, my_id) => {
     return new Promise((resolve, reject) => {
         dbConn.query(
-            SQL_EDIT_ACCEPT_FRIENDSHIP_TO_TRUE, [accepted, id_friends, my_id],
+            SQL_EDIT_ACCEPT_FRIENDSHIP_TO_TRUE(), [accepted, id_friends, my_id],
             (err, result) => {
                 if (err) {
                     reject(err);
@@ -91,7 +91,7 @@ friendsModel.edit = (accepted, id_friends, my_id) => {
 friendsModel.editWatched = (watched, id_friends, my_id) => {
     return new Promise((resolve, reject) => {
         dbConn.query(
-            SQL_EDIT_NEW_FRIEND_TO_SEEN, [watched, id_friends, my_id],
+            SQL_EDIT_NEW_FRIEND_TO_SEEN(), [watched, id_friends, my_id],
             (err, result) => {
                 if (err) {
                     reject(err);
@@ -107,7 +107,7 @@ friendsModel.editWatched = (watched, id_friends, my_id) => {
 friendsModel.delete = (id_friends, my_id) => {
     return new Promise((resolve, reject) => {
         dbConn.query(
-            SQL_DELETE_FRIENDSHIP, [id_friends, my_id, my_id],
+            SQL_DELETE_FRIENDSHIP(), [id_friends, my_id, my_id],
             (err, result) => {
                 if (err) {
                     reject(err);

@@ -22,7 +22,7 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
     const [city, setCity] = React.useState("");
     const [genre, setGenre] = React.useState("");
     const [rating, setRating] = React.useState("");
-    const [image, setImage] = React.useState();
+    const [image, setImage] = React.useState<any>();
     const [error, setError] = React.useState("");
     const [errorUsername, setErrorUsername] = React.useState("");
     const [errorEmail, setErrorEmail] = React.useState("");
@@ -68,7 +68,7 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
     };
 
     const updateImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setImage(event.currentTarget.files![0]);
+            setImage(event.currentTarget.files![0]);
     };
 
     const validEmailRegex = new RegExp(
@@ -265,7 +265,7 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                     <Form.Group className="col-6 colUsername" as={Col} controlId="formGridUsername">
                         <Form.Label>Usuario</Form.Label>
                         <Form.Control className={errorUsername ? "form-control form-control-red" : "form-control"}
-                            type="text" as="input" maxLength="12" placeholder="Escriba su usuario" onChange={updateUsername} required />
+                            type="text" as="input" maxLength={12} placeholder="Escriba su usuario" onChange={updateUsername} required />
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
@@ -285,21 +285,21 @@ const AddPlayer: React.FC<IProps & IPropsGlobal & RouteComponentProps> = props =
                     <Form.Group className="col-6" as={Col} controlId="formGridPassword">
                         <Form.Label>Contraseña</Form.Label>
                         <Form.Control type="password" className={errorPassword ? "form-control form-control-red" : "form-control"}
-                            as="input" maxLength="20" placeholder="Escriba su contraseña" onChange={updatePassword} required />
+                            as="input" maxLength={20} placeholder="Escriba su contraseña" onChange={updatePassword} required />
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
                     <Form.Group className="col" as={Col} controlId="formGridEmail">
                         <Form.Label>Email</Form.Label>
                         <Form.Control type="email" className={errorEmail ? "form-control form-control-red" : "form-control"}
-                            as="input" maxLength="30" placeholder="Escriba su email" onChange={updateEmail} required />
+                            as="input" maxLength={30} placeholder="Escriba su email" onChange={updateEmail} required />
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
                     <Form.Group className="col-6" as={Col} controlId="formGridCity">
                         <Form.Label>Ciudad</Form.Label>
                         <Form.Control type="text" className={errorCity ? "form-control form-control-red" : "form-control"}
-                            as="input" maxLength="14" placeholder="Escriba su ciudad" onChange={updateCity} required />
+                            as="input" maxLength={14} placeholder="Escriba su ciudad" onChange={updateCity} required />
                     </Form.Group>
                     <Form.Group className="col-4 containerGenero" as={Col} controlId="formGridGenre">
                         <Form.Label>Genero</Form.Label>

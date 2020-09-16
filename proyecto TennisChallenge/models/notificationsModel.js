@@ -31,7 +31,7 @@ const SQL_FIND_ALL_NOTIFICATIONS = () => "SELECT numbers_messages, numbers_reque
 notificationsModel.counter = (id_player) => {
     return new Promise((resolve, reject) => {
         dbConn.query(
-            SQL_FIND_ALL_NOTIFICATIONS,[id_player,id_player,id_player,id_player,id_player,id_player],
+            SQL_FIND_ALL_NOTIFICATIONS(),[id_player,id_player,id_player,id_player,id_player,id_player],
             (err, result) => {
                 console.log("Hay respuesta de la db es :" + err);
                 if (err) reject(err);

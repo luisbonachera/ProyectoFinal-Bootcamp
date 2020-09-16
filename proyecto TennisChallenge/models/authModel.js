@@ -7,9 +7,8 @@ authModel = {};
 
 authModel.checkUser = user => {
     return new Promise((resolve, reject) => {
-
         dbConn.query(
-            SQL_AUTH_PLAYER, [user.username, user.password],
+            SQL_AUTH_PLAYER(), [user.username, user.password],
             (err, result) => {
                 console.log("ya he terminado la consulata buscar usuario");
                 if (err) {

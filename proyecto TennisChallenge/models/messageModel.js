@@ -30,7 +30,7 @@ messageModel.add = msg => {
 messageModel.edit = (watched, id_message, id_player_destiny) => {
     return new Promise((resolve, reject) => {
         dbConn.query(
-            SQL_UPDATE_MESSAGE, [watched, id_message, id_player_destiny],
+            SQL_UPDATE_MESSAGE(), [watched, id_message, id_player_destiny],
             (err, result) => {
                 if (err) {
                     reject(err);
@@ -47,7 +47,7 @@ messageModel.edit = (watched, id_message, id_player_destiny) => {
 messageModel.list = (id_player) => {
     return new Promise((resolve, reject) => {
         dbConn.query(
-            SQL_LIST_MY_MESSAGES_INCLUDE_USERS, [id_player, id_player],
+            SQL_LIST_MY_MESSAGES_INCLUDE_USERS(), [id_player, id_player],
             (err, result) => {
                 if (err) {
                     reject(err);
@@ -62,7 +62,7 @@ messageModel.list = (id_player) => {
 // contar mis mensajes no vistos join user
 messageModel.list = (id_player) => {
     return new Promise((resolve, reject) => {
-        dbConn.query(SQL_LIST_MY_MESSAGES_NOT_SEEN_INCLUDE_USERS, [id_player, id_player],
+        dbConn.query(SQL_LIST_MY_MESSAGES_NOT_SEEN_INCLUDE_USERS(), [id_player, id_player],
             (err, result) => {
                 if (err) {
                     reject(err);
